@@ -6,6 +6,9 @@
 - ![](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/1053x821/18d29cfbeb0e20ba5b5806e410601d68/image.png)
 - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/0d59a40efa2f26ba18536ad6020277fa/image.png)
 - ![](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/688x615/baa7e57272a97658af83403937462cac/image.png)
+- ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/281c010af42108ff32906ca0dccd4321/image.png)
+- ![mondonguito](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/de5994c97ce1cd874af706709594a509/image.png)
+- ![bebidas](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/7b58d5ff75b9d9313317ba3ed738d3d2/image.png)
 
 #### mesas
 
