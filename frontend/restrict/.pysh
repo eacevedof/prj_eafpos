@@ -1,0 +1,3 @@
+PATH_BUILD=/Users/ioedu/projects/prj_shopech/frontend_react/restrict/build
+PATH_CACHE=/Users/ioedu/projects/prj_shopech/backend_web/var
+PATH_PUBLIC=/Users/ioedu/projects/prj_shopech/backend_web/public/react

@@ -1,0 +1,16 @@
+{
+    "short_name": "Orders",
+    "name": "Online Orders",
+    "icons": [
+      {
+        "src": "favicon.png",
+        "sizes": "512x512",
+        "type": "image/x-icon"
+      }
+    ],
+    "start_url": "/react",
+    "scope": "/react",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+}
