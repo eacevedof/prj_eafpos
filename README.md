@@ -33,6 +33,7 @@
 - pide pin
 - muestra la seleccion de grupos y platos/bebidas
   - en la parte izquierd permite configuracion de grupos temporales para que se borren a determinada hora
+    - como se configura un grupo temporal?
   - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/b4e6283e0a021dd168a7f0a55b44b58b/image.png)
 - botones de grupos e items, para llevar, nombre del cliente, alertador personas
   - mientras se va configurando en el lado derecho se va viendo la comanda con los cambios
