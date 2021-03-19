@@ -19,6 +19,7 @@
   - al seleccionar una mesa aparece un teclado numerico para ingresar num personas
     - ![teclado](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/688x615/baa7e57272a97658af83403937462cac/image.png)
   - despues del numero de personas aparece la pantalla de seleccion de bebidas/platos
+    - como se configuran los grupos (botones) tanto de bebidas como platos?
     - que significan los colores? como se configuran?
     - plato
     - ![mondonguito](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/de5994c97ce1cd874af706709594a509/image.png)
