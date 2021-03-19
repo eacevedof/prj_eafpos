@@ -89,11 +89,13 @@
 - no pide pin?
 - que pasa cuando se cierra?
 - que sucede si se ha presionado sin querer?
+- ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/2a3fe41599ea915b3e7328db6b0a2584/image.png)
 
 #### operaciones
 - pide pin
 - se visualiza la venta del día
   - se muestra un espacio izquierdo con un texto y en el derecho una columna con unos 7 botones
+  - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/ea24316f8117f55fb62cadc01b5b0a22/image.png)
 - hay varios botones (col derecha) pero solo se usa el que dice "ordenes realizadas"
   - al presionar aparece un panel con un grid de botones (+/- 16)
   - se usan dos botones "reporte de ventas por categoria" y "reporte de ventas por ordenes del menu"
@@ -102,9 +104,10 @@
       - mes(arriba y abajo), dia, año, cancelar, seleccionar
     - presenta filtro producto (like multiple campos)
     - el primero muestra subtotales por grupos (bebidas, cervezas, comidas ,extras, postres, licores)
+      - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/9ad1459461d96d19045ad49694e65005/image.png)
     - el segundo muestra venta por palto/bebida (producto) 
       - hay una columna % a que se refiere?
-
+      -![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/69849cdd3acba2147ed1ce18a153c469/image.png)
 #### oficina
 - pide pin
 - varias opciones, principalmente cambio de menu
