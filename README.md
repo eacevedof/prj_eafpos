@@ -28,6 +28,7 @@
     - es solo para cocina? o tambien aparece en el ticket del cliente 
     - ![modificaciones](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/a1f3a13f5e194583151738ad8d8b1bd9/image.png)  
 
+### [video pos repaso general](https://drive.google.com/file/d/1xb964WWXjRihoRYE96W3KqXOI79-jFn2/view?usp=sharing)
 #### llevar
 - pide pin
 - muestra la seleccion de grupos y platos/bebidas
