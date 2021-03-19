@@ -75,4 +75,19 @@
 #### salir del programa
 - que ocurre cuando le das? te pide confirmación? imprime algo?
 
+### registrar pago con tarjeta
+- se puede hacer de dos maneras: boton pagar o revisar
+- mis ordenes (para que muestre todos los pedidos)
+- busco nº de ticket o mesa (que esta en el ticket impreso)
+- se presiona sobre el item en cuestion
+- aparece la pantalla con botones efectivo, tarjeta 
+- se presiona en tarjeta 
+  - aparece teclado de numeros con opciones fijas de billetes y monedas
+  - y como primera opcion un boton con el monto exacto
+- si se presiona en ok o en el botón aparece una pantalla resumen y se imprime
+  - que imprime? un ejemplo de ticket impreso
+  - total pagado
+  - cambio a dar
+  - botones imprimir, listo
 
+- como se obtiene el recibo de cliente antes de darselo para que pague?
