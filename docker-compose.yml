@@ -1,0 +1,41 @@
+version: '3.5'
+
+services:
+  php-eafpos-web:
+    hostname: nginx
+    container_name: php-eafpos-web
+    build:
+      context: ./docker/nginx
+    ports:
+      - 400:80
+    volumes:
+      - ./public:/appdata/www/public
+    depends_on:
+      - php-eafpos-be
+    networks:
+      - php-eafpos-net
+
+  php-eafpos-be:
+    hostname: php
+    container_name: php-eafpos-be
+    build:
+      context: docker/php
+      args:
+        UID: $U_ID
+    environment:
+      PHP_IDE_CONFIG: serverName=phpblog
+      PHP_XDEBUG_ENABLED: 1
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9005
+    volumes:
+      - .:/appdata/www
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ~/.ssh/id_rsa:/home/appuser/.ssh/id_rsa
+
+    networks:
+      - php-eafpos-net
+      - mariadb-univ_net
+
+networks:
+  php-eafpos-net:
+  mariadb-univ_net:
+    external: true
