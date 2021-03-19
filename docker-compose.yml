@@ -2,34 +2,36 @@ version: '3.5'
 
 services:
   php-eafpos-web:
+    # nginx:latest
     hostname: nginx
     container_name: php-eafpos-web
     build:
-      context: ./docker/nginx
+      context: docker/nginx
     ports:
       - 400:80
+      - 401:81
     volumes:
-      - ./public:/appdata/www/public
+      - ./backend_web/public:/appdata/www/backend_web/public
+      - ./frontend/restrict/build:/appdata/www/frontend/restrict/build
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php-eafpos-be
     networks:
       - php-eafpos-net
 
   php-eafpos-be:
+    # php:7.4.16-fpm
     hostname: php
     container_name: php-eafpos-be
     build:
-      context: docker/php
-      args:
-        UID: $U_ID
+      context: docker/fpm
     environment:
-      PHP_IDE_CONFIG: serverName=phpblog
+      PHP_IDE_CONFIG: serverName=eafpos
       PHP_XDEBUG_ENABLED: 1
       XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9005
     volumes:
-      - .:/appdata/www
-      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
-      - ~/.ssh/id_rsa:/home/appuser/.ssh/id_rsa
+      - ./backend_web:/appdata/www/backend_web
+      - ./docker/fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
     networks:
       - php-eafpos-net
