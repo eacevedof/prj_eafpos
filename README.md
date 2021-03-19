@@ -6,17 +6,32 @@
 - **teclado login**
 - ![teclado-login](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/614x553/e06c35494e8a03030d787234122f0b15/image.png)
 - **mesa bar**
-- ![mesa bar](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/1053x821/18d29cfbeb0e20ba5b5806e410601d68/image.png)
     - **mesas**
-    - ![mesas](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/0d59a40efa2f26ba18536ad6020277fa/image.png)
     - **unidades pedido teclado**
-    - ![teclado](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/688x615/baa7e57272a97658af83403937462cac/image.png)  
     - ![unidades pedido teclado](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/281c010af42108ff32906ca0dccd4321/image.png)
-    - ![mondonguito](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/de5994c97ce1cd874af706709594a509/image.png)
-    - ![bebidas](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/7b58d5ff75b9d9313317ba3ed738d3d2/image.png)
-    - ![modificaciones](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/a1f3a13f5e194583151738ad8d8b1bd9/image.png)
+
 
 #### mesas
+- pide pin
+  - permite selecciona entre mesa bar
+    - como se ve la pantalla de bar?
+  - ![mesa bar](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/1053x821/18d29cfbeb0e20ba5b5806e410601d68/image.png)
+  - al presionar en mesa  
+    - se ven mesas en verde, morado y un texto, que texto? que significan los colores?
+    - como se trata la reserva de una mesa?
+    - botones laterales filtrar mesas, refrescar pantalla, cancelar  
+    - ![mesas](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/0d59a40efa2f26ba18536ad6020277fa/image.png) 
+  - al seleccionar una mesa aparece un teclado numerico para ingresar num personas
+    - ![teclado](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/688x615/baa7e57272a97658af83403937462cac/image.png)
+  - despues del numero de personas aparece la pantalla de seleccion de bebidas/platos
+    - que significan los colores? como se configuran?
+    - plato
+    - ![mondonguito](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/de5994c97ce1cd874af706709594a509/image.png)
+    - bebida  
+    - ![seleccion](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/7b58d5ff75b9d9313317ba3ed738d3d2/image.png)
+  - se puede aplicar notas para cocina
+    - es solo para cocina? o tambien aparece en el ticket del cliente 
+    - ![modificaciones](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/a1f3a13f5e194583151738ad8d8b1bd9/image.png)  
 
 #### llevar
 - pide pin
