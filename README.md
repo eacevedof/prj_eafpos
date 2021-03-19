@@ -19,6 +19,28 @@
 #### mesas
 
 #### llevar
+- pide pin
+- muestra la seleccion de grupos y platos/bebidas
+  - en la parte izquierd permite configuracion de grupos temporales para que se borren a determinada hora
+  - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/b4e6283e0a021dd168a7f0a55b44b58b/image.png)
+- botones de grupos e items, para llevar, nombre del cliente, alertador personas
+  - mientras se va configurando en el lado derecho se va viendo la comanda con los cambios
+    - ![](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/660x546/978c6523f039c1f5093da262d00b3b0e/image.png)
+  - para llevar:
+    - permite cambio de tipo o confirmar
+    - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/6594e8161b888cb7c8a35f70bc468de6/image.png)
+  - nombre del cliente:
+    - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/5334e6fe6b34e1d4ce8945e38f8de12a/image.png)
+  - alertador (pagar):
+    - como que no se usa no?
+    - presenta teclado numerico
+  - personas:
+    - imputar el numero de personas que sean
+    - presenta teclado numerico
+- si se desea cancelar el pedido se le da a un boton abajo que no llego a ver
+- no entiendo, si es para llevar porque se selecciona mesa? es una mesa que ha pedido para llevar?
+- que sucede si una mesa pide solo algunos platos para llevar? se le crea un nuevo pedido?
+
 
 #### revisar
 - muestra un resumen de los pedidos hechos por usuario x
