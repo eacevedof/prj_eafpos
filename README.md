@@ -107,7 +107,8 @@
 #### salir del programa
 - que ocurre cuando le das? te pide confirmación? imprime algo?
 
-### registrar pago con tarjeta
+### [video pago con tarjeta](https://drive.google.com/file/d/1xZGH25JpX08Ecb-fGKmH9C2AckinIt8e/view?usp=sharing)
+#### registrar pago con tarjeta
 - se puede hacer de dos maneras: boton pagar o revisar
 - mis ordenes (para que muestre todos los pedidos)
 - busco nº de ticket o mesa (que esta en el ticket impreso)
