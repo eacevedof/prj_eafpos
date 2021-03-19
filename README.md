@@ -72,7 +72,7 @@
   - aparece dos columnas nombre del menu y la otra con botones configurables con platos del menu
   - ver como se crea un menu?
 
-#### salir del prrograma
+#### salir del programa
 - que ocurre cuando le das? te pide confirmación? imprime algo?
 
 
