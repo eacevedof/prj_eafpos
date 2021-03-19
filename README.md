@@ -121,7 +121,8 @@
     - aparece dos columnas nombre del menu y la otra con botones configurables con platos del menu      
     - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/7cb180357c841ee2b0116fbc953cd120/image.png)
     - como se configuran los platos de la derecha?
-  
+    - porque se colocan en rectangulos dispersos?  
+
 #### salir del programa
 - que ocurre cuando le das a ok? te pide confirmación? imprime algo?
 
@@ -136,9 +137,10 @@
   - aparece teclado de numeros con opciones fijas de billetes y monedas
   - y como primera opcion un boton con el monto exacto
 - si se presiona en ok o en el botón aparece una pantalla resumen y se imprime
-  - que imprime? un ejemplo de ticket impreso
+  - que imprime? un ejemplo de ticket impreso despues de pagar
   - total pagado
   - cambio a dar
   - botones imprimir, listo
+  ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/bc0956d2869d4c0aa9adb89e5426b762/image.png)
 
 - como se obtiene el recibo de cliente antes de darselo para que pague?
