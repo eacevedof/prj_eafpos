@@ -5,13 +5,8 @@
 - ![inicio](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/1088x858/a62477c6a37fdd4efdff6ab613fe60a1/image.png)
 - **teclado login**
 - ![teclado-login](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/614x553/e06c35494e8a03030d787234122f0b15/image.png)
-- **mesa bar**
-    - **mesas**
-    - **unidades pedido teclado**
-    - ![unidades pedido teclado](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/281c010af42108ff32906ca0dccd4321/image.png)
 
-
-#### mesas
+#### [mesas](https://drive.google.com/file/d/1xgZBeAZgveG2zUsyjcXPaD9F2I_HRKfU/view?usp=sharing)
 - pide pin
   - permite selecciona entre mesa bar
     - como se ve la pantalla de bar?
@@ -55,7 +50,6 @@
 - si se desea cancelar el pedido se le da a un boton abajo que no llego a ver
 - no entiendo, si es para llevar porque se selecciona mesa? es una mesa que ha pedido para llevar?
 - que sucede si una mesa pide solo algunos platos para llevar? se le crea un nuevo pedido?
-
 
 #### revisar
 - muestra un resumen de los pedidos hechos por usuario x
