@@ -66,9 +66,13 @@
       - hay una columna % a que se refiere?
 
 #### oficina
+- pide pin
+- varias opciones, principalmente cambio de menu
+- menu > configurar > platillos/bebidas (con ratón y teclado)
+  - aparece dos columnas nombre del menu y la otra con botones configurables con platos del menu
+  - ver como se crea un menu?
 
-
-#### salida
-
+#### salir del prrograma
+- que ocurre cuando le das? te pide confirmación? imprime algo?
 
 
