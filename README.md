@@ -102,12 +102,14 @@
     - presenta un filtro por fecha desde/hasta
       - al presionar sobre la fecha se presentan botones selectores
       - mes(arriba y abajo), dia, año, cancelar, seleccionar
-    - presenta filtro producto (like multiple campos)
+      - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/42a134f697aa42a3844d9185d2059f2a/image.png)
+    - presenta filtro producto (**like** multiple campos) y **order by**
     - el primero muestra subtotales por grupos (bebidas, cervezas, comidas ,extras, postres, licores)
       - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/9ad1459461d96d19045ad49694e65005/image.png)
     - el segundo muestra venta por palto/bebida (producto) 
       - hay una columna % a que se refiere?
       -![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/69849cdd3acba2147ed1ce18a153c469/image.png)
+
 #### oficina
 - pide pin
 - varias opciones, principalmente cambio de menu
@@ -116,7 +118,7 @@
   - ver como se crea un menu?
 
 #### salir del programa
-- que ocurre cuando le das? te pide confirmación? imprime algo?
+- que ocurre cuando le das a ok? te pide confirmación? imprime algo?
 
 ### [video pago con tarjeta](https://drive.google.com/file/d/1xZGH25JpX08Ecb-fGKmH9C2AckinIt8e/view?usp=sharing)
 #### registrar pago con tarjeta
