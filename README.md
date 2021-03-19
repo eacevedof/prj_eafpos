@@ -26,7 +26,7 @@
     - bebida  
     - ![seleccion](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/7b58d5ff75b9d9313317ba3ed738d3d2/image.png)
   - se puede aplicar notas para cocina
-    - es solo para cocina? o tambien aparece en el ticket del cliente 
+    - es solo para cocina? o tambien aparece en el ticket del cliente? 
     - ![modificaciones](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/a1f3a13f5e194583151738ad8d8b1bd9/image.png)  
 
 ### [video pos repaso general](https://drive.google.com/file/d/1xb964WWXjRihoRYE96W3KqXOI79-jFn2/view?usp=sharing)
@@ -57,28 +57,32 @@
 - que sucede si una mesa pide solo algunos platos para llevar? se le crea un nuevo pedido?
 
 #### revisar
-- muestra un resumen de los pedidos hechos por usuario x
-  - que es la busqueda rápida? se usa?
-  - que es por número de cuenta? se usa?
-
+- muestra un resumen de los pedidos abiertos hechos por usuario x (por defecto solo el logado)
+  - que es por número de cuenta? para que se usa?
 - hay un botón "mis ordenes" que muestra todos los pedidos de todos los usuarios que están abiertas
   - que es abierta? que no ha salido de cocina? que no se ha pagado?
-- en este listado se puede hacer click sobre un item y entrar al detalle
+  - ![revisar](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/3b6c8990a1156f15d8dbf101187800d3/image.png)  
+- en este listado se puede presionar sobre un item y entrar al detalle
   - en el detalle aparecen botones:
     - editar orden
     - imprimir
     - pagar al banco de los empleados ???
     - abajo del ticket hay dos flechas y un boton "... pagar"
-
+    - ![detalle pedido](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/6f9b3f45b12ee27a558ce56da59a2f51/image.png)
 
 #### pagar
 - se ingresa pin
-- aparece un listado de las ordenes abiertas
+- aparece un listado de las ordenes abiertas (por defecto solo el logado)
+  - tambien se puede ver todo
+  - ![ordenes abiertas](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/a72331c0b7c74a2b6576a912823ba2d3/image.png)
 - se pulsa sobre el item
-  - aparece pantalla con botones 
+  - aparece pantalla con botones
     - efectivo
     - tarjeta de debito
     - *hay más botones pero no se utilizan*
+    - ![pago](https://trello-attachments.s3.amazonaws.com/6053c0cae4790579a20d72fc/1200x681/fa3fc82f080fd27584bff2f776309e3a/image.png)
+- aplicar pago
+  - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/6e17791bfa0c37ea1eb17a9efd8d88bc/image.png)
 
 #### salida de cajero
 - se utiliza al finalizar el día
