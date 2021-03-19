@@ -112,11 +112,16 @@
 
 #### oficina
 - pide pin
-- varias opciones, principalmente cambio de menu
-- menu > configurar > platillos/bebidas (con ratón y teclado)
-  - aparece dos columnas nombre del menu y la otra con botones configurables con platos del menu
-  - ver como se crea un menu?
-
+- varias opciones
+  - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/6b12c2cb740a9d4e07277a26a1c4981c/image.png)
+  - principalmente cambio de menu
+    - menu > configurar > platillos/bebidas (con ratón y teclado)
+    - video como se crea un menu?
+    - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/343e5338b36a6ebf4570dfdae8735a00/image.png)
+    - aparece dos columnas nombre del menu y la otra con botones configurables con platos del menu      
+    - ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/7cb180357c841ee2b0116fbc953cd120/image.png)
+    - como se configuran los platos de la derecha?
+  
 #### salir del programa
 - que ocurre cuando le das a ok? te pide confirmación? imprime algo?
 
