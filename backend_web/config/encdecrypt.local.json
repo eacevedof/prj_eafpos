@@ -1,0 +1,9 @@
+[
+  {
+    "domain": "self",
+    "domain": "localhost:10000",
+    "sslenc_method":"AES-256-CBC",
+    "sslenc_key":"@11111111@",
+    "sslsalt":"@#$.salt.$#@"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "id":"c1",
+    "alias":"docker-mysql",
+    "description":"Docker mysql",
+    "type":"mysql",
+    "server":"127.0.0.1",
+    "port":"3350",
+    "schemas":[
+      {
+        "database":"db_one",
+        "user":"root",
+        "password":"root"
+      },
+      {
+        "database":"db_two",
+        "user":"root",
+        "password":"root"
+      },
+      {
+        "database": "sf5-expenses-api_api",
+        "user":"root",
+        "password":"root"
+      }
+    ]
+  }
+]

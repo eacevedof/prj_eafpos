@@ -1,0 +1,25 @@
+[
+  {
+    "domain": "react-restrict-dev",
+    "domain": "localhost:3000",
+    "users": [
+      {
+        "id": 1,
+        "user": "fulanito",
+        "password": "$2y$10$fTCndo6jgE0QWM95OHUdFOvofm/p13S2BeMhgFIwGLxjsTPiKQRuC"
+      }
+    ]
+  },
+  {
+    "domain": "tinymarket",
+    "domain": "shopelchalan",
+    "domain": "localhost:300",
+    "users": [
+      {
+        "id": 1,
+        "user": "fulanito",
+        "password": "$2y$10$fTCndo6jgE0QWM95OHUdFOvofm/p13S2BeMhgFIwGLxjsTPiKQRuC"
+      }
+    ]
+  }
+]

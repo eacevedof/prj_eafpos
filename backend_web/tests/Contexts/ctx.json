@@ -1,0 +1,5 @@
+[
+    {"id":"agencyreader", "alias":"Test agency-reader", "description":"Agency Reader", "config":{"type":"mysql","server":"dbb2c01-replica-bi.rdsxxx.io","database":"agency","user":"xxx","password":"slavereader"}},
+    {"id":"dev", "alias":"Test dev-agregacion", "description":"Development", "config":{"type":"mysql","server":"dev01.serverxxx.io","database":"db_agregacion","user":"root","password":"yyy"}},
+    {"id":"draco", "alias":"Test draco-reader", "description":"Draco Reader", "config":{"type":"mysql","server":"dbcommon-bi.rdsxxx.io","database":"draco","user":"stratebi","password":"zzz"}}
+]
