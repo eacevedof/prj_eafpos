@@ -5,7 +5,10 @@ help: ## Show this help message
 	@echo "targets:"
 	@egrep "^(.+)\:\ ##\ (.+)" ${MAKEFILE_LIST} | column -t -c 2 -s ":#"
 
-restart: ## Restart the containers
+start: ## start
+	docker-compose start
+
+restart: ## restart the containers
 	docker-compose stop
 	docker-compose start
 
