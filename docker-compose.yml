@@ -10,18 +10,36 @@ services:
       args:
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
-
     environment:
       MYSQL_USER: ${DB_USER}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./docker/mariadb/dumps:/appdata/dumps
       - ./docker/mariadb/scripts:/appdata/scripts
-      - ./docker/mariadb/initdb:/docker-entrypoint-initdb.d/
+      - ./docker/mariadb/initdb:/docker-entrypoint-initdb.d
     ports:
       - 3307:3306
-    command:
-      'mysqld --innodb-flush-method=fsync'
+
+    networks:
+      - php-eafpos-net
+
+  php-eafpos-cron:
+    # crontab
+    hostname: cron
+    container_name: php-eafpos-cron
+    build:
+      context: docker/crontab
+      args:
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./docker/crontab/scripts:/appdata/scripts
+      - ./docker/crontab/dumps:/appdata/dumps
+    depends_on:
+      - php-eafpos-db
     networks:
       - php-eafpos-net
 

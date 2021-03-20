@@ -7,8 +7,17 @@ RUN echo "alias ll='ls -la'" >> /root/.bashrc
 RUN echo "alias db='mysql --host=localhost --user=$DB_USER --password=$DB_PASSWORD'" >> /root/.bashrc
 RUN echo "alias home='cd $HOME'" >> /root/.bashrc
 RUN echo "alias appdata='cd /appdata'" >> /root/.bashrc
+RUN echo "alias dumps='cd /appdata/dumps'" >> /root/.bashrc
+RUN echo "alias scripts='cd /appdata/scripts'" >> /root/.bashrc
 
 RUN apt-get update \
     && apt-get -y install --no-install-recommends vim-tiny cron
+
+RUN (crontab -l ; echo "* * * * * echo "Hello world" >> /appdata/dumps/cron.log") | crontab
+# CMD service cron start
+
+# CMD ["service","cron","start","/usr/local/bin/docker-entrypoint.sh"]
+
+# CMD ["/usr/local/bin/docker-entrypoint.sh"]
 
 WORKDIR /appdata

@@ -1,0 +1,1 @@
+5 * * * * /bin/sh /appdata/scripts/backup-cron.sh >> /appdata/scripts/backup-cron.log

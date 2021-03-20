@@ -8,6 +8,7 @@ help: ## Show this help message
 rebuild: ## rebuild containers
 	docker-compose -f docker-compose.yml down
 	docker-compose -f docker-compose.yml --env-file ./docker/.env up -d --build --remove-orphans
+	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-db
 
 start: ## start
 	docker-compose start
@@ -25,6 +26,12 @@ logs-web: ## Logs web
 logs-be: ## Logs be
 	docker logs php-eafpos-be
 
+logs-db: ## Logs db
+	docker logs php-eafpos-db
+
+logs-cron: ## Logs cron
+	docker logs php-eafpos-cron
+
 ssh-be: ## fpm
 	docker exec -it --user root php-eafpos-be bash
 
@@ -33,6 +40,9 @@ ssh-web: ## web
 
 ssh-db: ## ssh's into mysql
 	docker exec -it --user root php-eafpos-db bash
+
+ssh-cron: ## ssh's into crontab
+	docker exec -it --user root php-eafpos-cron sh
 
 deploy-test: ## deploy codeonly in test
 	py.sh deploy.codeonly eduardoaf
