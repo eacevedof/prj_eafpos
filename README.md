@@ -144,3 +144,8 @@
   ![](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/6053c0cae4790579a20d72fc/bc0956d2869d4c0aa9adb89e5426b762/image.png)
 
 - como se obtiene el recibo de cliente antes de darselo para que pague?
+
+# otras dudas:
+- **platillo de nivel superior** 
+    - para que sirve el platillo de nivel superior cuando estas haciendo una orden?
+    - que implica que "puede ser descontado" o no?. cuenta como precio 0 en el pedido
