@@ -5,6 +5,10 @@ help: ## Show this help message
 	@echo "targets:"
 	@egrep "^(.+)\:\ ##\ (.+)" ${MAKEFILE_LIST} | column -t -c 2 -s ":#"
 
+rebuild: ## rebuild containers
+	docker-compose -f docker-compose.yml down
+	docker-compose -f docker-compose.yml --env-file ./docker/.env up -d --build --remove-orphans
+
 start: ## start
 	docker-compose start
 
@@ -28,10 +32,7 @@ ssh-web: ## web
 	docker exec -it --user root php-eafpos-web bash
 
 ssh-db: ## ssh's into mysql
-	docker exec -it --user root cont-mariadb-univ bash
-
-cp-db: ## copy into database container
-	docker cp ./db/prod.sql cont-mariadb-univ:/tmp
+	docker exec -it --user root php-eafpos-db bash
 
 deploy-test: ## deploy codeonly in test
 	py.sh deploy.codeonly eduardoaf
@@ -43,10 +44,6 @@ remlogs: ## remove logs
 	rm -fr ./backend_web/logs/*
 
 
-
 compile: ## npm run dev
 	npm run dev
 
-rebuild: ## rebuild containers
-	docker-compose -f docker-compose.yml down
-	docker-compose -f docker-compose.yml up -d --build --remove-orphans

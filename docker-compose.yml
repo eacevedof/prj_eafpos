@@ -1,6 +1,30 @@
 version: '3.5'
 
 services:
+  php-eafpos-db:
+    # mariadb: 10.5.9
+    hostname: eafposdb
+    container_name: php-eafpos-db
+    build:
+      context: docker/mariadb
+      args:
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./docker/mariadb/dumps:/appdata/dumps
+      - ./docker/mariadb/scripts:/appdata/scripts
+      - ./docker/mariadb/initdb:/docker-entrypoint-initdb.d/
+    ports:
+      - 3307:3306
+    command:
+      'mysqld --innodb-flush-method=fsync'
+    networks:
+      - php-eafpos-net
+
   php-eafpos-web:
     # nginx:latest
     hostname: nginx
