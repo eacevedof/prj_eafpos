@@ -3,7 +3,7 @@ version: '3.5'
 services:
   php-eafpos-db:
     # mariadb: 10.5.9
-    hostname: eafposdb
+    hostname: db
     container_name: php-eafpos-db
     build:
       context: docker/mariadb
@@ -14,12 +14,11 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ./docker/mariadb/dumps:/appdata/dumps
+      - ./io:/appdata/io
       - ./docker/mariadb/scripts:/appdata/scripts
       - ./docker/mariadb/initdb:/docker-entrypoint-initdb.d
     ports:
       - 3307:3306
-
     networks:
       - php-eafpos-net
 
@@ -36,8 +35,8 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
+      - ./io:/appdata/io
       - ./docker/crontab/scripts:/appdata/scripts
-      - ./docker/crontab/dumps:/appdata/dumps
     depends_on:
       - php-eafpos-db
     networks:
@@ -53,6 +52,7 @@ services:
       - 400:80
       - 401:81
     volumes:
+      - ./io:/appdata/io
       - ./backend_web/public:/appdata/www/backend_web/public
       - ./frontend/restrict/build:/appdata/www/frontend/restrict/build
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -72,6 +72,7 @@ services:
       PHP_XDEBUG_ENABLED: 1
       XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9005
     volumes:
+      - ./io:/appdata/io
       - ./backend_web:/appdata/www/backend_web
       - ./docker/fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
