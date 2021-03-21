@@ -10,6 +10,15 @@ rebuild: ## rebuild containers
 	docker-compose -f docker-compose.yml --env-file ./docker/.env up -d --build --remove-orphans
 	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-db
 
+build-cron:
+	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-cron
+
+build-db:
+	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-db
+
+build-web:
+	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-web
+
 start: ## start
 	docker-compose start
 
