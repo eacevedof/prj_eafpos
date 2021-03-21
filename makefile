@@ -57,3 +57,14 @@ remlogs: ## remove logs
 compile: ## npm run dev
 	npm run dev
 
+install-cert: ## certs
+	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout ./certs/eafpos-ca.key -out ./certs/eafpos-ca.pem -subj "/C=US/CN=eafpos"
+	openssl x509 -outform pem -in ./certs/eafpos-ca.pem -out ./certs/eafpos-ca.crt
+	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout ./certs/eafposapi-ca.key -out ./certs/eafposapi-ca.pem -subj "/C=US/CN=eafposapi"
+	openssl x509 -outform pem -in ./certs/eafposapi-ca.pem -out ./certs/eafposapi-ca.crt
+
+make ips: ## get ips of containers
+	echo "php-eafpos-web"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-eafpos-web
+	echo "php-eafpos-cron"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-eafpos-cron
+	echo "php-eafpos-be"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-eafpos-be
+	echo "php-eafpos-db"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-eafpos-db
