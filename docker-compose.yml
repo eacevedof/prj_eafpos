@@ -51,6 +51,7 @@ services:
     ports:
       - 400:80
       - 401:81
+      - 443:443
     volumes:
       - ./io:/appdata/io
       - ./backend_web/public:/appdata/www/backend_web/public
