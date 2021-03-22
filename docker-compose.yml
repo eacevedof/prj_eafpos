@@ -49,9 +49,10 @@ services:
     build:
       context: docker/nginx
     ports:
-      - 400:80
-      - 401:81
-      - 443:443
+      - 900:90 #api
+      - 901:91 #spa sec
+      - 443:443 #api sec
+
     volumes:
       - ./io:/appdata/io
       - ./backend_web/public:/appdata/www/backend_web/public
