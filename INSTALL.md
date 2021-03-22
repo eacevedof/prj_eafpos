@@ -4,8 +4,8 @@
 
   - cp /etc/ssl/certs/localhost-ca.crt /appdata/io/out/localhost-ca.crt
   - cp /etc/ssl/private/localhost-ca.key /appdata/io/out/localhost-ca.key
-  - cp /appdata/io/out/localhost-ca.crt /etc/ssl/certs/localhost-ca.crt
-  - cp /appdata/io/out/localhost-ca.key /etc/ssl/private/localhost-ca.key
+  - cp /appdata/io/in/localhost-ca.crt /etc/ssl/certs/localhost-ca.crt
+  - cp /appdata/io/in/localhost-ca.key /etc/ssl/private/localhost-ca.key
     
   - https://192.168.1.128
   - nginx -t

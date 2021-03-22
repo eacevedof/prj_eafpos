@@ -50,8 +50,10 @@ services:
       context: docker/nginx
     ports:
       - 900:90 #api
-      - 901:91 #spa sec
-      - 443:443 #api sec
+      - 901:91 #spa
+
+      - 1000:100 #api sec
+      - 1001:101 #api sec
 
     volumes:
       - ./io:/appdata/io
