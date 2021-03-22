@@ -3,6 +3,7 @@
   - openssl req -x509 -nodes -days 365 -subj "/CN=192.168.1.128" -addext "subjectAltName=IP.1:192.168.1.128" -newkey rsa:2048 -keyout /etc/ssl/private/localhost-ca.key -out /etc/ssl/certs/localhost-ca.crt 
   - openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/localhost-ca.key -out /etc/ssl/certs/localhost-ca.crt
 
+  - cp /etc/ssl/certs/localhost-ca.crt /appdata/io/out/localhost-ca.crt
   - https://192.168.1.128
   - nginx -t
   - nginx -s reload
