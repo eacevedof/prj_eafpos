@@ -1,27 +1,17 @@
 [
   {
     "id":"c1",
-    "alias":"docker-mysql",
-    "description":"Docker mysql",
+    "alias":"db-pos",
+    "description":"Main db for POS",
     "type":"mysql",
-    "server":"127.0.0.1",
-    "port":"3350",
+    "server":"php-eafpos-db",
+    "port":"3306",
     "schemas":[
       {
-        "database":"db_one",
+        "database":"db_shopelchalan",
         "user":"root",
-        "password":"root"
+        "password":"1234"
       },
-      {
-        "database":"db_two",
-        "user":"root",
-        "password":"root"
-      },
-      {
-        "database": "sf5-expenses-api_api",
-        "user":"root",
-        "password":"root"
-      }
     ]
   }
 ]

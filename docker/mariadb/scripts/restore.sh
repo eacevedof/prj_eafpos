@@ -5,3 +5,4 @@ tagnow=$(date '+%Y%m%d-%H%M%S')
 echo $tagnow
 
 mysql --host=localhost --user=$MYSQL_USER --password=$MYSQL_ROOT_PASSWORD db_shopelchalan < /appdata/io/in/restore.sql
+echo db restored
