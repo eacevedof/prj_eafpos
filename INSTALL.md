@@ -1,7 +1,9 @@
 - ejecutar la creacion de certificado
 - en el contenedor web:
-  - openssl req -x509 -nodes -days 365 -subj "/CN=192.168.1.132" -addext "subjectAltName=IP.1:192.168.1.132" -newkey rsa:2048 -keyout /etc/ssl/private/localip-ca.key -out /etc/ssl/certs/localip-ca.crt 
+  - openssl req -x509 -nodes -days 730 -subj "/CN=192.168.1.132" -addext "subjectAltName=IP.1:192.168.1.132" -newkey rsa:2048 -keyout /etc/ssl/private/localip-ca.key -out /etc/ssl/certs/localip-ca.crt 
   ```  
+  cp /etc/ssl/certs/localip-ca.crt /appdata/io/out; cp /etc/ssl/private/localip-ca.key /appdata/io/out
+  
   cp /appdata/io/in/localip-ca.crt /etc/ssl/certs
   cp /appdata/io/in/localip-ca.key /etc/ssl/private
   ```
