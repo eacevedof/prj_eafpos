@@ -53,7 +53,7 @@ services:
       - 901:91 #spa
 
       - 1000:100 #api sec
-      - 1001:101 #api sec
+      - 1001:101 #spa sec
 
     volumes:
       - ./io:/appdata/io

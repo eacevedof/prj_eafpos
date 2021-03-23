@@ -66,13 +66,9 @@ remlogs: ## remove logs
 compile: ## npm run dev
 	npm run dev
 
-install-cert: ## certs
-	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout ./docker/nginx/certs/localhost-ca.key -out ./docker/nginx/certs/localhost-ca.pem -subj "/CN=localhost"
-	openssl x509 -outform pem -in ./docker/nginx/certs/localhost-ca.pem -out ./docker/nginx/certs/localhost-ca.crt
-	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout ./docker/nginx/certs/eafpos-ca.key -out ./docker/nginx/certs/eafpos-ca.pem -subj "/C=US/CN=eafpos"
-	openssl x509 -outform pem -in ./docker/nginx/certs/eafpos-ca.pem -out ./docker/nginx/certs/eafpos-ca.crt
-	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout ./docker/nginx/certs/eafposapi-ca.key -out ./docker/nginx/certs/eafposapi-ca.pem -subj "/C=US/CN=eafposapi"
-	openssl x509 -outform pem -in ./docker/nginx/certs/eafposapi-ca.pem -out ./docker/nginx/certs/eafposapi-ca.crt
+gen-cert: ## certs
+	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout ./io/in/localip-ca.key -out ./io/in/localip-ca.pem -subj "/CN=192.168.1.132"
+	openssl x509 -outform pem -in ./io/in/localip-ca.pem -out ./io/in/localip-ca.crt
 
 make ips: ## get ips of containers
 	echo "php-eafpos-web"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-eafpos-web
