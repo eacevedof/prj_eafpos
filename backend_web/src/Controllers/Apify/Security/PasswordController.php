@@ -25,6 +25,7 @@ class PasswordController extends AppController
         $oJson = new HelperJson();
         try{
             $domain = $this->get_domain(); //excepcion
+            //prd($domain);
             $oServ = new SignatureService($domain,$this->get_post());
             $token = $oServ->get_password();
             $oJson->set_payload(["result"=>$token])->show();

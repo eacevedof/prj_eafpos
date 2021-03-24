@@ -8,10 +8,11 @@
     "port":"3306",
     "schemas":[
       {
+        "alias": "db-pos",
         "database":"db_shopelchalan",
         "user":"root",
         "password":"1234"
-      },
+      }
     ]
   }
 ]

@@ -1,24 +1,12 @@
 [
   {
-    "domain": "react-restrict-dev",
-    "domain": "localhost:3000",
+    "domain": "192.168.1.132:1000",
     "users": [
       {
         "id": 1,
         "user": "fulanito",
-        "password": "$2y$10$fTCndo6jgE0QWM95OHUdFOvofm/p13S2BeMhgFIwGLxjsTPiKQRuC"
-      }
-    ]
-  },
-  {
-    "domain": "tinymarket",
-    "domain": "shopelchalan",
-    "domain": "localhost:300",
-    "users": [
-      {
-        "id": 1,
-        "user": "fulanito",
-        "password": "$2y$10$fTCndo6jgE0QWM95OHUdFOvofm/p13S2BeMhgFIwGLxjsTPiKQRuC"
+        "word": "MaFaLDa1234",
+        "password": "$2y$10$e4sj2EpOJpImt4qsiqLXl.5zKTomyoDGCCdisIhAIJipVlTTtpESq"
       }
     ]
   }

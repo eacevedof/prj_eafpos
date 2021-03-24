@@ -1,4 +1,5 @@
 - ejecutar la creacion de certificado
+- quizas seria conveniente crear una variable de entorno IP_CERTIFCATE
 - en el contenedor web:
   - openssl req -x509 -nodes -days 730 -subj "/CN=192.168.1.132" -addext "subjectAltName=IP.1:192.168.1.132" -newkey rsa:2048 -keyout /etc/ssl/private/localip-ca.key -out /etc/ssl/certs/localip-ca.crt 
   ```  
