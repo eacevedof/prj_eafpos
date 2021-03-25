@@ -74,7 +74,7 @@ services:
     environment:
       PHP_IDE_CONFIG: serverName=eafpos
       PHP_XDEBUG_ENABLED: 1
-      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9005
+      XDEBUG_CONFIG: remote_host=gateway.docker.internal remote_port=9005
     volumes:
       - ./io:/appdata/io
       - ./backend_web:/appdata/www/backend_web

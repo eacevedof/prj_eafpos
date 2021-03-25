@@ -19,6 +19,9 @@ build-db:
 build-web:
 	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-web
 
+build-be:
+	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-be
+
 start: ## start
 	docker-compose start
 
