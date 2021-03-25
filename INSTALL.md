@@ -5,8 +5,10 @@
   ```  
   cp /etc/ssl/certs/localip-ca.crt /appdata/io/out; cp /etc/ssl/private/localip-ca.key /appdata/io/out
   
-  cp /appdata/io/in/localip-ca.crt /etc/ssl/certs
-  cp /appdata/io/in/localip-ca.key /etc/ssl/private
+  cp /appdata/io/in/localip-ca.crt /etc/ssl/certs; cp /appdata/io/in/localip-ca.key /etc/ssl/private; nginx -s reload
+  
+  curl https://192.168.1.132:1000 --insecure
+  curl https://192.168.1.132:1001 --insecure
   ```
   - https://192.168.1.132:1000/   back
   - https://192.168.1.132:1001/   spa

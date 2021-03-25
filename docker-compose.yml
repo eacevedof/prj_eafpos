@@ -72,9 +72,9 @@ services:
     build:
       context: docker/fpm
     environment:
-      PHP_IDE_CONFIG: serverName=eafpos
+      PHP_IDE_CONFIG: serverName=Servxdebug
       PHP_XDEBUG_ENABLED: 1
-      XDEBUG_CONFIG: remote_host=gateway.docker.internal remote_port=9005
+      XDEBUG_CONFIG: remote_host=192.168.1.132 remote_port=9005
     volumes:
       - ./io:/appdata/io
       - ./backend_web:/appdata/www/backend_web
