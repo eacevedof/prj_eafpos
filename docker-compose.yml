@@ -72,9 +72,10 @@ services:
     build:
       context: docker/fpm
     environment:
-      PHP_IDE_CONFIG: serverName=servxdebug
+      # estas variables sirven para cuando se ejecuta desde consola... creo :)
+      PHP_IDE_CONFIG: serverName=ServXdebug
       PHP_XDEBUG_ENABLED: 1
-      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9005
+      XDEBUG_CONFIG: client_host=host.docker.internal client_port=9005 remote_connect_back=0
     volumes:
       - ./io:/appdata/io
       - ./backend_web:/appdata/www/backend_web

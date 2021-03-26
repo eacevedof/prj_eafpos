@@ -11,16 +11,16 @@ rebuild: ## rebuild containers
 	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-db
 
 build-cron:
-	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-cron
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-cron
 
 build-db:
-	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-db
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-db
 
 build-web:
-	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-web
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-web
 
 build-be:
-	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-be
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-be
 
 start: ## start
 	docker-compose start
@@ -28,6 +28,18 @@ start: ## start
 restart: ## restart the containers
 	docker-compose stop
 	docker-compose start
+
+restart-be:
+	docker restart php-eafpos-be
+
+restart-web:
+	docker restart php-eafpos-web
+
+restart-cron:
+	docker restart php-eafpos-web
+
+restart-db:
+	docker restart php-eafpos-db
 
 stop: ## stop containers
 	docker-compose stop
