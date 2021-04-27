@@ -9,9 +9,7 @@
  */
 namespace App\Controllers;
 
-use App\Controllers\AppController;
-
-class NotFoundController extends AppController
+final class NotFoundController extends AppController
 {
     public function index()
     {
