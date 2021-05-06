@@ -77,9 +77,11 @@ deploy-prod: ## deploy codeonly in prod
 remlogs: ## remove logs
 	rm -fr ./backend_web/logs/*
 
+frontstart: ## npm run start
+	cd frontend/restrict; npm run start
 
-compile: ## npm run dev
-	npm run dev
+frontbuild: ## npm run build
+	cd frontend/restrict; npm run build
 
 gen-cert: ## certs
 	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout ./io/in/localip-ca.key -out ./io/in/localip-ca.pem -subj "/CN=192.168.1.132"

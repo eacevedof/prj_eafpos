@@ -18,6 +18,7 @@ import {
 function Boot() {
 
   const routes = [].concat(dashroutes, prodroutes)
+  console.log("routes",routes)
   const {set_apifytoken, set_errorg} = useContext(GlobalContext)
 
   const async_onload = async () => {
