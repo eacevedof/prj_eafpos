@@ -1,4 +1,5 @@
 ### To-do:
+- pagina front con login
 - update-date es incoherente con delete-date ya que ambas son modificaciones **done**
 - acciones en grupo
 - paginación
