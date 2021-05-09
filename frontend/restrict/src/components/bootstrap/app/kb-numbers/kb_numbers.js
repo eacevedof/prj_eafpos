@@ -129,8 +129,8 @@ const css = {
     right: 0,
     margin: "auto",
     padding: "3px",
-    width: "500px",
-    height: "500px",
+    width: "475px",
+    height: "465px",
     //border: "1px solid red"
     backgroundColor: "#4A4A4B",
   },
@@ -157,7 +157,7 @@ const css = {
     alignItems: "center",
     justifyContent: "center",
     width: "150px",
-    height: "50px",
+    height: "60px",
     fontSize: "32px",
     fontWeight: "bold",
   }    
