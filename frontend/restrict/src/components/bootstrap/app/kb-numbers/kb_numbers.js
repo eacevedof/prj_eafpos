@@ -17,8 +17,8 @@ function KbNumbers({message, type}) {
       padding: "3px",
       width: "510px",
       height: "505px",
-      border: "1px solid red"
-      //backgroundColor: "blue",
+      //border: "1px solid red"
+      backgroundColor: "#4A4A4B",
     },
 
     button : {
@@ -145,7 +145,7 @@ function KbNumbers({message, type}) {
         </div>
         <div className="col-sm p-0">
           <button className="btn btn-primary" type="button" style={css.button}
-            onClick={() => on_click("ok")}
+            onClick={on_ok}
           >OK</button>
         </div>
       </div>     
