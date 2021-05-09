@@ -39,9 +39,9 @@ class ReaderService extends AppService
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     
-    private function get_parsed_tosql($arParams)
+    private function _get_parsed_tosql($arParams)
     {
-        //pr($arParams,"get_parsed_tosql");die;
+        //pr($arParams,"_get_parsed_tosql");die;
         $oCrud = new ComponentCrud();
         if(!isset($arParams["table"])) $this->add_error("get_sql no table");
         if(!isset($arParams["fields"]) || !is_array($arParams["fields"])) $this->add_error("get_sql no fields");
@@ -74,7 +74,7 @@ class ReaderService extends AppService
 
         $oCrud->get_selectfrom();
         $sql =  $oCrud->get_sql();
-        //$this->logd($sql,"get_parsed_tosql.sql");
+        //$this->logd($sql,"_get_parsed_tosql.sql");
         //pr($sql,"sql");
         return $sql;
     }
@@ -85,16 +85,20 @@ class ReaderService extends AppService
         $this->sSQL = $sSQL;
         $r = $this->oBehav->read_raw($sSQL);
         $this->iFoundrows = $this->oBehav->get_foundrows();
-        if($this->oBehav->is_error())
-            $this->add_error($this->oBehav->get_errors());
+        if($this->oBehav->is_error()) {
+            $this->logerr($errors = $this->oBehav->get_errors(),"readservice.read_raw");
+            $this->add_error($errors);
+        }
         return $r;
     }
     
     public function get_read($arParams)
     {
-        if(!$arParams)
-            return $this->add_error("get_read No params");
-        $sSQL = $this->get_parsed_tosql($arParams);
+        if(!$arParams) {
+            $this->logerr($error = "get_read No params","readservice.get_read");
+            return $this->add_error($error);
+        }
+        $sSQL = $this->_get_parsed_tosql($arParams);
         $this->sSQL = $sSQL;
         $r = $this->read_raw($sSQL);
         return $r;
