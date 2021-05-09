@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 function KbNumbers({message, type}) {
 
+  const maxlength = 6
   const [input, set_input] = useState("")
 
   const on_clear = () => {
@@ -19,7 +20,8 @@ function KbNumbers({message, type}) {
 
   const on_click = (n) => {
     console.log(n)
-    set_input(input.concat(n))
+    if(input.length<maxlength)
+      set_input(input.concat(n))
   }
 
   const updateform = ()=> {
