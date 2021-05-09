@@ -116,6 +116,10 @@ function LoginInsert() {
     }
   }// async_onload
 
+  const on_ok = () => {
+    alert("on ok")
+  }
+
   useEffect(()=>{
     console.log("login.insert.useeffect")
     async_onload()
@@ -126,16 +130,10 @@ function LoginInsert() {
     <>
       <Navbar />
       <main className="container">
-        
-        <h1 className="mt-2 mb-2">Access code</h1>
-
-        <form className="row g-3" onSubmit={on_submit}>
-          <KbNumbers />
-
-          <div className="col-12">
-            <SubmitAsync innertext="Save" type="primary" issubmitting={issubmitting} />
-          </div>
-        </form>
+        <div className="d-flex justify-content-center bd-highlight mt-2">
+          <h1 className="">Access code</h1>
+          <KbNumbers onok={on_ok}/>
+        </div>
       </main>
       <Footer />
     </>

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-function KbNumbers({message, type}) {
+function KbNumbers({onok, type}) {
 
   const maxlength = 6
 
@@ -17,8 +17,10 @@ function KbNumbers({message, type}) {
     refinput.current.focus()
   }
 
+
   const on_ok = () => {
     console.log("on_ok",input)
+    onok()
     refinput.current.focus()
   }
 
@@ -48,8 +50,7 @@ function KbNumbers({message, type}) {
 
   return (
     <div style={css.container}>
-   
-      <div className="d-flex justify-content-center bd-highlight mt-2">
+      <div className="d-flex justify-content-center pt-2">
         <div className="p-1 input-group" style={css.divinput}>
           <input type="password" className="form-control" style={css.input}
 
@@ -67,7 +68,7 @@ function KbNumbers({message, type}) {
         </div>
       </div>
       
-      <div className="d-flex justify-content-center bd-highlight">
+      <div className="d-flex justify-content-center">
         <div className="p-1">
           <button className="btn btn-primary" type="button" style={css.btn}
             onClick={() => on_click(7)}
@@ -85,7 +86,7 @@ function KbNumbers({message, type}) {
         </div>
       </div>  
       
-      <div className="d-flex justify-content-center bd-highlight">
+      <div className="d-flex justify-content-center">
         <div className="p-1">
           <button className="btn btn-primary" type="button" style={css.btn}
             onClick={() => on_click(4) }
@@ -103,7 +104,7 @@ function KbNumbers({message, type}) {
         </div>
       </div>
 
-      <div className="d-flex justify-content-center bd-highlight">
+      <div className="d-flex justify-content-center">
         <div className="p-1">
           <button className="btn btn-primary" type="button" style={css.btn}
             onClick={() => on_click(1) }
@@ -121,7 +122,7 @@ function KbNumbers({message, type}) {
         </div>
       </div>      
 
-      <div className="d-flex justify-content-center bd-highlight">
+      <div className="d-flex justify-content-center">
         <div className="p-1">
           <button className="btn btn-danger" type="button" style={css.btn}
             onClick={on_nok}
