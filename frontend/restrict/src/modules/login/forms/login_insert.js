@@ -125,16 +125,11 @@ function LoginInsert() {
   return (
     <>
       <Navbar />
-      <main className="container">       
+      <main className="container">
+        
         <h1 className="mt-2 mb-2">Access code</h1>
 
         <form className="row g-3" onSubmit={on_submit}>
-          {success!==""? <AlertSimple message={success} type="success" />: null}
-          {error!==""? <AlertSimple message={error} type="danger" />: null}
-
-          {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
-          {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}
-
           <KbNumbers />
 
           <div className="col-12">

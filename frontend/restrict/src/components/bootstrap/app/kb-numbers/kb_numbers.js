@@ -1,31 +1,49 @@
-import { findLastIndex } from 'lodash';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function KbNumbers({message, type}) {
 
   const maxlength = 6
+
   const [input, set_input] = useState("")
+  const refinput = useRef(null)
 
   const on_clear = () => {
     set_input(input.slice(0,-1))
+    refinput.current.focus()
   }
 
   const on_nok = () => {
     set_input("")
+    refinput.current.focus()
   }
 
   const on_ok = () => {
     console.log("on_ok",input)
+    refinput.current.focus()
   }
 
   const on_click = (n) => {
-    console.log(n)
     if(input.length<maxlength)
       set_input(input.concat(n))
+    refinput.current.focus()
   }
 
-  const updateform = ()=> {
-    console.log(input)
+  const on_change = (evt)=> {
+    if(input.length<maxlength)
+      set_input(evt.target.value)
+  }
+
+  const on_keyup = (evt) => {
+    //console.log("evt",evt.key)
+    if(input.length===maxlength){
+      if(evt.key==="Backspace"){
+        set_input(input.slice(0,-1))
+      }
+      else if(evt.key==="Delete") {
+        set_input("")
+      }
+    }
+    
   }
 
   return (
@@ -34,17 +52,20 @@ function KbNumbers({message, type}) {
       <div className="d-flex justify-content-center bd-highlight mt-2">
         <div className="p-1 input-group" style={css.divinput}>
           <input type="password" className="form-control" style={css.input}
+
+            autoFocus
+            ref={refinput}
             value={input}
-            onChange={updateform}
-            readOnly="readonly"
+            onChange={on_change}
+            onKeyUp={on_keyup}
           />
         </div>
         <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btndel}
+          <button className="btn btn-warning" type="button" style={css.btndel}
             onClick={on_clear}
           >&lt;</button>
         </div>
-      </div>        
+      </div>
       
       <div className="d-flex justify-content-center bd-highlight">
         <div className="p-1">
@@ -102,7 +123,7 @@ function KbNumbers({message, type}) {
 
       <div className="d-flex justify-content-center bd-highlight">
         <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
+          <button className="btn btn-danger" type="button" style={css.btn}
             onClick={on_nok}
           >X</button>
         </div>
@@ -112,7 +133,7 @@ function KbNumbers({message, type}) {
           >0</button>
         </div>
         <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
+          <button className="btn btn-success" type="button" style={css.btn}
             onClick={on_ok}
           >OK</button>
         </div>
@@ -134,7 +155,7 @@ const css = {
     width: "475px",
     height: "465px",
     //border: "1px solid red"
-    backgroundColor: "#4A4A4B",
+    backgroundColor: "#aaa",
   },
 
   btn : {
@@ -151,7 +172,8 @@ const css = {
 
   input: {
     fontSize: "32px",
-    fontWeight: "bold",    
+    fontWeight: "bold",
+    backgroundColor: "white"
   },  
 
   btndel : {
