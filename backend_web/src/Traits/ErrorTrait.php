@@ -17,7 +17,24 @@ trait ErrorTrait
     protected function add_error($sMessage){$this->isError = TRUE;$this->arErrors[]=$sMessage;}
 
     public function is_error(){return $this->isError;}
-    public function get_errors($inJson=0){if($inJson) return json_encode($this->arErrors); return $this->arErrors;}
+
+    private function _get_flattened(array $array): array
+    {
+        $flatten = [];
+        array_walk_recursive($array, function ($a) use (&$flatten) {
+            $flatten[] = $a;
+        });
+        return $flatten;
+    }
+
+    public function get_errors($inJson=0)
+    {
+        $errors = $this->_get_flattened($this->arErrors);
+        if($inJson)
+            return json_encode($errors);
+        return $errors;
+    }
+
     public function get_error($i=0){isset($this->arErrors[$i])?$this->arErrors[$i]:NULL;}
     public function show_errors(){echo "<pre>".var_export($this->arErrors,1);}    
     

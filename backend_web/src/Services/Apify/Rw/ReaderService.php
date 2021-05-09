@@ -26,12 +26,12 @@ class ReaderService extends AppService
     private $sSQL;
     private $iFoundrows;
 
-    public function __construct($idContext="",$sDbalias="")
+    public function __construct(string $idContext="", string $sDbalias="")
     {
         $this->idContext = $idContext;
 
         if(!$this->idContext) return $this->add_error("Error in context: $idContext");
-        $this->oContext = new ComponentContext($_ENV["APP_CONTEXTS"],$idContext);
+        $this->oContext = new ComponentContext($_ENV["APP_CONTEXTS"], $idContext);
         $this->sDb = $this->oContext->get_dbname($sDbalias);
         $oDb = DbFactory::get_dbobject_by_ctx($this->oContext,$this->sDb);
         if($oDb->is_error()) return $this->add_error($oDb->get_errors());

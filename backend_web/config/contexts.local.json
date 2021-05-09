@@ -8,8 +8,8 @@
     "port":"3306",
     "schemas":[
       {
-        "alias": "db-pos",
-        "database":"db_shopelchalan",
+        "alias": "db-eafpos",
+        "database":"db_eafpos",
         "user":"root",
         "password":"1234"
       }
