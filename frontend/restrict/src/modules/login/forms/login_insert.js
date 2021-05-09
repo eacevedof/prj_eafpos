@@ -8,7 +8,6 @@ import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
 import ToastSimple from 'components/bootstrap/toast/toastsimple'
 import SubmitAsync from 'components/bootstrap/button/submitasync'
-import Breadscrumb from 'components/bootstrap/breadscrumb/breadscrumb'
 import Footer from "components/common/footer"
 
 import KbNumbers from "components/bootstrap/app/kb-numbers/kb_numbers"
@@ -136,7 +135,7 @@ function LoginInsert() {
           {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
           {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}
 
-          <KbNumbers/>
+          <KbNumbers />
 
           <div className="col-12">
             <SubmitAsync innertext="Save" type="primary" issubmitting={issubmitting} />
