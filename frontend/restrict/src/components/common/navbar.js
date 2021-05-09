@@ -21,7 +21,7 @@ function Navbar() {
     <header className="mb-2">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <NavLink className="navbar-brand" activeClassName="navlink-active" exact to={"/admin"}> 
+          <NavLink className="navbar-brand" activeClassName="navlink-active" exact to={"/"}> 
             <i className="fa fa-home"></i>&nbsp;Home
           </NavLink>
           <button type="button" className="navbar-toggler" 
