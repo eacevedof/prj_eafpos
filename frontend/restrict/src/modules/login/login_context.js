@@ -1,8 +1,8 @@
 //Login_context.js
 import React, {createContext, useState} from 'react';
-export const loginContext = createContext();
+export const LoginContext = createContext();
 
-const loginProvider = (props) => {
+const LoginProvider = (props) => {
   const [someglobal, set_someglobal] = useState("")
   
   return (
@@ -16,4 +16,4 @@ const loginProvider = (props) => {
   )
 }
 
-export default loginProvider
+export default LoginProvider

@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {MODCONFIG} from "modules/Login/config/config"
+import {MODCONFIG} from "modules/login/config/config"
 import {pr, is_empty, isset, is_defined} from "helpers/functions"
-import {async_insert, async_get_maxuploadsize} from "modules/Login/async/async_requests"
+import {async_insert, async_get_maxuploadsize} from "modules/login/async/async_requests"
 import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
@@ -235,4 +235,4 @@ function LoginInsert() {
   )
 }
 
-export default loginInsert;
+export default LoginInsert;

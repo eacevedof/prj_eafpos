@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {MODCONFIG} from "modules/Login/config/config"
+import {MODCONFIG} from "modules/login/config/config"
 import {pr} from "helpers/functions"
 
 import {useParams} from "react-router-dom"
-import {async_get_by_id} from "modules/Login/async/async_requests"
+import {async_get_by_id} from "modules/login/async/async_requests"
 import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
@@ -165,4 +165,4 @@ function LoginDetail(){
   )
 }
 
-export default loginDetail;
+export default LoginDetail;

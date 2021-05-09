@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useParams} from "react-router-dom"
-import {MODCONFIG} from "modules/Login/config/config"
+import {MODCONFIG} from "modules/login/config/config"
 import {pr} from "helpers/functions"
-import {async_get_by_id, async_clone} from "modules/Login/async/async_requests"
+import {async_get_by_id, async_clone} from "modules/login/async/async_requests"
 import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
@@ -203,4 +203,4 @@ function LoginClone(){
   )
 }
 
-export default loginClone;
+export default LoginClone;
