@@ -17,7 +17,6 @@ function KbNumbers({onok, type}) {
     refinput.current.focus()
   }
 
-
   const on_ok = () => {
     console.log("on_ok",input)
     onok()
