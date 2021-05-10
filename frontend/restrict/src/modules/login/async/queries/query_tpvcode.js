@@ -2,15 +2,6 @@ import helpapify from "helpers/apify"
 import {get_sanitized} from "helpers/functions"
 
 
-/**
- * select id, fullname
-from base_user
-WHERE 1
-AND delete_date is null
-and is_enabled=1
- */
-
-//consulta
 const query = {
 
   table: "base_user",

@@ -13,7 +13,6 @@ function LoginCheck() {
     const r = await async_get_one_by_tpvcode(code)
     db.delete("user_session")
     if(parseInt(r.foundrows)===1) {
-      //console.log(r)
       db.save("user_session",r.result[0])
       history.push("admin")
     }

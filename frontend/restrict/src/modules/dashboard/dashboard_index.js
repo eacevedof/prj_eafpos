@@ -8,10 +8,11 @@ import Footer from "components/common/footer"
 
 //import HrefDom from "helpers/href_dom"
 //import Api from "providers/api"
+import {useHistory} from "react-router-dom"
 import { NavLink } from 'react-router-dom';
 
 function DashboardIndex() {
-  
+  const history = useHistory()
   //const {is_loading, set_is_loading, set_products, search} = useContext(GlobalContext)
   //const [is_error, set_is_error] = useState(false)
 
