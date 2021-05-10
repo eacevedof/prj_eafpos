@@ -4,15 +4,18 @@ import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
 import KbNumbers from "components/bootstrap/app/kb-numbers/kb_numbers"
 import db from "helpers/localdb"
+import {useHistory} from "react-router-dom"
 
 function LoginCheck() {
+  const history = useHistory()
 
   const on_submit = async code => {
     const r = await async_get_one_by_tpvcode(code)
     db.delete("user_session")
-    if(r.foundrows) {
+    if(parseInt(r.foundrows)===1) {
       //console.log(r)
       db.save("user_session",r.result[0])
+      history.push("admin")
     }
   }
 
@@ -25,7 +28,7 @@ function LoginCheck() {
       <Navbar />
       <main className="container">
         <div className="d-flex justify-content-center bd-highlight mt-2">
-          <h1 className="">Access code</h1>
+          <h1>Access code</h1>
           <KbNumbers onsubmit={on_submit}/>
         </div>
       </main>
