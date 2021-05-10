@@ -19,15 +19,15 @@ const query = {
   fields:[
     "t.id",
     "t.fullname",
+    "t.code_cache"
   ],
 
   where:[
     "t.delete_date IS NULL",
-    "t.is_enabled=1"
+    "t.is_enabled=1",
   ],
 }
 
-//fabfica de query
 export const get_one = tpvcode => {
 
   const code = get_sanitized(tpvcode)
@@ -40,4 +40,18 @@ export const get_one = tpvcode => {
   objselect.where.push(`t.tpv_code = '${code}'`)
   return objselect
 
-}//get_obj_list
+}//get_one
+
+export const get_by_codecache = codecache => {
+
+  const code = get_sanitized(codecache)
+  const objselect = helpapify.select
+  objselect.reset()
+  
+  objselect.table = `${query.table} ${query.alias}`  
+  objselect.fields.push(`t.id`)
+  objselect.where.push(`t.code_cache = '${code}'`)
+  return objselect
+
+}//get_by_codecache
+

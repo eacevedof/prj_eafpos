@@ -4,7 +4,7 @@ import {Redirect} from "react-router-dom"
 import LoginProvider from "modules/login/login_context"
 
 import LoginIndex from "modules/login/login_index"
-import LoginInsert from "modules/login/forms/login_insert"
+import LoginCheck from "modules/login/forms/login_check"
 /*
 import LoginClone from "modules/login/forms/login_clone"
 import LoginUpdate from "modules/login/forms/login_update"
@@ -16,6 +16,6 @@ import LoginDeleteLogic from "modules/login/forms/login_deletelogic"
 export const routes = [
   {
     path:"/",
-    component: (<LoginInsert />)
+    component: (<LoginCheck />)
   },
 ]

@@ -3,12 +3,17 @@ import {async_get_one_by_tpvcode} from "modules/login/async/async_requests"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
 import KbNumbers from "components/bootstrap/app/kb-numbers/kb_numbers"
+import db from "helpers/localdb"
 
-function LoginInsert() {
+function LoginCheck() {
 
   const on_submit = async code => {
     const r = await async_get_one_by_tpvcode(code)
-    console.log("on_submit.r",r)
+    db.delete("user_session")
+    if(r.foundrows) {
+      //console.log(r)
+      db.save("user_session",r.result[0])
+    }
   }
 
   useEffect(() => {
@@ -29,4 +34,4 @@ function LoginInsert() {
   )
 }
 
-export default LoginInsert;
+export default LoginCheck;
