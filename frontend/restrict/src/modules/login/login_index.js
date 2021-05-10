@@ -35,7 +35,8 @@ export const async_ispinned = async () => {
   if(!usersession) return false
 
   const response = await async_is_pinned(usersession.code_cache)
-
+  console.log("response",response)
+  
   if(is_defined(response.error)){
     return false
   }  

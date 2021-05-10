@@ -1,5 +1,5 @@
-//import React, {useContext, useState, useEffect} from 'react';
-import React from "react"
+import React, {useContext, useState, useEffect} from "react"
+
 //import {GlobalContext} from "components/context/global_context"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
@@ -11,11 +11,25 @@ import Footer from "components/common/footer"
 import {useHistory} from "react-router-dom"
 import { NavLink } from 'react-router-dom';
 
+import {async_ispinned} from "modules/login/login_index"
+
 function DashboardIndex() {
   const history = useHistory()
   //const {is_loading, set_is_loading, set_products, search} = useContext(GlobalContext)
   //const [is_error, set_is_error] = useState(false)
 
+
+  useEffect(() => {
+    const check = async () => {
+      const is_pinned = await async_ispinned()
+      if(!is_pinned){
+        history.push("/")
+      }
+    }
+    check()
+
+    return ()=> console.log("dashboard.index unmounting")
+  },[])
 
   return (
     <>
