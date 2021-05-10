@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-function KbNumbers({onok, type}) {
+function KbNumbers({onsubmit, type}) {
 
   const maxlength = 6
 
@@ -17,9 +17,8 @@ function KbNumbers({onok, type}) {
     refinput.current.focus()
   }
 
-  const on_ok = () => {
-    console.log("on_ok",input)
-    onok()
+  const on_submit = () => {
+    onsubmit(input)
     refinput.current.focus()
   }
 
@@ -134,7 +133,7 @@ function KbNumbers({onok, type}) {
         </div>
         <div className="p-1">
           <button className="btn btn-success" type="button" style={css.btn}
-            onClick={on_ok}
+            onClick={on_submit}
           >OK</button>
         </div>
       </div>     

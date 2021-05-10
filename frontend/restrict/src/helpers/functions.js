@@ -94,3 +94,8 @@ export const get_localip = () => {
 
   return arIp;
 }
+
+export const get_sanitized = value => {
+  if(!value) return ""
+  return value.replaceAll("'","\'")
+}

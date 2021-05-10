@@ -1,5 +1,5 @@
 import helpapify from "helpers/apify"
-import {is_empty} from "helpers/functions"
+import {get_sanitized} from "helpers/functions"
 
 
 /**
@@ -28,14 +28,16 @@ const query = {
 }
 
 //fabfica de query
-export const get_one = () => {
+export const get_one = tpvcode => {
 
+  const code = get_sanitized(tpvcode)
   const objselect = helpapify.select
   objselect.reset()
   
   objselect.table = `${query.table} ${query.alias}`  
   query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
   query.where.forEach(cond => objselect.where.push(cond))
+  objselect.where.push(`t.tpv_code = '${code}'`)
   return objselect
 
 }//get_obj_list
