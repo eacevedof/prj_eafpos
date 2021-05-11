@@ -18,6 +18,9 @@ function DashboardIndex() {
   //const {is_loading, set_is_loading, set_products, search} = useContext(GlobalContext)
   //const [is_error, set_is_error] = useState(false)
 
+  const on_click = () => {
+
+  }
 
   useEffect(() => {
     const check = async () => {
@@ -34,10 +37,8 @@ function DashboardIndex() {
   return (
     <>
       <Navbar />
-
       <main className="container">
         <h1 className="mt-2 mb-2">Dashboard</h1>
-        
         <div className="row">
 
           <div className="col-sm-4">
@@ -100,6 +101,15 @@ function DashboardIndex() {
       <Footer />      
     </>
   )
+}
+
+const css = {
+  btn: {
+    width: "200px",
+    height: "100px",
+    fontSize: "32px",
+    fontWeight: "bold",
+  }
 }
 
 export default DashboardIndex;

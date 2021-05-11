@@ -35,9 +35,14 @@ function Navbar() {
             <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/admin"}>
-                  <i className="fa fa-square"></i>&nbsp;Dashboard
+                  <i className="fa fa-square"></i>&nbsp;POS
                 </NavLink>
               </li>              
+              <li className="nav-item">
+                <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/admin/dashboard"}>
+                  <i className="fa fa-square"></i>&nbsp;Dashboard
+                </NavLink>
+              </li>        
               <li className="nav-item">
                 <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/admin/products"}>
                   <i className="fa fa-product-hunt"></i>&nbsp;Products

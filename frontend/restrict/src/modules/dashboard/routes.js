@@ -4,7 +4,7 @@ import DashboardIndex from "./dashboard_index"
 
 export const routes = [
   {
-    path:"/admin",
+    path:"/admin/dashboard",
     component: (<DashboardIndex />)
   },
 ]
