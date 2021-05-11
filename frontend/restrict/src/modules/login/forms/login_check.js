@@ -19,6 +19,7 @@ function LoginCheck() {
   }
 
   useEffect(() => {
+    db.delete("user_session")
     return () => console.log("login.insert.unmounting")
   },[])
   
