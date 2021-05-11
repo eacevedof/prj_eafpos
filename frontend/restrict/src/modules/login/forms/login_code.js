@@ -6,7 +6,7 @@ import KbNumbers from "components/bootstrap/app/kb-numbers/kb_numbers"
 import db from "helpers/localdb"
 import {useHistory} from "react-router-dom"
 
-function LoginCheck() {
+function LoginCode() {
   const history = useHistory()
 
   const on_submit = async code => {
@@ -37,4 +37,4 @@ function LoginCheck() {
   )
 }
 
-export default LoginCheck;
+export default LoginCode;

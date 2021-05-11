@@ -1,9 +1,9 @@
 import React from "react"
-import LoginCheck from "modules/login/forms/login_check"
+import LoginCode from "modules/login/forms/login_code"
 
 export const routes = [
   {
     path:"/",
-    component: (<LoginCheck />)
+    component: (<LoginCode />)
   },
 ]
