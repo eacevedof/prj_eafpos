@@ -21,6 +21,7 @@ import bs from "components/bootstrap/dist/bs"
 
 function PosIndex() {
   
+  console.log(window)
   const div = useRef(null)
   const history = useHistory()
   //const {is_loading, set_is_loading, set_products, search} = useContext(GlobalContext)
