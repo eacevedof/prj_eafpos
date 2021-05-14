@@ -12,8 +12,6 @@ import {useHistory} from "react-router-dom"
 import { NavLink } from 'react-router-dom';
 
 import {async_ispinned} from "modules/login/login_index"
-
-import bs from "components/bootstrap/dist/bs"
 import ToastMini from "components/bootstrap/toast/toastmini"
 //import {Toast} from "../public/bootstrap-5.0.0-dist/js/bootstrap.esm.min.js"
 //import {Toast} from "components/bootstrap/dist/x"
@@ -25,12 +23,11 @@ function PosIndex() {
   //const div = useRef(null)
   const history = useHistory()
   //const {is_loading, set_is_loading, set_products, search} = useContext(GlobalContext)
-  //const [is_error, set_is_error] = useState(false)
+  const [is_error, set_is_error] = useState(false)
 
-  const on_click = div => {
-    console.log("bs-onclick",bs, div.current)
-    const t = new bs.Toast(div.current)
-    t.show()
+  const on_click = () => {
+    console.log("on_click")
+    set_is_error(true)
   }
 
   useEffect(() => {
@@ -50,7 +47,7 @@ function PosIndex() {
       <Navbar />
       <main className="container">
         <h1 className="mt-2 mb-2">POS</h1>
-        <ToastMini onclick={on_click} isvisible={true} />
+        <ToastMini message="hola mundo" isvisible={is_error} />
 
         <div className="d-flex justify-content-center bd-highlight mt-2">
           
