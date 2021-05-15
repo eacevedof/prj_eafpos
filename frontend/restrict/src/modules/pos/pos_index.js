@@ -40,14 +40,15 @@ function PosIndex() {
     check()
 
     return ()=> console.log("dashboard.index unmounting")
-  },[])
+  },[is_error])
 
   return (
     <>
       <Navbar />
       <main className="container">
         <h1 className="mt-2 mb-2">POS</h1>
-        <ToastMini message="hola mundo" isvisible={is_error} />
+        {is_error? <ToastMini message="hola mundo" />: null}
+        
 
         <div className="d-flex justify-content-center bd-highlight mt-2">
           

@@ -1,29 +1,27 @@
 import React, {useEffect, useState, useRef} from "react"
 import bs from "components/bootstrap/dist/bs"
 //type: primary, secondary, success, danger, warning, info, light, dark
-function ToastMini({message, isvisible}) {
+function ToastMini({message}) {
 
-  const [show, set_show] = useState(isvisible)
   const div = useRef(null)
   
   const showit = () => {
     console.log("showit")
     const t = new bs.Toast(div.current)
-    //t.hide()
     t.show()
+    //set_show(false)
   }
 
-  const close = () => {
-    const t = new bs.Toast(div.current)
-    t.hide()
+  const hideit = () => {
+    //const t = new bs.Toast(div.current)
+    //t.hide()
   }
-
+ 
   useEffect(()=>{
-    if(show)
-      showit()
-    console.log("toastsimple.useffect")
-    return ()=> console.log("toastsimple unmounting")
-  },[isvisible])
+    console.log("toastmini.useeffect")
+    showit()
+    return ()=> console.log("toastmini.useeffect unmounting")
+  },[])
 
   const stylesuccess = {
     position: "absolute",
@@ -40,20 +38,18 @@ function ToastMini({message, isvisible}) {
     color: "#762936"
   }
 
-  if(show)
-    return (
-      <div ref={div} className="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div className="d-flex">
-          <div className="toast-body">
-            {message}
-          </div>
-          <button onClick={close} type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  return (
+    <>
+    <div ref={div} className="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div className="d-flex">
+        <div className="toast-body">
+          {message}
         </div>
+        <button onClick={hideit} type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
-    )
-
-  return null
-
+    </div>
+    </>
+  )
 }
 
 export default ToastMini;
