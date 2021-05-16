@@ -19,20 +19,19 @@ import {async_ispinned} from "modules/login/login_index"
 function PosIndex() {
 
   const history = useHistory()
-  //const {set_successg} = useContext(GlobalContext)
-  const {set_errorg, set_successg, set_warningg} = useContext(GlobalContext)
+  const {set_errorg, set_warningg, set_successg} = useContext(GlobalContext)
 
 
   const mesas = () => {
     console.log("clicked.success")
-    //set_successg("some success")
+    //set_warningg("some success")
     //set_success(Date.now().toString())
-    set_successg({message:"mesas!"})
+    set_warningg({message:"mesas!"})
   }
 
   const parallevar = () => {
     console.log("clicked.success")
-    //set_successg("some success")
+    //set_warningg("some success")
     //set_success(Date.now().toString())
     //set_warningg({message:"llevar!"})
     set_errorg({message:"error!"})

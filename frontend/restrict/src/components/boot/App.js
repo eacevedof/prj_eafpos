@@ -1,18 +1,20 @@
 //App.js
-import React from "react";
+import React from "react"
 import GlobalProvider from "components/context/global_context"
 import Boot from "components/boot/boot"
 import Devstripe from "components/boot/devstripe"
-import ToastMini from "components/bootstrap/toast/toastmini"
+import ToastMiniSuccess from "components/bootstrap/toast/toastminisuccess"
+import ToastMiniWarning from "components/bootstrap/toast/toastminiwarning"
+import ToastMiniError from "components/bootstrap/toast/toastminierror"
 
 function App(){
   return (
     <GlobalProvider>
       <Devstripe />
       <Boot/>
-      <ToastMini type={"success"} />
-      <ToastMini type={"warning"} />
-      <ToastMini type={"danger"} />
+      <ToastMiniSuccess />
+      <ToastMiniWarning />
+      <ToastMiniError />
     </GlobalProvider>
   );
 }//App
