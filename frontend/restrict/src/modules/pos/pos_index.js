@@ -13,6 +13,7 @@ import { NavLink } from 'react-router-dom';
 
 import {async_ispinned} from "modules/login/login_index"
 import ToastMini from "components/bootstrap/toast/toastmini"
+import ToastSimple from "../../components/bootstrap/toast/toastsimple";
 //import {Toast} from "../public/bootstrap-5.0.0-dist/js/bootstrap.esm.min.js"
 //import {Toast} from "components/bootstrap/dist/x"
 
@@ -23,32 +24,42 @@ function PosIndex() {
   //const div = useRef(null)
   const history = useHistory()
   //const {is_loading, set_is_loading, set_products, search} = useContext(GlobalContext)
-  const [is_error, set_is_error] = useState(false)
+  const [success, set_success] = useState("")
+  const [error, set_error] = useState("")
 
   const on_click = () => {
-    console.log("on_click")
-    set_is_error(true)
+    console.log("clicked.success", success)
+    set_success("ok")
   }
 
-  useEffect(() => {
-    const check = async () => {
-      const is_pinned = await async_ispinned()
-      if(!is_pinned){
-        history.push("/")
-      }
+  const async_onload = async () => {
+    let is_pinned = false
+    try {
+      is_pinned = await async_ispinned()
     }
-    check()
+    catch(error) {
+      set_error(error)
+    }
+    finally {
+      if(!is_pinned)
+        history.push("/")
+    }
+  }// async_onload
 
-    return ()=> console.log("dashboard.index unmounting")
-  },[is_error])
+  useEffect(() => {
+    async_onload()
+    return () => console.log("dashboard.index unmounting")
+  },[])
 
   return (
     <>
       <Navbar />
       <main className="container">
         <h1 className="mt-2 mb-2">POS</h1>
-        {is_error? <ToastMini message="hola mundo" />: null}
-        
+        {success!=="" ? 
+        <ToastMini message={success} title="Success" isvisible={true} /> : 
+        <ToastMini message={success} title="Success" isvisible={false} />
+        }
 
         <div className="d-flex justify-content-center bd-highlight mt-2">
           
