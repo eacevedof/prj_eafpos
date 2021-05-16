@@ -1,10 +1,10 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect} from "react"
+import {useHistory} from "react-router-dom"
+import db from "helpers/localdb"
 import {async_get_one_by_tpvcode} from "modules/login/async/async_requests"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
 import KbNumbers from "components/bootstrap/app/kb-numbers/kb_numbers"
-import db from "helpers/localdb"
-import {useHistory} from "react-router-dom"
 
 function LoginCode() {
   const history = useHistory()
