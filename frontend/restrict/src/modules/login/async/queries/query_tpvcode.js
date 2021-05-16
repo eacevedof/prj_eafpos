@@ -1,10 +1,6 @@
 import helpapify from "helpers/apify"
-import {get_keys, get_sanitized, is_defined} from "helpers/functions"
-import {get_rnd} from "helpers/random"
-import apiup from "../../../../providers/apiupload";
-import {get_obj_update} from "../../../product/async/queries/query_update";
-import apidb from "../../../../providers/apidb";
-import db from "../../../../helpers/localdb";
+import {get_sanitized} from "helpers/functions"
+import get_uuid from "helpers/random"
 
 const query = {
   table: "base_user",
@@ -13,7 +9,8 @@ const query = {
   fields:[
     "t.id",
     "t.fullname",
-    "t.code_cache"
+    "t.code_cache",
+    "t.tpv_uuid"
   ],
 
   where:[
@@ -22,7 +19,7 @@ const query = {
   ],
 }
 
-export const get_one = tpvcode => {
+export const get_one_by_tpvcode = tpvcode => {
 
   const code = get_sanitized(tpvcode)
   const objselect = helpapify.select
@@ -36,27 +33,26 @@ export const get_one = tpvcode => {
 
 }//get_one
 
-export const get_by_codecache = codecache => {
-
-  const code = get_sanitized(codecache)
+export const get_one_by_tpvuuid = tpvuuid => {
   const objselect = helpapify.select
   objselect.reset()
   
   objselect.table = `${query.table} ${query.alias}`  
   objselect.fields.push(`t.id`)
-  objselect.where.push(`t.code_cache = '${code}'`)
+  const uuid = get_sanitized(tpvuuid)
+  objselect.where.push(`t.tpv_uuid = '${uuid}'`)
   return objselect
 
 }//get_by_codecache
 
-export const save_uuid = userid => {
+export const get_update_uuid = codecache => {
   const objupdate = helpapify.update
   objupdate.reset()
   objupdate.table = query.table
   objupdate.extra = {autosysfields:1 }
   objupdate.fields.push({k:"update_platform",v:"3"})
-  objupdate.fields.push({k:"tpv_uuid",v:get_uuid(10)})
-  objupdate.where.push(`id='${userid}'`)
+  objupdate.fields.push({k:"tpv_uuid",v:get_uuid()})
+  objupdate.where.push(`code_cache='${codecache}'`)
   return objupdate
 }
 
