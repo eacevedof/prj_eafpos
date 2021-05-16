@@ -1,20 +1,22 @@
-import React, {useEffect, useState, useRef} from "react"
+import React, {useEffect, useState, useRef, useContext} from "react"
 import bs from "components/bootstrap/dist/bs"
+import {GlobalContext} from "../../context/global_context";
 
 //type: primary, secondary, success, danger, warning, info, light, dark
 function ToastMini({message, title, isvisible}) {
 
   const [show, set_show] = useState(isvisible)
+  const { errorg, set_errorg } = useContext(GlobalContext)
   const [time] = useState((new Date()).toString().substr(0,24))
 
-  const close = () => set_show(false)
+  const close = () => set_errorg("")
 
   useEffect(()=>{
     console.log("toastmini.useffect")
     return () => console.log("toastmini unmounting")
-  }, [show])
+  }, [errorg])
 
-  if(!show) return null
+  if(!errorg) return null
 
   return (
       <div className="toast fade show" role="alert" aria-live="assertive" aria-atomic="true"
