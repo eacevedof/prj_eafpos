@@ -1,5 +1,4 @@
 import React, {createContext, useState} from 'react';
-//import objorder from "../../models/order"
 import _ from "lodash"
 
 export const GlobalContext = createContext();
