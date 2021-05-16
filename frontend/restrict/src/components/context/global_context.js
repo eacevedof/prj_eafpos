@@ -8,6 +8,9 @@ const GlobalProvider = (props) => {
   //console.log("globalprovider.start.objorder.reset()",objorder.reset())
 
   const [errorg, set_errorg] = useState({})
+  const [successg, set_successg] = useState({})
+  const [warningg, set_warningg] = useState({})
+
   const [user, set_user] = useState({})
   const [apifytoken, set_apifytoken] = useState("")
   const [products, set_products] = useState([])
@@ -21,7 +24,8 @@ const GlobalProvider = (props) => {
   return (
     <GlobalContext.Provider
       value={{
-        apifytoken, set_apifytoken, errorg, set_errorg,
+        apifytoken, set_apifytoken,
+        errorg, set_errorg, successg, set_successg, warningg, set_warningg,
         products, set_products, search, set_search, order, set_order,
         selproduct, set_selproduct, user, set_user, is_loading, set_is_loading,
         order_total, set_order_total

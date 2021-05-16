@@ -1,38 +1,33 @@
 import React, {useContext, useState, useEffect, useRef} from "react"
 import {useHistory} from "react-router-dom"
+import {GlobalContext} from "components/context/global_context"
 
-//import {GlobalContext} from "components/context/global_context"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
 //import LoadingWheel from "components/common/loading_wheel"
 //import NotificationError from "components/common/notifications/notification_error"
-
 //import HrefDom from "helpers/href_dom"
 //import Api from "providers/api"
 import { NavLink } from 'react-router-dom';
-
 import {async_ispinned} from "modules/login/login_index"
 import ToastMini from "components/bootstrap/toast/toastmini"
-import ToastSimple from "../../components/bootstrap/toast/toastsimple";
-import {GlobalContext} from "../../components/context/global_context";
+//import ToastSimple from "../../components/bootstrap/toast/toastsimple";
 //import {Toast} from "../public/bootstrap-5.0.0-dist/js/bootstrap.esm.min.js"
 //import {Toast} from "components/bootstrap/dist/x"
-
 //import { Toast } from 'bootstrap.esm.min.js'
 
 function PosIndex() {
-  
-  //const div = useRef(null)
+
   const history = useHistory()
-  //const {is_loading, set_is_loading, set_products, search} = useContext(GlobalContext)
+  //const {set_successg} = useContext(GlobalContext)
   const {set_errorg} = useContext(GlobalContext)
-  const [success, set_success] = useState("")
-  const [error, set_error] = useState("")
+
 
   const on_click = () => {
-    console.log("clicked.success", success)
-    set_errorg("some success")
+    console.log("clicked.success")
+    //set_successg("some success")
     //set_success(Date.now().toString())
+    set_errorg({message:"Hola!"})
   }
 
   const async_onload = async () => {
@@ -41,7 +36,7 @@ function PosIndex() {
       is_pinned = await async_ispinned()
     }
     catch(error) {
-      set_error(error)
+      set_errorg({title:"Error", message:error})
     }
     finally {
       if(!is_pinned)
@@ -59,7 +54,7 @@ function PosIndex() {
       <Navbar />
       <main className="container">
         <h1 className="mt-2 mb-2">POS</h1>
-        <ToastMini message={success} title="Success" isvisible={true} />
+        <ToastMini />
 
         <div className="d-flex justify-content-center bd-highlight mt-2">
           

@@ -1,39 +1,42 @@
-import React, {useEffect, useState, useRef, useContext} from "react"
+import React, {useEffect, useContext, useRef} from "react"
+import {GlobalContext} from "components/context/global_context";
 import bs from "components/bootstrap/dist/bs"
-import {GlobalContext} from "../../context/global_context";
 
 //type: primary, secondary, success, danger, warning, info, light, dark
-function ToastMini({message, title, isvisible}) {
+function ToastMini() {
 
-  const [show, set_show] = useState(isvisible)
-  const { errorg, set_errorg } = useContext(GlobalContext)
-  const [time] = useState((new Date()).toString().substr(0,24))
+  const {errorg} = useContext(GlobalContext)
+  const refdiv = useRef(null)
 
-  const close = () => set_errorg("")
+  const is_empty = () => Object.keys(errorg).length === 0
+
+  const showit = () => {
+    const $div = refdiv.current ?? null
+    if($div) {
+        const t = new bs.Toast($div)
+        t.show()
+    }
+  }
 
   useEffect(()=>{
-    console.log("toastmini.useffect")
+    console.log("toastmini.useffect","errorg",errorg)
+    showit()
     return () => console.log("toastmini unmounting")
   }, [errorg])
 
-  if(!errorg) return null
+  if(is_empty()) return null
 
   return (
-      <div className="toast fade show" role="alert" aria-live="assertive" aria-atomic="true"
-            data-autohide="true"
-            style={title==="Success"?stylesuccess:styleerror}
-      >
-        <div className="toast-header">
-          <strong className="mr-auto">{title}</strong>
-          <small>{time}</small>
-          <button type="button" className="ml-2 mb-1 close" onClick={close} data-dismiss="toast" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+    <div ref={refdiv} className="toast align-items-center text-white bg-primary border-0 position-absolute top-0 end-0"
+         role="alert" aria-live="assertive" aria-atomic="true"
+    >
+      <div className="d-flex">
         <div className="toast-body">
-          {message}
+          {errorg.message}
         </div>
+        <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
+    </div>
   )
 }
 
