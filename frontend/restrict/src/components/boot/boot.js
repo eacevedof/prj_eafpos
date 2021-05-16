@@ -1,5 +1,5 @@
-import React, {useContext, useEffect} from 'react';
-import {GlobalContext} from 'components/context/global_context';
+import React, {useContext, useEffect} from "react"
+import {GlobalContext} from "components/context/global_context"
 
 import db from "helpers/localdb"
 import {async_gettoken, async_islogged} from "modules/login/login_index"

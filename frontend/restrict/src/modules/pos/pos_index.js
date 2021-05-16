@@ -10,7 +10,7 @@ import Footer from "components/common/footer"
 //import Api from "providers/api"
 import { NavLink } from 'react-router-dom';
 import {async_ispinned} from "modules/login/login_index"
-import ToastMini from "components/bootstrap/toast/toastmini"
+//import ToastMini from "components/bootstrap/toast/toastmini"
 //import ToastSimple from "../../components/bootstrap/toast/toastsimple";
 //import {Toast} from "../public/bootstrap-5.0.0-dist/js/bootstrap.esm.min.js"
 //import {Toast} from "components/bootstrap/dist/x"
@@ -20,14 +20,21 @@ function PosIndex() {
 
   const history = useHistory()
   //const {set_successg} = useContext(GlobalContext)
-  const {set_errorg} = useContext(GlobalContext)
+  const {set_errorg, set_successg, set_warningg} = useContext(GlobalContext)
 
 
-  const on_click = () => {
+  const mesas = () => {
     console.log("clicked.success")
     //set_successg("some success")
     //set_success(Date.now().toString())
-    set_errorg({message:"Hola!"})
+    set_successg({message:"mesas!"})
+  }
+
+  const parallevar = () => {
+    console.log("clicked.success")
+    //set_successg("some success")
+    //set_success(Date.now().toString())
+    set_warningg({message:"llevar!"})
   }
 
   const async_onload = async () => {
@@ -54,19 +61,17 @@ function PosIndex() {
       <Navbar />
       <main className="container">
         <h1 className="mt-2 mb-2">POS</h1>
-        <ToastMini />
-
         <div className="d-flex justify-content-center bd-highlight mt-2">
           
           <div className="d-flex justify-content-center">
             <div className="p-1">
               <button className="btn btn-dark" type="button" style={css.btn}
-                onClick={() => on_click(7)}
+                onClick={mesas}
               >Mesas</button>
             </div>
             <div className="p-1">
               <button className="btn btn-dark" type="button" style={css.btn}
-                onClick={() => on_click(8)}
+                onClick={parallevar}
               >Para llevar</button>
             </div>
           </div>

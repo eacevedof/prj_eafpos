@@ -36,7 +36,10 @@ function ToastMini() {
     console.log("toastmini.useffect")
     set_message(get_message())
     showit()
-    return () => console.log("toastmini unmounting")
+    return () => {
+      console.log("toastmini unmounting")
+      //set_successg({}) set_warningg({}) set_errorg({})
+    }
   }, [errorg, warningg, successg])
 
   if(is_empty()) return null
