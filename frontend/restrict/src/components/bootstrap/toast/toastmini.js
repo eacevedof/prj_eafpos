@@ -3,24 +3,44 @@ import {GlobalContext} from "components/context/global_context";
 import bs from "components/bootstrap/dist/bs"
 
 //type: primary, secondary, success, danger, warning, info, light, dark
-function ToastMini() {
+function ToastMini({type}) {
 
-  const {errorg, warningg, successg} = useContext(GlobalContext)
+  const {errorg, warningg, successg, set_errorg, set_warningg, set_successg} = useContext(GlobalContext)
   const [message, set_message] = useState({
-    text: "", css: "info"
+    text: "", css: "dark"
   })
+
   const refdiv = useRef(null)
 
-  const is_empty = () => Object.keys(successg).length === 0 && Object.keys(warningg).length === 0 &&  Object.keys(errorg).length === 0
+  const is_empty = () => (
+      (Object.keys(successg).length === 0 && ["info","light","primary","success"].filter(color => color===type).length === 0)
+      &&
+      (Object.keys(warningg).length === 0 && ["warning"].filter(color => color===type).length === 0)
+      &&
+      (Object.keys(errorg).length === 0 && ["danger"].filter(color => color===type).length === 0)
+  )
 
   const get_message = () => {
-    const text = errorg.message ?? warningg.message ?? successg.message ?? ""
-    const css = errorg.message ? "danger" :
-                warningg.message ? "warning" :
-                successg.message ? "success" : "info"
+
+    let text = ""
+    switch (type) {
+      case "info":
+      case "light":
+      case "primary":
+      case "success":
+        text = successg.message
+      break
+      case "warning":
+        text = warningg.message
+      break
+      case "danger":
+        text = errorg.message
+      break
+    }
+
     return {
       text,
-      css,
+      css: type,
     }
   }
 
@@ -38,9 +58,9 @@ function ToastMini() {
     showit()
     return () => {
       console.log("toastmini unmounting")
-      //set_successg({}) set_warningg({}) set_errorg({})
+
     }
-  }, [errorg, warningg, successg])
+  }, [])
 
   if(is_empty()) return null
 

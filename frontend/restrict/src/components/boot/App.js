@@ -10,7 +10,9 @@ function App(){
     <GlobalProvider>
       <Devstripe />
       <Boot/>
-      <ToastMini />
+      <ToastMini type={"success"} />
+      <ToastMini type={"warning"} />
+      <ToastMini type={"danger"} />
     </GlobalProvider>
   );
 }//App

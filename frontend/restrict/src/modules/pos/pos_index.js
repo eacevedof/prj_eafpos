@@ -34,7 +34,8 @@ function PosIndex() {
     console.log("clicked.success")
     //set_successg("some success")
     //set_success(Date.now().toString())
-    set_warningg({message:"llevar!"})
+    //set_warningg({message:"llevar!"})
+    set_errorg({message:"error!"})
   }
 
   const async_onload = async () => {
@@ -62,7 +63,6 @@ function PosIndex() {
       <main className="container">
         <h1 className="mt-2 mb-2">POS</h1>
         <div className="d-flex justify-content-center bd-highlight mt-2">
-          
           <div className="d-flex justify-content-center">
             <div className="p-1">
               <button className="btn btn-dark" type="button" style={css.btn}
