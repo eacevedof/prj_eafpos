@@ -28,7 +28,8 @@ function ToastMiniSuccess() {
   if(is_empty()) return null
 
   return (
-    <div ref={refdiv} className={`toast align-items-center text-white bg-success border-0 position-absolute top-0 end-0`}
+    <div ref={refdiv} className={`toast align-items-center text-white bg-success border-0 position-absolute`}
+         style={{top:"10px", right:"5px"}}
          role="alert" aria-live="assertive" aria-atomic="true"
     >
       <div className="d-flex">

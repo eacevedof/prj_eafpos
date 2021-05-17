@@ -2,7 +2,6 @@ import React, {useEffect, useContext, useRef} from "react"
 import {GlobalContext} from "components/context/global_context"
 import bs from "components/bootstrap/dist/bs"
 
-//type: primary, secondary, success, danger, warning, info, light, dark
 function ToastMiniWarning() {
 
   const {warningg} = useContext(GlobalContext)
@@ -28,7 +27,8 @@ function ToastMiniWarning() {
   if(is_empty()) return null
 
   return (
-    <div ref={refdiv} className={`toast align-items-center text-dark bg-warning border-0 position-absolute top-0 end-0`}
+    <div ref={refdiv} className={`toast align-items-center text-dark bg-warning border-0 position-absolute`}
+         style={{top:"60px", right:"5px"}}
          role="alert" aria-live="assertive" aria-atomic="true"
     >
       <div className="d-flex">
