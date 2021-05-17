@@ -33,17 +33,31 @@ export const get_one_by_tpvcode = tpvcode => {
 
 }//get_one
 
-export const get_one_by_tpvuuid = tpvuuid => {
+export const get_id_by_tpvuuid = tpvuuid => {
   const objselect = helpapify.select
   objselect.reset()
-  
-  objselect.table = `${query.table} ${query.alias}`  
+
+  objselect.table = `${query.table} ${query.alias}`
   objselect.fields.push(`t.id`)
   const uuid = get_sanitized(tpvuuid)
   objselect.where.push(`t.tpv_uuid = '${uuid}'`)
   return objselect
 
-}//get_by_codecache
+}//get_one_by_tpvuuid
+
+export const get_one_by_tpvuuid = tpvuuid => {
+  const objselect = helpapify.select
+  objselect.reset()
+
+  objselect.table = `${query.table} ${query.alias}`
+  query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
+  query.where.forEach(cond => objselect.where.push(cond))
+
+  const uuid = get_sanitized(tpvuuid)
+  objselect.where.push(`t.tpv_uuid = '${uuid}'`)
+  return objselect
+
+}//get_one_by_tpvuuid
 
 export const get_update_uuid = codecache => {
   const objupdate = helpapify.update
