@@ -4,9 +4,9 @@ import db from "helpers/localdb"
 import {async_get_one_by_tpvcode, async_update_rnd} from "modules/login/async/async_requests"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
-import KbNumbers from "components/bootstrap/app/kb-numbers/kb_numbers"
+import KeyboardSecret from "components/bootstrap/app/keyboards/keyboard_secret"
 
-function LoginCode() {
+function FormLogin() {
   const history = useHistory()
 
   const on_submit = async tpvcode => {
@@ -34,7 +34,7 @@ function LoginCode() {
       <main className="container">
         <div className="d-flex justify-content-center bd-highlight mt-2">
           <h1>Access code</h1>
-          <KbNumbers onsubmit={on_submit}/>
+          <KeyboardSecret onsubmit={on_submit}/>
         </div>
       </main>
       <Footer />
@@ -42,4 +42,4 @@ function LoginCode() {
   )
 }
 
-export default LoginCode;
+export default FormLogin;

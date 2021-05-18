@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-function KbNumbers({onsubmit, type}) {
+function KeyboardSecret({onsubmit, type}) {
 
   const maxlength = 6
 
@@ -186,4 +186,4 @@ const css = {
   }    
 }
 
-export default KbNumbers;
+export default KeyboardSecret;
