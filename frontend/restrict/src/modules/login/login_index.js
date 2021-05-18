@@ -34,12 +34,9 @@ export const async_ispinned = async () => {
   const usersession = db.select("user_session")
   if(!usersession) return false
 
-  const response = await async_is_pinned(usersession.code_cache)
-  console.log("response",response)
-  
+  const response = await async_is_pinned(usersession.tpv_uuid)
   if(is_defined(response.error)){
     return false
   }  
-
   return true
 }// async_ispinned
