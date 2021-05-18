@@ -1,13 +1,30 @@
 //Navbar.js
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavLink } from "react-router-dom";
+import {async_ispinned} from "modules/login/login_index";
 
 function Navbar() {
 
-  useEffect(()=>{
-    
-  },[])
+  /*
+  const {is_pinned, set_is_pinned} = useState(false)
 
+  const async_onload = async () => {
+    try {
+      const ispinned = await async_ispinned()
+      set_is_pinned(ispinned)
+    }
+    catch(error) {
+      console.log("navbar.onload.error",error)
+    }
+  }// async_onload
+
+  useEffect(() => {
+    async_onload()
+    return () => console.log("navbar unmounting")
+  },[is_pinned])
+
+
+   */
   return (
     <header className="mb-2">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -38,7 +55,7 @@ function Navbar() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/admin"}>
+                <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/"}>
                   <i className="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout
                 </NavLink>
               </li>
