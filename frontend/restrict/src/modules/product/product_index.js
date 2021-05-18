@@ -6,7 +6,7 @@ import { pr, get_pages } from 'helpers/functions';
 import db from "helpers/localdb" 
 import HrefDom from "helpers/href_dom"
 
-import {async_islogged} from 'modules/login/login_index'
+import {async_ispinned} from 'modules/login/login_index'
 import {async_get_list, async_multidelete, async_multideletelogic} from "modules/product/async/async_requests"
 
 import {VIEWCONFIG, grid} from "modules/product/async/queries/query_list"
@@ -68,9 +68,9 @@ function ProductIndex() {
     //pr(txtsearch)
     //pr(get_localip(),"localip")
     console.log("product.index.async_onload")
-    const islogged = await async_islogged()
+    const ispinned = await async_ispinned()
     
-    if(!islogged){
+    if(!ispinned){
       history.push("/admin")
       return
     }

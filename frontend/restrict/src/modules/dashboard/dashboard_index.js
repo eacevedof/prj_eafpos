@@ -18,19 +18,17 @@ function DashboardIndex() {
   //const {is_loading, set_is_loading, set_products, search} = useContext(GlobalContext)
   //const [is_error, set_is_error] = useState(false)
 
-  const on_click = () => {
-
+  const async_onload = async () => {
+    console.log("dashboard.index.async_onload")
+    const ispinned = await async_ispinned()
+    if (!ispinned) {
+      history.push("/admin")
+      return
+    }
   }
 
   useEffect(() => {
-    const check = async () => {
-      const is_pinned = await async_ispinned()
-      if(!is_pinned){
-        history.push("/")
-      }
-    }
-    check()
-
+    async_onload()
     return ()=> console.log("dashboard.index unmounting")
   },[])
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-function KeyboardSecret({onsubmit, type}) {
+function KeyboardSecret({onsubmit}) {
 
   const maxlength = 6
 
