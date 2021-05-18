@@ -19,17 +19,13 @@ const query = {
     "t.id",
     "t.code_erp",
     "t.description",
-    "t.description_full",
-    "t.slug",
-    "t.units_min",
-    "t.units_max",
-    "t.price_gross",
-    "t.price_sale",
-    "t.price_sale1",
-    "t.price_sale2",
-    "t.display",
+    "t.diner_names", //250
+    "t.diner_num",
+    "t.coord_x",
+    "t.coord_y",
+    "t.time_start",
     "t.id_user",
-    "t.url_image",
+    "t.reserved",
   ],
 
 }

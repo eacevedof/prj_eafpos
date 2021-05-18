@@ -37,19 +37,17 @@ const query = {
     "t.update_date",
     "t.delete_date",
     "t.is_enabled",
-    "t.i",
+      
     "t.id",
     "t.code_erp",
     "t.description",
-    "t.description_full",
-    "t.slug",
-    "t.display",
-    "t.units_min",
-    "t.units_max",
-    "t.price_gross",
-    "t.price_sale",
-    "t.price_sale1",
-    "t.price_sale2",
+    "t.diner_names", //250
+    "t.diner_num",
+    "t.coord_x",
+    "t.coord_y",
+    "t.time_start",
+    "t.id_user",
+    "t.reserved",
   ],
 
   joins:[],
@@ -63,23 +61,21 @@ const query = {
 export const grid = {
   headers:[
     {
-      text: 'nº',
-      align: 'start',
+      text: "nº",
+      align: "start",
       sortable: true,
-      value: 'id',
+      value: "id",
     },
-    { text: 'Code', value: 'code_erp' },
-    { text: 'Desc', value: 'description' },
-    { text: 'Desc big', value: 'description_full' },
-    { text: 'Slug', value: 'slug' },
-    { text: 'Show', value: 'display' },
-    { text: 'U. min', value: 'units_min' },
-    { text: 'U. max', value: 'units_max' },
-    { text: 'Price g.', value: 'price_gross' },
-    { text: 'Price s.', value: 'price_sale' },
-    { text: 'Price s1', value: 'price_sale1' },
-    { text: 'Updated', value: 'update_date' },
-    
+
+    { text: "Code", value: "code_erp" },
+    { text: "Desc", value: "description" },
+    { text: "Diner names", value: "diner_names" },
+    { text: "Diners", value: "diner_num" },
+    { text: "x", value: "coord_x" },
+    { text: "y", value: "coord_y" },
+    { text: "Time start", value: "time_start" },
+    { text: "Reserved note.", value: "reserved" },
+    { text: "Updated", value: "update_date" },
   ]
 }
 
@@ -119,7 +115,7 @@ export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
     //pr(objparam.filters,"objparam.filter")
     const strcond = objparam.filters
                     .fields
-                    .map(filter => `${filter.field} LIKE '%${filter.value}%'`)
+                    .map(filter => `${filter.field} LIKE "%${filter.value}%"`)
                     .join(` ${objparam.filters.op} `)
 
     //pr(strcond,"strcond")
