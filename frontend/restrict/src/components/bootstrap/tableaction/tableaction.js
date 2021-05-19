@@ -5,8 +5,6 @@ import DropdownTable from "components/bootstrap/dropdown/dropdowntable"
 import TableHead from "components/bootstrap/tableaction/tablehead"
 import TableBody from "components/bootstrap/tableaction/tablebody"
 
-import { pr } from 'helpers/functions';
-
 function TableAction({arhead, ardata, objconf, multiconf}) {
 
   const {multivalues, set_multiaction} = useContext(TableContext)
