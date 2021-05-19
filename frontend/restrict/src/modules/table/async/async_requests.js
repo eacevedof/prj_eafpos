@@ -20,21 +20,14 @@ export const async_get_list = async (page, search="") => {
 
   const ippage = VIEWCONFIG.PERPAGE
   const ifrom = get_pagefrom(page, ippage)
-  //const ifrom = ((page<1 ? 1:page) - 1) * ippage
-  //const ipages = ippage>0 ? Math.ceil(foundrows / ippage) : 0
-
-  //const objfilter = get_filterand(filterconf)//filtros por GET
   let objfilter = get_filteror(filterconf, search)
   if (is_command(search))
     objfilter = get_filtercmd(filterconf, search)
 
   const objparam = {page:{ippage,ifrom},filters:objfilter}
   const objquery = get_obj_list(objparam)
-  //pr(objquery,"objquery")
   const r = await apidb.async_get_list(objquery)
-  //pr(r,"r")//r.result y r.foundrows
   if(is_defined(r.error)) throw r.error
-  //pr(r,"r")
   return r
 }
 
@@ -53,37 +46,21 @@ export const async_get_by_id = async (id) => {
 }
 
 export const async_insert = async (formdata) => {
-  //console.log("table.async_request.async_insert.formdata",formdata)
-  let url_image = ""
 
-  let r = await apiup.async_post(formdata.url_image)
-  if(!is_defined(r.error)) url_image = r.file_1
-  //console.log("table.async_request.async_insert.r",r)
-
-  const objparam = {fields:{...formdata, url_image}}
+  const objparam = {fields:{...formdata}}
   const objquery = get_obj_insert(objparam)
 
-  r = await apidb.async_insert(objquery)
+  const r = await apidb.async_insert(objquery)
   if(is_defined(r.error)) throw r.error
 
   return r
 }
 
 export const async_update = async (formdata) => {
-  console.log("url_image",formdata.url_image)
-  
-  let r = null
-  let url_image = formdata.url_image
-  
-  if(formdata.url_image && is_defined(formdata.url_image.name)){
-    r = await apiup.async_post(formdata.url_image)
-    if(!is_defined(r.error)) url_image = r.file_1
-  }
-  //pr(url_image,"url_image")
- 
+
   const keys = ["id"]
   //esto habría que hacerlo con async
-  const temp = {...formdata,url_image}
+  const temp = {...formdata}
   const fieldsdel = ["delete_date","insert_date","update_date","i"]
   fieldsdel.forEach(field =>{
     delete temp[field] 
@@ -92,11 +69,9 @@ export const async_update = async (formdata) => {
   const dbfields = Object.keys(temp).map(field_name => ({field_name}))
   const objparam = {fields:temp, keys}
   const objquery = get_obj_update(objparam, dbfields)
-  //console.log("objparam",objquery)
-  r = await apidb.async_update(objquery)
+  const r = await apidb.async_update(objquery)
   
   if(is_defined(r.error)) throw r.error
-
   return r
 }
 

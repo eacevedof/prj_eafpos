@@ -1,12 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {MODCONFIG} from "modules/table/config/config"
-import {pr, is_empty, isset, is_defined} from "helpers/functions"
-import {async_insert, async_get_maxuploadsize} from "modules/table/async/async_requests"
-import {seldisplay} from "modules/common/options"
+import get_field from "helpers/form"
+import {async_insert} from "modules/table/async/async_requests"
 
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
-import ToastSimple from 'components/bootstrap/toast/toastsimple'
 import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Breadscrumb from 'components/bootstrap/breadscrumb/breadscrumb'
 import Footer from "components/common/footer"
@@ -14,11 +12,9 @@ import Footer from "components/common/footer"
 function TableInsert() {
 
   const [issubmitting, set_issubmitting] = useState(false)
-  const [maxsize, set_maxsize] = useState(0)
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
   const refcode = useRef(null)
-
 
   const formdefault = {
     //id: -1,
@@ -26,51 +22,26 @@ function TableInsert() {
     
     code_erp:"",
     description:"",
-    slug:"",
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: null,
-    
+    diner_names:"",
+    diner_num:0,
+    coord_x:0,
+    coord_y:0,
+    time_start: null,
+    reserved: "",
   }
 
   const [formdata, set_formdata] = useState({...formdefault})
 
-  const get_id = elem => {
-    const idpref = elem.id || ""
-    const parts = idpref.split("-")
-    //console.log("parts",parts)
-    if(parts.length>1) return parts[1]
-    //console.log("elem.idpref",idpref)
-    return idpref
-  }
-
   const updateform = evt =>{
     const elem = evt.target
-    const id = get_id(elem)
-    console.log("updateform.id",id)
+    const field = get_field(elem)
     const temp = {...formdata}
-    let value = elem.value
-    if(id=="url_image" && !is_empty(elem.files)) value = elem.files[0]
-
-    console.log("updateform.value",value)
-    temp[id] = value
-    console.log("updateform temp[id]:",temp)
+    temp[field] = elem.value
     set_formdata(temp)
-
-    console.log("updateform.formdata",formdata)
-    //console.log("updateform.formdata",formdata,"formdata.url_image",formdata.url_image)
   }
 
   const before_submit = () => {
 
-    if(isset(formdata.url_image) && is_defined(formdata.url_image.size)){
-      if(formdata.url_image.size > maxsize)
-        //throw new Error(`File is larger than allowed. File:${formdata.url_image.size}, allowed:${maxsize}`)
-        throw `File ${formdata.url_image.name} is larger than allowed. File size: ${formdata.url_image.size}, Max allowed: ${maxsize}`
-    }
   }
 
   const on_submit = async (evt)=>{
@@ -83,7 +54,7 @@ function TableInsert() {
 
     try {
       before_submit()
-
+      console.log(formdata)
       const r = await async_insert(formdata)
       console.log("table.insert.on_submit.r",r)
 
@@ -103,8 +74,7 @@ function TableInsert() {
   const async_onload = async () => {
     set_issubmitting(true)
     try {
-      const size = await async_get_maxuploadsize()
-      set_maxsize(size)
+
       refcode.current.focus()
     }
     catch(error){
@@ -133,9 +103,6 @@ function TableInsert() {
           {success!==""? <AlertSimple message={success} type="success" />: null}
           {error!==""? <AlertSimple message={error} type="danger" />: null}
 
-          {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
-          {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}
-
           <div className="col-md-3">
             <label htmlFor="txt-code_erp" className="form-label">Code</label>
             <input type="text" className="form-control" id="txt-code_erp" placeholder="code in your system" 
@@ -149,80 +116,65 @@ function TableInsert() {
 
           <div className="col-12">
             <label htmlFor="txt-description" className="form-label">Description</label>
-            <input type="text" className="form-control" id="txt-description" placeholder="Name of table" 
+            <input type="text" className="form-control" id="txt-description" placeholder="Where is located, max number, etc"
             
             value={formdata.description}
             onChange={updateform}
-            required 
             />
           </div>
           
           <div className="col-12">
-            <label htmlFor="txt-description_full" className="form-label">Description large</label>
-            <textarea className="form-control" id="txt-description_full" rows="2" placeholder="large description use # if needed upto 3000 chars"
-              value={formdata.description_full}
+            <label htmlFor="txt-diner_names" className="form-label">Diner names</label>
+            <input type="text" className="form-control" id="txt-diner_names" placeholder="Diner names in comma separated values"
+              value={formdata.diner_names}
               onChange={updateform}
-              required 
-            ></textarea>
+            />
           </div> 
 
           <div className="col-md-4">
-            <label htmlFor="num-price_sale" className="form-label">Price</label>
-            <input type="number" className="form-control" id="num-price_sale" placeholder="price in default currency" 
-              value={formdata.price_sale}
+            <label htmlFor="num-diner_num" className="form-label">Diner num.</label>
+            <input type="number" className="form-control" id="num-diner_num" placeholder="price in default currency" 
+              value={formdata.diner_num}
               onChange={updateform}
               required    
             />
           </div>
 
           <div className="col-md-4">
-            <label htmlFor="num-price_sale1" className="form-label">Price 1</label>
-            <input type="number" className="form-control" id="num-price_sale1" placeholder="price in second currency" 
-              value={formdata.price_sale1}
+            <label htmlFor="num-coord_x" className="form-label">Pos. x</label>
+            <input type="number" className="form-control" id="num-coord_x" title="x coordinate in dining room"
+              value={formdata.coord_x}
               onChange={updateform}
               required
             />
           </div>
 
           <div className="col-md-4">
-            <label htmlFor="num-order_by" className="form-label">Order</label>
-            <input type="number" className="form-control" id="num-order_by" 
-              value={formdata.order_by}
-              onChange={updateform}
-              required            
-            />
-          </div>          
-
-          <div className="col-md-6">
-            <label htmlFor="sel-display" className="form-label">Display</label>
-            <select id="sel-display" className="form-select"
-              value={formdata.display}
+            <label htmlFor="num-coord_y" className="form-label">Pos. y</label>
+            <input type="number" className="form-control" id="num-coord_y" title="y coordinate in dining room"
+              value={formdata.coord_y}
               onChange={updateform}
               required
-            >
-              <option defaultValue>Choose...</option>
-              {
-                seldisplay.map(obj => (<option key={obj.value} value={obj.value}>{obj.text}</option>))
-              }
-            </select>
+            />
           </div>
 
-          <div className="col-md-6">
-            <div className="form-group">
-              <label htmlFor="file-url_image" className="form-label">Picture: </label>
-              <input type="file" className="form-control" id="file-url_image" 
-                onChange={updateform}
-              />
-              <small>max: {maxsize}</small>
-              {
-                !is_empty(formdata.url_image) && is_defined(formdata.url_image.name) ?
-                (<ul>
-                  <li><small>filename: {formdata.url_image.name}</small></li>
-                  <li><small>size: {formdata.url_image.size}</small></li>
-                </ul>)
-                :null
-              }
-            </div>
+
+          <div className="col-md-4">
+            <label htmlFor="txa-reserved" className="form-label">Reserved</label>
+            <textarea type="number" className="form-control" id="txa-reserved"
+                      maxLength="250"
+                      placeholder="notes about booking. Time, max time, name of diner, phone, email, etc"
+                   value={formdata.reserved}
+                   onChange={updateform}
+            />
+          </div>
+
+          <div className="col-md-4">
+            <label htmlFor="num-time_start" className="form-label">Time start</label>
+            <input type="datetime-local" className="form-control" id="num-time_start"
+                   value={formdata.time_start}
+                   onChange={updateform}
+            />
           </div>
 
           <div className="col-12">
