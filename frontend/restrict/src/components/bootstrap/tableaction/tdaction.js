@@ -29,7 +29,7 @@ function Tdaction({objrow, objconf}) {
   return (
     <td>
       <div className="dropdown">
-        <button className="btn btn-secondary dropdown-toggle" type="button" id={ddid} data-toggle="dropdown" aria-expanded="false">
+        <button className="btn btn-secondary dropdown-toggle" type="button" id={ddid} data-bs-toggle="dropdown" aria-expanded="false">
           <span><i className="fa fa-bars"></i></span>
         </button>
         <ul className="dropdown-menu" aria-labelledby={ddid}>

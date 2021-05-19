@@ -30,7 +30,7 @@ function DropdownTable({multiconf, fnconfirm}) {
   return (
     <div className="row">
       <div className="col-3">
-        <button type="button" className="btn btn-secondary dropdown-toggle"  id="grid-ulmultiaction" data-toggle="dropdown" aria-expanded="false">
+        <button type="button" className="btn btn-secondary dropdown-toggle"  id="grid-ulmultiaction" data-bs-toggle="dropdown" aria-expanded="false">
           {seltext}
         </button>          
         <ul className="dropdown-menu" aria-labelledby="grid-ulmultiaction">
