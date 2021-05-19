@@ -1,9 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
-
-import db from "helpers/localdb" 
+import db from "helpers/localdb"
 import SubmitAsync from 'components/bootstrap/button/submitasync';
-import { pr } from 'helpers/functions';
-
 
 function InputSearch({cachekey, fnsettext, foundrows}){
   
@@ -38,13 +35,7 @@ function InputSearch({cachekey, fnsettext, foundrows}){
 
   useEffect(() => {
     console.log("inputsearch.on_load")
-    const search = db.select(cachekey)
-    //if(search){
-      //console.log("inputsearch.useeffect search cache:",search)
-      //set_formdata({search})
-      //fnsettext(search)
-    //}
-    //pr(text)
+    const search = db.select(cachekey) ?? ""
     set_formdata({search})
       
     return ()=> console.log("inputsearch unmounting")

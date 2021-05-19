@@ -91,8 +91,8 @@ export const filterconf = [
         {name: "id", labels:["n","n","id"]},
         {name: "code_erp", labels:["code"]},
         {name: "description", labels:["desc"]},
-        {name: "description_full", labels:["descbig"]},
-        {name: "display", labels:["show"]},
+        {name: "diner_names", labels:["diner names"]},
+        {name: "reserved", labels:["reserved note"]},
       ]
     }
   },
@@ -112,13 +112,11 @@ export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
   query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
   
   if(!is_empty(objparam.filters.fields)){
-    //pr(objparam.filters,"objparam.filter")
     const strcond = objparam.filters
                     .fields
                     .map(filter => `${filter.field} LIKE "%${filter.value}%"`)
                     .join(` ${objparam.filters.op} `)
 
-    //pr(strcond,"strcond")
     objselect.where.push(`(${strcond})`)
   }
 
@@ -133,13 +131,11 @@ export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
   objselect.limit.perpage = VIEWCONFIG.PERPAGE
   objselect.limit.regfrom = 0
   if(!is_empty(objparam.page)){
-    //pr(objparam.page,"page")
     objselect.limit.perpage = objparam.page.ippage
     objselect.limit.regfrom = objparam.page.ifrom
   }
 
   objselect.orderby.push(`${query.alias}.id DESC`)
-  //pr(objselect,"get_obj_list.objselect")
   return objselect
 
 }//get_obj_list
