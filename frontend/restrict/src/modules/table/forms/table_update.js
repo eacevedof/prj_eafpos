@@ -4,6 +4,7 @@ import {MODCONFIG} from "modules/table/config/config"
 import {pr, is_defined, is_empty, is_string, isset} from "helpers/functions"
 import {async_get_by_id, async_update, async_get_maxuploadsize} from "modules/table/async/async_requests"
 import {seldisplay} from "modules/common/options"
+import get_field from "helpers/form"
 
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
@@ -13,6 +14,7 @@ import RefreshAsync from 'components/bootstrap/button/refreshasync'
 import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
+
 
 function TableUpdate(){
 
@@ -49,53 +51,15 @@ function TableUpdate(){
     ...formdefault
   })
 
-  const get_id = elem => {
-    const idpref = elem.id || ""
-    const parts = idpref.split("-")
-    //console.log("parts",parts)
-    if(parts.length>1) return parts[1]
-    //console.log("elem.idpref",idpref)
-    return idpref
-  }
-
-  const updatefile = elem => {
-    const id = get_id(elem)
-    if(id !== "url_image") return 
-
-    if(!is_empty(elem.files[0]))
-      set_inputfile(elem.files[0])
-    else 
-      set_inputfile(null)
-  }
-
   const updateform = evt => {
-    //console.log("updateform.e.target",e.target)
-    //pr("updateform.evt.target",evt.target)
     const elem = evt.target
-    console.log("updateform.element:",elem)
-
-    const id = get_id(elem)
-    console.log("updateform.id",id)
-
+    const id = get_field(elem)
     const tmpform = { ...formdata }
-    //pr(elem.value,"v")
-
-    tmpform[id] = elem.value.includes("C:\\fakepath\\") ? "" : elem.value
-    updatefile(elem)
-
-    console.log("updateform.value tmpform:",tmpform)
+    tmpform[id] = elem.value
     set_formdata(tmpform)
-    console.log("updateform.formdata",formdata)
   }
 
   const before_submit = () => {
-    //pr(formdata.url_image.size);pr(maxsize)
-    
-    if(isset(inputfile) && is_defined(inputfile.size)){
-      if(inputfile.size > maxsize)
-        //throw new Error(`File is larger than allowed. File:${inputfile.size}, allowed:${maxsize}`)
-        throw `File ${inputfile.name} is larger than allowed. File size: ${inputfile.size}, Max allowed: ${maxsize}`
-    }
   }
 
   const async_refresh = async () => {
@@ -114,18 +78,12 @@ function TableUpdate(){
       console.log("table.update.on_submit.inputfile",inputfile)
       //hacer insert y enviar fichero
       before_submit()
-
-      const url_image = inputfile ? inputfile : formdata.url_image
-      const r = await async_update({...formdata, url_image})
-
-      console.log("table.update.on_submit.r",r)
- 
+      const r = await async_update({...formdata})
       set_success("Num regs updated: ".concat(r))
       async_onload()
       set_inputfile(null)
       refcode.current.focus()
       reffile.current.value = null
-      
     }
     catch(error){
       set_error(error)
@@ -174,8 +132,6 @@ function TableUpdate(){
           
           {success!==""? <AlertSimple message={success} type="success" />: null}
           {error!==""? <AlertSimple message={error} type="danger" />: null}
-          {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
-          {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}
 
           <div className="col-md-3">
             <label htmlFor="txt-code_erp" className="form-label">Code</label>
@@ -190,6 +146,7 @@ function TableUpdate(){
           <div className="col-md-3">
             <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} />
           </div>
+
           <div className="col-12">
             <label htmlFor="txt-description" className="form-label">Description</label>
             <input type="text" className="form-control" id="txt-description" placeholder="Name of table" 
@@ -201,12 +158,12 @@ function TableUpdate(){
           </div>
           
           <div className="col-12">
-            <label htmlFor="txt-description_full" className="form-label">Description large</label>
-            <textarea className="form-control" id="txt-description_full" rows="2" placeholder="large description use # if needed upto 3000 chars"
-              value={formdata.description_full}
+            <label htmlFor="txt-reserved" className="form-label">Description large</label>
+            <textarea className="form-control" id="txt-reserved" rows="2" placeholder="large description use # if needed upto 3000 chars"
+              value={formdata.reserved}
               onChange={updateform}
               required 
-            ></textarea>
+            />
           </div> 
 
           <div className="col-md-4">
