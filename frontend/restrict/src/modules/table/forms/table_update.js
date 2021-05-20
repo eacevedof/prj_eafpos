@@ -93,8 +93,7 @@ function TableUpdate(){
       const r = await async_get_by_id(id)
       console.log("table.update.onload.r",r)
       const temp = {...formdata, ...r}
-      console.log("TTTTEMPPP",temp)
-      temp.time_start =  temp.time_start.replace(" ","T")
+      temp.time_start =  temp.time_start?.replace(" ","T")
       set_formdata(temp)
   
       console.log("table.update.onload.formdata:",formdata)
@@ -197,8 +196,7 @@ function TableUpdate(){
           <div className="col-md-4">
             <label htmlFor="num-time_start" className="form-label">Time start</label>
             <input type="datetime-local" className="form-control" id="num-time_start"
-                   pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
-                   value={formdata.time_start}
+                   value={formdata.time_start ?? ""}
                    onChange={updateform}
             />
           </div>

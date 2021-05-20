@@ -35,14 +35,12 @@ function TableDeleteLogic(){
 
     code_erp:"",
     description:"",
-    slug:"",
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: "",
-
+    diner_names:"",
+    diner_num:0,
+    coord_x:0,
+    coord_y:0,
+    time_start: null,
+    reserved: "",
   })
 
   const [sysdata, set_sysdata] = useState({

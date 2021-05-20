@@ -37,13 +37,12 @@ function TableDelete(){
 
     code_erp:"",
     description:"",
-    slug:"",
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: "",
+    diner_names:"",
+    diner_num:0,
+    coord_x:0,
+    coord_y:0,
+    time_start: null,
+    reserved: "",
   })
 
   const before_submit = () => {}
@@ -147,11 +146,11 @@ function TableDelete(){
           </div>
           
           <div className="col-12">
-            <label htmlFor="txt-description_full" className="form-label">Description large</label>
-            <textarea className="form-control border-0" id="txt-description_full" rows="2" placeholder="large description use # if needed upto 3000 chars"
-              value={formdata.description_full}
+            <label htmlFor="txt-reserved" className="form-label">Reserved</label>
+            <textarea className="form-control border-0" id="txt-reserved" rows="2" placeholder="large description use # if needed upto 3000 chars"
+              value={formdata.reserved}
               disabled 
-            ></textarea>
+            />
           </div> 
 
           <div className="col-md-4">

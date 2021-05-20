@@ -18,7 +18,7 @@ function TableInsert() {
 
   const formdefault = {
     //id: -1,
-    id_user:-1, //hay que cambiarlo por un hash, es el owner del tableo
+    id_user:-1,
     
     code_erp:"",
     description:"",
@@ -173,7 +173,7 @@ function TableInsert() {
             <label htmlFor="num-time_start" className="form-label">Time start</label>
             <input type="datetime-local" className="form-control" id="num-time_start"
 
-                   value={formdata.time_start}
+                   value={formdata.time_start ?? ""}
                    onChange={updateform}
             />
           </div>

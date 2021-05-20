@@ -30,17 +30,15 @@ function TableClone(){
     update_user:"",
 
     id: -1,
+
     code_erp:"",
     description:"",
-    slug:"",
-    
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: "",
-    id_user:1,
+    diner_names:"",
+    diner_num:0,
+    coord_x:0,
+    coord_y:0,
+    time_start: null,
+    reserved: "",
   }
 
   const [formdata, set_formdata] = useState({
@@ -66,7 +64,6 @@ function TableClone(){
     try {
       const r = await async_clone(formdata)
       set_success("Table cloned. Nº: ".concat(r))
-      //set_formdata({...formdefault})
       refcode.current.focus()
     } 
     catch (error) {
@@ -113,9 +110,6 @@ function TableClone(){
         <form className="row g-3" onSubmit={on_submit}>
           {success!==""? <AlertSimple message={success} type="success" />: null}
           {error!==""? <AlertSimple message={error} type="danger" />: null}
-
-          {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
-          {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}
 
           <div className="col-md-3">
             <label htmlFor="txt-code_erp" className="form-label">Code</label>

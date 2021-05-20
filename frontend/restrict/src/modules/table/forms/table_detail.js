@@ -21,15 +21,6 @@ function TableDetail(){
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
 
-  const get_seltext = id => {
-    const arfound = seldisplay.filter(obj => obj.value===id) || []
-    //pr(arfound)
-    //return ""
-    if(arfound.length>0)
-      return arfound[0]["text"]
-    return ""
-  }
-
   const [formdata, set_formdata] = useState({
     insert_date: "",
     insert_user:"react",
@@ -38,14 +29,13 @@ function TableDetail(){
 
     code_erp:"",
     description:"",
-    slug:"",
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: "",
-    id_user: -1,
+    diner_names:"",
+    diner_num:0,
+    coord_x:0,
+    coord_y:0,
+    time_start: null,
+    reserved: "",
+    order_by: "",
   })
 
   const async_refresh = async () => {
@@ -79,7 +69,6 @@ function TableDetail(){
     }    
   }
 
-
   useEffect(()=>{
     async_onload()
     return ()=> console.log("table.detail unmounting")
@@ -95,8 +84,7 @@ function TableDetail(){
         <div>
           {error!==""? <AlertSimple message={error} type="danger" />: null}
           {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
-          {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}
-          
+
           <div className="row">
             <div className="col-6">Nº</div>
             <div className="col-6">{formdata.id}&nbsp;&nbsp;&nbsp;
@@ -115,47 +103,34 @@ function TableDetail(){
           </div>
 
           <div className="row">
-            <div className="col-6">Slug</div>
-            <div className="col-6">{formdata.slug}</div>
+            <div className="col-6">Diner names</div>
+            <div className="col-6">{formdata.diner_names}</div>
           </div>          
 
           <div className="row">
-            <div className="col-6">Description large</div>
-            <div className="col-6">{formdata.description_full}</div>
+            <div className="col-6">Diner num</div>
+            <div className="col-6">{formdata.diner_num}</div>
           </div>
 
           <div className="row">
-            <div className="col-6">Price</div>
-            <div className="col-6">{formdata.price_sale}</div>
+            <div className="col-6">x</div>
+            <div className="col-6">{formdata.coord_x}</div>
           </div>
 
           <div className="row">
-            <div className="col-6">Price 1</div>
-            <div className="col-6">{formdata.price_sale1}</div>
+            <div className="col-6">y</div>
+            <div className="col-6">{formdata.coord_y}</div>
           </div>
 
           <div className="row">
-            <div className="col-6">Display order</div>
+            <div className="col-6">Time start</div>
+            <div className="col-6">{formdata.time_start}</div>
+          </div>
+
+          <div className="row">
+            <div className="col-6">Order by</div>
             <div className="col-6">{formdata.order_by}</div>
           </div>
-
-          <div className="row">
-            <div className="col-6">Display</div>
-            <div className="col-6">{get_seltext(formdata.display)}</div>
-          </div>
-
-          <div className="row">
-            <div className="col-6">Owner</div>
-            <div className="col-6">{formdata.id_user}</div>
-          </div>          
-
-          <div className="row">
-            <div className="col-3">Picture</div>
-            <div className="col-9">
-            <a className="link-dark" href={formdata.url_image} target="_blank" rel="noopener noreferrer">{formdata.url_image}</a>
-              <img src={formdata.url_image} className="img-fluid" alt={formdata.url_image}/>
-            </div>
-          </div>                      
 
           <Sysfields sysdata={formdata} />          
         </div>
