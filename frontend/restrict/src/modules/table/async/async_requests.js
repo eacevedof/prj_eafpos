@@ -56,10 +56,8 @@ export const async_insert = async (formdata) => {
   return r
 }
 
-export const async_update = async (formdata) => {
-
+export const async_update = async formdata => {
   const keys = ["id"]
-  //esto habría que hacerlo con async
   const temp = {...formdata}
   const fieldsdel = ["delete_date","insert_date","update_date","i"]
   fieldsdel.forEach(field =>{
@@ -77,12 +75,8 @@ export const async_update = async (formdata) => {
 
 export const async_delete = async (formdata)=>{
   const keys = ["id"]
-  //esto habría que hacerlo con async
   const objparam = {fields:{...formdata}, keys}
-  //pr(objparam,"objparam");
   const objquery = get_obj_delete(objparam)
-  //console.log("objparam",objquery)
-  //pr(objquery,"objquery")
   const r = await apidb.async_delete(objquery)
   //pr(r,"async_delete.r")
   if(is_defined(r.error)) throw r.error

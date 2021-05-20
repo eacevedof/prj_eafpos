@@ -172,6 +172,7 @@ function TableInsert() {
           <div className="col-md-4">
             <label htmlFor="num-time_start" className="form-label">Time start</label>
             <input type="datetime-local" className="form-control" id="num-time_start"
+
                    value={formdata.time_start}
                    onChange={updateform}
             />

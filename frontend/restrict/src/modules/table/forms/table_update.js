@@ -1,14 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/table/config/config"
-import {pr, is_defined, is_empty, is_string, isset} from "helpers/functions"
-import {async_get_by_id, async_update, async_get_maxuploadsize} from "modules/table/async/async_requests"
-import {seldisplay} from "modules/common/options"
+import {async_get_by_id, async_update,} from "modules/table/async/async_requests"
 import get_field from "helpers/form"
 
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
-import ToastSimple from 'components/bootstrap/toast/toastsimple'
 import Breadscrumb from 'components/bootstrap/breadscrumb/breadscrumb'
 import RefreshAsync from 'components/bootstrap/button/refreshasync'
 import SubmitAsync from 'components/bootstrap/button/submitasync'
@@ -20,10 +17,8 @@ function TableUpdate(){
 
   const {id} = useParams()
   const refcode = useRef(null)
-  const reffile = useRef(null)
 
   const [issubmitting, set_issubmitting] = useState(false)
-  const [maxsize, set_maxsize] = useState(0)
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
   const [inputfile,set_inputfile] = useState(null)
@@ -83,7 +78,6 @@ function TableUpdate(){
       async_onload()
       set_inputfile(null)
       refcode.current.focus()
-      reffile.current.value = null
     }
     catch(error){
       set_error(error)
@@ -96,11 +90,11 @@ function TableUpdate(){
   const async_onload = async () => {
     set_issubmitting(true)
     try {
-      const size = await async_get_maxuploadsize()
-      set_maxsize(size)
       const r = await async_get_by_id(id)
       console.log("table.update.onload.r",r)
       const temp = {...formdata, ...r}
+      console.log("TTTTEMPPP",temp)
+      temp.time_start =  temp.time_start.replace(" ","T")
       set_formdata(temp)
   
       console.log("table.update.onload.formdata:",formdata)
@@ -135,110 +129,85 @@ function TableUpdate(){
 
           <div className="col-md-3">
             <label htmlFor="txt-code_erp" className="form-label">Code</label>
-            <input type="text" className="form-control" id="txt-code_erp" placeholder="code in your system" 
-            
-              ref={refcode}
-              value={formdata.code_erp}
-              onChange={updateform}
-              required 
+            <input type="text" className="form-control" id="txt-code_erp" placeholder="code in your system"
+
+                   ref={refcode}
+                   value={formdata.code_erp}
+                   onChange={updateform}
+                   required
             />
           </div>
           <div className="col-md-3">
             <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} />
           </div>
-
           <div className="col-12">
             <label htmlFor="txt-description" className="form-label">Description</label>
-            <input type="text" className="form-control" id="txt-description" placeholder="Name of table" 
-            
-            value={formdata.description}
-            onChange={updateform}
-            required 
+            <input type="text" className="form-control" id="txt-description" placeholder="Where is located, max number, etc"
+
+                   value={formdata.description}
+                   onChange={updateform}
             />
           </div>
-          
+
           <div className="col-12">
-            <label htmlFor="txt-reserved" className="form-label">Description large</label>
-            <textarea className="form-control" id="txt-reserved" rows="2" placeholder="large description use # if needed upto 3000 chars"
-              value={formdata.reserved}
-              onChange={updateform}
-              required 
-            />
-          </div> 
-
-          <div className="col-md-4">
-            <label htmlFor="num-price_sale" className="form-label">Price</label>
-            <input type="number" className="form-control" id="num-price_sale" placeholder="price in default currency" 
-              value={formdata.price_sale}
-              onChange={updateform}
-              required    
+            <label htmlFor="txt-diner_names" className="form-label">Diner names</label>
+            <input type="text" className="form-control" id="txt-diner_names" placeholder="Diner names in comma separated values"
+                   value={formdata.diner_names}
+                   onChange={updateform}
             />
           </div>
 
           <div className="col-md-4">
-            <label htmlFor="num-price_sale1" className="form-label">Price 1</label>
-            <input type="number" className="form-control" id="num-price_sale1" placeholder="price in second currency" 
-              value={formdata.price_sale1}
-              onChange={updateform}
-              required
+            <label htmlFor="num-diner_num" className="form-label">Diner num.</label>
+            <input type="number" className="form-control" id="num-diner_num" placeholder="price in default currency"
+                   value={formdata.diner_num}
+                   onChange={updateform}
+                   required
             />
           </div>
 
           <div className="col-md-4">
-            <label htmlFor="num-order_by" className="form-label">Order</label>
-            <input type="number" className="form-control" id="num-order_by" 
-              value={formdata.order_by}
-              onChange={updateform}
-              required            
+            <label htmlFor="num-coord_x" className="form-label">Pos. x</label>
+            <input type="number" className="form-control" id="num-coord_x" title="x coordinate in dining room"
+                   value={formdata.coord_x}
+                   onChange={updateform}
+                   required
             />
-          </div>          
-
-          <div className="col-md-6">
-            <label htmlFor="sel-display" className="form-label">Display</label>
-            <select id="sel-display" className="form-select"
-              value={formdata.display}
-              onChange={updateform}
-              required
-            >
-              <option>Choose...</option>
-              {
-                seldisplay.map(obj => (<option key={obj.value} value={obj.value}>{obj.text}</option>))
-              }
-            </select>
           </div>
 
-          <div className="col-md-6">
-            <div className="form-group">
-              <label htmlFor="file-url_image" className="form-label">Picture: </label>
-              <input type="file" className="form-control" id="file-url_image" 
-                ref={reffile}
-                onChange={updateform}
-              />
-              <small>max: {maxsize}</small>
-              {
-                !is_empty(inputfile) && is_defined(inputfile.name) ?
-                (<ul>
-                  <li><small>filename: {inputfile.name}</small></li>
-                  <li><small>size: {inputfile.size}</small></li>
-                </ul>)
-                :null
-              }
-            </div>
+          <div className="col-md-4">
+            <label htmlFor="num-coord_y" className="form-label">Pos. y</label>
+            <input type="number" className="form-control" id="num-coord_y" title="y coordinate in dining room"
+                   value={formdata.coord_y}
+                   onChange={updateform}
+                   required
+            />
           </div>
+
+          <div className="col-md-4">
+            <label htmlFor="txa-reserved" className="form-label">Reserved</label>
+            <textarea type="number" className="form-control" id="txa-reserved"
+                      maxLength="250"
+                      placeholder="notes about booking. Time, max time, name of diner, phone, email, etc"
+                      value={formdata.reserved}
+                      onChange={updateform}
+            />
+          </div>
+
+          <div className="col-md-4">
+            <label htmlFor="num-time_start" className="form-label">Time start</label>
+            <input type="datetime-local" className="form-control" id="num-time_start"
+                   pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
+                   value={formdata.time_start}
+                   onChange={updateform}
+            />
+          </div>
+
           <div className="col-12">
             <SubmitAsync innertext="Save" type="primary" issubmitting={issubmitting} />
           </div>
-          {
-            is_string(formdata.url_image) ?
-            (<div className="col-12">
-              <a className="link-dark" href={formdata.url_image} target="_blank" rel="noopener noreferrer">{formdata.url_image}</a>
-              <img src={formdata.url_image} className="img-fluid" alt={formdata.url_image}/>
-            </div>)
-            :null
-          }
 
           <Sysfields sysdata={formdata} />
-          
         </form>
       </main>
       <Footer />
