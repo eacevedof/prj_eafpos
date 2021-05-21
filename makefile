@@ -13,7 +13,7 @@ rebuild: ## rebuild containers
 build-cron:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-cron
 
-build-db:
+build-db-:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-db
 
 build-web:

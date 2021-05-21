@@ -1,4 +1,4 @@
-import { pr, is_defined, get_pagefrom } from "helpers/functions"
+import { is_defined, get_pagefrom } from "helpers/functions"
 
 import apidb from "providers/apidb"
 import apiup from "providers/apiupload"
@@ -17,11 +17,8 @@ import {get_obj_multideletelogic} from "./queries/query_multideletelogic"
 
 
 export const async_get_list = async (page, search="") => {
-
   const ippage = VIEWCONFIG.PERPAGE
   const ifrom = get_pagefrom(page, ippage)
-
-  //const objfilter = get_filterand(filterconf)//filtros por GET
   let objfilter = get_filteror(filterconf, search)
   if (is_command(search))
     objfilter = get_filtercmd(filterconf, search)
@@ -46,36 +43,39 @@ export const async_get_by_id = async (id) => {
   return r
 }
 
-export const async_insert = async formdata => {
-  const objparam = {fields:formdata}
+export const async_insert = async (formdata) => {
+
+  const objparam = {fields:{...formdata}}
   const objquery = get_obj_insert(objparam)
 
   const r = await apidb.async_insert(objquery)
   if(is_defined(r.error)) throw r.error
+
   return r
 }
 
 export const async_update = async formdata => {
   const keys = ["id"]
   const temp = {...formdata}
-  
   const fieldsdel = ["delete_date","insert_date","update_date","i"]
-  fieldsdel.forEach(field => delete temp[field])
+  fieldsdel.forEach(field =>{
+    delete temp[field] 
+  })
   
   const dbfields = Object.keys(temp).map(field_name => ({field_name}))
   const objparam = {fields:temp, keys}
   const objquery = get_obj_update(objparam, dbfields)
   const r = await apidb.async_update(objquery)
+  
   if(is_defined(r.error)) throw r.error
   return r
 }
 
-export const async_delete = async formdata => {
+export const async_delete = async (formdata)=>{
   const keys = ["id"]
   const objparam = {fields:{...formdata}, keys}
   const objquery = get_obj_delete(objparam)
   const r = await apidb.async_delete(objquery)
-
   if(is_defined(r.error)) throw r.error
   return r
 }
