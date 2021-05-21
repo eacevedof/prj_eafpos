@@ -1,7 +1,7 @@
 import React from "react"
 import {Redirect} from "react-router-dom"
 
-import ZzzTplProvider from "modules/zzz-tpl/table_context"
+import ZzzTplProvider from "modules/zzz-tpl/zzz_tpl_context"
 
 import ZzzTplIndex from "modules/zzz-tpl/views/index"
 import ZzzTplInsert from "modules/zzz-tpl/views/form_insert"

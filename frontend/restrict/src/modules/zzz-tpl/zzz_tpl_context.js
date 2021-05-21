@@ -1,8 +1,7 @@
-//table_context.js
 import React, {createContext, useState} from "react"
 export const ZzzTplContext = createContext();
 
-const ZzzTplProvider = (props) => {
+const ZzzTplProvider = props => {
   const [someglobal, set_someglobal] = useState("")
   
   return (
