@@ -41,7 +41,7 @@ class ContextService extends AppService
         return $arContext[$ipos]["schemas"] ?? [];
     }
 
-    private function _get_schema_by_alias($schemas,$dbalias)
+    private function _get_schema_by_alias(array $schemas,string $dbalias): array
     {
         foreach ($schemas as $arschema)
             if($arschema["alias"] === $dbalias)
