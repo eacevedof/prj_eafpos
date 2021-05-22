@@ -57,7 +57,6 @@ function ZzzTplDeleteLogic(){
     const elem = evt.target
 
     const id = get_field(elem)
-    console.log("updateform.id",id)
     const temp = {...formdata}
     let value = elem.value
     if(id=="url_image" && !is_empty(elem.files)) value = elem.files[0]

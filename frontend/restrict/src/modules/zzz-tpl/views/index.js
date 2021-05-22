@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react"
 import {useParams, useHistory} from "react-router-dom"
 import {MODCONFIG} from "modules/zzz-tpl/config/config"
 
-import { pr, get_pages } from "helpers/functions"
+import { get_pages } from "helpers/functions"
 import db from "helpers/localdb" 
 import HrefDom from "helpers/href_dom"
 
@@ -35,27 +35,23 @@ function ZzzTplIndex() {
   const [foundrows, set_foundrows] = useState(0)
  
   const on_multiconfirm = keys => async straction => {
-    //pr(straction,"straction")
     switch(straction){
       case "delete": 
         await async_multidelete(keys)
-        set_success("tables deleted: ".concat(keys.toString())) 
+        set_success("Tpls deleted: ".concat(keys.toString()))
       break
       case "deletelogic":
          await async_multideletelogic(keys)
-         set_success("tables deleted: ".concat(keys.toString())) 
+         set_success("Tpls deleted: ".concat(keys.toString()))
       break
     }
-    await async_load_tables()
+    await async_load_tpls()
   }
 
-  async function async_load_tables(){
+  async function async_load_tpls(){
     set_issubmitting(true)
     const r = await async_get_list(page, txtsearch)    
-    //pr(r.foundrows)
-    //pr(r.result)
     const ipages = get_pages(r.foundrows, VIEWCONFIG.PERPAGE)
-    //alert(page)
     if(page>ipages) history.push(VIEWCONFIG.URL_PAGINATION.replace("%page%",1))
     
     set_issubmitting(false)
@@ -64,8 +60,6 @@ function ZzzTplIndex() {
   }
 
   const async_onload = async () => {
-    //pr(txtsearch)
-    //pr(get_localip(),"localip")
     console.log("zzz_tpl.index.async_onload")
     const islogged = await async_islogged()
     
@@ -74,20 +68,18 @@ function ZzzTplIndex() {
       return
     }
 
-    HrefDom.document_title("Admin | ZzzTpls")    
+    HrefDom.document_title("Admin | Tpls")
     const search = db.select(VIEWCONFIG.CACHE_KEY)
     if(!txtsearch && search){
       set_txtsearch(search)
       return
     }
     
-    await async_load_tables()
+    await async_load_tpls()
   }
 
   useEffect(()=>{
-    //https://stackoverflow.com/questions/53446020/how-to-compare-oldvalues-and-newvalues-on-react-hooks-useeffect
     async_onload()
-
     return ()=> console.log("zzz_tpl.index unmounting")
   },[page, txtsearch])
   
@@ -110,7 +102,7 @@ function ZzzTplIndex() {
             <Spinnergrow type="info" />
           :
           <>
-          <RefreshAsync issubmitting={issubmitting} fnrefresh={async_load_tables} />
+          <RefreshAsync issubmitting={issubmitting} fnrefresh={async_load_tpls} />
           <ZzzTplProvider>
             <ZzzTplAction 
               arhead={grid.headers} 

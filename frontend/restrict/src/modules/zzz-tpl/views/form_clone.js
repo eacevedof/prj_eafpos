@@ -58,11 +58,10 @@ function ZzzTplClone(){
     set_error("")
     set_success("")
 
-    //hacer insert y enviar fichero
     before_submit()
     try {
       const r = await async_clone(formdata)
-      set_success("ZzzTpl cloned. Nº: ".concat(r))
+      set_success("Tpl cloned. Nº: ".concat(r))
       refcode.current.focus()
     } 
     catch (error) {

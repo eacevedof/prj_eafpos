@@ -17,11 +17,10 @@ function ZzzTplInsert() {
   const refcode = useRef(null)
 
   const formdefault = {
-    //id: -1,
     id_user:-1,
-    
     code_erp:"",
     description:"",
+
     diner_names:"",
     diner_num:0,
     coord_x:0,
@@ -58,7 +57,7 @@ function ZzzTplInsert() {
       const r = await async_insert(formdata)
       console.log("zzz_tpl.insert.on_submit.r",r)
 
-      set_success("New table added. Nº: ".concat(r))
+      set_success("New tpl added. Nº: ".concat(r))
       set_formdata({...formdefault})
       refcode.current.focus()
     } 

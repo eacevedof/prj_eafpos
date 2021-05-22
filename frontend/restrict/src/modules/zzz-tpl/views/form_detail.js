@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from "react"
 import {MODCONFIG} from "modules/zzz-tpl/config/config"
-import {pr} from "helpers/functions"
-
 import {useParams} from "react-router-dom"
 import {async_get_by_id} from "modules/zzz-tpl/async/async_repository"
 import {seldisplay} from "modules/common/options"
@@ -52,13 +50,13 @@ function ZzzTplDetail(){
       console.log("zzz_tpl.detail.onload.r",r)
       
       if(!r){
-        set_error("ZzzTpl not found!")
+        set_error("Tpl not found!")
         return
       }
       else{
         const tmpform = {...formdata, ...r}
         set_formdata(tmpform)
-        set_success(`ZzzTpl Nº:${id} refreshed!`)
+        set_success(`Tpl Nº:${id} refreshed!`)
       } 
     }
     catch(error){
