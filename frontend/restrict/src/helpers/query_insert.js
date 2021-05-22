@@ -2,70 +2,49 @@ import {add} from "helpers/functions"
 
 export default () =>{
   const q = {
-    init: function (){
-      this.table =  "";
-      this.fields = [];
-      this.extra = {};
+    init(){
+      this.table =  ""
+      this.fields = []
+      this.extras = []
       return this
     },
 
-    set_table: function (table, alias="") {
+    set_table(table, alias="") {
       this.table = alias ? `${table} as \`${alias}\`` : table
       return this
     },
 
-    set_fields: function (arfields) {
+    set_fields(arfields) {
       this.fields = arfields ?? []
       return this
     },
 
-    add_field: function (field, alias="") {
-      const fullfield = alias ? `${field} as \`${alias}\`` : field
-      add(this.fields, fullfield)
+    add_field(field, value) {
+      this.fields.push({f:field, v:value})
       return this
     },
 
-    set_orderbys: function (arorderbys) {
-      this.orderby = arorderbys ?? []
+    set_extras(extra) {
+      this.extras = extra ?? []
       return this
     },
 
-    add_orderby: function (orderby) {
-      add(this.orderby, orderby)
-      return this
-    },
-
-    set_limit: function ({perpage=null, regfrom=0}) {
-      this.limit = {perpage, regfrom}
-      return this
-    },
-
-    set_perpage: function (perpage=null) {
-      this.limit.perpage = perpage
-      return this
-    },
-
-    set_regfrom: function (regfrom=0) {
-      this.limit.regfrom = regfrom
+    add_extra(prop, value) {
+      this.extras.push({p:prop, v:value})
       return this
     },
 
     get_query(){
-      const thisinsert = Apify.insert
       const oform = new FormData()
       oform.append("action","insert")
+      oform.append("queryparts[table]", this.table)
 
-      //table
-      oform.append("queryparts[table]",thisinsert.table)
-
-      thisinsert.fields.forEach( field => {
-        oform.append(`queryparts[fields][${field.k}]`,field.v)
+      this.fields.forEach( field => {
+        oform.append(`queryparts[fields][${field.f}]`,field.v)
       });
 
-      const extrakeys = Object.keys(thisinsert.extra)
-      extrakeys.forEach(key => {
-        const v = thisinsert.extra[key]
-        oform.append(`queryparts[${key}]`,v)
+      this.extras.forEach( prop => {
+        oform.append(`queryparts[${prop.p}]`,prop.v)
       })
 
       return oform

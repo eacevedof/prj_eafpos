@@ -1,4 +1,4 @@
-import helpapify from "helpers/apify"
+import insert from "helpers/query_insert"
 import {get_keys, is_empty} from "helpers/functions"
 import db from "helpers/localdb"
 
@@ -8,18 +8,17 @@ const query = {
 }
 
 export const get_obj_insert = (objparam={fields:{}})=>{
-  const objinsert = helpapify.insert
-  objinsert.reset()
-  objinsert.table = query.table
-  objinsert.extra = {autosysfields:1, useruuid: db.select("useruuid")}
+  const objinsert = insert()
+    .set_table(query.table)
+    .add_extra("autosysfields", 1)
+    .add_extra("useruuid", db.select("useruuid"))
 
   if(!is_empty(objparam.fields)){
+    objinsert.add_field("insert_platform", "3")
     const fields = get_keys(objparam.fields)
     fields.forEach( field => {
-      objinsert.fields.push({k:field,v:objparam.fields[field]})
+      objinsert.add_field(field, objparam.fields[field])
     })
-    objinsert.fields.push({k:"insert_platform",v:"3"})
   }
-  //pr(objinsert)
   return objinsert
 }
