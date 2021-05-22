@@ -16,12 +16,12 @@ const select = function (){
   const q = {
     init: function (){
       this.table= ""
-      this.foundrows =0
+      this.foundrows = 0
       this.distinct = 0
       this.fields = []
       this.joins = []
       this.where = []
-      this.groupby=[]
+      this.groupby =[]
       this.having = []
       this.orderby = []
       this.limit = {perpage:null, regfrom:0}
@@ -70,6 +70,41 @@ const select = function (){
 
     add_where: function (where) {
       this.where.push(where)
+      return this
+    },
+
+    set_groupbys: function (arwheres) {
+      this.groupby = argroupbys ?? []
+      return this
+    },
+
+    add_groupby: function (groupby) {
+      this.groupby.push(groupby)
+      return this
+    },
+
+    set_havings: function (arhavings) {
+      this.having = arhavings ?? []
+      return this
+    },
+
+    add_having: function (having) {
+      this.having.push(having)
+      return this
+    },
+
+    set_orderbys: function (arorderbys) {
+      this.orderby = arorderbys ?? []
+      return this
+    },
+
+    add_orderby: function (orderby) {
+      this.orderby.push(orderby)
+      return this
+    },
+
+    set_limit: function ({perpage=null, regfrom=0}) {
+      this.limit = {perpage, regfrom}
       return this
     },
 
