@@ -1,5 +1,5 @@
 import select from "helpers/query_select"
-import {is_empty, pr} from "helpers/functions"
+import {is_empty} from "helpers/functions"
 
 export const VIEWCONFIG = {
  
@@ -26,29 +26,13 @@ export const VIEWCONFIG = {
 
 }
 
-//consulta
 const _query = {
 
   table: "zzz_tpl",
   alias: "t",
 
   fields:[
-    "t.update_date",
-    "t.delete_date",
-    "t.is_enabled",
-    "t.i",
-    "t.id",
-    "t.code_erp",
-    "t.description",
-    "t.description_full",
-    "t.slug",
-    "t.display",
-    "t.units_min",
-    "t.units_max",
-    "t.price_gross",
-    "t.price_sale",
-    "t.price_sale1",
-    "t.price_sale2",
+    "%__FIELDS__%",
   ],
 
   joins:[],
@@ -58,7 +42,6 @@ const _query = {
   ],
 }
 
-//configuración ui grid
 export const grid = {
   headers:[
     {
@@ -82,10 +65,8 @@ export const grid = {
   ]
 }
 
-//configuración filtros
 export const filterconf = [
   {
-    //tabla principal
     table:{
       name: _query.table,
       alias: _query.alias,
