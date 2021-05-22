@@ -1,4 +1,4 @@
-import delet from "helpers/query_delete"
+import qdelete from "helpers/query_delete"
 import {isset, is_empty} from "helpers/functions"
 
 const query = {
@@ -6,7 +6,7 @@ const query = {
 }
 
 export const get_obj_delete = (objparam={fields:{},keys:[]})=>{
-  const objdelete = delet()
+  const querydelete = qdelete()
     .set_table(query.table)
 
   if(isset(objparam.fields) && isset(objparam.keys)){
@@ -14,11 +14,11 @@ export const get_obj_delete = (objparam={fields:{},keys:[]})=>{
     fields.forEach( field => {
       if(!objparam.keys.includes(field))
         return
-      objdelete.add_where(`${field}='${objparam.fields[field]}'`)
+      querydelete.add_where(`${field}='${objparam.fields[field]}'`)
     })
   }
 
-  if(is_empty(objparam.keys)) objdelete.add_where(`1!=1`)
+  if(is_empty(objparam.keys)) querydelete.add_where(`1!=1`)
 
-  return objdelete
+  return querydelete
 }

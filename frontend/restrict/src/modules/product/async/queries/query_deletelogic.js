@@ -7,7 +7,7 @@ const query = {
 }
 
 export const get_obj_deletelogic = (objparam={fields:{},keys:[]})=>{
-  const objdellog = deletelogic()
+  const querydeletel = deletelogic()
     .set_table(query.table)
     .add_extra("autosysfields", "1")
     .add_extra("useruuid", db.select("useruuid"))
@@ -18,9 +18,9 @@ export const get_obj_deletelogic = (objparam={fields:{},keys:[]})=>{
     fields.forEach( field => {
       if(!objparam.keys.includes(field))
         return
-      objdellog.add_where(`${field}='${objparam.fields[field]}'`)
+      querydeletel.add_where(`${field}='${objparam.fields[field]}'`)
     })
   }
 
-  return objdellog
+  return querydeletel
 }

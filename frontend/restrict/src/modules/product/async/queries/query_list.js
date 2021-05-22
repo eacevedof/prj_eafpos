@@ -109,7 +109,6 @@ export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
   const objselect = select()
     .set_table(query.table, query.alias)
     .is_foundrows(1)
-    //.is_distinct(1)
     .set_fields(query.fields)
     .set_joins(query.joins)
     .add_where(query.where)

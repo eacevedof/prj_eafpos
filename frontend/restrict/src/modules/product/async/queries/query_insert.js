@@ -8,17 +8,15 @@ const query = {
 }
 
 export const get_obj_insert = (objparam={fields:{}})=>{
-  const objinsert = insert()
+  const queryinsert = insert()
     .set_table(query.table)
     .add_extra("autosysfields", 1)
     .add_extra("useruuid", db.select("useruuid"))
+    .add_field("insert_platform", "3")
 
   if(!is_empty(objparam.fields)){
-    objinsert.add_field("insert_platform", "3")
-    const fields = get_keys(objparam.fields)
-    fields.forEach( field => {
-      objinsert.add_field(field, objparam.fields[field])
-    })
+    get_keys(objparam.fields)
+      .forEach( field => queryinsert.add_field(field, objparam.fields[field]))
   }
-  return objinsert
+  return queryinsert
 }
