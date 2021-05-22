@@ -2,14 +2,11 @@ import insert from "helpers/query_insert"
 import {get_keys, is_empty} from "helpers/functions"
 import db from "helpers/localdb"
 
-const query = {
-  table: "app_product",
-  alias: "t",
-}
+const _TABLE = "app_product"
 
 export const get_obj_insert = (objparam={fields:{}})=>{
   const queryinsert = insert()
-    .set_table(query.table)
+    .set_table(_TABLE)
     .add_extra("autosysfields", 1)
     .add_extra("useruuid", db.select("useruuid"))
     .add_field("insert_platform", "3")

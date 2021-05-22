@@ -1,4 +1,4 @@
-import { pr, is_defined, get_pagefrom } from "helpers/functions"
+import { is_defined, get_pagefrom } from "helpers/functions"
 
 import apidb from "providers/apidb"
 import apiup from "providers/apiupload"

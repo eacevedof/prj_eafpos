@@ -28,7 +28,7 @@ export const VIEWCONFIG = {
 }
 
 //consulta
-const query = {
+const _query = {
 
   table: "app_product",
   alias: "t",
@@ -88,8 +88,8 @@ export const filterconf = [
   {
     //tabla principal
     table:{
-      name: query.table,
-      alias: query.alias,
+      name: _query.table,
+      alias: _query.alias,
 
       fields:[
         {name: "id", labels:["n","n","id"]},
@@ -103,17 +103,15 @@ export const filterconf = [
   {}
 ]
 
-//fabfica de query
 export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
-
   const objselect = select()
-    .set_table(query.table, query.alias)
+    .set_table(_query.table, _query.alias)
     .is_foundrows(1)
-    .set_fields(query.fields)
-    .set_joins(query.joins)
-    .add_where(query.where)
+    .set_fields(_query.fields)
+    .set_joins(_query.joins)
+    .add_where(_query.where)
     .set_limit(VIEWCONFIG.PERPAGE, 0)
-    .add_orderby(`${query.alias}.id DESC`)
+    .add_orderby(`${_query.alias}.id DESC`)
 
   if(!is_empty(objparam.filters.fields)){
     const strcond = objparam.filters

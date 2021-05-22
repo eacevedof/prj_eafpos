@@ -1,7 +1,7 @@
 import select from "helpers/query_select"
 import {is_empty} from "helpers/functions"
 
-const query = {
+const _query = {
   table: "app_product",
   alias: "t",
   
@@ -35,12 +35,12 @@ const query = {
 
 export const get_obj_entity = (objparam={filters:{}})=>{
   const objselect = select()
-    .set_table(query.table, query.alias)
+    .set_table(_query.table, _query.alias)
     .is_foundrows(1)
     .is_distinct(1)
-    .set_joins(query.joins)
-    .set_wheres(query.where)
-    .set_fields(query.fields)
+    .set_joins(_query.joins)
+    .set_wheres(_query.where)
+    .set_fields(_query.fields)
 
   if(!is_empty(objparam.filters.fields)){
     const strcond = objparam.filters

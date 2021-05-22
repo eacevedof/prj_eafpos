@@ -7,7 +7,7 @@ import TableBody from "components/bootstrap/tableaction/tablebody"
 
 function TableAction({arhead, ardata, objconf, multiconf}) {
 
-  const {multivalues, set_multiaction} = useContext(TableContext)
+  const {multivalues} = useContext(TableContext)
 
   useEffect(()=>{
     console.log("tableaction.mounting")

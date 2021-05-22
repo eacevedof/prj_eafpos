@@ -1,13 +1,11 @@
 import qdelete from "helpers/query_delete"
 import {isset, is_empty} from "helpers/functions"
 
-const query = {
-  table: "app_product",
-}
+const _TABLE = "app_product"
 
 export const get_obj_delete = (objparam={fields:{},keys:[]})=>{
   const querydelete = qdelete()
-    .set_table(query.table)
+    .set_table(_TABLE)
 
   if(isset(objparam.fields) && isset(objparam.keys)){
     const fields = Object.keys(objparam.fields)

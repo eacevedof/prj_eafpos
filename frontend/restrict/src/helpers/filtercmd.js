@@ -1,4 +1,4 @@
-import { pr, is_empty } from "helpers/functions"
+import { is_empty } from "helpers/functions"
 
 
 const CMD_TAG=">"

@@ -1,14 +1,12 @@
 import update from "helpers/query_update"
-import {get_keys,is_defined} from "helpers/functions"
+import {get_keys, is_defined} from "helpers/functions"
 import db from "helpers/localdb"
 
-const query = {
-  table: "app_product",
-}
+const _TABLE = "app_product"
 
 export const get_obj_update = (objparam={fields:{},keys:[]},dbfields=[])=>{
   const queryupdate = update()
-    .set_table(query.table)
+    .set_table(_TABLE)
     .add_extra("autosysfields", 1)
     .add_field("update_platform", "3")
     .add_extra("useruuid", db.select("useruuid"))

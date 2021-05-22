@@ -75,7 +75,7 @@ function TableUpdate(){
       before_submit()
       const r = await async_update({...formdata})
       set_success("Num regs updated: ".concat(r))
-      async_onload()
+      await async_onload()
       set_inputfile(null)
       refcode.current.focus()
     }

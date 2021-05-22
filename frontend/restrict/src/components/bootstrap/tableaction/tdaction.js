@@ -1,11 +1,10 @@
-import React, {useContext} from 'react';
+import React from "react"
 //import { TableContext } from "components/bootstrap/tableaction/tablecontext"
-import { NavLink } from "react-router-dom";
-import { get_uuid } from 'helpers/functions';
-
+import { NavLink } from "react-router-dom"
+import { get_uuid } from "helpers/functions"
 
 function Tdaction({objrow, objconf}) {
-  
+
   const ddid = get_uuid()
   
   const keyname = (objconf!=null && typeof(objconf.KEYFIELD)!="undefined") ? objconf.KEYFIELD : "id"
@@ -15,7 +14,7 @@ function Tdaction({objrow, objconf}) {
 
   const get_li = (actions, action)=> {
     const objaction = actions[action]
-    return objaction.url !="" ? (  
+    return objaction.url !== "" ? (
       <li key={get_uuid()}>
         <NavLink className="dropdown-item" exact to={get_replaced(objaction.url, keyval)}> 
           <span><i className={objaction.icon}></i>&nbsp;{objaction.text}</span>

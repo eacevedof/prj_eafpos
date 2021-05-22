@@ -1,9 +1,9 @@
-import { pr, is_defined, get_pagefrom } from "helpers/functions"
+import { is_defined, get_pagefrom } from "helpers/functions"
 
 import apidb from "providers/apidb"
 import apiup from "providers/apiupload"
 
-import get_filterand, {get_filteror} from "helpers/filter"
+import {get_filteror} from "helpers/filter"
 import {get_filtercmd, is_command} from "helpers/filtercmd"
 
 import {get_obj_list, filterconf, VIEWCONFIG} from "./queries/query_list"

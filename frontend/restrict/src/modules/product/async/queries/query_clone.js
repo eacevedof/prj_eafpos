@@ -1,12 +1,10 @@
 import insert from "helpers/query_insert"
 
-const query = {
-  table: "app_product",
-}
+const _TABLE = "app_product"
 
 export const get_obj_clone = (objparam={fields:{}},dbfields=[])=>{
   const queryinsert = insert()
-    .set_table(query.table)
+    .set_table(_TABLE)
 
   if(!is_empty(objparam.fields)){
     

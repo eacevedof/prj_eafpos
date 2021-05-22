@@ -139,18 +139,20 @@ function ProductUpdate(){
   const async_onload = async () => {
     set_issubmitting(true)
     try {
-      const size = await async_get_maxuploadsize()
-      set_maxsize(size)
       const r = await async_get_by_id(id)
       console.log("product.update.onload.r",r)
       const temp = {...formdata, ...r}
       set_formdata(temp)
-  
+
+      const size = await async_get_maxuploadsize()
+      set_maxsize(size)
+
       console.log("product.update.onload.formdata:",formdata)
       set_issubmitting(false)
       refcode.current.focus()      
     }
     catch (error) {
+      console.log("product.update.onload.error",error)
       set_error(error)
     }
     finally {

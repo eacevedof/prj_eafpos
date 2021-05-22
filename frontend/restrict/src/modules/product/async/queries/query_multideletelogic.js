@@ -2,13 +2,11 @@ import deletelogic from "helpers/query_deletelogic"
 import {is_empty} from "helpers/functions"
 import db from "helpers/localdb"
 
-const query = {
-  table: "app_product",
-}
+const _TABLE = "app_product"
 
 export const get_obj_multideletelogic = (objparam={key:"", keys:[]})=>{
   const querydeletel = deletelogic()
-    .set_table(query.table)
+    .set_table(_TABLE)
     .add_extra("autosysfields", "1")
     .add_extra("useruuid", db.select("useruuid"))
     .set_platform("3")
