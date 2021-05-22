@@ -1,27 +1,22 @@
-import helpapify from "helpers/apify"
+import qdelete from "helpers/query_delete"
 import {isset, is_empty} from "helpers/functions"
 
-const query = {
-  table: "zzz_tpl",
-  alias: "t",
-}
+const _TABLE = "zzz_tpl"
 
 export const get_obj_delete = (objparam={fields:{},keys:[]})=>{
-  const objdelete = helpapify.delete
-  objdelete.reset()
-  objdelete.table = query.table
-  
+  const querydelete = qdelete()
+    .set_table(_TABLE)
+
   if(isset(objparam.fields) && isset(objparam.keys)){
     const fields = Object.keys(objparam.fields)
     fields.forEach( field => {
       if(!objparam.keys.includes(field))
         return
-      objdelete.where.push(`${field}='${objparam.fields[field]}'`)
-    })  
+      querydelete.add_where(`${field}='${objparam.fields[field]}'`)
+    })
   }
 
-  if(is_empty(objparam.keys)) objdelete.where.push(`1!=1`)
+  if(is_empty(objparam.keys)) querydelete.add_where(`1!=1`)
 
-  //pr(objdelete,"objdelete")
-  return objdelete
+  return querydelete
 }

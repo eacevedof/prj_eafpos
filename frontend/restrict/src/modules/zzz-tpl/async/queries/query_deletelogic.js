@@ -1,28 +1,24 @@
-import helpapify from "helpers/apify"
+import deletelogic from "helpers/query_deletelogic"
 import {isset} from "helpers/functions"
 import db from "helpers/localdb"
 
-const query = {
-  table: "zzz_tpl",
-  alias: "t",
-}
+const _TABLE = "zzz_tpl"
 
 export const get_obj_deletelogic = (objparam={fields:{},keys:[]})=>{
-  const objdellog = helpapify.deletelogic
-  objdellog.reset()
-  objdellog.delete_platform = "3"
-  objdellog.table = query.table
-  objdellog.extra = {autosysfields:1, useruuid: db.select("useruuid")}
+  const querydeletel = deletelogic()
+    .set_table(_TABLE)
+    .add_extra("autosysfields", "1")
+    .add_extra("useruuid", db.select("useruuid"))
+    .set_platform("3")
 
   if(isset(objparam.fields) && isset(objparam.fields)){
     const fields = Object.keys(objparam.fields)
     fields.forEach( field => {
       if(!objparam.keys.includes(field))
         return
-      objdellog.where.push(`${field}='${objparam.fields[field]}'`)
+      querydeletel.add_where(`${field}='${objparam.fields[field]}'`)
     })
-    
   }
 
-  return objdellog
+  return querydeletel
 }
