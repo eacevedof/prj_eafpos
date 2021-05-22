@@ -4,7 +4,7 @@ export default () => {
   const q = {
     init(){
       this.table =  ""
-      this.delete_platform = ""
+      this.platform = ""
       this.where = []
       this.extras = []
       return this
@@ -45,8 +45,8 @@ export default () => {
       oform.append("action","deletelogic")
       oform.append("queryparts[table]", this.table)
 
-      if(this.delete_platform)
-        oform.append(`queryparts[fields][delete_platform]`,this.delete_platform)
+      if(this.platform)
+        oform.append(`queryparts[fields][delete_platform]`,this.platform)
 
       this.where.forEach((strcond,i) => {
         oform.append(`queryparts[where][${i}]`,strcond)
