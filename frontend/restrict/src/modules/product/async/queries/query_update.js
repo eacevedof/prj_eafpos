@@ -4,7 +4,6 @@ import db from "helpers/localdb"
 
 const query = {
   table: "app_product",
-  alias: "t",
 }
 
 export const get_obj_update = (objparam={fields:{},keys:[]},dbfields=[])=>{
