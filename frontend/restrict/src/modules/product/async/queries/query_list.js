@@ -1,6 +1,4 @@
 import select from "helpers/query_select"
-
-import helpapify from "helpers/apify"
 import {is_empty, pr} from "helpers/functions"
 
 export const VIEWCONFIG = {

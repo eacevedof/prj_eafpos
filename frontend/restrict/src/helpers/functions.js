@@ -99,3 +99,15 @@ export const get_sanitized = value => {
   if(!value) return ""
   return value.replaceAll("'","\'")
 }
+
+export const add = function (obj, toadd) {
+  if(!Array.isArray(obj)) return
+  if(!toadd) return
+
+  if (Array.isArray(toadd)) {
+    toadd.forEach(item => obj.push(item))
+  }
+  else {
+    obj.push(toadd)
+  }
+}

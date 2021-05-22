@@ -1,6 +1,17 @@
-import {add} from "helpers/functions"
+const add = function (obj, toadd) {
+  if(!Array.isArray(obj)) return
+  if(!toadd) return
 
-export default () =>{
+  if (Array.isArray(toadd)) {
+    toadd.forEach(item => obj.push(item))
+  }
+  else {
+    obj.push(toadd)
+  }
+
+}
+
+const select = function (){
   const q = {
     init: function (){
       this.table= ""
@@ -152,7 +163,15 @@ export default () =>{
       return oform
     },    
   }//q
-
   return q.init()
 }
 
+export default select
+
+const insert = function (){}
+
+const update = function (){}
+
+const delet = function (){}
+
+const delete_logic = function (){}
