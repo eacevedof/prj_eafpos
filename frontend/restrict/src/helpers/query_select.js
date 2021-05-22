@@ -1,16 +1,15 @@
-/*
-*     table: "",
-    foundrows:0,
-    distinct: 0,
-    fields: [],
-    joins: [],
-    where: [],
-    groupby:[],
-    having:[],
-    orderby:[],
-    //limit:{regfrom:0,perpage:300,},
-    limit:{perpage:null, regfrom:0},
-* */
+const add = function (obj, toadd) {
+  if(!Array.isArray(obj)) return
+  if(!toadd) return
+
+  if (Array.isArray(toadd)) {
+    toadd.forEach(item => obj.push(item))
+  }
+  else {
+    obj.push(toadd)
+  }
+
+}
 
 const select = function (){
   const q = {
@@ -40,6 +39,7 @@ const select = function (){
 
     is_distinct: function (i) {
       this.distinct = i ? 1 : 0
+      return this
     },
 
     set_fields: function (arfields) {
@@ -49,7 +49,7 @@ const select = function (){
 
     add_field: function (field, alias="") {
       const fullfield = alias ? `${field} as \`${alias}\`` : field
-      this.fields = this.fields ? this.fields.concat([fullfield]): [fullfield]
+      add(this.fields, fullfield)
       return this
     },
 
@@ -59,7 +59,7 @@ const select = function (){
     },
 
     add_join: function (join) {
-      this.joins.push(join)
+      add(this.joins, join)
       return this
     },
 
@@ -69,17 +69,17 @@ const select = function (){
     },
 
     add_where: function (where) {
-      this.where.push(where)
+      add(this.where, where)
       return this
     },
 
-    set_groupbys: function (arwheres) {
+    set_groupbys: function (argroupbys) {
       this.groupby = argroupbys ?? []
       return this
     },
 
     add_groupby: function (groupby) {
-      this.groupby.push(groupby)
+      add(this.groupby, groupby)
       return this
     },
 
@@ -89,7 +89,7 @@ const select = function (){
     },
 
     add_having: function (having) {
-      this.having.push(having)
+      add(this.having, having)
       return this
     },
 
@@ -99,7 +99,7 @@ const select = function (){
     },
 
     add_orderby: function (orderby) {
-      this.orderby.push(orderby)
+      add(this.orderby, orderby)
       return this
     },
 
@@ -108,9 +108,65 @@ const select = function (){
       return this
     },
 
+    set_perpage: function (perpage=null) {
+      this.limit.perpage = perpage
+      return this
+    },
+
+    set_regfrom: function (regfrom=0) {
+      this.limit.regfrom = regfrom
+      return this
+    },
+
+    get_query(){
+      const oform = new FormData()
+
+      //table
+      oform.append("queryparts[table]",this.table)
+
+      if(this.foundrows)
+        oform.append("queryparts[foundrows]",this.foundrows)
+
+      if(this.distinct)
+        oform.append("queryparts[distinct]",this.distinct)
+
+      this.fields.forEach((field,i) => {
+        oform.append(`queryparts[fields][${i}]`,field)
+      });
+
+      this.joins.forEach((join,i) => {
+        oform.append(`queryparts[joins][${i}]`,join)
+      });
+
+      this.where.forEach((strcond,i) => {
+        oform.append(`queryparts[where][${i}]`,strcond)
+      });
+
+      this.groupby.forEach((field,i) => {
+        oform.append(`queryparts[groupby][${i}]`,field)
+      });
+
+      this.having.forEach((metric,i) => {
+        oform.append(`queryparts[having][${i}]`,metric)
+      });
+
+      this.orderby.forEach((field,i) => {
+        oform.append(`queryparts[orderby][${i}]`,field)
+      });
+
+      if(this.limit.perpage){
+        if(this.limit.perpage!==null)
+          oform.append(`queryparts[limit][perpage]`,this.limit.perpage)
+        oform.append(`queryparts[limit][regfrom]`,this.limit.regfrom)
+      }
+
+      return oform
+    },    
   }//q
   return q.init()
 }
+
+export default select
 
 const insert = function (){}
 
