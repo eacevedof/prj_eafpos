@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useRef} from "react"
 import {useParams} from "react-router-dom"
-import {MODCONFIG} from "modules/zzz-tpl/config/config"
-import {is_empty} from "helpers/functions"
-import get_field from "helpers/form"
-import {async_get_by_id, async_deletelogic} from "modules/zzz-tpl/async/async_repository"
+import {MODCONFIG} from "modules/app-table/config/config"
+import { is_empty } from "helpers/functions"
+import {async_get_by_id, async_delete} from "modules/app-table/async/async_repository"
 import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
@@ -15,15 +14,17 @@ import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
 
-function ZzzTplDeleteLogic(){
+
+function AppTableDelete(){
 
   const {id} = useParams()
   const [issubmitting, set_issubmitting] = useState(false)
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
+  const refcode = useRef(null)
   const [isdeleted, set_isdeleted] = useState(false)
 
-  const [formdata, set_formdata] = useState({  
+  const [formdata, set_formdata] = useState({
     insert_user:"",
     insert_date:"",
     update_date:"",
@@ -44,84 +45,64 @@ function ZzzTplDeleteLogic(){
     reserved: "",
   })
 
-  const [sysdata, set_sysdata] = useState({
-    insert_user:"",
-    insert_date:"",
-    update_date:"",
-    update_user:"",    
-    delete_user:"",
-    delete_date:"",    
-  })
-
-  const updateform = evt =>{
-    const elem = evt.target
-
-    const id = get_field(elem)
-    const temp = {...formdata}
-    let value = elem.value
-    if(id=="url_image" && !is_empty(elem.files)) value = elem.files[0]
-
-    console.log("zzz_tpl.deletelogic.updateform.value",value)
-    temp[id] = value
-    console.log("zzz_tpl.deletelogic.temp:",temp)
-    set_formdata(temp)
-    console.log("zzz_tpl.deletelogic.formdata",formdata)
-  }
-
   const before_submit = () => {}
 
   const async_refresh = async () => {
     await async_onload()
-  }  
+  }
 
-  const on_submit = async evt => {
-    console.log("zzz_tpl.deletelogic.on_submit.formdata:",formdata)
+  const on_submit = async (evt)=>{
+    console.log("app_table.delete.on_submit.formdata:",formdata)
     evt.preventDefault()
 
     set_issubmitting(true)
     set_error("")
     set_success("")
-
+    //hacer insert y enviar fichero
     before_submit()
     
     try {
-      const r = await async_deletelogic(formdata)
-      console.log("zzz_tpl.deletelogic.on_submit.r",r)
+      const r = await async_delete(formdata)
+      console.log("app_table.delete.on_submit.r",r)
       set_success("Num regs deleted: ".concat(r))
-      async_onload()
+      //async_onload()
+      set_isdeleted(true)
+      refcode.current.focus()
     }
-    catch(error){
+    catch (error) {
       set_error(error)
     }
-    finally{
+    finally {
       set_issubmitting(false)
     }
-  }
+  } // on_submit
 
   const async_onload = async () => {
     set_issubmitting(true)
-    
     try {
       const r = await async_get_by_id(id)
-      console.log("zzz_tpl.deletelogic.onload.r",r)
-      const tmpform = {...formdata, ...r}      
-      console.log("zzz_tpl.deletelogic.onload.tmpform",tmpform)
+
+      console.log("app_table.delete.onload.r",r)
+      const tmpform = {...formdata, ...r}
+      console.log("app_table.delete.onload.tmpform",tmpform)
       set_formdata(tmpform)
-      if(r.delete_date!=="" && r.delete_date!==null) set_isdeleted(true)
-      set_sysdata({...tmpform})
-      console.log("zzz_tpl.deletelogic.onload.formdata:",formdata)      
-    }
-    catch(error){
+      if(is_empty(r)){
+        set_error("AppTable not found")
+        set_isdeleted(true)
+      }
+    } 
+    catch (error) {
       set_error(error)
-    }
-    finally{
-      set_issubmitting(false)
+    } 
+    finally {
+      console.log("app_table.delete.onload.formdata:",formdata)
+      set_issubmitting(false)      
     }
   }
 
   useEffect(()=>{
     async_onload()
-    return ()=> console.log("zzz_tpl.deletelogic unmounting")
+    return ()=> console.log("app_table.delete unmounting")
   },[])
 
   return (
@@ -129,7 +110,7 @@ function ZzzTplDeleteLogic(){
       <Navbar />
       <main className="container">
         
-        <h1 className="mt-2 mb-2">ZzzTpl delete log.</h1>
+        <h1 className="mt-2 mb-2">AppTable delete</h1>
         <Breadscrumb urls={MODCONFIG.SCRUMBS.GENERIC}/>
 
         <form className="row g-3" onSubmit={on_submit}>
@@ -138,16 +119,23 @@ function ZzzTplDeleteLogic(){
           {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
           {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}
 
+
           <div className="col-md-3">
             <label htmlFor="txt-code_erp" className="form-label">Code</label>
             <input type="text" className="form-control border-0" id="txt-code_erp" placeholder="code in your system" 
+
+              ref={refcode}
               value={formdata.code_erp}
               disabled 
             />
           </div>
-          <div className="col-md-3">
-            <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} />
-          </div>
+          {
+            isdeleted ? null:(
+              <div className="col-md-3">
+                <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} />
+              </div>
+            )
+          }
           <div className="col-12">
             <label htmlFor="txt-description" className="form-label">Description</label>
             <input type="text" className="form-control" id="txt-description" placeholder="Name of table" 
@@ -158,11 +146,11 @@ function ZzzTplDeleteLogic(){
           </div>
           
           <div className="col-12">
-            <label htmlFor="txt-description_full" className="form-label">Description large</label>
-            <textarea className="form-control border-0" id="txt-description_full" rows="2" placeholder="large description use # if needed upto 3000 chars"
-              value={formdata.description_full}
+            <label htmlFor="txt-reserved" className="form-label">Reserved</label>
+            <textarea className="form-control border-0" id="txt-reserved" rows="2" placeholder="large description use # if needed upto 3000 chars"
+              value={formdata.reserved}
               disabled 
-            ></textarea>
+            />
           </div> 
 
           <div className="col-md-4">
@@ -209,11 +197,11 @@ function ZzzTplDeleteLogic(){
             </div>
           </div>
 
-          <Sysfields sysdata={sysdata} />
+          <Sysfields sysdata={formdata} />
           {
             isdeleted ? null:(
               <div className="col-12">
-                <SubmitAsync innertext="Delete L" type="danger" issubmitting={issubmitting} />
+                <SubmitAsync innertext="Delete" type="danger" issubmitting={issubmitting} />
               </div>   
             )
           }
@@ -224,4 +212,4 @@ function ZzzTplDeleteLogic(){
   )
 }
 
-export default ZzzTplDeleteLogic;
+export default AppTableDelete;
