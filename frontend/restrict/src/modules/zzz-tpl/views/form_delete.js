@@ -52,7 +52,7 @@ function ZzzTplDelete(){
   }
 
   const on_submit = async (evt)=>{
-    console.log("table.delete.on_submit.formdata:",formdata)
+    console.log("zzz_tpl.delete.on_submit.formdata:",formdata)
     evt.preventDefault()
 
     set_issubmitting(true)
@@ -63,7 +63,7 @@ function ZzzTplDelete(){
     
     try {
       const r = await async_delete(formdata)
-      console.log("table.delete.on_submit.r",r)
+      console.log("zzz_tpl.delete.on_submit.r",r)
       set_success("Num regs deleted: ".concat(r))
       //async_onload()
       set_isdeleted(true)
@@ -82,9 +82,9 @@ function ZzzTplDelete(){
     try {
       const r = await async_get_by_id(id)
 
-      console.log("table.delete.onload.r",r)
+      console.log("zzz_tpl.delete.onload.r",r)
       const tmpform = {...formdata, ...r}
-      console.log("table.delete.onload.tmpform",tmpform)
+      console.log("zzz_tpl.delete.onload.tmpform",tmpform)
       set_formdata(tmpform)
       if(is_empty(r)){
         set_error("ZzzTpl not found")
@@ -95,14 +95,14 @@ function ZzzTplDelete(){
       set_error(error)
     } 
     finally {
-      console.log("table.delete.onload.formdata:",formdata)
+      console.log("zzz_tpl.delete.onload.formdata:",formdata)
       set_issubmitting(false)      
     }
   }
 
   useEffect(()=>{
     async_onload()
-    return ()=> console.log("table.delete unmounting")
+    return ()=> console.log("zzz_tpl.delete unmounting")
   },[])
 
   return (

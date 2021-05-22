@@ -45,7 +45,7 @@ function ZzzTplInsert() {
   }
 
   const on_submit = async (evt)=>{
-    console.log("table.insert.on_submit.formdata:",formdata)
+    console.log("zzz_tpl.insert.on_submit.formdata:",formdata)
     evt.preventDefault()
 
     set_issubmitting(true)
@@ -56,7 +56,7 @@ function ZzzTplInsert() {
       before_submit()
       console.log(formdata)
       const r = await async_insert(formdata)
-      console.log("table.insert.on_submit.r",r)
+      console.log("zzz_tpl.insert.on_submit.r",r)
 
       set_success("New table added. Nº: ".concat(r))
       set_formdata({...formdefault})
@@ -86,9 +86,9 @@ function ZzzTplInsert() {
   }// async_onload
 
   useEffect(()=>{
-    console.log("table.insert.useeffect")
+    console.log("zzz_tpl.insert.useeffect")
     async_onload()
-    return ()=> console.log("table.insert.unmounting")
+    return ()=> console.log("zzz_tpl.insert.unmounting")
   },[])
   
   return (

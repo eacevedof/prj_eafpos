@@ -62,7 +62,7 @@ function ZzzTplUpdate(){
   }
 
   const on_submit = async (evt)=>{
-    console.log("table.update.on_submit.formdata:",formdata)
+    console.log("zzz_tpl.update.on_submit.formdata:",formdata)
     evt.preventDefault()
 
     set_issubmitting(true)
@@ -70,7 +70,7 @@ function ZzzTplUpdate(){
     set_success("")
     
     try{
-      console.log("table.update.on_submit.inputfile",inputfile)
+      console.log("zzz_tpl.update.on_submit.inputfile",inputfile)
       //hacer insert y enviar fichero
       before_submit()
       const r = await async_update({...formdata})
@@ -91,12 +91,12 @@ function ZzzTplUpdate(){
     set_issubmitting(true)
     try {
       const r = await async_get_by_id(id)
-      console.log("table.update.onload.r",r)
+      console.log("zzz_tpl.update.onload.r",r)
       const temp = {...formdata, ...r}
       temp.time_start =  temp.time_start?.replace(" ","T")
       set_formdata(temp)
   
-      console.log("table.update.onload.formdata:",formdata)
+      console.log("zzz_tpl.update.onload.formdata:",formdata)
       set_issubmitting(false)
       refcode.current.focus()      
     }
@@ -110,7 +110,7 @@ function ZzzTplUpdate(){
 
   useEffect(()=>{
     async_onload()
-    return ()=> console.log("table.update unmounting")
+    return ()=> console.log("zzz_tpl.update unmounting")
   },[])
 
   return (

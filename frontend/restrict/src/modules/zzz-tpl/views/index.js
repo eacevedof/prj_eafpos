@@ -66,7 +66,7 @@ function ZzzTplIndex() {
   const async_onload = async () => {
     //pr(txtsearch)
     //pr(get_localip(),"localip")
-    console.log("table.index.async_onload")
+    console.log("zzz_tpl.index.async_onload")
     const islogged = await async_islogged()
     
     if(!islogged){
@@ -88,7 +88,7 @@ function ZzzTplIndex() {
     //https://stackoverflow.com/questions/53446020/how-to-compare-oldvalues-and-newvalues-on-react-hooks-useeffect
     async_onload()
 
-    return ()=> console.log("table.index unmounting")
+    return ()=> console.log("zzz_tpl.index unmounting")
   },[page, txtsearch])
   
   return (

@@ -51,7 +51,7 @@ function ZzzTplClone(){
   }  
   
   const on_submit = async (evt)=>{
-    console.log("table.clon.on_submit.formdata:",formdata)
+    console.log("zzz_tpl.clon.on_submit.formdata:",formdata)
     evt.preventDefault()
 
     set_issubmitting(true)
@@ -76,11 +76,11 @@ function ZzzTplClone(){
 
   const async_onload = async () => {
     
-    console.log("table.clone.onload.formdata:",formdata)
+    console.log("zzz_tpl.clone.onload.formdata:",formdata)
     set_issubmitting(true)
     try {
       const r = await async_get_by_id(id)
-      console.log("table.clone.onload.r",r)
+      console.log("zzz_tpl.clone.onload.r",r)
       const temp = {...formdata, ...r}
       set_formdata(temp)  
     }
@@ -95,7 +95,7 @@ function ZzzTplClone(){
 
   useEffect(()=>{
     async_onload()
-    return ()=> console.log("table.clone unmounting")
+    return ()=> console.log("zzz_tpl.clone unmounting")
   },[])
 
   return (

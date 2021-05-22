@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react"
 import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/zzz-tpl/config/config"
-import {pr, is_empty} from "helpers/functions"
+import {is_empty} from "helpers/functions"
+import {get_field} from "helpers/form"
 import {async_get_by_id, async_deletelogic} from "modules/zzz-tpl/async/async_repository"
 import {seldisplay} from "modules/common/options"
 
@@ -52,31 +53,20 @@ function ZzzTplDeleteLogic(){
     delete_date:"",    
   })
 
-  const get_id = elem => {
-    const idpref = elem.id || ""
-    const parts = idpref.split("-")
-    //console.log("parts",parts)
-    if(parts.length>1) return parts[1]
-    //console.log("elem.idpref",idpref)
-    return idpref
-  }
-
   const updateform = evt =>{
     const elem = evt.target
 
-    const id = get_id(elem)
+    const id = get_field(elem)
     console.log("updateform.id",id)
     const temp = {...formdata}
     let value = elem.value
     if(id=="url_image" && !is_empty(elem.files)) value = elem.files[0]
 
-    console.log("table.deletelogic.updateform.value",value)
+    console.log("zzz_tpl.deletelogic.updateform.value",value)
     temp[id] = value
-    console.log("table.deletelogic.temp:",temp)
+    console.log("zzz_tpl.deletelogic.temp:",temp)
     set_formdata(temp)
-
-    console.log("table.deletelogic.formdata",formdata)
-    //console.log("updateform.formdata",formdata,"formdata.url_image",formdata.url_image)
+    console.log("zzz_tpl.deletelogic.formdata",formdata)
   }
 
   const before_submit = () => {}
@@ -86,7 +76,7 @@ function ZzzTplDeleteLogic(){
   }  
 
   const on_submit = async evt => {
-    console.log("table.deletelogic.on_submit.formdata:",formdata)
+    console.log("zzz_tpl.deletelogic.on_submit.formdata:",formdata)
     evt.preventDefault()
 
     set_issubmitting(true)
@@ -97,7 +87,7 @@ function ZzzTplDeleteLogic(){
     
     try {
       const r = await async_deletelogic(formdata)
-      console.log("table.deletelogic.on_submit.r",r)
+      console.log("zzz_tpl.deletelogic.on_submit.r",r)
       set_success("Num regs deleted: ".concat(r))
       async_onload()
     }
@@ -114,13 +104,13 @@ function ZzzTplDeleteLogic(){
     
     try {
       const r = await async_get_by_id(id)
-      console.log("table.deletelogic.onload.r",r)
+      console.log("zzz_tpl.deletelogic.onload.r",r)
       const tmpform = {...formdata, ...r}      
-      console.log("table.deletelogic.onload.tmpform",tmpform)
+      console.log("zzz_tpl.deletelogic.onload.tmpform",tmpform)
       set_formdata(tmpform)
       if(r.delete_date!=="" && r.delete_date!==null) set_isdeleted(true)
       set_sysdata({...tmpform})
-      console.log("table.deletelogic.onload.formdata:",formdata)      
+      console.log("zzz_tpl.deletelogic.onload.formdata:",formdata)      
     }
     catch(error){
       set_error(error)
@@ -132,7 +122,7 @@ function ZzzTplDeleteLogic(){
 
   useEffect(()=>{
     async_onload()
-    return ()=> console.log("table.deletelogic unmounting")
+    return ()=> console.log("zzz_tpl.deletelogic unmounting")
   },[])
 
   return (

@@ -46,10 +46,10 @@ function ZzzTplDetail(){
     set_issubmitting(true)
     set_error("")
     set_success("")
-    console.log("table.detail.onload.formdata:",formdata)
+    console.log("zzz_tpl.detail.onload.formdata:",formdata)
     try{
       const r = await async_get_by_id(id)
-      console.log("table.detail.onload.r",r)
+      console.log("zzz_tpl.detail.onload.r",r)
       
       if(!r){
         set_error("ZzzTpl not found!")
@@ -71,7 +71,7 @@ function ZzzTplDetail(){
 
   useEffect(()=>{
     async_onload()
-    return ()=> console.log("table.detail unmounting")
+    return ()=> console.log("zzz_tpl.detail unmounting")
   },[])
 
   return (
