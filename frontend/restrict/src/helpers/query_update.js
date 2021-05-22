@@ -1,8 +1,11 @@
+import {add} from "helpers/functions"
+
 export default () =>{
   const q = {
     init(){
       this.table =  ""
       this.fields = []
+      this.where = []
       this.extras = []
       return this
     },
@@ -22,6 +25,16 @@ export default () =>{
       return this
     },
 
+    set_wheres(arwheres) {
+      this.where = arwheres ?? []
+      return this
+    },
+
+    add_where(where) {
+      add(this.where, where)
+      return this
+    },
+
     set_extras(extra) {
       this.extras = extra ?? []
       return this
@@ -34,11 +47,15 @@ export default () =>{
 
     get_query(){
       const oform = new FormData()
-      oform.append("action","insert")
-      oform.append("queryparts[table]", this.table)
+      oform.append("action","update")
+      oform.append("queryparts[table]",this.table)
 
       this.fields.forEach( field => {
         oform.append(`queryparts[fields][${field.f}]`,field.v)
+      });
+
+      this.where.forEach((strcond,i) => {
+        oform.append(`queryparts[where][${i}]`,strcond)
       });
 
       this.extras.forEach( prop => {
@@ -51,4 +68,3 @@ export default () =>{
 
   return q.init()
 }
-

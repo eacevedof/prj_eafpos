@@ -1,5 +1,5 @@
-
 import helpapify from "helpers/apify"
+import update from "helpers/query_update"
 import {get_keys,is_defined} from "helpers/functions"
 import db from "helpers/localdb"
 
@@ -9,32 +9,30 @@ const query = {
 }
 
 export const get_obj_update = (objparam={fields:{},keys:[]},dbfields=[])=>{
-  const objupdate = helpapify.update
-  objupdate.reset()
-  objupdate.table = query.table
-  objupdate.extra = {autosysfields:1, useruuid: db.select("useruuid")}
+  const objupdate = update()
+    .set_table(query.table)
+    .add_extra("autosysfields", 1)
+    .add_extra("useruuid", db.select("useruuid"))
 
   if(!is_defined(objparam.keys)) return null
   //evita que se actualicen todos los registros que no son una entidad
   if(objparam.keys.length === 0) return null
 
   if(is_defined(objparam.fields)){
+    objupdate.add_field("update_platform", "3")
     const onlyfields = dbfields.map(dbfield => dbfield.field_name)
     const fields = get_keys(objparam.fields)
-
     fields.forEach( field => {
       if(!onlyfields.includes(field))
         return
   
       //si el campo es clave
       if(objparam.keys.includes(field)){
-        objupdate.where.push(`${field}='${objparam.fields[field]}'`)
+        objupdate.add_where(`${field}='${objparam.fields[field]}'`)
       }
       else
-        objupdate.fields.push({k:field,v:objparam.fields[field]})
+        objupdate.add_field(field, objparam.fields[field])
     })
-
-    objupdate.fields.push({k:"update_platform",v:"3"})
   }
 
   return objupdate
