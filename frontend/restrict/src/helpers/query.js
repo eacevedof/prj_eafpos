@@ -109,9 +109,7 @@ const select = function (){
     },
 
   }//q
-
-  q.init()
-  return q
+  return q.init()
 }
 
 const insert = function (){}
