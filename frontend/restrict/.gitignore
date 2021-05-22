@@ -26,3 +26,5 @@ yarn-error.log*
 
 build.zip
 static.zip
+
+/src/modules/202*
