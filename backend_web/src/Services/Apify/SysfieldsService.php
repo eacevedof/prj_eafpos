@@ -141,7 +141,6 @@ class SysfieldsService extends AppService
             case "update":
             case "deletelogic":
                 return $this->_get_autofilled();
-            break;
             default:
                 return [];
         }
