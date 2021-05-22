@@ -1,9 +1,10 @@
 import {add} from "helpers/functions"
 
-export default () =>{
+export default () => {
   const q = {
     init(){
       this.table =  ""
+      this.delete_platform = ""
       this.where = []
       this.extras = []
       return this
@@ -11,6 +12,11 @@ export default () =>{
 
     set_table(table) {
       this.table = table ?? ""
+      return this
+    },
+
+    set_platform(platform) {
+      this.platform = platform ?? ""
       return this
     },
 
@@ -36,8 +42,12 @@ export default () =>{
 
     get_query(){
       const oform = new FormData()
-      oform.append("action","delete")
-      oform.append("queryparts[table]",this.table)
+      oform.append("action","deletelogic")
+      oform.append("queryparts[table]", this.table)
+
+      if(this.delete_platform)
+        oform.append(`queryparts[fields][delete_platform]`,this.delete_platform)
+
       this.where.forEach((strcond,i) => {
         oform.append(`queryparts[where][${i}]`,strcond)
       });
