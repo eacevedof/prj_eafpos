@@ -7,7 +7,7 @@ function Tdaction({objrow, objconf}) {
 
   const ddid = get_uuid()
   
-  const keyname = (objconf!=null && typeof(objconf.KEYFIELD)!="undefined") ? objconf.KEYFIELD : "id"
+  const keyname = (objconf.KEYFIELD ?? "id")
   const keyval = objrow[keyname]
 
   const get_replaced = (string, key) => !string ? "" : string.replace("%key%",key)
