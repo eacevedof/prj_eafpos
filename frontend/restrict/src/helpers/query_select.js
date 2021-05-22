@@ -2,7 +2,7 @@ import {add} from "helpers/functions"
 
 export default () =>{
   const q = {
-    init: function (){
+    init(){
       this.table= ""
       this.foundrows = 0
       this.distinct = 0
@@ -16,93 +16,93 @@ export default () =>{
       return this
     },
 
-    set_table: function (table, alias="") {
+    set_table(table, alias="") {
       this.table = alias ? `${table} as \`${alias}\`` : table
       return this
     },
 
-    is_foundrows: function (i) {
+    is_foundrows(i) {
       this.foundrows = i ? 1 : 0
       return this
     },
 
-    is_distinct: function (i) {
+    is_distinct(i) {
       this.distinct = i ? 1 : 0
       return this
     },
 
-    set_fields: function (arfields) {
+    set_fields(arfields) {
       this.fields = arfields ?? []
       return this
     },
 
-    add_field: function (field, alias="") {
+    add_field(field, alias="") {
       const fullfield = alias ? `${field} as \`${alias}\`` : field
       add(this.fields, fullfield)
       return this
     },
 
-    set_joins: function (arjoins) {
+    set_joins(arjoins) {
       this.joins = arjoins ?? []
       return this
     },
 
-    add_join: function (join) {
+    add_join(join) {
       add(this.joins, join)
       return this
     },
 
-    set_wheres: function (arwheres) {
+    set_wheres(arwheres) {
       this.where = arwheres ?? []
       return this
     },
 
-    add_where: function (where) {
+    add_where(where) {
       add(this.where, where)
       return this
     },
 
-    set_groupbys: function (argroupbys) {
+    set_groupbys(argroupbys) {
       this.groupby = argroupbys ?? []
       return this
     },
 
-    add_groupby: function (groupby) {
+    add_groupby(groupby) {
       add(this.groupby, groupby)
       return this
     },
 
-    set_havings: function (arhavings) {
+    set_havings(arhavings) {
       this.having = arhavings ?? []
       return this
     },
 
-    add_having: function (having) {
+    add_having(having) {
       add(this.having, having)
       return this
     },
 
-    set_orderbys: function (arorderbys) {
+    set_orderbys(arorderbys) {
       this.orderby = arorderbys ?? []
       return this
     },
 
-    add_orderby: function (orderby) {
+    add_orderby(orderby) {
       add(this.orderby, orderby)
       return this
     },
 
-    set_limit: function ({perpage=null, regfrom=0}) {
+    set_limit({perpage=null, regfrom=0}) {
       this.limit = {perpage, regfrom}
       return this
     },
 
-    set_perpage: function (perpage=null) {
+    set_perpage(perpage=null) {
       this.limit.perpage = perpage
       return this
     },
 
-    set_regfrom: function (regfrom=0) {
+    set_regfrom(regfrom=0) {
       this.limit.regfrom = regfrom
       return this
     },
