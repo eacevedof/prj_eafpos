@@ -3,21 +3,20 @@ import {is_empty, pr} from "helpers/functions"
 
 export const VIEWCONFIG = {
  
-  CACHE_KEY: "products.search",
+  CACHE_KEY: "zzz_tpls.search",
   
   PERPAGE: 25,
   
   KEYFIELD: "id",
   
-  URL_PAGINATION: "/admin/products/%page%",
+  URL_PAGINATION: "/admin/zzz-tpls/%page%",
   
   ACTIONS: {
-    //hay que aplicar texto e iconos
-    detail: {url:"/admin/product/%key%", icon:"fa fa-info-circle", text:"Detail"},
-    update: {url:"/admin/product/update/%key%", icon:"fa fa-pencil", text:"Update"},
-    delete: {url:"/admin/product/delete/%key%", icon:"fa fa-trash", text:"Delete"},
-    deletelogic: {url:"/admin/product/delete-logic/%key%", icon:"fa fa-trash", text:"Delete L"},
-    clone: {url:"/admin/product/clone/%key%", icon:"fa fa-files-o", text:"Clone"}, 
+    detail: {url:"/admin/zzz-tpl/%key%", icon:"fa fa-info-circle", text:"Detail"},
+    update: {url:"/admin/zzz-tpl/update/%key%", icon:"fa fa-pencil", text:"Update"},
+    delete: {url:"/admin/zzz-tpl/delete/%key%", icon:"fa fa-trash", text:"Delete"},
+    deletelogic: {url:"/admin/zzz-tpl/delete-logic/%key%", icon:"fa fa-trash", text:"Delete L"},
+    clone: {url:"/admin/zzz-tpl/clone/%key%", icon:"fa fa-files-o", text:"Clone"}, 
   },
 
   MULTIACTIONS: {

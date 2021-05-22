@@ -1,5 +1,5 @@
 import React, {createContext, useState} from "react"
-export const ZzzTplContext = createContext();
+export const ZzzTplContext = createContext()
 
 const ZzzTplProvider = props => {
   const [someglobal, set_someglobal] = useState("")
