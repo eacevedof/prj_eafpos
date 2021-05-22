@@ -190,6 +190,8 @@ class WriterService extends AppService
         $this->_add_sysfields($oCrud, $arParams);
 
         $oCrud->add_update_fv("delete_platform",$arParams["fields"]["delete_platform"]);
+        //como el registro tiene el trigger del update si quiero marcar el softdelete tambien actualizaría el update_date
+        //si paso en formato de tags obligo que el update_date=update_date es decir se mantenga el update_date anterior
         $oCrud->add_update_fv("update_date","%%update_date%%",0);
 
         if(isset($arParams["pks"]))
