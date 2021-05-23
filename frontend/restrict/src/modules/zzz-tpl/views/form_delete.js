@@ -129,66 +129,8 @@ function ZzzTplDelete(){
               </div>
             )
           }
-          <div className="col-12">
-            <label htmlFor="txt-description" className="form-label">Description</label>
-            <input type="text" className="form-control" id="txt-description" placeholder="Name of table" 
-            
-            value={formdata.description}
-            disabled 
-            />
-          </div>
-          
-          <div className="col-12">
-            <label htmlFor="txt-reserved" className="form-label">Reserved</label>
-            <textarea className="form-control border-0" id="txt-reserved" rows="2" placeholder="large description use # if needed upto 3000 chars"
-              value={formdata.reserved}
-              disabled 
-            />
-          </div> 
 
-          <div className="col-md-4">
-            <label htmlFor="num-price_sale" className="form-label">Price</label>
-            <input type="number" className="form-control border-0" id="num-price_sale" placeholder="price in default currency" 
-              value={formdata.price_sale}
-              disabled    
-            />
-          </div>
-
-          <div className="col-md-4">
-            <label htmlFor="num-price_sale1" className="form-label">Price 1</label>
-            <input type="number" className="form-control border-0" id="num-price_sale1" placeholder="price in second currency" 
-              value={formdata.price_sale1}
-              disabled
-            />
-          </div>
-
-          <div className="col-md-4">
-            <label htmlFor="num-order_by" className="form-label">Order</label>
-            <input type="number" className="form-control border-0" id="num-order_by" 
-              value={formdata.order_by}
-              disabled            
-            />
-          </div>          
-
-          <div className="col-md-6">
-            <label htmlFor="sel-display" className="form-label">Display</label>
-            <select id="sel-display" className="form-select border-0"
-              value={formdata.display}
-              disabled
-            >
-              <option>Choose...</option>
-              {
-                seldisplay.map(obj => (<option key={obj.value} value={obj.value}>{obj.text}</option>))
-              }
-            </select>
-          </div>
-
-          <div className="col-md-6">
-            <div className="form-group">
-              <label htmlFor="file-url_image" className="form-label">Picture: </label>
-              <img src={formdata.url_image} className="img-fluid" alt={formdata.url_image}/>
-            </div>
-          </div>
+          %FORM_DELETE%
 
           <Sysfields sysdata={formdata} />
           {

@@ -85,45 +85,7 @@ function ZzzTplDetail(){
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-6">Code</div>
-            <div className="col-6">{formdata.code_erp}</div>
-          </div>
-          
-          <div className="row">
-            <div className="col-6">Description</div>
-            <div className="col-6">{formdata.description}</div>
-          </div>
-
-          <div className="row">
-            <div className="col-6">Diner names</div>
-            <div className="col-6">{formdata.diner_names}</div>
-          </div>          
-
-          <div className="row">
-            <div className="col-6">Diner num</div>
-            <div className="col-6">{formdata.diner_num}</div>
-          </div>
-
-          <div className="row">
-            <div className="col-6">x</div>
-            <div className="col-6">{formdata.coord_x}</div>
-          </div>
-
-          <div className="row">
-            <div className="col-6">y</div>
-            <div className="col-6">{formdata.coord_y}</div>
-          </div>
-
-          <div className="row">
-            <div className="col-6">Time start</div>
-            <div className="col-6">{formdata.time_start}</div>
-          </div>
-
-          <div className="row">
-            <div className="col-6">Order by</div>
-            <div className="col-6">{formdata.order_by}</div>
-          </div>
+          %FORM_DETAIL%
 
           <Sysfields sysdata={formdata} />          
         </div>
