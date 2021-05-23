@@ -32,7 +32,7 @@ const _query = {
   alias: "t",
 
   fields:[
-    "%__FIELDS__%",
+    //%FIELDS_QUERY_LIST%
   ],
 
   joins:[],
@@ -50,18 +50,8 @@ export const grid = {
       sortable: true,
       value: 'id',
     },
-    { text: 'Code', value: 'code_erp' },
-    { text: 'Desc', value: 'description' },
-    { text: 'Desc big', value: 'description_full' },
-    { text: 'Slug', value: 'slug' },
-    { text: 'Show', value: 'display' },
-    { text: 'U. min', value: 'units_min' },
-    { text: 'U. max', value: 'units_max' },
-    { text: 'Price g.', value: 'price_gross' },
-    { text: 'Price s.', value: 'price_sale' },
-    { text: 'Price s1', value: 'price_sale1' },
-    { text: 'Updated', value: 'update_date' },
-    
+
+    //%FIELDS_GRID_HEADERS%
   ]
 }
 
@@ -72,11 +62,7 @@ export const filterconf = [
       alias: _query.alias,
 
       fields:[
-        {name: "id", labels:["n","n","id"]},
-        {name: "code_erp", labels:["code"]},
-        {name: "description", labels:["desc"]},
-        {name: "description_full", labels:["descbig"]},
-        {name: "display", labels:["show"]},
+        //%FIELDS_FILTERCONF%
       ]
     }
   },
