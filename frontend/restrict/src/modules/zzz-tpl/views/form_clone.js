@@ -28,7 +28,10 @@ function ZzzTplClone(){
     update_date:"",
     update_user:"",
 
-    //"%FIELDS_CLONE%"
+    id: -1,
+    id_user: -1,
+    
+    //%FIELDS_CLONE%
   }
 
   const [formdata, set_formdata] = useState({

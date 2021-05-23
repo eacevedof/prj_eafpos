@@ -18,8 +18,6 @@ function ZzzTplInsert() {
 
   const formdefault = {
     id_user:-1,
-    code_erp:"",
-    description:"",
 
     //%FIELDS_INSERT%
   }

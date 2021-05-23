@@ -25,6 +25,9 @@ function ZzzTplDetail(){
     update_date: "",
     update_user:"",
 
+    id: -1,
+    id_user: -1,
+
     //%FIELDS_DETAIL%
   })
 

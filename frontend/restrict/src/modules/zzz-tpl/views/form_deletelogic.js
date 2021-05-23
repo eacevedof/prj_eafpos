@@ -34,7 +34,7 @@ function ZzzTplDeleteLogic(){
     id: -1,
     id_user: -1,
 
-    //%FIELDS_DELETE_LOGIC%
+    //%FIELDS_DELETELOGIC%
   })
 
   const [sysdata, set_sysdata] = useState({
