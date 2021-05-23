@@ -6,29 +6,7 @@ const _query = {
   alias: "t",
   
   fields:[
-    "t.insert_date",
-    "t.insert_user",
-    "t.update_date",
-    "t.update_user",
-    "t.delete_date",
-    "t.delete_user",
-    "t.is_enabled",
-    "t.i",
-
-    "t.id",
-    "t.code_erp",
-    "t.description",
-    "t.description_full",
-    "t.slug",
-    "t.units_min",
-    "t.units_max",
-    "t.price_gross",
-    "t.price_sale",
-    "t.price_sale1",
-    "t.price_sale2",
-    "t.display",
-    "t.id_user",
-    "t.url_image",
+    //%FIELDS_QUERY_ENTITY%
   ],
 
 }
