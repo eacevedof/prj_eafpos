@@ -65,7 +65,7 @@ function ZzzTplUpdate(){
     try{
       console.log("zzz_tpl.update.on_submit.inputfile",inputfile)
       before_submit()
-      const r = await async_update({...formdata})
+      const r = await async_update({...formdata, id})
       set_success("Num regs updated: ".concat(r))
       async_onload()
       set_inputfile(null)
