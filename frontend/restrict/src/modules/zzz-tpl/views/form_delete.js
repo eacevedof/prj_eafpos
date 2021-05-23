@@ -35,7 +35,7 @@ function ZzzTplDelete(){
     id: -1,
     id_user: -1,
 
-    //"%FIELDS_DELETE%"
+    //%FIELDS_DELETE%
   })
 
   const before_submit = () => {}

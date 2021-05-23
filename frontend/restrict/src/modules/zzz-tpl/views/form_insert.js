@@ -21,7 +21,7 @@ function ZzzTplInsert() {
     code_erp:"",
     description:"",
 
-    //"%FIELDS_INSERT%"
+    //%FIELDS_INSERT%
   }
 
   const [formdata, set_formdata] = useState({...formdefault})

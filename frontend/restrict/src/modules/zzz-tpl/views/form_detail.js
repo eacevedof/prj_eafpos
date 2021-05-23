@@ -25,7 +25,7 @@ function ZzzTplDetail(){
     update_date: "",
     update_user:"",
 
-    //"%FIELDS_DETAIL%"
+    //%FIELDS_DETAIL%
   })
 
   const async_refresh = async () => {
