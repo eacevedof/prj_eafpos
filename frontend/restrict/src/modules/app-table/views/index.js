@@ -87,7 +87,7 @@ function AppTableIndex() {
     <>
       <Navbar />
       <main className="container">
-        <h1 className="mt-2 mb-2">AppTables</h1>
+        <h1 className="mt-2 mb-2">Tables</h1>
         <Breadscrumb urls={MODCONFIG.SCRUMBS.GENERIC}/>
         
         {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
