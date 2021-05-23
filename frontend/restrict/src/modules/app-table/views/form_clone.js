@@ -29,15 +29,17 @@ function AppTableClone(){
     update_user:"",
 
     id: -1,
-
-    code_erp:"",
-    description:"",
-    diner_names:"",
-    diner_num:0,
-    coord_x:0,
-    coord_y:0,
-    time_start: null,
-    reserved: "",
+    id_user: -1,
+    
+    code_erp: "", //varchar(25)
+description: "", //varchar(250)
+diner_names: "", //varchar(250)
+diner_num: 0, //int(10,0)
+coord_x: "", //varchar(5)
+coord_y: "", //varchar(5)
+time_start: "", //timestamp
+order_by: 0, //int(10,0)
+reserved: "", //varchar(250)
   }
 
   const [formdata, set_formdata] = useState({
@@ -102,7 +104,7 @@ function AppTableClone(){
       <Navbar />
       <main className="container">
         
-        <h1 className="mt-2 mb-2">AppTable clone</h1>
+        <h1 className="mt-2 mb-2">Table clone</h1>
         <Breadscrumb urls={MODCONFIG.SCRUMBS.GENERIC}/>
 
         <form className="row g-3" onSubmit={on_submit}>
@@ -121,67 +123,90 @@ function AppTableClone(){
           <div className="col-md-3">
             <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} />
           </div>
-          <div className="col-12">
-            <label htmlFor="txt-description" className="form-label">Description</label>
-            <input type="text" className="form-control" id="txt-description" placeholder="Name of table" 
-            
-            value={formdata.description}
-            disabled 
-            />
-          </div>
           
-          <div className="col-12">
-            <label htmlFor="txt-description_full" className="form-label">Description large</label>
-            <textarea className="form-control border-0" id="txt-description_full" rows="2" placeholder="large description use # if needed upto 3000 chars"
-              value={formdata.description_full}
-              disabled 
-            ></textarea>
-          </div> 
-
-          <div className="col-md-4">
-            <label htmlFor="num-price_sale" className="form-label">Price</label>
-            <input type="number" className="form-control border-0" id="num-price_sale" placeholder="price in default currency" 
-              value={formdata.price_sale}
-              disabled    
-            />
-          </div>
-
-          <div className="col-md-4">
-            <label htmlFor="num-price_sale1" className="form-label">Price 1</label>
-            <input type="number" className="form-control border-0" id="num-price_sale1" placeholder="price in second currency" 
-              value={formdata.price_sale1}
-              disabled
-            />
-          </div>
-
-          <div className="col-md-4">
-            <label htmlFor="num-order_by" className="form-label">Order</label>
-            <input type="number" className="form-control border-0" id="num-order_by" 
-              value={formdata.order_by}
-              disabled            
-            />
-          </div>          
-
-          <div className="col-md-6">
-            <label htmlFor="sel-display" className="form-label">Display</label>
-            <select id="sel-display" className="form-select border-0"
-              value={formdata.display}
-              disabled
-            >
-              <option>Choose...</option>
-              {
-                seldisplay.map(obj => (<option key={obj.value} value={obj.value}>{obj.text}</option>))
-              }
-            </select>
-          </div>
-
-          <div className="col-md-6">
-            <div className="form-group">
-              <label htmlFor="file-url_image" className="form-label">Picture: </label>
-              <img src={formdata.url_image} className="img-fluid" alt={formdata.url_image}/>
+          
+            <div className="col-12">
+              <label htmlFor="txt-code_erp" className="form-label">label-code_erp</label>
+              <input type="text" className="form-control" id="txt-code_erp"
+                
+                value={formdata.code_erp}
+                disabled 
+              />
             </div>
-          </div>
-
+        
+            <div className="col-12">
+              <label htmlFor="txt-description" className="form-label">label-description</label>
+              <input type="text" className="form-control" id="txt-description"
+                
+                value={formdata.description}
+                disabled 
+              />
+            </div>
+        
+            <div className="col-12">
+              <label htmlFor="txt-diner_names" className="form-label">label-diner_names</label>
+              <input type="text" className="form-control" id="txt-diner_names"
+                
+                value={formdata.diner_names}
+                disabled 
+              />
+            </div>
+        
+            <div className="col-12">
+              <label htmlFor="txt-diner_num" className="form-label">label-diner_num</label>
+              <input type="text" className="form-control" id="txt-diner_num"
+                
+                value={formdata.diner_num}
+                disabled 
+              />
+            </div>
+        
+            <div className="col-12">
+              <label htmlFor="txt-coord_x" className="form-label">label-coord_x</label>
+              <input type="text" className="form-control" id="txt-coord_x"
+                
+                value={formdata.coord_x}
+                disabled 
+              />
+            </div>
+        
+            <div className="col-12">
+              <label htmlFor="txt-coord_y" className="form-label">label-coord_y</label>
+              <input type="text" className="form-control" id="txt-coord_y"
+                
+                value={formdata.coord_y}
+                disabled 
+              />
+            </div>
+        
+            <div className="col-12">
+              <label htmlFor="txt-time_start" className="form-label">label-time_start</label>
+              <input type="text" className="form-control" id="txt-time_start"
+                
+                value={formdata.time_start}
+                disabled 
+              />
+            </div>
+        
+            <div className="col-12">
+              <label htmlFor="txt-order_by" className="form-label">label-order_by</label>
+              <input type="text" className="form-control" id="txt-order_by"
+                
+                value={formdata.order_by}
+                disabled 
+              />
+            </div>
+        
+            <div className="col-12">
+              <label htmlFor="txt-reserved" className="form-label">label-reserved</label>
+              <input type="text" className="form-control" id="txt-reserved"
+                
+                value={formdata.reserved}
+                disabled 
+              />
+            </div>
+        
+          
           <Sysfields sysdata={formdata} />
           
           <div className="col-12">

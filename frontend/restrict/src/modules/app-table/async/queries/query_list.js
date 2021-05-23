@@ -1,5 +1,5 @@
 import select from "helpers/query_select"
-import {is_empty, pr} from "helpers/functions"
+import {is_empty} from "helpers/functions"
 
 export const VIEWCONFIG = {
  
@@ -26,29 +26,28 @@ export const VIEWCONFIG = {
 
 }
 
-//consulta
 const _query = {
 
   table: "app_table",
   alias: "t",
 
   fields:[
-    "t.update_date",
-    "t.delete_date",
-    "t.is_enabled",
-    "t.i",
-    "t.id",
-    "t.code_erp",
-    "t.description",
-    "t.description_full",
-    "t.slug",
-    "t.display",
-    "t.units_min",
-    "t.units_max",
-    "t.price_gross",
-    "t.price_sale",
-    "t.price_sale1",
-    "t.price_sale2",
+    "t.insert_date",
+"t.update_date",
+"t.delete_date",
+"t.is_enabled",
+"t.id",
+"t.code_erp",
+"t.description",
+"t.diner_names",
+"t.diner_num",
+"t.coord_x",
+"t.coord_y",
+"t.time_start",
+"t.id_user",
+"t.order_by",
+"t.code_cache",
+"t.reserved"
   ],
 
   joins:[],
@@ -58,7 +57,6 @@ const _query = {
   ],
 }
 
-//configuración ui grid
 export const grid = {
   headers:[
     {
@@ -67,35 +65,37 @@ export const grid = {
       sortable: true,
       value: 'id',
     },
-    { text: 'Code', value: 'code_erp' },
-    { text: 'Desc', value: 'description' },
-    { text: 'Desc big', value: 'description_full' },
-    { text: 'Slug', value: 'slug' },
-    { text: 'Show', value: 'display' },
-    { text: 'U. min', value: 'units_min' },
-    { text: 'U. max', value: 'units_max' },
-    { text: 'Price g.', value: 'price_gross' },
-    { text: 'Price s.', value: 'price_sale' },
-    { text: 'Price s1', value: 'price_sale1' },
-    { text: 'Updated', value: 'update_date' },
-    
+
+    {text: "label-code_erp", value: "code_erp"},
+{text: "label-description", value: "description"},
+{text: "label-diner_names", value: "diner_names"},
+{text: "label-diner_num", value: "diner_num"},
+{text: "label-coord_x", value: "coord_x"},
+{text: "label-coord_y", value: "coord_y"},
+{text: "label-time_start", value: "time_start"},
+{text: "label-id_user", value: "id_user"},
+{text: "label-order_by", value: "order_by"},
+{text: "label-reserved", value: "reserved"}
   ]
 }
 
-//configuración filtros
 export const filterconf = [
   {
-    //tabla principal
     table:{
       name: _query.table,
       alias: _query.alias,
 
       fields:[
-        {name: "id", labels:["n","n","id"]},
-        {name: "code_erp", labels:["code"]},
-        {name: "description", labels:["desc"]},
-        {name: "description_full", labels:["descbig"]},
-        {name: "display", labels:["show"]},
+        {name: "code_erp", labels: ["label-code_erp"]},
+{name: "description", labels: ["label-description"]},
+{name: "diner_names", labels: ["label-diner_names"]},
+{name: "diner_num", labels: ["label-diner_num"]},
+{name: "coord_x", labels: ["label-coord_x"]},
+{name: "coord_y", labels: ["label-coord_y"]},
+{name: "time_start", labels: ["label-time_start"]},
+{name: "id_user", labels: ["label-id_user"]},
+{name: "order_by", labels: ["label-order_by"]},
+{name: "reserved", labels: ["label-reserved"]}
       ]
     }
   },
