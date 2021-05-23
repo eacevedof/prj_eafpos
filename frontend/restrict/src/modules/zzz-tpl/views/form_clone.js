@@ -28,16 +28,7 @@ function ZzzTplClone(){
     update_date:"",
     update_user:"",
 
-    id: -1,
-
-    code_erp:"",
-    description:"",
-    diner_names:"",
-    diner_num:0,
-    coord_x:0,
-    coord_y:0,
-    time_start: null,
-    reserved: "",
+    //"%FIELDS_CLONE%"
   }
 
   const [formdata, set_formdata] = useState({

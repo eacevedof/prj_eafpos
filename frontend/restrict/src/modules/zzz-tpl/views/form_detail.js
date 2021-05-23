@@ -21,19 +21,11 @@ function ZzzTplDetail(){
 
   const [formdata, set_formdata] = useState({
     insert_date: "",
-    insert_user:"react",
+    insert_user:"",
     update_date: "",
-    update_user:"react",
+    update_user:"",
 
-    code_erp:"",
-    description:"",
-    diner_names:"",
-    diner_num:0,
-    coord_x:0,
-    coord_y:0,
-    time_start: null,
-    reserved: "",
-    order_by: "",
+    //"%FIELDS_DETAIL%"
   })
 
   const async_refresh = async () => {

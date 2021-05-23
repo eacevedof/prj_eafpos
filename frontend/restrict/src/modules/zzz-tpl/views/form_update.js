@@ -30,16 +30,7 @@ function ZzzTplUpdate(){
     update_user:"",
 
     id: -1,
-    code_erp:"",
-    description:"",
-
-    diner_names:"",
-    diner_num:0,
-    coord_x:0,
-    coord_y:0,
-    time_start: null,
-    reserved: "",
-    id_user: -1,
+    //"%FIELDS_UPDATE%"
   }
 
   const [formdata, set_formdata] = useState({

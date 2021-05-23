@@ -21,12 +21,7 @@ function ZzzTplInsert() {
     code_erp:"",
     description:"",
 
-    diner_names:"",
-    diner_num:0,
-    coord_x:0,
-    coord_y:0,
-    time_start: null,
-    reserved: "",
+    //"%FIELDS_INSERT%"
   }
 
   const [formdata, set_formdata] = useState({...formdefault})
