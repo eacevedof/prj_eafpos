@@ -97,7 +97,7 @@ reserved: "", //varchar(250)
   useEffect(()=>{
     async_onload()
     return ()=> console.log("app_table.clone unmounting")
-  },[])
+  })
 
   return (
     <>

@@ -87,7 +87,7 @@ function ZzzTplClone(){
   useEffect(()=>{
     async_onload()
     return ()=> console.log("zzz_tpl.clone unmounting")
-  },[])
+  })
 
   return (
     <>
