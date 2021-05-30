@@ -1,9 +1,9 @@
-import {pr, get_urlvalue, is_empty} from "helpers/functions"
+import {get_urlvalue, is_empty} from "helpers/functions"
 
-const get_fields = arconfs => arconfs.
-                              filter(objconf => !is_empty(objconf.table) ).
-                              map(objconf => objconf.table.fields.map(objf => ({name:`${objconf.table.alias}.${objf.name}`,labels:objf.labels}))).
-                              reduce((arac, arcurr) => [...arac, ...arcurr])
+const get_fields = arconfs => arconfs
+    .filter(objconf => !is_empty(objconf.table) )
+    .map(objconf => objconf.table.fields.map(objf => ({name:`${objconf.table.alias}.${objf.name}`,labels:objf.labels})))
+    .reduce((arac, arcurr) => [...arac, ...arcurr])
                                     
 const get_value = arlabels => arlabels.map(strlabel => get_urlvalue(strlabel)).filter(strval => strval!=="")[0] || ""
 

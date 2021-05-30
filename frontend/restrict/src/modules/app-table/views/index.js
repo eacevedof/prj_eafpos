@@ -26,7 +26,7 @@ function AppTableIndex() {
 
   const {page} = useParams()
   const [issubmitting, set_issubmitting] = useState(false)
-  const [error, set_error] = useState("")
+  const [error,] = useState("")
   const [success, set_success] = useState("")
   const [txtsearch, set_txtsearch] = useState("")
   

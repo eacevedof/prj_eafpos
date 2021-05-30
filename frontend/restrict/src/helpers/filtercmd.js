@@ -5,16 +5,16 @@ const CMD_TAG=">"
 const CMD_SEPARATOR = ";"
 const KEYVAL_SEPARATOR = ":"
 
-const get_fields = arconfs => arconfs.
-                                filter(objconf => !is_empty(objconf.table) ).
-                                map(objconf => objconf.table.fields.map(objf => ({name:`${objconf.table.alias}.${objf.name}`,labels:objf.labels}))).
-                                reduce((arac, arcurr) => [...arac, ...arcurr])
+const get_fields = arconfs => arconfs
+    .filter(objconf => !is_empty(objconf.table) )
+    .map(objconf => objconf.table.fields.map(objf => ({name:`${objconf.table.alias}.${objf.name}`,labels:objf.labels})))
+    .reduce((arac, arcurr) => [...arac, ...arcurr])
 
-const get_cmdkeyval = strkey => strkey.split(CMD_SEPARATOR).
-                                  map(strkv => strkv.trim()).
-                                  map(strkv => strkv.split(KEYVAL_SEPARATOR)).
-                                  filter(ar => ar.length===2).
-                                  map(ar => ({label:ar[0].trim().toLowerCase(),value:ar[1].trim()}))
+const get_cmdkeyval = strkey => strkey.split(CMD_SEPARATOR)
+    .map(strkv => strkv.trim())
+    .map(strkv => strkv.split(KEYVAL_SEPARATOR))
+    .filter(ar => ar.length===2)
+    .map(ar => ({label:ar[0].trim().toLowerCase(),value:ar[1].trim()}))
 
 //obtiene las etiquetas del cmd
 const get_labels = arlblval => arlblval.map(arlblval => arlblval.label)

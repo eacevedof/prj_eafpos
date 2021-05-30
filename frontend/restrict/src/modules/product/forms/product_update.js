@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/product/config/config"
-import {pr, is_defined, is_empty, is_string, isset} from "helpers/functions"
+import {is_defined, is_empty, is_string, isset} from "helpers/functions"
 import {async_get_by_id, async_update, async_get_maxuploadsize} from "modules/product/async/async_requests"
 import {seldisplay} from "modules/common/options"
 

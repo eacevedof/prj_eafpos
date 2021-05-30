@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/product/config/config"
-import {pr, is_empty} from "helpers/functions"
 import {async_get_by_id, async_deletelogic} from "modules/product/async/async_requests"
 import {seldisplay} from "modules/common/options"
 
@@ -53,33 +52,6 @@ function ProductDeleteLogic(){
     delete_user:"",
     delete_date:"",    
   })
-
-  const get_id = elem => {
-    const idpref = elem.id || ""
-    const parts = idpref.split("-")
-    //console.log("parts",parts)
-    if(parts.length>1) return parts[1]
-    //console.log("elem.idpref",idpref)
-    return idpref
-  }
-
-  const updateform = evt =>{
-    const elem = evt.target
-
-    const id = get_id(elem)
-    console.log("updateform.id",id)
-    const temp = {...formdata}
-    let value = elem.value
-    if(id=="url_image" && !is_empty(elem.files)) value = elem.files[0]
-
-    console.log("product.deletelogic.updateform.value",value)
-    temp[id] = value
-    console.log("product.deletelogic.temp:",temp)
-    set_formdata(temp)
-
-    console.log("product.deletelogic.formdata",formdata)
-    //console.log("updateform.formdata",formdata,"formdata.url_image",formdata.url_image)
-  }
 
   const before_submit = () => {}
 

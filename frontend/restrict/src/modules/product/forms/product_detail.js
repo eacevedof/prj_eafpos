@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {MODCONFIG} from "modules/product/config/config"
-import {pr} from "helpers/functions"
 
 import {useParams} from "react-router-dom"
 import {async_get_by_id} from "modules/product/async/async_requests"

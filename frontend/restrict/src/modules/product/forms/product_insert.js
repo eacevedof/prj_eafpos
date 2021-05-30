@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {MODCONFIG} from "modules/product/config/config"
-import {pr, is_empty, isset, is_defined} from "helpers/functions"
+import {is_empty, isset, is_defined} from "helpers/functions"
 import {async_insert, async_get_maxuploadsize} from "modules/product/async/async_requests"
 import {seldisplay} from "modules/common/options"
 
@@ -18,7 +18,6 @@ function ProductInsert() {
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
   const refcode = useRef(null)
-
 
   const formdefault = {
     //id: -1,
@@ -53,7 +52,7 @@ function ProductInsert() {
     console.log("updateform.id",id)
     const temp = {...formdata}
     let value = elem.value
-    if(id=="url_image" && !is_empty(elem.files)) value = elem.files[0]
+    if(id==="url_image" && !is_empty(elem.files)) value = elem.files[0]
 
     console.log("updateform.value",value)
     temp[id] = value

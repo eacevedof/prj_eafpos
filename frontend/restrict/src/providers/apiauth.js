@@ -1,6 +1,6 @@
 import {APIFY_BASEURL} from "../config/constants"
 import axios from "axios"
-import {is_undefined, pr, get_error} from "../helpers/functions"
+import {is_undefined, get_error} from "../helpers/functions"
 import db from "../helpers/localdb"
 
 const Apiauth = {

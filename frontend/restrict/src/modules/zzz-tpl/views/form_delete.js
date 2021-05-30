@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/zzz-tpl/config/config"
 import { is_empty } from "helpers/functions"
 import {async_get_by_id, async_delete} from "modules/zzz-tpl/async/async_repository"
-import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'

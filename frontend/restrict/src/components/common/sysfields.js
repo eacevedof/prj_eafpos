@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import async_get_useralias from "modules/sysfields/sysfields_index"
-import {is_defined, pr} from "helpers/functions"
+//import {is_defined, pr} from "helpers/functions"
 
 function Sysfields({sysdata}){
 

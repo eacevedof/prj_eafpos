@@ -1,7 +1,7 @@
 import {APIFY_BASEURL, APIFY_CONTEXT, APIFY_SCHEMA} from "../config/constants"
 import axios from "axios"
 import db from "helpers/localdb"
-import {pr, is_undefined, get_error} from "../helpers/functions"
+import {is_undefined, get_error} from "../helpers/functions"
 
 const Apidb = {
   

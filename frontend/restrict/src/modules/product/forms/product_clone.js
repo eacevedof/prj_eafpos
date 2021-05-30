@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/product/config/config"
-import {pr} from "helpers/functions"
 import {async_get_by_id, async_clone} from "modules/product/async/async_requests"
 import {seldisplay} from "modules/common/options"
 

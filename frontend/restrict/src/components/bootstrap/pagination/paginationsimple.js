@@ -1,5 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
-import { pr } from 'helpers/functions'
+import React, {useEffect, useState} from 'react'
 import { NavLink } from "react-router-dom"
 import shortid from "shortid"
 
@@ -18,8 +17,8 @@ function PaginationSimple({objconf}){
   
   const get_buttons = (ipage,ipages) => {
 
-    if(ipages==0) return []
-    if(ipages==1) return []
+    if(ipages===0) return []
+    if(ipages===1) return []
 
     const ibuttons = 3
     const ihalf = Math.ceil(ibuttons/2)
@@ -130,7 +129,7 @@ function PaginationSimple({objconf}){
 
         {
           urls.map(objurl => 
-            objurl.text==objconf.page ?
+            objurl.text === objconf.page ?
               get_li_active(objurl.url, objurl.text)
             : //si no es la página actual
               objurl.url==="..." ? get_li_dotted() : get_li_simple(objurl.url, objurl.text)

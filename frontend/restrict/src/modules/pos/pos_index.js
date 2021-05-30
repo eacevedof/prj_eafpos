@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect, useRef} from "react"
+import React, {useContext, useEffect} from "react"
 import {useHistory} from "react-router-dom"
 import {GlobalContext} from "components/context/global_context"
 
@@ -8,7 +8,7 @@ import Footer from "components/common/footer"
 //import NotificationError from "components/common/notifications/notification_error"
 //import HrefDom from "helpers/href_dom"
 //import Api from "providers/api"
-import { NavLink } from 'react-router-dom';
+//import { NavLink } from 'react-router-dom';
 import {async_ispinned} from "modules/login/login_index"
 
 function PosIndex() {

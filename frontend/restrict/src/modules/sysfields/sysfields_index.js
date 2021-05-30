@@ -1,6 +1,6 @@
 import helpapify from "helpers/apify"
 import apidb from "providers/apidb"
-import {is_defined, pr, is_undefined} from "helpers/functions"
+import {is_defined, is_undefined} from "helpers/functions"
 
 const query = {
   table: "base_user",

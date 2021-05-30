@@ -1,6 +1,6 @@
 import React, {useEffect, useContext} from 'react';
 import { TableContext } from "components/bootstrap/tableaction/tablecontext"
-import { is_defined, pr } from 'helpers/functions';
+import { is_defined } from 'helpers/functions';
 
 
 function TableHead({arhead, objconf, multiconf}) {

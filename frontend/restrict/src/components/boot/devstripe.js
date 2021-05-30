@@ -1,5 +1,5 @@
 import React from 'react';
-import {is_dev, is_prod} from "helpers/env"
+import {is_dev} from "helpers/env"
 
 function Devstripe() {
   

@@ -19,7 +19,7 @@ function TableBody({arhead, ardata, objconf, multiconf}) {
   useEffect(()=>{
     console.log("tablebody.mounting")
     if(ismultiaction) add_all()
-    else if(ardata.length == multivalues.length) remove_all()
+    else if(ardata.length === multivalues.length) remove_all()
 
     return ()=> console.log("tablebody.unmounting")
 

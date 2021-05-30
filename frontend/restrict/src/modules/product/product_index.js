@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useParams, useHistory} from "react-router-dom"
 import {MODCONFIG} from "modules/product/config/config"
 
-import { pr, get_pages } from 'helpers/functions';
+import {get_pages } from 'helpers/functions';
 import db from "helpers/localdb" 
 import HrefDom from "helpers/href_dom"
 
@@ -12,7 +12,7 @@ import {async_get_list, async_multidelete, async_multideletelogic} from "modules
 import {VIEWCONFIG, grid} from "modules/product/async/queries/query_list"
 
 import Navbar from "components/common/navbar"
-import AlertSimple from 'components/bootstrap/alert/alertsimple'
+//import AlertSimple from 'components/bootstrap/alert/alertsimple'
 import ToastSimple from 'components/bootstrap/toast/toastsimple'
 import InputSearch from "components/bootstrap/input/inputsearch"
 import Spinnergrow from "components/bootstrap/spinner/spinnergrow"
@@ -27,7 +27,7 @@ function ProductIndex() {
 
   const {page} = useParams()
   const [issubmitting, set_issubmitting] = useState(false)
-  const [error, set_error] = useState("")
+  const [error,] = useState("")
   const [success, set_success] = useState("")
   const [txtsearch, set_txtsearch] = useState("")
   

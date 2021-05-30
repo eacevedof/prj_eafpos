@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react"
 import {MODCONFIG} from "modules/app-table/config/config"
 import {useParams} from "react-router-dom"
 import {async_get_by_id} from "modules/app-table/async/async_repository"
-import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'

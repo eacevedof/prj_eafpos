@@ -8,8 +8,7 @@ import {routes as prodroutes} from "modules/product/routes"
 import {routes as posroutes} from "modules/pos/routes"
 import {routes as dashroutes} from "modules/dashboard/routes"
 import {routes as loginroutes} from "modules/login/routes"
-import {routes as tableroutes} from "modules/table/routes"
-import {routes as tableroutes2} from "modules/app-table/routes"
+import {routes as tableroutes} from "modules/app-table/routes"
 
 import E404 from "modules/errors/404/e404"
 
@@ -22,8 +21,9 @@ import {
 function Boot() {
 
   const routes = [].concat(
-      dashroutes, prodroutes,loginroutes, posroutes, tableroutes, tableroutes2
+      dashroutes, prodroutes,loginroutes, posroutes, tableroutes
   )
+
   //console.log("routes",routes)
   const {set_apifytoken, set_errorg} = useContext(GlobalContext)
 

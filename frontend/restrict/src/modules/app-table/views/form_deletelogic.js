@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from "react"
 import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/app-table/config/config"
-import {is_empty} from "helpers/functions"
-import get_field from "helpers/form"
 import {async_get_by_id, async_deletelogic} from "modules/app-table/async/async_repository"
-import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
@@ -53,21 +50,6 @@ reserved: "", //varchar(250)
     delete_user:"",
     delete_date:"",    
   })
-
-  const updateform = evt =>{
-    const elem = evt.target
-
-    const id = get_field(elem)
-    const temp = {...formdata}
-    let value = elem.value
-    if(id=="url_image" && !is_empty(elem.files)) value = elem.files[0]
-
-    console.log("app_table.deletelogic.updateform.value",value)
-    temp[id] = value
-    console.log("app_table.deletelogic.temp:",temp)
-    set_formdata(temp)
-    console.log("app_table.deletelogic.formdata",formdata)
-  }
 
   const before_submit = () => {}
 

@@ -1,6 +1,7 @@
 //Navbar.js
-import React, {useEffect, useState} from 'react';
-import { NavLink } from "react-router-dom";
+import React from "react"
+//import React, {useEffect, useState} from "react"
+import { NavLink } from "react-router-dom"
 import {async_ispinned} from "modules/login/login_index";
 
 function Navbar() {

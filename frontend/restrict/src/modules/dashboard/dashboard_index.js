@@ -1,5 +1,5 @@
-import React, {useContext, useState, useEffect} from "react"
-
+import React, {useEffect} from "react"
+//import React, {useContext, useState, useEffect} from "react"
 //import {GlobalContext} from "components/context/global_context"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
