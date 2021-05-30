@@ -99,7 +99,7 @@ function ProductClone(){
   useEffect(()=>{
     async_onload()
     return ()=> console.log("product.clone unmounting")
-  },[])
+  }, [id])
 
   return (
     <>
