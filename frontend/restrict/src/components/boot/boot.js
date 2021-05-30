@@ -5,10 +5,11 @@ import db from "helpers/localdb"
 import {async_gettoken, async_islogged} from "modules/login/login_index"
 
 import {routes as prodroutes} from "modules/product/routes"
-import {routes as posroutes} from "modules/pos/routes"
+import {routes as posroutes} from "modules/pos-dashboard/routes"
 import {routes as dashroutes} from "modules/dashboard/routes"
 import {routes as loginroutes} from "modules/login/routes"
 import {routes as tableroutes} from "modules/app-table/routes"
+import {routes as tableposroutes} from "modules/pos-table/routes"
 
 import E404 from "modules/errors/404/e404"
 
@@ -22,6 +23,7 @@ function Boot() {
 
   const routes = [].concat(
       dashroutes, prodroutes,loginroutes, posroutes, tableroutes
+      ,tableposroutes
   )
 
   //console.log("routes",routes)

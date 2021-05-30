@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from "react"
-import {useHistory} from "react-router-dom"
+import {NavLink, useHistory} from "react-router-dom"
 import {GlobalContext} from "components/context/global_context"
 
 import Navbar from "components/common/navbar"
@@ -56,9 +56,9 @@ function PosIndex() {
         <div className="d-flex justify-content-center bd-highlight mt-2">
           <div className="d-flex justify-content-center">
             <div className="p-1">
-              <button className="btn btn-dark" type="button" style={css.btn}
-                onClick={mesas}
-              >Mesas</button>
+              <NavLink className="btn btn-dark" exact to={"/pos-tables"} style={css.btn}>
+                <i className="fa fa-table"></i>&nbsp;Tables
+              </NavLink>
             </div>
             <div className="p-1">
               <button className="btn btn-dark" type="button" style={css.btn}

@@ -1,6 +1,5 @@
-import React from 'react';
-
-import PosIndex from "./pos_index"
+import React from "react"
+import PosIndex from "./views/index"
 
 export const routes = [
   {
