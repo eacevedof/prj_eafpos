@@ -1,8 +1,7 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import {useHistory} from "react-router-dom"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
-import KeyboardSecret from "components/bootstrap/app/keyboards/keyboard_secret"
 import {async_ispinned} from "modules/login/login_index";
 import HrefDom from "helpers/href_dom";
 import {async_get_all_enabled_not_deleted} from "../async/async_repository";
@@ -10,6 +9,7 @@ import {async_get_all_enabled_not_deleted} from "../async/async_repository";
 
 function TableIndex() {
   const history = useHistory()
+  const [tables, set_tables] = useState([])
 
   const async_onload = async () => {
     console.log("app_table.index.async_onload")
@@ -23,7 +23,7 @@ function TableIndex() {
     const data = await async_get_all_enabled_not_deleted()
     console.log(data,"pos-tables")
     console.table(data.result)
-
+    set_tables(data.result)
 
   }
 
@@ -32,13 +32,14 @@ function TableIndex() {
     return () => console.log("login.insert.unmounting")
   },[])
 
+  //const get_tds = ar => ar.map( (objth,i) => <td key={i} scope="col">{objth.text}</td>) // get_tds
+  const get_div_cols = obj => Object.keys(obj).map( (objth,i) => <div className="col">{i}</div>) // get_tds
+
   return (
       <>
         <Navbar />
         <main className="container">
-          <div className="d-flex justify-content-center bd-highlight mt-2">
-
-          </div>
+          {tables.map( (row, i) => <div className="row">{get_div_cols(row)}</div>)}
         </main>
         <Footer />
       </>
