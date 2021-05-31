@@ -11,7 +11,7 @@
   line-height: 85px;
 }
 
-.pos-btn-lg {
+.pos-btn-table {
   width: 100px;
   height: 100px;
   font-size: 32px;
@@ -20,3 +20,22 @@
   text-align: center;
   line-height: 85px;
 }
+
+.table-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 3px 3px;
+  grid-template-areas:
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . .";
+}
+

@@ -34,26 +34,28 @@ function TableIndex() {
   },[])
 
   const get_xy = (tables, x,y) => tables
-      .filter( row => parseInt(row.coord_x) === x && parseInt(row.coord_y) === y)
-      .map( row => JSON.stringify(row))
-      .join(" ")
+      .filter( row => parseInt(row.coord_x) === x && parseInt(row.coord_y) === y)[0] ?? []
+      //.map( row => JSON.stringify(row))
+      //.join(" ")
 
-  const render_button = row => row ?(<button type="button" className="btn btn-dark pos-btn-lg">
+  const render_button = row => row.code_erp ?(<button type="button" className="btn btn-dark pos-btn-table">
     {row.code_erp}
   </button>):null
 
   return (
       <>
         <Navbar />
-        <main className="container">
-          {[...Array(10).keys()].map(x =>
-              <div key={get_uuid()} className="row">
-                {[...Array(10).keys()].map(y =>
-                    <div key={get_uuid()}  className="col">{render_button(get_xy(tables,x,y))}</div>)
-                }
-              </div>)
-          }
-        </main>
+        <div className="table-grid">
+        {[...Array(10).keys()].map(x =>
+            <div key={get_uuid()}>
+              {[...Array(10).keys()].map(y =>
+                  <div key={get_uuid()}>{render_button(get_xy(tables,x,y))}</div>)
+              }
+            </div>
+            )
+
+        }
+        </div>
         <Footer />
       </>
   )
