@@ -45,6 +45,7 @@ function TableIndex() {
   return (
       <>
         <Navbar />
+        <h2 className="h2 text-center">Tables</h2>
         <div className="table-grid">
         {[...Array(10).keys()].map(x =>
             <div key={get_uuid()}>
