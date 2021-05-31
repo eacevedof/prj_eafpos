@@ -56,17 +56,17 @@ function TableIndex() {
 
     const tmp = [...tables]
     console.log("tmp", tmp)
-    for(let x=0; x<4; x++) {
-      for(let y=0; y<4; y++) {
-        const row = get_xy(tmp, x, y)
-        console.log("ROW", row, x, y)
-        if(row) {
-          console.log("xxx")
+    for(let x=0; x<10; x++) {
+      for(let y=0; y<10; y++) {
+        if(!tmp) return elements
+        const row = get(tmp, x, y)
+        if(row[0]) {
+          tmp.shift()
+          console.log("tmp.length",tmp.length, "x",x,"y",y)
           elements.push(<div key={get_uuid()}>xxx</div>)
         }
         else {
-          console.log("yyy")
-          elements.push(<div key={get_uuid()}>yyy</div>)
+          elements.push(<div key={get_uuid()}></div>)
         }
       }
     }
