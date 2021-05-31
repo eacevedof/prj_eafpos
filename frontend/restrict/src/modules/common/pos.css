@@ -12,20 +12,21 @@
 }
 
 .pos-btn-table {
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   font-size: 32px;
   color: white;
   font-weight: bold;
   text-align: center;
-  line-height: 85px;
+  line-height: 50px;
 }
 
 .table-grid {
+  padding: 10px;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  gap: 3px 3px;
+  grid-gap: 5px;
   grid-template-areas:
     ". . . . . . . . . ."
     ". . . . . . . . . ."
