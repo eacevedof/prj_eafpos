@@ -59,11 +59,11 @@ function TableIndex() {
     for(let x=0; x<10; x++) {
       for(let y=0; y<10; y++) {
         if(!tmp) return elements
-        const row = get(tmp, x, y)
-        if(row[0]) {
+        const row = get_xy(tmp, x, y)
+        if(row) {
           tmp.shift()
           console.log("tmp.length",tmp.length, "x",x,"y",y)
-          elements.push(<div key={get_uuid()}>xxx</div>)
+          elements.push(<div key={get_uuid()}>{row.code_erp}</div>)
         }
         else {
           elements.push(<div key={get_uuid()}></div>)
