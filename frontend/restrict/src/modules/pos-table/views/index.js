@@ -38,7 +38,7 @@ function TableIndex() {
       .map( row => JSON.stringify(row))
       .join(" ")
 
-  const render_button = row => row ?(<button type="button" className="btn-dark">
+  const render_button = row => row ?(<button type="button" className="btn btn-dark pos-btn-lg">
     {row.code_erp}
   </button>):null
 
