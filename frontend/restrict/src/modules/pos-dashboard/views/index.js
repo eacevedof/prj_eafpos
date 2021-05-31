@@ -10,6 +10,7 @@ import Footer from "components/common/footer"
 //import Api from "providers/api"
 //import { NavLink } from 'react-router-dom';
 import {async_ispinned} from "modules/login/login_index"
+import "modules/common/pos.css"
 
 function PosIndex() {
 
@@ -56,12 +57,12 @@ function PosIndex() {
         <div className="d-flex justify-content-center bd-highlight mt-2">
           <div className="d-flex justify-content-center">
             <div className="p-1">
-              <NavLink className="btn btn-dark" exact to={"/pos-tables"} style={css.btn}>
+              <NavLink className="btn btn-dark pos-btn-lg" exact to={"/pos-tables"}>
                 <i className="fa fa-table"></i>&nbsp;Tables
               </NavLink>
             </div>
             <div className="p-1">
-              <button className="btn btn-dark" type="button" style={css.btn}
+              <button className="btn btn-dark pos-btn-lg" type="button"
                 onClick={parallevar}
               >Para llevar</button>
             </div>
@@ -73,15 +74,6 @@ function PosIndex() {
       <Footer />
     </>
   )
-}
-
-const css = {
-  btn: {
-    width: "200px",
-    height: "100px",
-    fontSize: "32px",
-    fontWeight: "bold",
-  }
 }
 
 export default PosIndex;
