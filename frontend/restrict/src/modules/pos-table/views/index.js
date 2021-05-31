@@ -33,29 +33,13 @@ function TableIndex() {
     return () => console.log("login.insert.unmounting")
   },[])
 
-
-  const get_xy = (tables, x,y) => tables
-      .filter( row => parseInt(row.coord_x) === x && parseInt(row.coord_y) === y)[0] ?? null
-      //.map( row => JSON.stringify(row))
-      //.join(" ")
-
-  const render_button = row => row.code_erp ?(<button type="button" className="btn btn-dark pos-btn-table">
-    {row.code_erp}
-  </button>):null
-
   const render = () => {
     const elements = []
-    let remove = null
-    const get = (rows, x, y) => rows.filter((row, i)=>{
-      if(parseInt(row.coord_x) === x && parseInt(row.coord_y) === y){
-        remove = i
-        return true
-      }
-      return false
-    })
-
     const tmp = [...tables]
-    console.log("tmp", tmp)
+
+    const get_xy = (tables, x,y) => tables
+        .filter( row => parseInt(row.coord_x) === x && parseInt(row.coord_y) === y)[0] ?? null
+
     for(let x=0; x<10; x++) {
       for(let y=0; y<10; y++) {
         if(!tmp) return elements
@@ -63,7 +47,13 @@ function TableIndex() {
         if(row) {
           tmp.shift()
           console.log("tmp.length",tmp.length, "x",x,"y",y)
-          elements.push(<div key={get_uuid()}>{row.code_erp}</div>)
+          elements.push(
+            <div key={get_uuid()}>
+              <button type="button" className="btn btn-dark pos-btn-table">
+              {row.code_erp}
+              </button>
+            </div>
+          )
         }
         else {
           elements.push(<div key={get_uuid()}></div>)
