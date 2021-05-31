@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { get_uuid } from 'helpers/functions';
+import React, {useState} from "react"
+import { get_uuid } from "helpers/functions"
 
 function DropdownTable({multiconf, fnconfirm}) {
 

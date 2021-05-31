@@ -5,7 +5,8 @@ import Footer from "components/common/footer"
 import {async_ispinned} from "modules/login/login_index";
 import HrefDom from "helpers/href_dom";
 import {async_get_all_enabled_not_deleted} from "../async/async_repository";
-
+import { get_uuid } from "helpers/functions"
+import "modules/common/pos.css"
 
 function TableIndex() {
   const history = useHistory()
@@ -32,14 +33,26 @@ function TableIndex() {
     return () => console.log("login.insert.unmounting")
   },[])
 
-  //const get_tds = ar => ar.map( (objth,i) => <td key={i} scope="col">{objth.text}</td>) // get_tds
-  const get_div_cols = obj => Object.keys(obj).map( (objth,i) => <div className="col">{i}</div>) // get_tds
+  const get_xy = (tables, x,y) => tables
+      .filter( row => parseInt(row.coord_x) === x && parseInt(row.coord_y) === y)
+      .map( row => JSON.stringify(row))
+      .join(" ")
+
+  const render_button = row => row ?(<button type="button" className="btn-dark">
+    {row.code_erp}
+  </button>):null
 
   return (
       <>
         <Navbar />
         <main className="container">
-          {tables.map( (row, i) => <div className="row">{get_div_cols(row)}</div>)}
+          {[...Array(10).keys()].map(x =>
+              <div key={get_uuid()} className="row">
+                {[...Array(10).keys()].map(y =>
+                    <div key={get_uuid()}  className="col">{render_button(get_xy(tables,x,y))}</div>)
+                }
+              </div>)
+          }
         </main>
         <Footer />
       </>
