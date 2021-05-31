@@ -33,8 +33,9 @@ function TableIndex() {
     return () => console.log("login.insert.unmounting")
   },[])
 
+
   const get_xy = (tables, x,y) => tables
-      .filter( row => parseInt(row.coord_x) === x && parseInt(row.coord_y) === y)[0] ?? []
+      .filter( row => parseInt(row.coord_x) === x && parseInt(row.coord_y) === y)[0] ?? null
       //.map( row => JSON.stringify(row))
       //.join(" ")
 
@@ -42,20 +43,44 @@ function TableIndex() {
     {row.code_erp}
   </button>):null
 
+  const render = () => {
+    const elements = []
+    let remove = null
+    const get = (rows, x, y) => rows.filter((row, i)=>{
+      if(parseInt(row.coord_x) === x && parseInt(row.coord_y) === y){
+        remove = i
+        return true
+      }
+      return false
+    })
+
+    const tmp = [...tables]
+    console.log("tmp", tmp)
+    for(let x=0; x<4; x++) {
+      for(let y=0; y<4; y++) {
+        const row = get_xy(tmp, x, y)
+        console.log("ROW", row, x, y)
+        if(row) {
+          console.log("xxx")
+          elements.push(<div key={get_uuid()}>xxx</div>)
+        }
+        else {
+          console.log("yyy")
+          elements.push(<div key={get_uuid()}>yyy</div>)
+        }
+      }
+    }
+
+    console.log(elements)
+    return elements
+  }
+
   return (
       <>
         <Navbar />
         <h2 className="h2 text-center">Tables</h2>
         <div className="table-grid">
-        {[...Array(10).keys()].map(x =>
-            <div key={get_uuid()}>
-              {[...Array(10).keys()].map(y =>
-                  <div key={get_uuid()}>{render_button(get_xy(tables,x,y))}</div>)
-              }
-            </div>
-            )
-
-        }
+        {render()}
         </div>
         <Footer />
       </>
