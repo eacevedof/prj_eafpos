@@ -21,10 +21,13 @@ function TableIndex() {
     }
 
     HrefDom.document_title("Admin | POS-Tables")
-    const data = await async_get_all_enabled_not_deleted()
-    console.table(data.result)
-    set_tables(data.result)
+    refresh()
+  }
 
+  const refresh = async () => {
+    const data = await async_get_all_enabled_not_deleted()
+    //console.table(data.result)
+    set_tables(data.result)
   }
 
   useEffect(() => {
@@ -74,7 +77,7 @@ function TableIndex() {
   return (
       <>
         <Navbar />
-        <h2 className="h2 text-center">Tables</h2>
+        <button className="h2 text-center" onClick={refresh}>POS Tables</button>
         <div className="table-grid">
         {render()}
         </div>

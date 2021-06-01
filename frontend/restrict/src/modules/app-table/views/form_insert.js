@@ -148,16 +148,18 @@ reserved: "", //varchar(250)
           </div> 
         
           <div className="col-12">
-            <label htmlFor="txt-coord_x" className="form-label">label-coord_x</label>
-            <input type="text" className="form-control" id="txt-coord_x" placeholder="placeholder-coord_x"
+            <label htmlFor="num-coord_x" className="form-label">label-coord_x</label>
+            <input type="number" className="form-control" id="num-coord_x" placeholder="placeholder-coord_x"
+                   min="0" max="9"
               value={formdata.coord_x}
               onChange={updateform}
             />
           </div> 
         
           <div className="col-12">
-            <label htmlFor="txt-coord_y" className="form-label">label-coord_y</label>
-            <input type="text" className="form-control" id="txt-coord_y" placeholder="placeholder-coord_y"
+            <label htmlFor="num-coord_y" className="form-label">label-coord_y</label>
+            <input type="number" className="form-control" id="num-coord_y" placeholder="placeholder-coord_y"
+                   min="0" max="9"
               value={formdata.coord_y}
               onChange={updateform}
             />
