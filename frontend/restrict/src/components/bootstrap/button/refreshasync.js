@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react"
 
 //type: primary, secondary, success, danger, warning, info, light, dark
-function RefreshAsync({issubmitting, fnrefresh}) {
+function RefreshAsync({issubmitting, fnrefresh, css}) {
 
-  const cssbutton = `btn btn-info`
+  const cssbutton = css ?? `btn btn-info`
   const disabled = issubmitting ? "disabled" : null
   const strloading = " Loading..."
 

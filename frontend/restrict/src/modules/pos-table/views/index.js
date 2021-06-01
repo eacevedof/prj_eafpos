@@ -7,10 +7,12 @@ import HrefDom from "helpers/href_dom";
 import {async_get_all_enabled_not_deleted} from "../async/async_repository";
 import { get_uuid } from "helpers/functions"
 import "modules/common/pos.css"
+import RefreshAsync, {refreshasync} from "components/bootstrap/button/refreshasync"
 
 function TableIndex() {
   const history = useHistory()
   const [tables, set_tables] = useState([])
+  const [issubmitting, set_issubmitting] = useState(false)
 
   const async_onload = async () => {
     console.log("app_table.index.async_onload")
@@ -25,9 +27,11 @@ function TableIndex() {
   }
 
   const refresh = async () => {
+    set_issubmitting(true)
     const data = await async_get_all_enabled_not_deleted()
     //console.table(data.result)
     set_tables(data.result)
+    set_issubmitting(false)
   }
 
   useEffect(() => {
@@ -81,7 +85,7 @@ function TableIndex() {
         <Navbar />
         <div className="buttons-grid">
           <NavLink className="btn-lg btn-primary" exact to={"/admin"}>POS</NavLink>
-          <button type="button" className="btn-lg btn-dark" onClick={refresh}>POS Tables</button>
+          <RefreshAsync issubmitting={issubmitting} fnrefresh={refresh} css="btn-lg btn-dark" />
         </div>
         <div className="table-grid">
         {render()}
