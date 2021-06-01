@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {useHistory} from "react-router-dom"
+import {NavLink, useHistory} from "react-router-dom"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
 import {async_ispinned} from "modules/login/login_index";
@@ -16,7 +16,7 @@ function TableIndex() {
     console.log("app_table.index.async_onload")
     const ispinned = await async_ispinned()
     if(!ispinned){
-      history.push("/admin")
+      history.push("/")
       return
     }
 
@@ -79,7 +79,8 @@ function TableIndex() {
   return (
       <>
         <Navbar />
-        <div className="d-grid gap-2 col-6 mx-auto">
+        <div className="buttons-grid">
+          <NavLink className="btn-lg btn-primary" exact to={"/admin"}>POS</NavLink>
           <button type="button" className="btn-lg btn-dark" onClick={refresh}>POS Tables</button>
         </div>
         <div className="table-grid">
