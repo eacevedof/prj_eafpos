@@ -72,3 +72,15 @@
   border: 1px solid black;
   background: orange;
 }
+
+.table-grid .ul-data {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ul-data > li {
+  margin: 0;
+  padding: 0;
+  font-size: small;
+}

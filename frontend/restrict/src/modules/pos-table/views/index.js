@@ -55,8 +55,10 @@ function TableIndex() {
               <button type="button" className={`btn pos-btn-table ${otable.btn_state}`}>
               {otable.code_erp}
               </button>
-              <sub>{otable.user}</sub><br/>
-              <sub>{otable.time_passed} min</sub>
+              <ul className="ul-data">
+                <li>{otable.user}</li>
+                <li>{otable.time_passed} min</li>
+              </ul>
             </div>
           )
         }
@@ -77,7 +79,9 @@ function TableIndex() {
   return (
       <>
         <Navbar />
-        <button className="h2 text-center" onClick={refresh}>POS Tables</button>
+        <div className="d-grid gap-2 col-6 mx-auto">
+          <button type="button" className="btn-lg btn-dark" onClick={refresh}>POS Tables</button>
+        </div>
         <div className="table-grid">
         {render()}
         </div>
