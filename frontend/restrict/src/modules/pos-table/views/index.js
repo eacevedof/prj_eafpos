@@ -40,8 +40,10 @@ function TableIndex() {
     const get_xy = (tables, x,y) => tables
         .filter( row => parseInt(row.coord_x) === x && parseInt(row.coord_y) === y)[0] ?? null
 
-    for(let x=0; x<10; x++) {
-      for(let y=0; y<10; y++) {
+    const CELLS = 10
+
+    for(let x=0; x<CELLS; x++) {
+      for(let y=0; y<CELLS; y++) {
         if(!tmp) return elements
         const row = get_xy(tmp, x, y)
         if(row) {
@@ -52,11 +54,16 @@ function TableIndex() {
               <button type="button" className="btn btn-dark pos-btn-table">
               {row.code_erp}
               </button>
+              <sub>{row.user}</sub>
             </div>
           )
         }
         else {
-          elements.push(<div key={get_uuid()}></div>)
+          elements.push(
+            <div key={get_uuid()}>
+              <sub className="coord">({x},{y})</sub>
+            </div>
+          )
         }
       }
     }

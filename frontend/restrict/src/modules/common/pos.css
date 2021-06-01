@@ -40,3 +40,12 @@
     ". . . . . . . . . .";
 }
 
+.table-grid > div {
+  border: 1px solid #C2C3C4;
+  text-align: center;
+
+}
+
+.table-grid > div .coord {
+  color: #C2C3C4;
+}
