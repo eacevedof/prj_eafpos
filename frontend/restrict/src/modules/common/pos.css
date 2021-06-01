@@ -43,9 +43,32 @@
 .table-grid > div {
   border: 1px solid #C2C3C4;
   text-align: center;
-
 }
 
 .table-grid > div .coord {
   color: #C2C3C4;
+}
+
+.table-grid .btn-free {
+  color: black;
+  border: 1px solid black;
+  background: white;
+}
+
+.table-grid .btn-printed {
+  color: white;
+  border: 1px solid black;
+  background: purple;
+}
+
+.table-grid .btn-occupied {
+  color: white;
+  border: 1px solid black;
+  background: darkolivegreen;
+}
+
+.table-grid .btn-reserved {
+  color: black;
+  border: 1px solid black;
+  background: orange;
 }

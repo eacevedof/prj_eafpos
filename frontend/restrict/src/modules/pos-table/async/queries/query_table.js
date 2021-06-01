@@ -20,8 +20,34 @@ const _query = {
     "t.order_by",
     "t.code_cache",
     "t.reserved",
-
-    "u.description as user"
+    "t.is_printed",
+    `
+    CASE  
+      WHEN TRIM(COALESCE(t.diner_names,''))='' THEN
+        'btn-free'
+      ELSE
+        CASE t.is_printed
+          WHEN 0 THEN
+            CASE TRIM(COALESCE(t.reserved,''))
+              WHEN '' THEN
+                'btn-occupied'
+              ELSE
+                'btn-reserved'
+            END
+          ELSE
+            'btn-printed'
+        END
+    END AS btn_state 
+    `,
+    `
+    CASE  
+      WHEN t.time_start IS NOT NULL THEN
+        ROUND((UNIX_TIMESTAMP() - UNIX_TIMESTAMP(t.time_start)) / 60)
+      ELSE
+        ''
+    END AS time_passed 
+    `,
+    "u.description as user",
   ],
 
   joins: [

@@ -173,23 +173,25 @@ reserved: "", //varchar(250)
             />
           </div> 
         
-          <div className="col-12">
-            <label htmlFor="txt-coord_x" className="form-label">label-coord_x</label>
-            <input type="text" className="form-control" id="txt-coord_x" placeholder="placeholder-coord_x"
+          <div className="col-3">
+            <label htmlFor="num-coord_x" className="form-label">label-coord_x</label>
+            <input type="number" className="form-control" id="num-coord_x" placeholder="placeholder-coord_x"
+                   min="0" max="9"
               value={formdata.coord_x}
               onChange={updateform}
             />
           </div> 
         
-          <div className="col-12">
-            <label htmlFor="txt-coord_y" className="form-label">label-coord_y</label>
-            <input type="text" className="form-control" id="txt-coord_y" placeholder="placeholder-coord_y"
+          <div className="col-3">
+            <label htmlFor="num-coord_y" className="form-label">label-coord_y</label>
+            <input type="number" className="form-control" id="num-coord_y" placeholder="placeholder-coord_y"
+                   min="0" max="9"
               value={formdata.coord_y}
               onChange={updateform}
             />
           </div> 
         
-          <div className="col-12">
+          <div className="col-3">
             <label htmlFor="txt-time_start" className="form-label">label-time_start</label>
             <input type="text" className="form-control" id="txt-time_start" placeholder="placeholder-time_start"
               value={formdata.time_start}
@@ -197,7 +199,7 @@ reserved: "", //varchar(250)
             />
           </div> 
         
-          <div className="col-12">
+          <div className="col-3">
             <label htmlFor="txt-order_by" className="form-label">label-order_by</label>
             <input type="text" className="form-control" id="txt-order_by" placeholder="placeholder-order_by"
               value={formdata.order_by}

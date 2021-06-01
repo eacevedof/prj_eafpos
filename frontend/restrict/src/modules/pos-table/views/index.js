@@ -22,7 +22,6 @@ function TableIndex() {
 
     HrefDom.document_title("Admin | POS-Tables")
     const data = await async_get_all_enabled_not_deleted()
-    console.log(data,"pos-tables")
     console.table(data.result)
     set_tables(data.result)
 
@@ -45,16 +44,16 @@ function TableIndex() {
     for(let x=0; x<CELLS; x++) {
       for(let y=0; y<CELLS; y++) {
         if(!tmp) return elements
-        const row = get_xy(tmp, x, y)
-        if(row) {
+        const otable = get_xy(tmp, x, y)
+        if(otable) {
           tmp.shift()
-          console.log("tmp.length",tmp.length, "x",x,"y",y)
           elements.push(
             <div key={get_uuid()}>
-              <button type="button" className="btn btn-dark pos-btn-table">
-              {row.code_erp}
+              <button type="button" className={`btn pos-btn-table ${otable.btn_state}`}>
+              {otable.code_erp}
               </button>
-              <sub>{row.user}</sub>
+              <sub>{otable.user}</sub><br/>
+              <sub>{otable.time_passed} min</sub>
             </div>
           )
         }
