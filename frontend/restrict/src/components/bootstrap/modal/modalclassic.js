@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react"
 //import SubmitAsync from "components/bootstrap/button/submitasync"
 import "./modalclassic.css"
 
-function ModalClassic({isvisible, fn_onok, fn_onclose}){
+function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
   console.log("modal-classic.l-1")
   const modal_init = () => {
     const $modal = document.getElementById("my-modal")
@@ -16,9 +16,10 @@ function ModalClassic({isvisible, fn_onok, fn_onclose}){
 
   return (
     <>
-    <div id="my-modal" className={`modal fade show ${isvisible ? "modal-show": "modal-hide"}`} aria-hidden="true" tabIndex="-1">
+    <div id="my-modal"
+         className={`modal fade show ${isvisible ? "modal-show": "modal-hide"}`} aria-hidden="true" tabIndex="-1">
       <div className="modal-dialog">
-        <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Modal title</h5>
             <button type="button" className="btn-close" onClick={fn_onclose} data-bs-dismiss="modal" aria-label="Close"></button>
@@ -28,7 +29,7 @@ function ModalClassic({isvisible, fn_onok, fn_onclose}){
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={fn_onclose}>Close</button>
-            <button type="button" className="btn btn-primary" onClick={fn_onok}>Save changes</button>
+            <button type="button" className="btn btn-primary" onClick={fn_onaccept}>Save changes</button>
           </div>
         </div>
       </div>

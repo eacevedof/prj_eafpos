@@ -112,7 +112,7 @@ function TableIndex() {
         <div className="pos-table-grid">
         {render()}
         </div>
-        <ModalClassic isvisible={isvisible} fn_onok={on_accept} fn_onclose={on_close} />
+        <ModalClassic isvisible={isvisible} fn_onaccept={on_accept} fn_onclose={on_close} />
         <Footer />
       </>
   )
