@@ -55,6 +55,11 @@ function PosIndex() {
             <i className="fa fa-box-open"></i>&nbsp;Take away
           </NavLink>
         </div>
+        <div>
+          <NavLink className="btn btn-dark pos-dashboard-grid-btn-lg " exact to={"/pos-order"}>
+            <i className="fa fa-shopping-basket"></i>&nbsp;Check out
+          </NavLink>
+        </div>
       </div>
       <Footer />
     </>
