@@ -1,34 +1,29 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 //import React, {, useState, useRef} from "react"
 //import db from "helpers/localdb"
 //import SubmitAsync from "components/bootstrap/button/submitasync"
 
 function ModalClassic({isvisible, fn_onok}){
+  console.log("modal-classic.l-1")
+  const [objmodal, set_objmodal] = useState(null)
 
-  const modal = () => {
+  const modal_init = () => {
     const $modal = document.getElementById("my-modal")
     console.log("myModal",$modal)
     if($modal){
-      const bootModal = new window.bootstrap.Modal($modal)
+      //const bootModal = new window.bootstrap.Modal($modal)
       $modal.addEventListener("shown.bs.modal", function (){
 
       })
       $modal.addEventListener("hidden.bs.modal", function (){
 
       })
-
-      bootModal.show()
+      set_objmodal($modal)
+      //bootModal.show()
     }
 
   }
 
-  useEffect(() => {
-    console.log("modalclassic mounting")
-    modal()
-    return ()=> console.log("modalclassic unmounting")
-  },[])
-
-  //if(!isvisible) return null
 
   return (
     <div id="my-modal" className="modal" tabIndex="-1">
