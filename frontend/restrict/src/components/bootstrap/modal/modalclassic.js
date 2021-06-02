@@ -6,23 +6,30 @@ import React, {useEffect} from "react"
 function ModalClassic({isvisible, fn_onok}){
 
   const modal = () => {
-    const myModal = document.getElementById("my-modal")
-    console.log("myModal",myModal)
-    if(myModal){
-      const m = new window.bootstrap.Modal(myModal, {
-        keyboard: false
+    const $modal = document.getElementById("my-modal")
+    console.log("myModal",$modal)
+    if($modal){
+      const bootModal = new window.bootstrap.Modal($modal)
+      $modal.addEventListener("shown.bs.modal", function (){
+
       })
-      m.show()
+      $modal.addEventListener("hidden.bs.modal", function (){
+
+      })
+
+      bootModal.show()
     }
 
   }
 
   useEffect(() => {
-    return ()=> console.log("modalc unmounting")
+    console.log("modalclassic mounting")
     modal()
-  },[isvisible])
+    return ()=> console.log("modalclassic unmounting")
+  },[])
 
   //if(!isvisible) return null
+
   return (
     <div id="my-modal" className="modal" tabIndex="-1">
       <div className="modal-dialog">
