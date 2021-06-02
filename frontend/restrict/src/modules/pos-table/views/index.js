@@ -6,7 +6,7 @@ import {async_ispinned} from "modules/login/login_index";
 import HrefDom from "helpers/href_dom";
 import {async_get_all_enabled_not_deleted} from "../async/async_repository";
 import { get_uuid } from "helpers/functions"
-import "modules/common/pos.css"
+import "modules/common/pos_table.css"
 import RefreshAsync, {refreshasync} from "components/bootstrap/button/refreshasync"
 
 function TableIndex() {
@@ -83,11 +83,12 @@ function TableIndex() {
   return (
       <>
         <Navbar />
+        <h2 className="h2 text-center">POS Tables</h2>
         <div className="buttons-grid">
           <NavLink className="btn-lg btn-primary" exact to={"/admin"}>POS</NavLink>
           <RefreshAsync issubmitting={issubmitting} fnrefresh={refresh} css="btn-lg btn-dark" />
         </div>
-        <div className="table-grid">
+        <div className="pos-table-grid">
         {render()}
         </div>
         <Footer />

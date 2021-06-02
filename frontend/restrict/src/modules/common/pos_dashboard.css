@@ -21,59 +21,54 @@
   line-height: 50px;
 }
 
-.table-grid {
+.pos-dashboard-grid {
   padding: 10px;
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   grid-gap: 5px;
   grid-template-areas:
-    ". . . . . . . . . ."
-    ". . . . . . . . . ."
-    ". . . . . . . . . ."
-    ". . . . . . . . . ."
-    ". . . . . . . . . ."
-    ". . . . . . . . . ."
-    ". . . . . . . . . ."
-    ". . . . . . . . . ."
-    ". . . . . . . . . ."
-    ". . . . . . . . . .";
+    ". . . ."
+    ". . . ."
+    ". . . ."
+    ". . . ."
+    ". . . .";
 }
 
-.table-grid > div {
+.pos-dashboard-grid > div {
   border: 1px solid #C2C3C4;
   text-align: center;
 }
 
-.table-grid > div .coord {
+.pos-dashboard-grid > div .coord {
   color: #C2C3C4;
 }
 
-.table-grid .btn-free {
+.pos-dashboard-grid .btn-free {
   color: black;
   border: 1px solid black;
   background: white;
 }
 
-.table-grid .btn-printed {
+.pos-dashboard-grid .btn-printed {
   color: white;
   border: 1px solid black;
   background: purple;
 }
 
-.table-grid .btn-occupied {
+.pos-dashboard-grid .btn-occupied {
   color: white;
   border: 1px solid black;
   background: darkolivegreen;
 }
 
-.table-grid .btn-reserved {
+.pos-dashboard-grid .btn-reserved {
   color: black;
   border: 1px solid black;
   background: orange;
 }
 
-.table-grid .ul-data {
+.pos-dashboard-grid .ul-data {
   list-style-type: none;
   margin: 0;
   padding: 0;

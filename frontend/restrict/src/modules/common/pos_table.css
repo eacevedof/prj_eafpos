@@ -1,0 +1,95 @@
+.debug{
+  border: 1px solid red !important;
+}
+
+.pos-btn-lg {
+  width: 200px;
+  height: 100px;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 85px;
+}
+
+.pos-btn-table {
+  width: 75px;
+  height: 75px;
+  font-size: 32px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  line-height: 50px;
+}
+
+.pos-table-grid {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  grid-gap: 5px;
+  grid-template-areas:
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . ."
+    ". . . . . . . . . .";
+}
+
+.pos-table-grid > div {
+  border: 1px solid #C2C3C4;
+  text-align: center;
+}
+
+.pos-table-grid > div .coord {
+  color: #C2C3C4;
+}
+
+.pos-table-grid .btn-free {
+  color: black;
+  border: 1px solid black;
+  background: white;
+}
+
+.pos-table-grid .btn-printed {
+  color: white;
+  border: 1px solid black;
+  background: purple;
+}
+
+.pos-table-grid .btn-occupied {
+  color: white;
+  border: 1px solid black;
+  background: darkolivegreen;
+}
+
+.pos-table-grid .btn-reserved {
+  color: black;
+  border: 1px solid black;
+  background: orange;
+}
+
+.pos-table-grid .ul-data {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ul-data > li {
+  margin: 0;
+  padding: 0;
+  font-size: small;
+}
+
+.buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  grid-gap: 5px;
+  grid-template-areas:
+    ". . . . .";
+}
