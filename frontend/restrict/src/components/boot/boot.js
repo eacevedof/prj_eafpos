@@ -20,7 +20,7 @@ import {
 } from "react-router-dom";
 
 function Boot() {
-
+  console.log("Boot.js")
   const routes = [].concat(
       dashroutes, prodroutes,loginroutes, posroutes, tableroutes
       ,tableposroutes

@@ -1,26 +1,3 @@
-.debug{
-  border: 1px solid red !important;
-}
-
-.pos-btn-lg {
-  width: 200px;
-  height: 100px;
-  font-size: 32px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 85px;
-}
-
-.pos-btn-table {
-  width: 75px;
-  height: 75px;
-  font-size: 32px;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-  line-height: 50px;
-}
-
 .pos-dashboard-grid {
   padding: 10px;
   display: grid;
@@ -35,56 +12,11 @@
     ". . . .";
 }
 
-.pos-dashboard-grid > div {
-  border: 1px solid #C2C3C4;
+.pos-dashboard-grid-btn-lg {
+  width: 200px;
+  height: 100px;
+  font-size: 25px;
+  font-weight: bold;
   text-align: center;
-}
-
-.pos-dashboard-grid > div .coord {
-  color: #C2C3C4;
-}
-
-.pos-dashboard-grid .btn-free {
-  color: black;
-  border: 1px solid black;
-  background: white;
-}
-
-.pos-dashboard-grid .btn-printed {
-  color: white;
-  border: 1px solid black;
-  background: purple;
-}
-
-.pos-dashboard-grid .btn-occupied {
-  color: white;
-  border: 1px solid black;
-  background: darkolivegreen;
-}
-
-.pos-dashboard-grid .btn-reserved {
-  color: black;
-  border: 1px solid black;
-  background: orange;
-}
-
-.pos-dashboard-grid .ul-data {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.ul-data > li {
-  margin: 0;
-  padding: 0;
-  font-size: small;
-}
-
-.buttons-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-  grid-gap: 5px;
-  grid-template-areas:
-    ". . . . .";
+  line-height: 85px;
 }

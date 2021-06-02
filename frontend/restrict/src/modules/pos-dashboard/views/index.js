@@ -41,17 +41,17 @@ function PosIndex() {
       <h2 className="h2 text-center">POS Dashboard</h2>
       <div className="pos-dashboard-grid">
         <div>
-          <NavLink className="btn btn-dark pos-btn-lg" exact to={"/pos-tables"}>
+          <NavLink className="btn btn-dark pos-dashboard-grid-btn-lg " exact to={"/pos-tables"}>
             <i className="fa fa-chair"></i>&nbsp;Tables
           </NavLink>
         </div>
         <div>
-          <NavLink className="btn btn-dark pos-btn-lg" exact to={"/pos-bar"}>
+          <NavLink className="btn btn-dark pos-dashboard-grid-btn-lg " exact to={"/pos-bar"}>
             <i className="fa fa-cocktail"></i>&nbsp;Bar
           </NavLink>
         </div>
         <div>
-          <NavLink className="btn btn-dark pos-btn-lg" exact to={"/pos-take-away"}>
+          <NavLink className="btn btn-dark pos-dashboard-grid-btn-lg " exact to={"/pos-take-away"}>
             <i className="fa fa-box-open"></i>&nbsp;Take away
           </NavLink>
         </div>
