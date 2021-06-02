@@ -3,7 +3,7 @@ import PosIndex from "./views/index"
 
 export const routes = [
   {
-    path:"/admin",
+    path:"/pos",
     component: (<PosIndex />)
   },
 ]

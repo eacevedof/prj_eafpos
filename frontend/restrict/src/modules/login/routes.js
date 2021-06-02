@@ -1,5 +1,5 @@
 import React from "react"
-import LoginCode from "modules/login/forms/form_login"
+import LoginCode from "./views/form_login"
 
 export const routes = [
   {

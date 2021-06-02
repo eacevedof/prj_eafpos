@@ -2,7 +2,7 @@
 import React from "react"
 //import React, {useEffect, useState} from "react"
 import { NavLink } from "react-router-dom"
-import {async_ispinned} from "modules/login/login_index";
+import {async_ispinned} from "modules/login/async/login_checker";
 
 function Navbar() {
 
@@ -41,23 +41,18 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="top-navbar">
             <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
               <li className="nav-item">
+                <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/pos"}>
+                  <i className="fa fa-desktop"></i>&nbsp;POS
+                </NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/admin"}>
-                  <i className="fa fa-square"></i>&nbsp;POS
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/admin/dashboard"}>
-                  <i className="fa fa-square"></i>&nbsp;Dashboard
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/admin/products"}>
-                  <i className="fa fa-product-hunt"></i>&nbsp;Products
+                  <i className="fa fa-users-cog"></i>&nbsp;Admin
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" activeClassName="navlink-active" exact to={"/"}>
-                  <i className="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout
+                  <i className="fa fa-sign-out-alt" aria-hidden="true"></i>&nbsp;Logout
                 </NavLink>
               </li>
             </ul>

@@ -6,7 +6,7 @@ import { get_pages } from "helpers/functions"
 import db from "helpers/localdb" 
 import HrefDom from "helpers/href_dom"
 
-import {async_islogged} from "modules/login/login_index"
+import {async_islogged} from "modules/login/async/login_checker"
 import {async_get_list, async_multidelete, async_multideletelogic} from "modules/zzz-tpl/async/async_repository"
 
 import {VIEWCONFIG, grid} from "modules/zzz-tpl/async/queries/query_list"

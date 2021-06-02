@@ -2,13 +2,13 @@ import React, {useContext, useEffect} from "react"
 import {GlobalContext} from "components/context/global_context"
 
 import db from "helpers/localdb"
-import {async_gettoken, async_islogged} from "modules/login/login_index"
+import {async_gettoken, async_islogged} from "modules/login/async/login_checker"
 
-import {routes as prodroutes} from "modules/product/routes"
+import {routes as prodroutes} from "modules/adm-app-product/routes"
 import {routes as posroutes} from "modules/pos-dashboard/routes"
-import {routes as dashroutes} from "modules/dashboard/routes"
+import {routes as dashroutes} from "modules/adm-dashboard/routes"
 import {routes as loginroutes} from "modules/login/routes"
-import {routes as tableroutes} from "modules/app-table/routes"
+import {routes as tableroutes} from "modules/adm-app-table/routes"
 import {routes as tableposroutes} from "modules/pos-table/routes"
 
 import E404 from "modules/errors/404/e404"

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {NavLink, useHistory} from "react-router-dom"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
-import {async_ispinned} from "modules/login/login_index";
+import {async_ispinned} from "modules/login/async/login_checker";
 import HrefDom from "helpers/href_dom";
 import {async_get_all_enabled_not_deleted} from "../async/async_repository";
 import { get_uuid } from "helpers/functions"
