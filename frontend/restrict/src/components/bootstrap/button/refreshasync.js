@@ -23,7 +23,7 @@ function RefreshAsync({issubmitting, fnrefresh, css}) {
         {strloading}
         </>)
       :
-        <i className="fa fa-refresh fa-lg" aria-hidden="true"></i>
+        <i className="fa fa-sync-alt" aria-hidden="true"></i>
       }
     </button>
   )

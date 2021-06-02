@@ -85,7 +85,9 @@ function TableIndex() {
         <Navbar />
         <h2 className="h2 text-center">POS Tables</h2>
         <div className="buttons-grid">
-          <NavLink className="btn-lg btn-primary" exact to={"/admin"}>POS</NavLink>
+          <NavLink className="btn btn-lg btn-primary" exact to={"/pos"}>
+            <i className="fa fa-desktop"></i>&nbsp;&nbsp;POS
+          </NavLink>
           <RefreshAsync issubmitting={issubmitting} fnrefresh={refresh} css="btn-lg btn-dark" />
         </div>
         <div className="pos-table-grid">
