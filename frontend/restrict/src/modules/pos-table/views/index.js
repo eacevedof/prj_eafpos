@@ -43,6 +43,12 @@ function TableIndex() {
 
   const on_accept = () => {
     console.log("accept")
+    set_isvisible(false)
+  }
+
+  const on_close = () => {
+    console.log("on_close")
+    set_isvisible(false)
   }
 
   useEffect(() => {
@@ -106,7 +112,7 @@ function TableIndex() {
         <div className="pos-table-grid">
         {render()}
         </div>
-        <ModalClassic isvisible={isvisible} fn_onok={on_accept} />
+        <ModalClassic isvisible={isvisible} fn_onok={on_accept} fn_onclose={on_close} />
         <Footer />
       </>
   )
