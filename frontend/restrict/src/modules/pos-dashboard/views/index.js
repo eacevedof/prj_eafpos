@@ -10,7 +10,7 @@ import Footer from "components/common/footer"
 //import Api from "providers/api"
 //import { NavLink } from 'react-router-dom';
 import {async_ispinned} from "modules/login/async/login_checker"
-import "modules/common/pos_dashboard.css"
+import "modules/pos-dashboard/views/pos_dashboard.css"
 
 function PosIndex() {
 
