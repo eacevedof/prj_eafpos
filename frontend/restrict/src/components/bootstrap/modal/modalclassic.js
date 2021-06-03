@@ -1,7 +1,9 @@
 import React, {useEffect, useRef} from "react"
 import ReactDOM from "react-dom"
 import {CSSTransition} from "react-transition-group"
+import KeyboardNumber, {keyboard_number} from "components/bootstrap/app/keyboards/keyboard_number"
 import "./modalclassic.css"
+
 
 function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
   const nodeRef = useRef(null)
@@ -21,17 +23,8 @@ function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
         <div className={`modal show ${isvisible ? "modal-show": "modal-hide"}`} aria-hidden="true" tabIndex="-1">
           <div className="modal-dialog">
             <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Modal title</h5>
-                <button type="button" className="btn-close" onClick={fn_onclose} data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div className="modal-body">
-                <p>Modal body text goes here.</p>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={fn_onclose}>Close</button>
-                <button type="button" className="btn btn-primary" onClick={fn_onaccept}>Save changes</button>
-              </div>
+              <button type="button" className="btn-close" onClick={fn_onclose} data-bs-dismiss="modal" aria-label="Close"></button>
+              <KeyboardNumber/>
             </div>
           </div>
         </div>
