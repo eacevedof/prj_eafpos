@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useRef} from "react"
 import ReactDOM from "react-dom"
 import {CSSTransition} from "react-transition-group"
 //import React, {, useState, useRef} from "react"
@@ -7,6 +7,7 @@ import {CSSTransition} from "react-transition-group"
 import "./modalclassic.css"
 
 function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
+  const nodeRef = useRef(null)
   console.log("modal-classic.l-1")
 
   useEffect(() => {
@@ -17,6 +18,7 @@ function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
     <CSSTransition
       in={isvisible}
       unmountOnExit
+      nodeRef={nodeRef}
       timeout={{ enter: 0, exit: 300 }}
     >
       <div>
