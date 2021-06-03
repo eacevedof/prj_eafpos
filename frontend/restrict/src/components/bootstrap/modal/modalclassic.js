@@ -1,17 +1,13 @@
 import React, {useEffect, useRef} from "react"
 import ReactDOM from "react-dom"
 import {CSSTransition} from "react-transition-group"
-//import React, {, useState, useRef} from "react"
-//import db from "helpers/localdb"
-//import SubmitAsync from "components/bootstrap/button/submitasync"
 import "./modalclassic.css"
 
 function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
   const nodeRef = useRef(null)
-  console.log("modal-classic.l-1")
 
   useEffect(() => {
-    return () => console.log("login.insert.unmounting")
+    return () => console.log("modalclassic.unmounting")
   },[])
 
   return ReactDOM.createPortal(
