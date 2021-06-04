@@ -52,11 +52,13 @@ function KeyboardNumber({onaccept, oncancel}) {
   }
 
   const on_change = evt => {
+    console.log("on_change")
     if(input.length<maxlength)
       set_input(evt.target.value)
   }
 
   const on_keydown = evt => {
+    console.log("on_keydown")
     const key = evt.key
     console.log("key",key, "evt.withc",evt.which,"evtkeycode",evt.keyCode)
     if (is_copy_paste(evt)) return
@@ -84,17 +86,25 @@ function KeyboardNumber({onaccept, oncancel}) {
       el.fireEvent('on'+e.eventType, e);
     }
   }
-  const test_p = e => {
+  const test_p = (e) => {
     const el = e.target
-    triggerEvent(el, "keyup", 55)
+    const ev3 = document.createEvent("KeyboardEvent")
+    ev3.initEvent(
+        "keypress", true, true, window, false, false, false, false, 13, 0)
+    el.dispatchEvent(ev3)
   }
 
   const on_keyup = evt => {
+    console.log("on_keyup")
     const key = evt.key
     if(key==="Escape") return on_cancel()
     if(key==="Enter") return on_accept()
     if(key==="Backspace") set_input(input.slice(0,-1))
     if(key==="Delete") set_input("")
+  }
+
+  const on_keypress = evt => {
+    console.log("on_keypress")
   }
 
   return (
@@ -104,6 +114,7 @@ function KeyboardNumber({onaccept, oncancel}) {
                autoFocus
                ref={refinput}
                value={input}
+               onKeyPress={on_keypress}
                onChange={on_change}
                onKeyDown={on_keydown}
                onKeyUp={on_keyup}
