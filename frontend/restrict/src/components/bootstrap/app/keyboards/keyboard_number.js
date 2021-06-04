@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react"
 import "./keyboard_number.css"
 
-function KeyboardNumber({onsubmit, oncancel}) {
+function KeyboardNumber({onaccept, oncancel}) {
 
   const maxlength = 6
 
@@ -19,8 +19,7 @@ function KeyboardNumber({onsubmit, oncancel}) {
   }
 
   const on_accept = () => {
-    onsubmit(input)
-    refinput.current.focus()
+    onaccept()
   }
 
   const on_click = (n) => {
@@ -51,7 +50,6 @@ function KeyboardNumber({onsubmit, oncancel}) {
     <div className="keyboard-number-grid">
       <div className="input-group cell-span-2">
         <input type="text" className="form-control kb-input"
-
                autoFocus
                ref={refinput}
                value={input}

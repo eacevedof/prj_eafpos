@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from "react"
 import ReactDOM from "react-dom"
 import {CSSTransition} from "react-transition-group"
-import KeyboardNumber, {keyboard_number} from "components/bootstrap/app/keyboards/keyboard_number"
+import KeyboardNumber from "components/bootstrap/app/keyboards/keyboard_number"
 import "./modalclassic.css"
 
 
@@ -22,8 +22,8 @@ function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
       <>
         <div className={`modal show ${isvisible ? "modal-show": "modal-hide"}`} aria-hidden="true" tabIndex="-1">
           <div className="modal-dialog ajusta-ancho">
-            <div className="modal-content aplica-zindex-superior">
-              <KeyboardNumber oncancel={fn_onclose}/>
+            <div className="modal-content width-0 aplica-zindex-superior">
+              <KeyboardNumber oncancel={fn_onclose} onaccept={fn_onaccept}/>
             </div>
           </div>
         </div>
