@@ -68,26 +68,25 @@ function KeyboardNumber({onaccept, oncancel}) {
       evt.preventDefault()
   }
 
-  const test_p = () => {
-    const txtinput = refinput.current
-    console.log(txtinput)
-    const character = "7"
-    const e = new KeyboardEvent("Keypress", { bubbles: true, cancelable: true, key: character.charCodeAt(0), char: character, shiftKey: false });
-    console.log(e)
-    //var e = new KeyboardEvent("keydown", { bubbles: true, cancelable: true, key: "a".charCodeAt(0), char: "a", shiftKey: true });
-    return txtinput.dispatchEvent(e);
-
-    //const e = document.createEvent("KeyboardEvent");
-    /*
-    if (e.initKeyboardEvent) {  // Chrome, IE
-        e.initKeyboardEvent("keydown", true, true, document.defaultView, "Enter", 0, "", false, "");
-    } else { // FF
-        e.initKeyEvent("keydown", true, true, document.defaultView, false, false, false, false, character.charCodeAt(0), 0);
+  function triggerEvent(el, type, keyCode) {
+    if ('createEvent' in document) {
+      // modern browsers, IE9+
+      const e = document.createEvent('HTMLEvents');
+      e.keyCode = keyCode;
+      console.log("el",el,"type",type,"keycode",keyCode)
+      e.initEvent(type, false, true);
+      el.dispatchEvent(e);
+    } else {
+      // IE 8
+      const e = document.createEventObject();
+      e.keyCode = keyCode;
+      e.eventType = type;
+      el.fireEvent('on'+e.eventType, e);
     }
-    */
-    //(evt.initKeyEvent || evt.initKeyboardEvent)('keypress', true, true, document.defaultView, 0, 0, 0, 0, 0, character.charCodeAt(0));
-    e.initKeyboardEvent("keypress", true, true, document.defaultView, 0, 0, 0, 0, 0, character.charCodeAt(0));
-    return !txtinput.dispatchEvent(e);
+  }
+  const test_p = e => {
+    const el = e.target
+    triggerEvent(el, "keyup", 55)
   }
 
   const on_keyup = evt => {
