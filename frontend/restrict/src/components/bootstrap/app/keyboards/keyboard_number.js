@@ -3,7 +3,15 @@ import "./keyboard_number.css"
 
 function KeyboardNumber({onaccept, oncancel}) {
 
-  const maxlength = 6
+  const maxlength = 10
+  const validkeys = [
+      "Backspace","Delete","Shift","ArrowLeft","ArrowRight","ArrowTop","ArrowDown","Meta","Enter","Escape",
+      "0","1","2","3","4","5","6","7","8","9",
+      ",","."
+  ]
+
+  const in_array = (ar, value) => ar.filter( v => v===value).length>0
+  const in_string = (str, chars) => chars.filter(char => str.includes(char)).length>0
 
   const [input, set_input] = useState("")
   const refinput = useRef(null)
@@ -19,31 +27,50 @@ function KeyboardNumber({onaccept, oncancel}) {
   }
 
   const on_accept = () => {
-    onaccept()
+    const notnum = parseFloat(input.replace(",","."))
+    console.log(input,"is_number",notnum)
+    if(isNaN(notnum)){
+      refinput.current.focus()
+      return
+    }
+    onaccept(notnum)
   }
 
-  const on_click = (n) => {
+  const on_click = n => {
     if(input.length<maxlength)
       set_input(input.concat(n))
     refinput.current.focus()
   }
 
-  const on_change = (evt)=> {
+  const on_change = evt => {
     if(input.length<maxlength)
       set_input(evt.target.value)
   }
 
-  const on_keyup = (evt) => {
-    //console.log("evt",evt.key)
+  const on_keydown = evt => {
+    const key = evt.key
+    console.log("key",key)
+    if(
+        (!in_array(validkeys, key)) ||
+        (in_array([".",","], key) && in_string(input, [".",","]))
+    )
+      evt.preventDefault()
+  }
+
+  const on_keyup = evt => {
+    const key = evt.key
+    if(key==="Escape") return on_cancel()
+    if(key==="Enter") return on_accept()
+
     if(input.length===maxlength){
-      if(evt.key==="Backspace"){
+
+      if(key==="Backspace"){
         set_input(input.slice(0,-1))
       }
-      else if(evt.key==="Delete") {
+      else if(key==="Delete") {
         set_input("")
       }
     }
-    
   }
 
   return (
@@ -54,6 +81,7 @@ function KeyboardNumber({onaccept, oncancel}) {
                ref={refinput}
                value={input}
                onChange={on_change}
+               onKeyDown={on_keydown}
                onKeyUp={on_keyup}
         />
       </div>

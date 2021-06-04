@@ -41,8 +41,8 @@ function TableIndex() {
     set_isvisible(true)
   }
 
-  const on_accept = () => {
-    console.log("accept")
+  const on_accept = value => {
+    console.log("table.accept.value",value)
     set_isvisible(false)
   }
 
