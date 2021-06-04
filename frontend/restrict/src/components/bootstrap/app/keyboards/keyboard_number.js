@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react"
 import "./keyboard_number.css"
 
-function KeyboardNumber({onsubmit}) {
+function KeyboardNumber({onsubmit, oncancel}) {
 
   const maxlength = 6
 
@@ -13,12 +13,12 @@ function KeyboardNumber({onsubmit}) {
     refinput.current.focus()
   }
 
-  const on_nok = () => {
+  const on_cancel = () => {
     set_input("")
-    refinput.current.focus()
+    oncancel()
   }
 
-  const on_submit = () => {
+  const on_accept = () => {
     onsubmit(input)
     refinput.current.focus()
   }
@@ -111,7 +111,7 @@ function KeyboardNumber({onsubmit}) {
       </div>
       <div>
         <button className="btn btn-danger kb-btn" type="button"
-                onClick={on_nok}
+                onClick={on_cancel}
         >X</button>
       </div>
       <div>
@@ -121,7 +121,7 @@ function KeyboardNumber({onsubmit}) {
       </div>
       <div>
         <button className="btn btn-success kb-btn" type="button"
-                onClick={on_submit}
+                onClick={on_accept}
         >OK</button>
       </div>
     </div>

@@ -19,17 +19,16 @@ function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
       nodeRef={nodeRef}
       timeout={{ enter: 0, exit: 300 }}
     >
-      <div>
+      <>
         <div className={`modal show ${isvisible ? "modal-show": "modal-hide"}`} aria-hidden="true" tabIndex="-1">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <button type="button" className="btn-close" onClick={fn_onclose} data-bs-dismiss="modal" aria-label="Close"></button>
-              <KeyboardNumber/>
+          <div className="modal-dialog ajusta-ancho">
+            <div className="modal-content aplica-zindex-superior">
+              <KeyboardNumber oncancel={fn_onclose}/>
             </div>
           </div>
         </div>
         <div className={`modal-backdrop show ${isvisible ? "modal-show": "modal-hide"}`}></div>
-      </div>
+      </>
     </CSSTransition>,
     document.getElementById("root")
   )
