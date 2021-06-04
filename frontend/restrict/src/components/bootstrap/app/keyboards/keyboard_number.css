@@ -17,6 +17,14 @@
 
 .cell-span-2:first-child {
   grid-column: 1 / 3; /* span from grid column line 1 to 3 (i.e., span 2 columns) */
+  padding-right: 3px;
+  padding-bottom: 3px;
+}
+
+.kb-input{
+  font-size: 32px;
+  font-weight: bold;
+  background-color: white;
 }
 
 .kb-btn {
@@ -26,22 +34,12 @@
   font-weight: bold;
 }
 
-.kb-divinput{
-  width: 305px;
-}
-
-.kb-input{
-  font-size: 32px;
-  font-weight: bold;
-  background-color: white
-}
-
 .kb-btn-del{
   display: flex;
   align-items: center;
   justify-content: center;
   width: 150px;
-  height: 60px;
+  height: 85px;
   font-size: 32px;
   font-weight: bold;
-}   
+}

@@ -49,7 +49,7 @@ function KeyboardNumber({onsubmit}) {
 
   return (
     <div className="keyboard-number-grid">
-      <div className="input-group cell-span-2 kb-divinput">
+      <div className="input-group cell-span-2">
         <input type="text" className="form-control kb-input"
 
                autoFocus
@@ -108,6 +108,21 @@ function KeyboardNumber({onsubmit}) {
         <button className="btn btn-primary kb-btn" type="button"
                 onClick={() => on_click(1)}
         >1</button>
+      </div>
+      <div>
+        <button className="btn btn-danger kb-btn" type="button"
+                onClick={on_nok}
+        >X</button>
+      </div>
+      <div>
+        <button className="btn btn-primary kb-btn" type="button"
+                onClick={() => on_click(0)}
+        >0</button>
+      </div>
+      <div>
+        <button className="btn btn-success kb-btn" type="button"
+                onClick={on_submit}
+        >OK</button>
       </div>
     </div>
   )
