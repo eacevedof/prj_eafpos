@@ -12,6 +12,15 @@ function KeyboardNumber({onaccept, oncancel}) {
 
   const in_array = (ar, value) => ar.filter( v => v===value).length>0
   const in_string = (str, chars) => chars.filter(char => str.includes(char)).length>0
+  const is_copy_paste = e => {
+    const COPY = 67
+    const PASTE = 86
+
+    const key = parseInt(e.which || e.keyCode)
+    const ctrl = e.ctrlKey ? e.ctrlKey : (in_array([17,91], key) ? true : false)
+    console.log("ctrl",ctrl,"key",key)
+    return ((key === PASTE && ctrl) || (key === COPY && ctrl))
+  }
 
   const [input, set_input] = useState("")
   const refinput = useRef(null)
@@ -49,7 +58,9 @@ function KeyboardNumber({onaccept, oncancel}) {
 
   const on_keydown = evt => {
     const key = evt.key
-    console.log("key",key)
+    console.log("key",key, "evt.withc",evt.which,"evtkeycode",evt.keyCode)
+    if (is_copy_paste(evt)) return
+
     if(
         (!in_array(validkeys, key)) ||
         (in_array([".",","], key) && in_string(input, [".",","]))
