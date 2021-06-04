@@ -17,7 +17,7 @@ function KeyboardNumber({onaccept, oncancel}) {
     const PASTE = 86
 
     const key = parseInt(e.which || e.keyCode)
-    const ctrl = e.ctrlKey ? e.ctrlKey : (in_array([17,91], key) ? true : false)
+    const ctrl = e.ctrlKey || e.metaKey
     console.log("ctrl",ctrl,"key",key)
     return ((key === PASTE && ctrl) || (key === COPY && ctrl))
   }
@@ -72,16 +72,8 @@ function KeyboardNumber({onaccept, oncancel}) {
     const key = evt.key
     if(key==="Escape") return on_cancel()
     if(key==="Enter") return on_accept()
-
-    if(input.length===maxlength){
-
-      if(key==="Backspace"){
-        set_input(input.slice(0,-1))
-      }
-      else if(key==="Delete") {
-        set_input("")
-      }
-    }
+    if(key==="Backspace") set_input(input.slice(0,-1))
+    if(key==="Delete") set_input("")
   }
 
   return (
