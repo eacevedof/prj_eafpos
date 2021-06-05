@@ -86,13 +86,6 @@ function KeyboardNumber({onaccept, oncancel}) {
       el.fireEvent('on'+e.eventType, e);
     }
   }
-  const test_p = (e) => {
-    const el = e.target
-    const ev3 = document.createEvent("KeyboardEvent")
-    ev3.initEvent(
-        "keypress", true, true, window, false, false, false, false, 13, 0)
-    el.dispatchEvent(ev3)
-  }
 
   const on_keyup = evt => {
     console.log("on_keyup")
@@ -127,7 +120,7 @@ function KeyboardNumber({onaccept, oncancel}) {
       </div>
       <div>
         <button className="btn btn-primary kb-btn" type="button"
-                onClick={test_p}
+                onClick={on_click(7)}
         >7</button>
       </div>
       <div>
