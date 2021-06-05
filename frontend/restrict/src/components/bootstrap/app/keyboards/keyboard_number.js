@@ -61,19 +61,21 @@ function KeyboardNumber({onaccept, oncancel}) {
   const on_keydown = evt => {
     console.log("on_keydown")
     const key = evt.key
-    console.log("key",key, "evt.withc",evt.which,"evtkeycode",evt.keyCode)
-    if (is_copy_paste(evt)) return
+    console.log("key",key, "evt.which",evt.which,"evt.keycode",evt.keyCode)
+    if (
+      is_copy_paste(evt) ||
+      in_array(["Backspace","Delete","Shift","ArrowLeft","ArrowRight","Meta","Enter","Escape"], key)
+    ) return
 
     if(
         (!in_array(validkeys, key)) ||
-        (in_array([".",","], key) && in_string(input, [".",","]))
+        (in_array([".",","], key) && in_string(input, [".",","])) ||
+        (in_array(validkeys, key) && input.length>=maxlength)
     )
       evt.preventDefault()
   }
 
-  const on_keypress = evt => {
-    console.log("on_keypress")
-  }
+  const on_keypress = evt => console.log("on_keypress")
 
   const on_change = evt => {
     console.log("on_change")
@@ -85,7 +87,6 @@ function KeyboardNumber({onaccept, oncancel}) {
     const key = evt.key
     if(key==="Escape") return on_cancel()
     if(key==="Enter") return on_accept()
-    //if(key==="Backspace") set_input(input.slice(0,-1))
     if(key==="Delete") set_input("")
   }
 
