@@ -70,23 +70,6 @@ function KeyboardNumber({onaccept, oncancel}) {
       evt.preventDefault()
   }
 
-  function triggerEvent(el, type, keyCode) {
-    if ('createEvent' in document) {
-      // modern browsers, IE9+
-      const e = document.createEvent('HTMLEvents');
-      e.keyCode = keyCode;
-      console.log("el",el,"type",type,"keycode",keyCode)
-      e.initEvent(type, false, true);
-      el.dispatchEvent(e);
-    } else {
-      // IE 8
-      const e = document.createEventObject();
-      e.keyCode = keyCode;
-      e.eventType = type;
-      el.fireEvent('on'+e.eventType, e);
-    }
-  }
-
   const on_keyup = evt => {
     console.log("on_keyup")
     const key = evt.key
