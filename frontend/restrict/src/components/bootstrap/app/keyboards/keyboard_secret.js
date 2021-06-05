@@ -1,8 +1,25 @@
 import React, { useState, useRef } from "react"
+import "./keyboard_number.css"
 
-function KeyboardSecret({onsubmit}) {
+function KeyboardSecret({onaccept, oncancel}) {
 
   const maxlength = 6
+  const validkeys = [
+    "Backspace","Delete","Shift","ArrowLeft","ArrowRight","ArrowTop","ArrowDown","Meta","Enter","Escape",
+    "0","1","2","3","4","5","6","7","8","9"
+  ]
+
+  const in_array = (value, ar) => ar.filter( v => v===value).length>0
+  const in_string = (str, chars) => chars.filter(char => str.includes(char)).length>0
+
+  const is_copy_paste = e => {
+    const COPY = 67
+    const PASTE = 86
+
+    const key = parseInt(e.which || e.keyCode)
+    const ctrl = e.ctrlKey || e.metaKey
+    return ((key === PASTE && ctrl) || (key === COPY && ctrl))
+  }
 
   const [input, set_input] = useState("")
   const refinput = useRef(null)
@@ -12,178 +29,136 @@ function KeyboardSecret({onsubmit}) {
     refinput.current.focus()
   }
 
-  const on_nok = () => {
+  const on_cancel = () => {
     set_input("")
     refinput.current.focus()
   }
 
-  const on_submit = () => {
-    onsubmit(input)
-    refinput.current.focus()
+  const on_accept = () => {
+    const notnum = parseFloat(input.replace(",","."))
+    console.log(input,"is_number",notnum)
+    if(isNaN(notnum)){
+      refinput.current.focus()
+      return
+    }
+    onaccept(notnum)
   }
 
-  const on_click = (n) => {
+  const on_click = n => {
     if(input.length<maxlength)
       set_input(input.concat(n))
     refinput.current.focus()
   }
 
-  const on_change = (evt)=> {
-    if(input.length<maxlength)
-      set_input(evt.target.value)
+  const on_keydown = evt => {
+    console.log("on_keydown")
+    const key = evt.key
+    console.log("key",key, "evt.which",evt.which,"evt.keycode",evt.keyCode)
+    if (
+        is_copy_paste(evt) ||
+        in_array(key, ["Backspace","Delete","Shift","ArrowLeft","ArrowRight","Meta","Enter","Escape"])
+    ) return
+
+    if(
+        (!in_array(key, validkeys)) ||
+        (in_array(key, [".",","]) && in_string(input, [".",","])) ||
+        (in_array(key, validkeys) && input.length>=maxlength)
+    )
+      evt.preventDefault()
   }
 
-  const on_keyup = (evt) => {
-    //console.log("evt",evt.key)
-    if(input.length===maxlength){
-      if(evt.key==="Backspace"){
-        set_input(input.slice(0,-1))
-      }
-      else if(evt.key==="Delete") {
-        set_input("")
-      }
-    }
-    
+  const on_change = evt => {
+    console.log("on_change")
+    set_input(evt.target.value)
+  }
+
+  const on_keyup = evt => {
+    console.log("on_keyup")
+    const key = evt.key
+    if(key==="Escape") return on_cancel()
+    if(key==="Enter") return on_accept()
+    if(key==="Delete") set_input("")
   }
 
   return (
-    <div style={css.container}>
-      <div className="d-flex justify-content-center pt-2">
-        <div className="p-1 input-group" style={css.divinput}>
-          <input type="password" className="form-control" style={css.input}
-
-            autoFocus
-            ref={refinput}
-            value={input}
-            onChange={on_change}
-            onKeyUp={on_keyup}
+      <div className="keyboard-number-grid">
+        <div className="input-group cell-span-2">
+          <input type="password" className="form-control kb-input"
+                 autoFocus
+                 ref={refinput}
+                 value={input}
+                 onChange={on_change}
+                 onKeyDown={on_keydown}
+                 onKeyUp={on_keyup}
           />
         </div>
-        <div className="p-1">
-          <button className="btn btn-warning" type="button" style={css.btndel}
-            onClick={on_clear}
+        <div>
+          <button className="btn btn-warning kb-btn-del" type="button"
+                  onClick={on_clear}
           >&lt;</button>
         </div>
-      </div>
-      
-      <div className="d-flex justify-content-center">
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(7)}
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(7)}
           >7</button>
         </div>
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(8)}
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(8)}
           >8</button>
         </div>
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(9)}
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(9)}
           >9</button>
         </div>
-      </div>  
-      
-      <div className="d-flex justify-content-center">
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(4) }
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(4)}
           >4</button>
         </div>
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(5)}
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(5)}
           >5</button>
         </div>
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(6)}
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(6)}
           >6</button>
         </div>
-      </div>
-
-      <div className="d-flex justify-content-center">
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(1) }
-          >1</button>
-        </div>
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(2)}
-          >2</button>
-        </div>
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(3)}
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(3)}
           >3</button>
         </div>
-      </div>      
-
-      <div className="d-flex justify-content-center">
-        <div className="p-1">
-          <button className="btn btn-danger" type="button" style={css.btn}
-            onClick={on_nok}
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(2)}
+          >2</button>
+        </div>
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(1)}
+          >1</button>
+        </div>
+        <div>
+          <button className="btn btn-danger kb-btn" type="button"
+                  onClick={on_cancel}
           >X</button>
         </div>
-        <div className="p-1">
-          <button className="btn btn-primary" type="button" style={css.btn}
-            onClick={() => on_click(0)}
+        <div>
+          <button className="btn btn-primary kb-btn" type="button"
+                  onClick={() => on_click(0)}
           >0</button>
         </div>
-        <div className="p-1">
-          <button className="btn btn-success" type="button" style={css.btn}
-            onClick={on_submit}
+        <div>
+          <button className="btn btn-success kb-btn" type="button"
+                  onClick={on_accept}
           >OK</button>
         </div>
-      </div>     
-    </div>
+      </div>
   )
-}
-
-const css = {
-  container : {
-    position: "absolute",
-    //display: "flex",
-    top:0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    margin: "auto",
-    padding: "3px",
-    width: "475px",
-    height: "465px",
-    //border: "1px solid red"
-    backgroundColor: "#aaa",
-  },
-
-  btn : {
-    width: "145px",
-    height: "85px",
-    fontSize: "32px",
-    fontWeight: "bold",
-  },
-
-  divinput: {
-    //border: "1px solid red",
-    width: "305px",
-  },
-
-  input: {
-    fontSize: "32px",
-    fontWeight: "bold",
-    backgroundColor: "white"
-  },  
-
-  btndel : {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "150px",
-    height: "60px",
-    fontSize: "32px",
-    fontWeight: "bold",
-  }    
 }
 
 export default KeyboardSecret;

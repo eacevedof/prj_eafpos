@@ -1,5 +1,6 @@
 import React, {useEffect} from "react"
 import {useHistory} from "react-router-dom"
+import dt from "helpers/datetime"
 import db from "helpers/localdb"
 import {async_get_one_by_tpvcode, async_update_rnd} from "modules/login/async/async_repository"
 import Navbar from "components/common/navbar"
@@ -10,15 +11,17 @@ function FormLogin() {
   const history = useHistory()
 
   const on_submit = async tpvcode => {
-    let r = await async_get_one_by_tpvcode(tpvcode)
+    const pincode = tpvcode.toString()
+    let r = await async_get_one_by_tpvcode(pincode)
     console.log("result r tpv", r)
     db.delete("user_session")
     if(parseInt(r.foundrows)===1) {
       console.log("async_get_one_by_tpvcode",r)
       const usercode = r.result[0]["code_cache"]
       r = await async_update_rnd(usercode)
-      r = await async_get_one_by_tpvcode(tpvcode)
+      r = await async_get_one_by_tpvcode(pincode)
       db.save("user_session",r.result[0])
+      db.save("last_action", dt.get_timestamp_secs())
       history.push("/pos")
     }
   }
@@ -32,9 +35,11 @@ function FormLogin() {
     <>
       <Navbar />
       <main className="container">
-        <div className="d-flex justify-content-center bd-highlight mt-2">
-          <h1>Access code</h1>
-          <KeyboardSecret onsubmit={on_submit}/>
+        <div className="d-flex flex-column">
+          <h1 className="align-self-md-center">Access code</h1>
+          <div className="align-self-md-center">
+            <KeyboardSecret onaccept={on_submit}/>
+          </div>
         </div>
       </main>
       <Footer />

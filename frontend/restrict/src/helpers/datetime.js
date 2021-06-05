@@ -1,11 +1,19 @@
-const DateTime = {
+const datetime = {
   get_timestamp(){
-    return + new Date()
+    return new Date().getTime()
+  },
+
+  get_timestamp_secs() {
+    return Math.round(new Date().getTime()/1000)
+  },
+
+  get_timestamp_diff(large, small) {
+    return parseInt(large) - parseInt(small)
   },
 
   get_ymdhis(){
     const get_random = () => Math.random() * 1000
-    const pad2 = n => n < 10 ? '0' + n : n 
+    const pad2 = n => n < 10 ? "0" + n : n
     const date = new Date();
     return (date.getFullYear().toString() + 
               pad2(date.getMonth() + 1) + pad2( date.getDate()) + 
@@ -15,4 +23,4 @@ const DateTime = {
 
 }
 
-export default DateTime;
+export default datetime;

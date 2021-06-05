@@ -7,4 +7,6 @@ export const APIFY_CONTEXT = process.env.REACT_APP_ENV_APIFY_CONTEXT
 export const APIFY_SCHEMA = process.env.REACT_APP_ENV_APIFY_SCHEMA
 //necesita: token_upload
 export const UPLOAD_BASEURL = process.env.REACT_APP_ENV_UPLOAD_BASEURL
-/**/
+
+/*session*/
+export const TIME_SESSION = process.env.REACT_APP_ENV_TIME_SESSION
