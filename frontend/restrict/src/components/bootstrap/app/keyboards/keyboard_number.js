@@ -10,15 +10,22 @@ function KeyboardNumber({onaccept, oncancel}) {
       ",","."
   ]
 
+  /*
+  * keydown
+  * keypress
+  * change
+  * keyup
+  * */
+
   const in_array = (ar, value) => ar.filter( v => v===value).length>0
   const in_string = (str, chars) => chars.filter(char => str.includes(char)).length>0
+
   const is_copy_paste = e => {
     const COPY = 67
     const PASTE = 86
 
     const key = parseInt(e.which || e.keyCode)
     const ctrl = e.ctrlKey || e.metaKey
-    console.log("ctrl",ctrl,"key",key)
     return ((key === PASTE && ctrl) || (key === COPY && ctrl))
   }
 
@@ -51,12 +58,6 @@ function KeyboardNumber({onaccept, oncancel}) {
     refinput.current.focus()
   }
 
-  const on_change = evt => {
-    console.log("on_change")
-    if(input.length<maxlength)
-      set_input(evt.target.value)
-  }
-
   const on_keydown = evt => {
     console.log("on_keydown")
     const key = evt.key
@@ -70,17 +71,22 @@ function KeyboardNumber({onaccept, oncancel}) {
       evt.preventDefault()
   }
 
+  const on_keypress = evt => {
+    console.log("on_keypress")
+  }
+
+  const on_change = evt => {
+    console.log("on_change")
+    set_input(evt.target.value)
+  }
+
   const on_keyup = evt => {
     console.log("on_keyup")
     const key = evt.key
     if(key==="Escape") return on_cancel()
     if(key==="Enter") return on_accept()
-    if(key==="Backspace") set_input(input.slice(0,-1))
+    //if(key==="Backspace") set_input(input.slice(0,-1))
     if(key==="Delete") set_input("")
-  }
-
-  const on_keypress = evt => {
-    console.log("on_keypress")
   }
 
   return (
@@ -103,7 +109,7 @@ function KeyboardNumber({onaccept, oncancel}) {
       </div>
       <div>
         <button className="btn btn-primary kb-btn" type="button"
-                onClick={on_click(7)}
+                onClick={() => on_click(7)}
         >7</button>
       </div>
       <div>

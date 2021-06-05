@@ -19,12 +19,13 @@
   grid-column: 1 / 3; /* span from grid column line 1 to 3 (i.e., span 2 columns) */
   padding-right: 3px;
   padding-bottom: 2px;
+  width: 306px;
+  height: 87px;
 }
 
 .kb-input{
   font-size: 32px;
   font-weight: bold;
-  height: 85px;
 }
 
 .kb-btn {
