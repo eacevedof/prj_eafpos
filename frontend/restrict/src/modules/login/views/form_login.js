@@ -21,11 +21,12 @@ function FormLogin() {
       r = await async_get_one_by_tpvcode(pincode)
       db.save("user_session",r.result[0])
       r = db.select("last_location")
+      console.log("r",r)
       db.delete("last_location")
-      if (r!=="" && r!=="/") {
+      if (r && r!=="" && r!=="/") {
         return history.push(r)
       }
-      history.push(r ?? "/pos")
+      history.push("/pos")
     }
   }
 
