@@ -13,6 +13,24 @@ import RefreshAsync from 'components/bootstrap/button/refreshasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
 
+const formdefault = {
+  insert_date: "",
+  insert_user:"react",
+  update_date: "",
+  update_user:"react",
+
+  code_erp:"",
+  description:"",
+  slug:"",
+  description_full:"",
+  price_sale:"0",
+  price_sale1:"0",
+  order_by:"100",
+  display:"0",
+  url_image: "",
+  id_user: -1,
+}
+
 function ProductDetail(){
 
   const {id} = useParams()
@@ -29,23 +47,7 @@ function ProductDetail(){
     return ""
   }
 
-  const [formdata, set_formdata] = useState({
-    insert_date: "",
-    insert_user:"react",
-    update_date: "",
-    update_user:"react",
-
-    code_erp:"",
-    description:"",
-    slug:"",
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: "",
-    id_user: -1,
-  })
+  const [formdata, set_formdata] = useState(formdefault)
 
   const async_refresh = async () => {
     await async_onload()
@@ -77,7 +79,6 @@ function ProductDetail(){
       set_issubmitting(false)
     }    
   }
-
 
   useEffect(()=>{
     async_onload()

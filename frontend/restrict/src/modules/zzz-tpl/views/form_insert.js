@@ -9,20 +9,19 @@ import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Breadscrumb from 'components/bootstrap/breadscrumb/breadscrumb'
 import Footer from "components/common/footer"
 
+const formdefault = {
+  id_user:-1,
+
+  //%FIELDS_INSERT%
+}
+
 function ZzzTplInsert() {
 
   const [issubmitting, set_issubmitting] = useState(false)
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
   const refcode = useRef(null)
-
-  const formdefault = {
-    id_user:-1,
-
-    //%FIELDS_INSERT%
-  }
-
-  const [formdata, set_formdata] = useState({...formdefault})
+  const [formdata, set_formdata] = useState(formdefault)
 
   const updateform = evt =>{
     const elem = evt.target
@@ -32,9 +31,7 @@ function ZzzTplInsert() {
     set_formdata(temp)
   }
 
-  const before_submit = () => {
-
-  }
+  const before_submit = () => {}
 
   const on_submit = async (evt)=>{
     console.log("zzz_tpl.insert.on_submit.formdata:",formdata)
@@ -66,7 +63,6 @@ function ZzzTplInsert() {
   const async_onload = async () => {
     set_issubmitting(true)
     try {
-
       refcode.current.focus()
     }
     catch(error){

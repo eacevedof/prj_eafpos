@@ -11,6 +11,18 @@ import RefreshAsync from 'components/bootstrap/button/refreshasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
 
+const formdefault = {
+  insert_date: "",
+  insert_user:"",
+  update_date: "",
+  update_user:"",
+
+  id: -1,
+  id_user: -1,
+
+  //%FIELDS_DETAIL%
+}
+
 function ZzzTplDetail(){
 
   const {id} = useParams()
@@ -18,17 +30,7 @@ function ZzzTplDetail(){
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
 
-  const [formdata, set_formdata] = useState({
-    insert_date: "",
-    insert_user:"",
-    update_date: "",
-    update_user:"",
-
-    id: -1,
-    id_user: -1,
-
-    //%FIELDS_DETAIL%
-  })
+  const [formdata, set_formdata] = useState(formdefault)
 
   const async_refresh = async () => {
     await async_onload()

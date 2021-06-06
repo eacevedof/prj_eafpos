@@ -13,6 +13,29 @@ import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
 
+const formdefault = {
+  insert_user:"",
+  insert_date:"",
+  update_date:"",
+  update_user:"",
+  delete_user:"",
+  delete_date:"",
+
+  id: -1,
+  id_user: -1,
+
+  code_erp:"",
+  description:"",
+  slug:"",
+  description_full:"",
+  price_sale:"0",
+  price_sale1:"0",
+  order_by:"100",
+  display:"0",
+  url_image: "",
+
+}
+
 function ProductDeleteLogic(){
 
   const {id} = useParams()
@@ -21,28 +44,7 @@ function ProductDeleteLogic(){
   const [success, set_success] = useState("")
   const [isdeleted, set_isdeleted] = useState(false)
 
-  const [formdata, set_formdata] = useState({  
-    insert_user:"",
-    insert_date:"",
-    update_date:"",
-    update_user:"",    
-    delete_user:"",
-    delete_date:"",
-
-    id: -1,
-    id_user: -1,
-
-    code_erp:"",
-    description:"",
-    slug:"",
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: "",
-
-  })
+  const [formdata, set_formdata] = useState(formdefault)
 
   const [sysdata, set_sysdata] = useState({
     insert_user:"",

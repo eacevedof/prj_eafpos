@@ -11,6 +11,21 @@ import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Breadscrumb from 'components/bootstrap/breadscrumb/breadscrumb'
 import Footer from "components/common/footer"
 
+const formdefault = {
+  //id: -1,
+  id_user:-1, //hay que cambiarlo por un hash, es el owner del producto
+
+  code_erp:"",
+  description:"",
+  slug:"",
+  description_full:"",
+  price_sale:"0",
+  price_sale1:"0",
+  order_by:"100",
+  display:"0",
+  url_image: null,
+}
+
 function ProductInsert() {
 
   const [issubmitting, set_issubmitting] = useState(false)
@@ -18,24 +33,7 @@ function ProductInsert() {
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
   const refcode = useRef(null)
-
-  const formdefault = {
-    //id: -1,
-    id_user:-1, //hay que cambiarlo por un hash, es el owner del producto
-    
-    code_erp:"",
-    description:"",
-    slug:"",
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: null,
-    
-  }
-
-  const [formdata, set_formdata] = useState({...formdefault})
+  const [formdata, set_formdata] = useState(formdefault)
 
   const get_id = elem => {
     const idpref = elem.id || ""

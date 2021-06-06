@@ -14,6 +14,27 @@ import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
 
+const formdefault = {
+  insert_user:"",
+  insert_date:"",
+  update_date:"",
+  update_user:"",
+  delete_user:"",
+  delete_date:"",
+
+  id: -1,
+  id_user: -1,
+
+  code_erp:"",
+  description:"",
+  slug:"",
+  description_full:"",
+  price_sale:"0",
+  price_sale1:"0",
+  order_by:"100",
+  display:"0",
+  url_image: "",
+}
 
 function ProductDelete(){
 
@@ -24,27 +45,7 @@ function ProductDelete(){
   const refcode = useRef(null)
   const [isdeleted, set_isdeleted] = useState(false)
 
-  const [formdata, set_formdata] = useState({
-    insert_user:"",
-    insert_date:"",
-    update_date:"",
-    update_user:"",    
-    delete_user:"",
-    delete_date:"",
-
-    id: -1,
-    id_user: -1,
-
-    code_erp:"",
-    description:"",
-    slug:"",
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: "",
-  })
+  const [formdata, set_formdata] = useState(formdefault)
 
   const before_submit = () => {}
 
@@ -119,7 +120,6 @@ function ProductDelete(){
           {error && <AlertSimple message={error} type="danger"  />}
           {success && <ToastSimple message={success} title="Success" isvisible={true}  />}
           {error && <ToastSimple message={error} title="Error" isvisible={true}  />}
-
 
           <div className="col-md-3">
             <label htmlFor="txt-code_erp" className="form-label">Code</label>

@@ -12,6 +12,17 @@ import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
 
+const formdefault = {
+  insert_user:"",
+  insert_date:"",
+  update_date:"",
+  update_user:"",
+
+  id: -1,
+  id_user: -1,
+
+  //%FIELDS_UPDATE%
+}
 
 function ZzzTplUpdate(){
 
@@ -22,22 +33,7 @@ function ZzzTplUpdate(){
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
   const [inputfile,set_inputfile] = useState(null)
-
-  const formdefault = {
-    insert_user:"",
-    insert_date:"",
-    update_date:"",
-    update_user:"",
-
-    id: -1,
-    id_user: -1,
-    
-    //%FIELDS_UPDATE%
-  }
-
-  const [formdata, set_formdata] = useState({
-    ...formdefault
-  })
+  const [formdata, set_formdata] = useState(formdefault)
 
   const updateform = evt => {
     const elem = evt.target
