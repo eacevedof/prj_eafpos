@@ -2,12 +2,12 @@ import React, {createContext, useState} from "react"
 export const ZzzTplContext = createContext()
 
 const ZzzTplProvider = props => {
-  const [someglobal, set_someglobal] = useState("")
+  const [zzztpl, set_zzztpl] = useState("")
   
   return (
     <ZzzTplContext.Provider
       value={{
-        someglobal, set_someglobal
+        zzztpl, set_zzztpl
       }}
     >
       {props.children}
