@@ -10,6 +10,7 @@ const Session = ({component}) => {
   const on_idle = () => {
     db.delete("useruuid")
     db.delete("user_session")
+    db.save("last_location",window.location.href)
     history.push("/")
   }
 

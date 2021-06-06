@@ -1,6 +1,5 @@
 import React, {useEffect} from "react"
 import {useHistory} from "react-router-dom"
-import dt from "helpers/datetime"
 import db from "helpers/localdb"
 import {async_get_one_by_tpvcode, async_update_rnd} from "modules/login/async/async_repository"
 import Navbar from "components/common/navbar"
