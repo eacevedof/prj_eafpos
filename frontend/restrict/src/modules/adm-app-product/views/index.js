@@ -99,8 +99,8 @@ function ProductIndex() {
         <h1 className="mt-2 mb-2">Products</h1>
         <Breadscrumb urls={MODCONFIG.SCRUMBS.GENERIC}/>
         
-        {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
-        {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}       
+        {success && <ToastSimple message={success} title="Success" isvisible={true}  />}
+        {error && <ToastSimple message={error} title="Error" isvisible={true}  />}       
         
         <InputSearch cachekey={VIEWCONFIG.CACHE_KEY} fnsettext={set_txtsearch} foundrows={foundrows} />
 

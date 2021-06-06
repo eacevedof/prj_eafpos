@@ -115,10 +115,10 @@ reserved: "", //varchar(250)
         <Breadscrumb urls={MODCONFIG.SCRUMBS.GENERIC}/>
 
         <form className="row g-3" onSubmit={on_submit}>
-          {success!==""? <AlertSimple message={success} type="success" />: null}
-          {error!==""? <AlertSimple message={error} type="danger" />: null}
-          {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
-          {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}
+          {success && <AlertSimple message={success} type="success"  />}
+          {error && <AlertSimple message={error} type="danger"  />}
+          {success && <ToastSimple message={success} title="Success" isvisible={true}  />}
+          {error && <ToastSimple message={error} title="Error" isvisible={true}  />}
 
 
           <div className="col-md-3">

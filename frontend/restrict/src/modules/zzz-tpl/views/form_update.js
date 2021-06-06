@@ -115,8 +115,8 @@ function ZzzTplUpdate(){
 
         <form className="row g-3" onSubmit={on_submit}>
           
-          {success!==""? <AlertSimple message={success} type="success" />: null}
-          {error!==""? <AlertSimple message={error} type="danger" />: null}
+          {success && <AlertSimple message={success} type="success"  />}
+          {error && <AlertSimple message={error} type="danger"  />}
 
           <div className="col-md-3">
             <label htmlFor="txt-code_erp" className="form-label">Code</label>

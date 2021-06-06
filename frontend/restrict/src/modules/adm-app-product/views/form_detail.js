@@ -92,9 +92,9 @@ function ProductDetail(){
         <h1 className="mt-2 mb-2">Product Info</h1>
         <Breadscrumb urls={MODCONFIG.SCRUMBS.GENERIC}/>
         <div>
-          {error!==""? <AlertSimple message={error} type="danger" />: null}
-          {success!==""? <ToastSimple message={success} title="Success" isvisible={true} />: null}
-          {error!==""? <ToastSimple message={error} title="Error" isvisible={true} />: null}
+          {error && <AlertSimple message={error} type="danger" />}
+          {success && <ToastSimple message={success} title="Success" isvisible={true} />}
+          {error && <ToastSimple message={error} title="Error" isvisible={true} />}
           
           <div className="row">
             <div className="col-6">Nº</div>
