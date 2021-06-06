@@ -101,7 +101,7 @@ function AppTableIndex() {
             <Spinnergrow type="info" />
           :
           <>
-          <RefreshAsync issubmitting={issubmitting} fnrefresh={async_load_tables} />
+          <RefreshAsync issubmitting={issubmitting} onrefresh={async_load_tables} />
           <AppTableProvider>
             <AppTableAction 
               arhead={grid.headers} 

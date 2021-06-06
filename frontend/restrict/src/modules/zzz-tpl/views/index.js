@@ -102,7 +102,7 @@ function ZzzTplIndex() {
             <Spinnergrow type="info" />
           :
           <>
-          <RefreshAsync issubmitting={issubmitting} fnrefresh={async_load_tpls} />
+          <RefreshAsync issubmitting={issubmitting} onrefresh={async_load_tpls} />
           <ZzzTplProvider>
             <ZzzTplAction 
               arhead={grid.headers} 

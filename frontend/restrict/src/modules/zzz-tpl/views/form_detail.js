@@ -80,7 +80,7 @@ function ZzzTplDetail(){
           <div className="row">
             <div className="col-6">Nº</div>
             <div className="col-6">{formdata.id}&nbsp;&nbsp;&nbsp;
-              <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} />
+              <RefreshAsync issubmitting={issubmitting} onrefresh={async_refresh} />
             </div>
           </div>
 

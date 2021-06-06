@@ -133,7 +133,7 @@ reserved: "", //varchar(250)
           {
             isdeleted ? null:(
               <div className="col-md-3">
-                <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} />
+                <RefreshAsync issubmitting={issubmitting} onrefresh={async_refresh} />
               </div>
             )
           }

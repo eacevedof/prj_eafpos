@@ -5,7 +5,7 @@ import KeyboardNumber from "components/bootstrap/app/keyboards/keyboard_number"
 import "./modalclassic.css"
 
 
-function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
+function ModalClassic({isvisible, onaccept, onclose}){
   const nodeRef = useRef(null)
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function ModalClassic({isvisible, fn_onaccept, fn_onclose}){
         <div className={`modal show ${isvisible ? "modal-show": "modal-hide"}`} aria-hidden="true" tabIndex="-1">
           <div className="modal-dialog ajusta-ancho">
             <div className="modal-content width-0 aplica-zindex-superior">
-              <KeyboardNumber oncancel={fn_onclose} onaccept={fn_onaccept}/>
+              <KeyboardNumber oncancel={onclose} onaccept={onaccept}/>
             </div>
           </div>
         </div>

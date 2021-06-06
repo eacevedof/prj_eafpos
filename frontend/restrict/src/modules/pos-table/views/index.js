@@ -105,12 +105,12 @@ function TableIndex() {
         <NavLink className="btn btn-lg btn-primary" exact to={"/pos"}>
           <i className="fa fa-desktop"></i>&nbsp;&nbsp;POS
         </NavLink>
-        <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} css="btn-lg btn-dark" />
+        <RefreshAsync issubmitting={issubmitting} onrefresh={async_refresh} css="btn-lg btn-dark" />
       </div>
       <div className="pos-table-grid">
       {render(tables, on_click)}
       </div>
-      <ModalClassic isvisible={isvisible} fn_onaccept={on_accept} fn_onclose={on_close} />
+      <ModalClassic isvisible={isvisible} onaccept={on_accept} onclose={on_close} />
       <Footer />
     </>
   )

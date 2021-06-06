@@ -111,7 +111,7 @@ function ProductIndex() {
             <Spinnergrow type="info" />
           :
           <>
-          <RefreshAsync issubmitting={issubmitting} fnrefresh={async_load_products} />
+          <RefreshAsync issubmitting={issubmitting} onrefresh={async_load_products} />
           <TableProvider>
             <TableAction 
               arhead={grid.headers} 

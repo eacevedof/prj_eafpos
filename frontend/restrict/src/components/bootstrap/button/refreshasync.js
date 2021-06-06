@@ -1,7 +1,7 @@
 import React from "react"
 
 //type: primary, secondary, success, danger, warning, info, light, dark
-function RefreshAsync({issubmitting, fnrefresh, css}) {
+function RefreshAsync({issubmitting, onrefresh, css}) {
 
   const cssbutton = css ?? `btn btn-info`
   const disabled = issubmitting ? "disabled" : null
@@ -15,7 +15,7 @@ function RefreshAsync({issubmitting, fnrefresh, css}) {
 */
 
   return (
-    <button type="button" className={cssbutton} disabled={disabled} onClick={fnrefresh}>
+    <button type="button" className={cssbutton} disabled={disabled} onClick={onrefresh}>
       {issubmitting ?
         (<>
 

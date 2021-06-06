@@ -129,7 +129,7 @@ function ZzzTplUpdate(){
             />
           </div>
           <div className="col-md-3">
-            <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} />
+            <RefreshAsync issubmitting={issubmitting} onrefresh={async_refresh} />
           </div>
 
           %FORM_UPDATE%
