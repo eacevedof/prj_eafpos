@@ -4,13 +4,12 @@ import { useHistory } from "react-router"
 
 const SESSION_IDEL_MINUTES = 4;
 
-const Session = (props: any) => {
-  const { ComposedClass } = props
+const Session = ({component}) => {
   const history = useHistory()
 
-  const handleOnIdle = (event: any) => {
+  const handleOnIdle = event => {
     // SHOW YOUR MODAL HERE AND LAGOUT
-    console.log("user is idle", event)
+    //console.log("user is idle", event)
     console.log("last active", getLastActiveTime())
     history.push("/")
   }
@@ -21,7 +20,7 @@ const Session = (props: any) => {
     debounce: 500,
   })
 
-  return <ComposedClass />
+  return component
 }
 
 export default Session

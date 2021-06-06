@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from "react"
 import {GlobalContext} from "components/context/global_context"
-
+import Session from "components/common/session"
 import db from "helpers/localdb"
 import {async_gettoken, async_islogged} from "modules/login/async/login_checker"
 
@@ -22,8 +22,8 @@ import {
 function Boot() {
   console.log("Boot.js")
   const routes = [].concat(
-      dashroutes, prodroutes,loginroutes, posroutes, tableroutes
-      ,tableposroutes
+    dashroutes, prodroutes,loginroutes, posroutes, tableroutes,
+    tableposroutes
   )
 
   //console.log("routes",routes)
@@ -62,7 +62,9 @@ function Boot() {
   return (
     <Router>
       <Switch>
-        {routes.map((obj,i) => (<Route key={i} path={obj.path} exact>{obj.component}</Route>))}
+        {routes.map((obj,i) => (
+            <Route key={i} path={obj.path} exact><Session component={obj.component} /></Route>
+        ))}
 
         <Route path="/admin/order">
           <>orders</>
