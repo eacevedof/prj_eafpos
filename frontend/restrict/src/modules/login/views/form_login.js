@@ -21,7 +21,6 @@ function FormLogin() {
       r = await async_update_rnd(usercode)
       r = await async_get_one_by_tpvcode(pincode)
       db.save("user_session",r.result[0])
-      db.save("last_action", dt.get_timestamp_secs())
       history.push("/pos")
     }
   }
