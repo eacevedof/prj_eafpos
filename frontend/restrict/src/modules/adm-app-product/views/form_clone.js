@@ -13,6 +13,26 @@ import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
 
+const formdefault = {
+  insert_user:"",
+  insert_date:"",
+  update_date:"",
+  update_user:"",
+
+  id: -1,
+  code_erp:"",
+  description:"",
+  slug:"",
+
+  description_full:"",
+  price_sale:"0",
+  price_sale1:"0",
+  order_by:"100",
+  display:"0",
+  url_image: "",
+  id_user:1,
+}
+
 function ProductClone(){
 
   const {id} = useParams()
@@ -22,29 +42,8 @@ function ProductClone(){
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
 
-  const formdefault = {
-    insert_user:"",
-    insert_date:"",
-    update_date:"",
-    update_user:"",
 
-    id: -1,
-    code_erp:"",
-    description:"",
-    slug:"",
-    
-    description_full:"",
-    price_sale:"0",
-    price_sale1:"0",
-    order_by:"100",
-    display:"0",
-    url_image: "",
-    id_user:1,
-  }
-
-  const [formdata, set_formdata] = useState({
-    ...formdefault
-  })
+  const [formdata, set_formdata] = useState(formdefault)
 
   const before_submit = () => {}
 

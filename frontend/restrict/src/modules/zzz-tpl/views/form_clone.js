@@ -11,6 +11,18 @@ import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
 
+const formdefault = {
+  insert_user:"",
+  insert_date:"",
+  update_date:"",
+  update_user:"",
+
+  id: -1,
+  id_user: -1,
+
+  //%FIELDS_CLONE%
+}
+
 function ZzzTplClone(){
 
   const {id} = useParams()
@@ -20,21 +32,7 @@ function ZzzTplClone(){
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
 
-  const formdefault = {
-    insert_user:"",
-    insert_date:"",
-    update_date:"",
-    update_user:"",
-
-    id: -1,
-    id_user: -1,
-    
-    //%FIELDS_CLONE%
-  }
-
-  const [formdata, set_formdata] = useState({
-    ...formdefault
-  })
+  const [formdata, set_formdata] = useState(formdefault)
 
   const before_submit = () => {}
 

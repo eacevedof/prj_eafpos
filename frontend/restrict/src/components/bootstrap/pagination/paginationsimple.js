@@ -15,7 +15,7 @@ function PaginationSimple({objconf}){
 
   const get_uuid = () => shortid.generate()
   
-  const get_buttons = (ipage,ipages) => {
+  const get_buttons = (ipage, ipages) => {
 
     if(ipages===0) return []
     if(ipages===1) return []
@@ -93,7 +93,7 @@ function PaginationSimple({objconf}){
     //pr(arurls,"arurls")
     set_npages(ipages)
     set_urls(arurls)
-    //console.log("paginationsimple.on_load:","ipage",ipage,"foundrows",foundrows,"hops",hops,"ipages",ipages,"arurls",arurls)
+    console.log("paginationsimple.on_load:","ipage",ipage,"foundrows",foundrows,"hops",hops,"ipages",ipages,"arurls",arurls)
   }
 
   useEffect(()=>{
@@ -125,11 +125,11 @@ function PaginationSimple({objconf}){
   return (
     <nav className="d-flex justify-content-center">
       <ul className="pagination">
-        { objconf.page >1 ? get_li_arrow("l", ipage-1) : null }
+        { ipage >1 ? get_li_arrow("l", ipage-1) : null }
 
         {
           urls.map(objurl => 
-            objurl.text === objconf.page ?
+            objurl.text === ipage ?
               get_li_active(objurl.url, objurl.text)
             : //si no es la página actual
               objurl.url==="..." ? get_li_dotted() : get_li_simple(objurl.url, objurl.text)
