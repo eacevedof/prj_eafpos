@@ -3,14 +3,16 @@ import { useIdleTimer } from "react-idle-timer"
 import { useHistory } from "react-router"
 import {TIME_SESSION} from "config/constants"
 import db from "helpers/localdb"
+import {useLocation} from "react-router-dom"
 
 const Session = ({component}) => {
   const history = useHistory()
+  let location = useLocation()
 
   const on_idle = () => {
     db.delete("useruuid")
     db.delete("user_session")
-    db.save("last_location",window.location.href)
+    db.save("last_location", location.pathname)
     history.push("/")
   }
 

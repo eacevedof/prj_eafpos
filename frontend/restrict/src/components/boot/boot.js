@@ -20,18 +20,16 @@ import {
 } from "react-router-dom";
 
 function Boot() {
-  console.log("Boot.js")
+
   const routes = [].concat(
     dashroutes, prodroutes,loginroutes, posroutes, tableroutes,
     tableposroutes
   )
 
-  //console.log("routes",routes)
   const {set_apifytoken, set_errorg} = useContext(GlobalContext)
 
   const async_onload = async () => {
     let apifytoken = ""
-    //lee el token de la bd y lanza peticion al serv para comprobar si es correcta
     const islogged = await async_islogged()
 
     if(islogged){

@@ -20,7 +20,12 @@ function FormLogin() {
       r = await async_update_rnd(usercode)
       r = await async_get_one_by_tpvcode(pincode)
       db.save("user_session",r.result[0])
-      history.push("/pos")
+      r = db.select("last_location")
+      db.delete("last_location")
+      if (r!=="" && r!=="/") {
+        return history.push(r)
+      }
+      history.push(r ?? "/pos")
     }
   }
 
