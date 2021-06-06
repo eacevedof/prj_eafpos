@@ -67,15 +67,15 @@ function TableIndex() {
     }
 
     HrefDom.document_title("Admin | POS-Tables")
-    refresh()
+    await async_refresh()
   },[])
 
-  const refresh = useMemo( () => async () => {
+  const async_refresh = async () => {
     set_issubmitting(true)
     const data = await async_get_all_enabled_not_deleted()
     set_tables(data.result)
     set_issubmitting(false)
-  },[tables])
+  }
 
   const on_click = () => {
     console.log("on click")
@@ -105,7 +105,7 @@ function TableIndex() {
         <NavLink className="btn btn-lg btn-primary" exact to={"/pos"}>
           <i className="fa fa-desktop"></i>&nbsp;&nbsp;POS
         </NavLink>
-        <RefreshAsync issubmitting={issubmitting} fnrefresh={refresh} css="btn-lg btn-dark" />
+        <RefreshAsync issubmitting={issubmitting} fnrefresh={async_refresh} css="btn-lg btn-dark" />
       </div>
       <div className="pos-table-grid">
       {render(tables, on_click)}
