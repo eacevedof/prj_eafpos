@@ -1,5 +1,5 @@
 import React from "react"
-import ActionClone from "modules/adm-app-product/hooks/action_clone";
+import ActionClone from "modules/adm-app-product/hooks/action_index";
 
 import Navbar from "components/common/navbar"
 import ToastSimple from 'components/bootstrap/toast/toastsimple'
