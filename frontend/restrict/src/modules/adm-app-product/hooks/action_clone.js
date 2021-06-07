@@ -8,7 +8,7 @@ import HrefDom from "helpers/href_dom";
 import db from "helpers/localdb";
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 
-function ActionIndex(){
+function  ActionIndex(){
   const {page} = useParams()
   const history = useHistory()
 

@@ -1,5 +1,5 @@
 import React from "react"
-import ActionClone from "modules/adm-app-product/hooks/action_index";
+import  ActionIndex from "modules/adm-app-product/hooks/action_index";
 
 import Navbar from "components/common/navbar"
 import ToastSimple from 'components/bootstrap/toast/toastsimple'
@@ -14,10 +14,10 @@ import Footer from "components/common/footer"
 
 function ProductIndex() {
 
-  const { scrumbs, cachekey } = ActionClone()
-  const { error, success} = ActionClone()
-  const {async_load_products, on_multiconfirm} = ActionClone()
-  const { result, foundrows} = ActionClone()
+  const { scrumbs, cachekey } =  ActionIndex()
+  const { error, success} =  ActionIndex()
+  const {async_load_products, on_multiconfirm} =  ActionIndex()
+  const { result, foundrows} =  ActionIndex()
 
   const {
     urlpagination,
@@ -28,7 +28,7 @@ function ProductIndex() {
 
     set_txtsearch,
     issubmitting,
-  } = ActionClone()
+  } =  ActionIndex()
 
   return (
     <>
