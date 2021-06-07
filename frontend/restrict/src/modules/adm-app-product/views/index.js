@@ -16,23 +16,18 @@ function ProductIndex() {
 
   const { scrumbs, cachekey } = ActionClone()
   const { error, success} = ActionClone()
+  const {async_load_products, on_multiconfirm} = ActionClone()
+  const { result, foundrows} = ActionClone()
 
   const {
     urlpagination,
     perpage,
     page,
-    result,
-    foundrows,
-
-
     headers,
     viewconfig,
 
     set_txtsearch,
     issubmitting,
-    async_load_products,
-    on_multiconfirm,
-
   } = ActionClone()
 
   return (
