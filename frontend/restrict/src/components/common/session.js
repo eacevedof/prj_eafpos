@@ -10,10 +10,13 @@ const Session = ({component}) => {
   let location = useLocation()
 
   const on_idle = () => {
-    db.delete("useruuid")
-    db.delete("user_session")
-    db.save("last_location", location.pathname)
-    history.push("/")
+    if(db.select("user_session")){
+      db.delete("useruuid")
+      db.delete("user_session")
+      if(location.pathname!=="/")
+        db.save("last_location", location.pathname)
+      history.push("/")
+    }
   }
 
   const {getLastActiveTime } = useIdleTimer({

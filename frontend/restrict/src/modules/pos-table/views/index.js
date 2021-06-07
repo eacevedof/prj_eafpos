@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback, useMemo} from "react"
+import React, {useEffect, useState, useCallback} from "react"
 import {NavLink, useHistory} from "react-router-dom"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"

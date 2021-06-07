@@ -19,6 +19,8 @@ function FormLogin() {
       const usercode = r.result[0]["code_cache"]
       r = await async_update_rnd(usercode)
       r = await async_get_one_by_tpvcode(pincode)
+
+      db.save("useruuid",usercode)
       db.save("user_session",r.result[0])
       r = db.select("last_location")
       console.log("r",r)
