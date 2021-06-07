@@ -1,94 +1,111 @@
-import {useHistory, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {async_get_list, async_multidelete, async_multideletelogic} from "../async/async_requests";
+import {useParams} from "react-router-dom";
+import {useEffect, useRef, useState} from "react";
+import {
+  async_clone,
+  async_get_by_id
+} from "../async/async_requests";
 import {get_pages} from "helpers/functions";
 import {grid, VIEWCONFIG} from "../async/queries/query_list";
-import {async_ispinned} from "../../login/async/login_checker";
+import {async_ispinned} from "modules/login/async/login_checker";
 import HrefDom from "helpers/href_dom";
 import db from "helpers/localdb";
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 
-function  ActionIndex(){
-  const {page} = useParams()
-  const history = useHistory()
+const formdefault = {
+  insert_user:"",
+  insert_date:"",
+  update_date:"",
+  update_user:"",
+
+  id: -1,
+  code_erp:"",
+  description:"",
+  slug:"",
+
+  description_full:"",
+  price_sale:"0",
+  price_sale1:"0",
+  order_by:"100",
+  display:"0",
+  url_image: "",
+  id_user:1,
+}
+
+function ActionClone() {
+  const {id} = useParams()
+  const refcode = useRef(null)
 
   const [issubmitting, set_issubmitting] = useState(false)
-  const [error,] = useState("")
+  const [error, set_error] = useState("")
   const [success, set_success] = useState("")
-  const [txtsearch, set_txtsearch] = useState("")
+  const [formdata, set_formdata] = useState(formdefault)
 
-  const [result, set_result] = useState([])
-  const [foundrows, set_foundrows] = useState(0)
+  const before_submit = () => {}
 
-  const on_multiconfirm = keys => async straction => {
-    switch(straction){
-      case "delete":
-        await async_multidelete(keys)
-        set_success("products deleted: ".concat(keys.toString()))
-        break
-      case "deletelogic":
-        await async_multideletelogic(keys)
-        set_success("products deleted: ".concat(keys.toString()))
-        break
-    }
-    await async_load_products()
+  const async_refresh = async () => {
+    await async_onload()
   }
 
-  async function async_load_products(){
+  const on_submit = async (evt)=>{
+    evt.preventDefault()
+
     set_issubmitting(true)
-    const r = await async_get_list(page, txtsearch)
-    const ipages = get_pages(r.foundrows, VIEWCONFIG.PERPAGE)
-    if(page>ipages) history.push(VIEWCONFIG.URL_PAGINATION.replace("%page%",1))
+    set_error("")
+    set_success("")
 
-    set_issubmitting(false)
-    set_result(r.result)
-    set_foundrows(r.foundrows)
-  }
+    before_submit()
+    try {
+      const r = await async_clone(formdata)
+      set_success("Product cloned. Nº: ".concat(r))
+      refcode.current.focus()
+    }
+    catch (error) {
+      set_error(error)
+    }
+    finally {
+      set_issubmitting(false)
+    }
+
+  }// on_submit
 
   const async_onload = async () => {
-    console.log("product.index.async_onload")
-    const ispinned = await async_ispinned()
 
-    if(!ispinned){
-      history.push("/admin")
-      return
+    console.log("product.clone.onload.formdata:",formdata)
+    set_issubmitting(true)
+    try {
+      const r = await async_get_by_id(id)
+      console.log("product.clone.onload.r",r)
+      const temp = {...formdata, ...r}
+      set_formdata(temp)
+    }
+    catch (error){
+      set_error(error)
+    }
+    finally {
+      set_issubmitting(false)
     }
 
-    HrefDom.document_title("Admin | Products")
-    const search = db.select(VIEWCONFIG.CACHE_KEY)
-    if(!txtsearch && search){
-      set_txtsearch(search)
-      return
-    }
-
-    await async_load_products()
-  }
+  }// async_onload
 
   useEffect(()=>{
     async_onload()
+    return ()=> console.log("product.clone unmounting")
+  }, [id])
 
-    return ()=> console.log("product.index unmounting")
-  },[page, txtsearch])
 
   return {
-    scrumbs: MODCONFIG.SCRUMBS.GENERIC,
-    cachekey: VIEWCONFIG.CACHE_KEY,
-    perpage: VIEWCONFIG.PERPAGE,
-    urlpagination: VIEWCONFIG.URL_PAGINATION,
-    headers: grid.headers,
-    viewconfig: VIEWCONFIG,
+    scrumbs:MODCONFIG.SCRUMBS.GENERIC,
 
-    page,
-    foundrows,
     success,
     error,
-    result,
+    formdata,
+    refcode,
 
-    set_txtsearch,
+
     issubmitting,
-    async_load_products,
-    on_multiconfirm,
+    async_refresh,
+    on_submit,
   }
 }
 
-export default  ActionIndex
+export default  ActionClone

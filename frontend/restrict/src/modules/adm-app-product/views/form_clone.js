@@ -1,7 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {useParams} from "react-router-dom"
+import React from "react"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
-import {async_get_by_id, async_clone} from "modules/adm-app-product/async/async_requests"
 import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
@@ -12,93 +10,16 @@ import RefreshAsync from 'components/bootstrap/button/refreshasync'
 import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
-
-const formdefault = {
-  insert_user:"",
-  insert_date:"",
-  update_date:"",
-  update_user:"",
-
-  id: -1,
-  code_erp:"",
-  description:"",
-  slug:"",
-
-  description_full:"",
-  price_sale:"0",
-  price_sale1:"0",
-  order_by:"100",
-  display:"0",
-  url_image: "",
-  id_user:1,
-}
+import ActionClone from "modules/adm-app-product/hooks/action_clone"
 
 function ProductClone(){
 
-  const {id} = useParams()
-  const refcode = useRef(null)
-
-  const [issubmitting, set_issubmitting] = useState(false)
-  const [error, set_error] = useState("")
-  const [success, set_success] = useState("")
-
-
-  const [formdata, set_formdata] = useState(formdefault)
-
-  const before_submit = () => {}
-
-  const async_refresh = async () => {
-    await async_onload()
-  }  
+  const { refcode, scrumbs } =  ActionClone()
+  const { error, success} =  ActionClone()
+  const {async_refresh, on_multiconfirm} =  ActionClone()
+  const {formdata, on_submit} =  ActionClone()
+  const {issubmitting} =  ActionClone()
   
-  const on_submit = async (evt)=>{
-    console.log("product.clon.on_submit.formdata:",formdata)
-    evt.preventDefault()
-
-    set_issubmitting(true)
-    set_error("")
-    set_success("")
-
-    //hacer insert y enviar fichero
-    before_submit()
-    try {
-      const r = await async_clone(formdata)
-      set_success("Product cloned. Nº: ".concat(r))
-      //set_formdata({...formdefault})
-      refcode.current.focus()
-    } 
-    catch (error) {
-      set_error(error)
-    } 
-    finally {
-      set_issubmitting(false)
-    }
-    
-  }// on_submit
-
-  const async_onload = async () => {
-    
-    console.log("product.clone.onload.formdata:",formdata)
-    set_issubmitting(true)
-    try {
-      const r = await async_get_by_id(id)
-      console.log("product.clone.onload.r",r)
-      const temp = {...formdata, ...r}
-      set_formdata(temp)  
-    }
-    catch (error){
-      set_error(error)
-    }
-    finally {
-      set_issubmitting(false)
-    }
-
-  }// async_onload
-
-  useEffect(()=>{
-    async_onload()
-    return ()=> console.log("product.clone unmounting")
-  }, [id])
 
   return (
     <>
@@ -106,7 +27,7 @@ function ProductClone(){
       <main className="container">
         
         <h1 className="mt-2 mb-2">Product clone</h1>
-        <Breadscrumb urls={MODCONFIG.SCRUMBS.GENERIC}/>
+        <Breadscrumb urls={scrumbs}/>
 
         <form className="row g-3" onSubmit={on_submit}>
           {success && <AlertSimple message={success} type="success"  />}
