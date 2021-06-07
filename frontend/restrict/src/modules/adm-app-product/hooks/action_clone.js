@@ -2,10 +2,11 @@ import {useHistory, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {async_get_list, async_multidelete, async_multideletelogic} from "../async/async_requests";
 import {get_pages} from "helpers/functions";
-import {VIEWCONFIG} from "../async/queries/query_list";
+import {grid, VIEWCONFIG} from "../async/queries/query_list";
 import {async_ispinned} from "../../login/async/login_checker";
 import HrefDom from "helpers/href_dom";
 import db from "helpers/localdb";
+import {MODCONFIG} from "modules/adm-app-product/config/config"
 
 function ActionClone(){
   const {page} = useParams()
@@ -20,7 +21,6 @@ function ActionClone(){
   const [foundrows, set_foundrows] = useState(0)
 
   const on_multiconfirm = keys => async straction => {
-    //pr(straction,"straction")
     switch(straction){
       case "delete":
         await async_multidelete(keys)
@@ -37,10 +37,7 @@ function ActionClone(){
   async function async_load_products(){
     set_issubmitting(true)
     const r = await async_get_list(page, txtsearch)
-    //pr(r.foundrows)
-    //pr(r.result)
     const ipages = get_pages(r.foundrows, VIEWCONFIG.PERPAGE)
-    //alert(page)
     if(page>ipages) history.push(VIEWCONFIG.URL_PAGINATION.replace("%page%",1))
 
     set_issubmitting(false)
@@ -49,8 +46,6 @@ function ActionClone(){
   }
 
   const async_onload = async () => {
-    //pr(txtsearch)
-    //pr(get_localip(),"localip")
     console.log("product.index.async_onload")
     const ispinned = await async_ispinned()
 
@@ -70,13 +65,19 @@ function ActionClone(){
   }
 
   useEffect(()=>{
-    //https://stackoverflow.com/questions/53446020/how-to-compare-oldvalues-and-newvalues-on-react-hooks-useeffect
     async_onload()
 
     return ()=> console.log("product.index unmounting")
   },[page, txtsearch])
 
   return {
+    scrumbs: MODCONFIG.SCRUMBS.GENERIC,
+    cachekey: VIEWCONFIG.CACHE_KEY,
+    perpage: VIEWCONFIG.PERPAGE,
+    urlpagination: VIEWCONFIG.URL_PAGINATION,
+    headers: grid.headers,
+    viewconfig: VIEWCONFIG,
+
     page,
     foundrows,
     success,

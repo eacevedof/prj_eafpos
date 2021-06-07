@@ -1,6 +1,4 @@
 import React from "react"
-import {MODCONFIG} from "modules/adm-app-product/config/config"
-import {VIEWCONFIG, grid} from "modules/adm-app-product/async/queries/query_list"
 import ActionClone from "modules/adm-app-product/hooks/action_clone";
 
 import Navbar from "components/common/navbar"
@@ -16,12 +14,19 @@ import Footer from "components/common/footer"
 
 function ProductIndex() {
 
+  const { scrumbs, cachekey } = ActionClone()
+  const { error, success} = ActionClone()
+
   const {
+    urlpagination,
+    perpage,
     page,
-    foundrows,
-    success,
-    error,
     result,
+    foundrows,
+
+
+    headers,
+    viewconfig,
 
     set_txtsearch,
     issubmitting,
@@ -35,14 +40,14 @@ function ProductIndex() {
       <Navbar />
       <main className="container">
         <h1 className="mt-2 mb-2">Products</h1>
-        <Breadscrumb urls={MODCONFIG.SCRUMBS.GENERIC}/>
+        <Breadscrumb urls={scrumbs}/>
         
         {success && <ToastSimple message={success} title="Success" isvisible={true}  />}
         {error && <ToastSimple message={error} title="Error" isvisible={true}  />}       
         
-        <InputSearch cachekey={VIEWCONFIG.CACHE_KEY} fnsettext={set_txtsearch} foundrows={foundrows} />
+        <InputSearch cachekey={cachekey} fnsettext={set_txtsearch} foundrows={foundrows} />
 
-        <PaginationSimple objconf={{page, foundrows, ippage:VIEWCONFIG.PERPAGE, url:VIEWCONFIG.URL_PAGINATION}} />
+        <PaginationSimple objconf={{page, foundrows, ippage:perpage, url:urlpagination}} />
         
         {
           issubmitting ?
@@ -52,16 +57,16 @@ function ProductIndex() {
           <RefreshAsync issubmitting={issubmitting} onrefresh={async_load_products} />
           <TableProvider>
             <TableAction 
-              arhead={grid.headers} 
+              arhead={headers}
               ardata={result} 
-              objconf={VIEWCONFIG}
-              multiconf={{ACTIONS:VIEWCONFIG.MULTIACTIONS, fnmultiaction:on_multiconfirm }} 
+              objconf={viewconfig}
+              multiconf={{ACTIONS:viewconfig.MULTIACTIONS, fnmultiaction:on_multiconfirm }}
             />
           </TableProvider>
           </>
         }
 
-        <PaginationSimple objconf={{page, foundrows, ippage:VIEWCONFIG.PERPAGE, url:VIEWCONFIG.URL_PAGINATION}} />
+        <PaginationSimple objconf={{page, foundrows, ippage:perpage, url:urlpagination}} />
       </main>
       <Footer />
     </>
