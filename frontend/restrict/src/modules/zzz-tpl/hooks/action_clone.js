@@ -1,10 +1,11 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
+import {useParams} from "react-router-dom"
+import {useEffect, useRef, useState} from "react"
 import {
   async_clone,
   async_get_by_id
-} from "../async/async_requests";
+} from "../async/async_requests"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
+import {seldisplay} from "modules/common/options"
 
 const formdefault = {
   insert_user:"",
@@ -13,20 +14,12 @@ const formdefault = {
   update_user:"",
 
   id: -1,
-  code_erp:"",
-  description:"",
-  slug:"",
+  id_user: -1,
 
-  description_full:"",
-  price_sale:"0",
-  price_sale1:"0",
-  order_by:"100",
-  display:"0",
-  url_image: "",
-  id_user:1,
+  //%FIELDS_CLONE%
 }
 
-function ActionClone() {
+function ZzzTplClone() {
   const {id} = useParams()
   const refcode = useRef(null)
 
@@ -42,6 +35,7 @@ function ActionClone() {
   }
 
   const on_submit = async (evt)=>{
+    console.log("zzz_tpl.clon.on_submit.formdata:",formdata)
     evt.preventDefault()
 
     set_issubmitting(true)
@@ -51,7 +45,7 @@ function ActionClone() {
     before_submit()
     try {
       const r = await async_clone(formdata)
-      set_success("Product cloned. Nº: ".concat(r))
+      set_success("Tpl cloned. Nº: ".concat(r))
       refcode.current.focus()
     }
     catch (error) {
@@ -65,11 +59,11 @@ function ActionClone() {
 
   const async_onload = async () => {
 
-    console.log("product.clone.onload.formdata:",formdata)
+    console.log("zzz_tpl.clone.onload.formdata:",formdata)
     set_issubmitting(true)
     try {
       const r = await async_get_by_id(id)
-      console.log("product.clone.onload.r",r)
+      console.log("zzz_tpl.clone.onload.r",r)
       const temp = {...formdata, ...r}
       set_formdata(temp)
     }
@@ -84,9 +78,8 @@ function ActionClone() {
 
   useEffect(()=>{
     async_onload()
-    return ()=> console.log("product.clone unmounting")
-  }, [id])
-
+    return ()=> console.log("zzz_tpl.clone unmounting")
+  },[id])
 
   return {
     scrumbs:MODCONFIG.SCRUMBS.GENERIC,
@@ -96,11 +89,10 @@ function ActionClone() {
     formdata,
     refcode,
 
-
     issubmitting,
     async_refresh,
     on_submit,
   }
 }
 
-export default  ActionClone
+export default ZzzTplClone
