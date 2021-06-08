@@ -1,7 +1,4 @@
 import React from "react"
-import {MODCONFIG} from "modules/adm-app-product/config/config"
-import {seldisplay} from "modules/common/options"
-
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
 import ToastSimple from 'components/bootstrap/toast/toastsimple'
@@ -14,12 +11,11 @@ import ActionClone from "modules/adm-app-product/hooks/action_clone"
 
 function ProductClone(){
 
-  const { refcode, scrumbs } =  ActionClone()
-  const { error, success} =  ActionClone()
-  const {async_refresh, on_multiconfirm} =  ActionClone()
-  const {formdata, on_submit} =  ActionClone()
-  const {issubmitting} =  ActionClone()
-  
+  const {refcode, scrumbs} = ActionClone()
+  const {error, success} = ActionClone()
+  const {formdata, on_submit} = ActionClone()
+  const {issubmitting} = ActionClone()
+  const {async_refresh} = ActionClone()
 
   return (
     <>

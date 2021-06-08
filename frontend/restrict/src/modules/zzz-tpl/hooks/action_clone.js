@@ -1,11 +1,10 @@
-import {useParams} from "react-router-dom"
-import {useEffect, useRef, useState} from "react"
+import {useParams} from "react-router-dom";
+import {useEffect, useRef, useState} from "react";
 import {
   async_clone,
   async_get_by_id
-} from "../async/async_requests"
+} from "../async/async_requests";
 import {MODCONFIG} from "modules/adm-app-product/config/config"
-import {seldisplay} from "modules/common/options"
 
 const formdefault = {
   insert_user:"",
@@ -96,13 +95,12 @@ function ActionClone() {
     error,
     formdata,
     refcode,
-    seldisplay,
+
 
     issubmitting,
     async_refresh,
     on_submit,
-
   }
 }
 
-export default ActionClone
+export default  ActionClone
