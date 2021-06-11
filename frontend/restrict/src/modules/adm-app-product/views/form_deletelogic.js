@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
-import {async_get_by_id, async_deletelogic} from "modules/adm-app-product/async/async_requests"
+import {async_get_by_id, async_deletelogic} from "modules/adm-app-product/async/async_repository"
 import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"

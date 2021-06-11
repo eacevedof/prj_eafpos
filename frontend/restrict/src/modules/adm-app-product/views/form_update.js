@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {is_defined, is_empty, is_string, isset} from "helpers/functions"
-import {async_get_by_id, async_update, async_get_maxuploadsize} from "modules/adm-app-product/async/async_requests"
+import {async_get_by_id, async_update, async_get_maxuploadsize} from "modules/adm-app-product/async/async_repository"
 import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"

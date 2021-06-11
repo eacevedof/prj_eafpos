@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react"
 import {
   async_clone,
   async_get_by_id
-} from "../async/async_requests"
+} from "../async/async_repository"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {seldisplay} from "modules/common/options"
 

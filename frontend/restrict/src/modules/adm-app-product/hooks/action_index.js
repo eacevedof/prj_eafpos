@@ -1,6 +1,6 @@
 import {useHistory, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {async_get_list, async_multidelete, async_multideletelogic} from "../async/async_requests";
+import {async_get_list, async_multidelete, async_multideletelogic} from "../async/async_repository";
 import {get_pages} from "helpers/functions";
 import {grid, VIEWCONFIG} from "../async/queries/query_list";
 import {async_ispinned} from "../../login/async/login_checker";

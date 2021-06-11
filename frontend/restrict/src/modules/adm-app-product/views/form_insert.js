@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {is_empty, isset, is_defined} from "helpers/functions"
-import {async_insert, async_get_maxuploadsize} from "modules/adm-app-product/async/async_requests"
+import {async_insert, async_get_maxuploadsize} from "modules/adm-app-product/async/async_repository"
 import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
