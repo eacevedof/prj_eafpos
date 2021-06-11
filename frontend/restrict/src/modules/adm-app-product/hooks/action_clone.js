@@ -1,9 +1,6 @@
 import {useParams} from "react-router-dom"
 import {useEffect, useRef, useState} from "react"
-import {
-  async_clone,
-  async_get_by_id
-} from "../async/async_repository"
+import {async_clone, async_get_by_id} from "modules/adm-app-product/async/async_repository"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {seldisplay} from "modules/common/options"
 
@@ -51,9 +48,10 @@ function ActionClone() {
 
     before_submit()
     try {
+      console.log("product on_submit")
       const r = await async_clone(formdata)
       set_success("Product cloned. Nº: ".concat(r))
-      refcode.current.focus()
+      console.log("product cloned")
     }
     catch (error) {
       set_error(error)

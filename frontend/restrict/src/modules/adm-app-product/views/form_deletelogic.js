@@ -11,7 +11,10 @@ import ActionDeleteLogic from "modules/adm-app-product/hooks/action_deletelogic"
 
 function ProductDeleteLogic(){
 
-  const {issubmitting, error, success, isdeleted, formdata, sysdata, breadscrumb} = ActionDeleteLogic()
+  const {error, success, issubmitting, isdeleted} = ActionDeleteLogic()
+  const {breadscrumb} = ActionDeleteLogic()
+  const {seldisplay, formdata, sysdata} = ActionDeleteLogic()
+  const {on_submit, async_refresh} = ActionDeleteLogic()
 
   return (
     <>
@@ -23,7 +26,7 @@ function ProductDeleteLogic(){
 
         <form className="row g-3" onSubmit={on_submit}>
           {success && <AlertSimple message={success} type="success"  />}
-          {error && <AlertSimple message={error} type="danger"  />}
+          {error && <AlertSimple message={error} type="danger" />}
           {success && <ToastSimple message={success} title="Success" isvisible={true}  />}
           {error && <ToastSimple message={error} title="Error" isvisible={true}  />}
 

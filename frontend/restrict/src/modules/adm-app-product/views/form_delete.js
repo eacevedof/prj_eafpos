@@ -13,7 +13,7 @@ function ProductDelete(){
 
   const {error, success} = ActionDelete()
   const {isdeleted, issubmitting} = ActionDelete()
-  const {scrumbs, seldisplay, formdata, async_refresh} = ActionDelete()
+  const {scrumbs, seldisplay, refcode, formdata, async_refresh, on_submit} = ActionDelete()
 
   return (
     <>

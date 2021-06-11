@@ -116,7 +116,6 @@ function ActionDeleteLogic(){
     breadscrumb: MODCONFIG.SCRUMBS.GENERIC,
     success,
     error,
-    refcode,
     formdata,
     sysdata,
 
