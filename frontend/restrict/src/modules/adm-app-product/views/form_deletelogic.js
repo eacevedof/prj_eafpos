@@ -1,5 +1,4 @@
 import React from "react"
-import {useParams} from "react-router-dom"
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
 import ToastSimple from 'components/bootstrap/toast/toastsimple'
