@@ -40,10 +40,9 @@ function ProductDeleteLogic(){
           </div>
           <div className="col-12">
             <label htmlFor="txt-description" className="form-label">Description</label>
-            <input type="text" className="form-control" id="txt-description" placeholder="Name of product" 
-            
-            value={formdata.description}
-            disabled 
+            <input type="text" className="form-control" id="txt-description" placeholder="Name of product"
+              value={formdata.description}
+              disabled
             />
           </div>
           
