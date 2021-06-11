@@ -1,93 +1,107 @@
-import {useEffect} from "react"
-import {useParams, useHistory} from "react-router-dom"
-import {MODCONFIG} from "modules/zzz-tpl/config/config"
-import { get_pages } from "helpers/functions"
-import db from "helpers/localdb"
-import HrefDom from "helpers/href_dom"
-import {async_islogged} from "modules/login/async/login_checker"
-import {async_get_list, async_multidelete, async_multideletelogic} from "modules/zzz-tpl/async/async_repository"
-import {VIEWCONFIG, grid} from "modules/zzz-tpl/async/queries/query_list"
+import React, {useState, useEffect, useRef} from "react"
+import {useParams} from "react-router-dom"
+import {MODCONFIG} from "modules/adm-app-product/config/config"
+import { is_empty } from "helpers/functions";
+import {async_get_by_id, async_delete} from "modules/zzz-tpl/async/async_repository"
+import {seldisplay} from "modules/common/options"
 
+const formdefault = {
+  insert_user:"",
+  insert_date:"",
+  update_date:"",
+  update_user:"",
+  delete_user:"",
+  delete_date:"",
 
-function ActionIndex(){
-  const {page} = useParams()
+  id: -1,
+  id_user: -1,
+
+  //%FIELDS_DELETE%
+}
+
+function ActionDelete(){
+
+  const {id} = useParams()
   const [issubmitting, set_issubmitting] = useState(false)
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
-  const [txtsearch, set_txtsearch] = useState("")
+  const refcode = useRef(null)
+  const [isdeleted, set_isdeleted] = useState(false)
 
-  const history = useHistory()
-  const [result, set_result] = useState([])
-  const [foundrows, set_foundrows] = useState(0)
+  const [formdata, set_formdata] = useState(formdefault)
 
-  const on_multiconfirm = keys => async straction => {
-    switch(straction){
-      case "delete":
-        await async_multidelete(keys)
-        set_success("Tpls deleted: ".concat(keys.toString()))
-        break
-      case "deletelogic":
-        await async_multideletelogic(keys)
-        set_success("Tpls deleted: ".concat(keys.toString()))
-        break
-    }
-    await async_load_tpls()
+  const before_submit = () => {}
+
+  const async_refresh = async () => {
+    await async_onload()
   }
 
-  async function async_load_tpls(){
+  const on_submit = async (evt)=>{
+    console.log("zzz_tpl.delete.on_submit.formdata:",formdata)
+    evt.preventDefault()
+
     set_issubmitting(true)
-    const r = await async_get_list(page, txtsearch)
-    const ipages = get_pages(r.foundrows, VIEWCONFIG.PERPAGE)
-    if(page>ipages) history.push(VIEWCONFIG.URL_PAGINATION.replace("%page%",1))
+    set_error("")
+    set_success("")
+    before_submit()
 
-    set_issubmitting(false)
-    set_result(r.result)
-    set_foundrows(r.foundrows)
-  }
+    try {
+      const r = await async_delete(formdata)
+      console.log("zzz_tpl.delete.on_submit.r",r)
+      set_success("Num regs deleted: ".concat(r))
+      set_isdeleted(true)
+      refcode.current.focus()
+    }
+    catch (error) {
+      set_error(error)
+    }
+    finally {
+      set_issubmitting(false)
+    }
+  } // on_submit
 
   const async_onload = async () => {
-    console.log("zzz_tpl.index.async_onload")
-    const islogged = await async_islogged()
+    set_issubmitting(true)
+    try {
+      const r = await async_get_by_id(id)
 
-    if(!islogged){
-      history.push("/admin")
-      return
+      console.log("zzz_tpl.delete.onload.r",r)
+      const tmpform = {...formdata, ...r}
+      console.log("zzz_tpl.delete.onload.tmpform",tmpform)
+      set_formdata(tmpform)
+      if(is_empty(r)){
+        set_error("ZzzTpl not found")
+        set_isdeleted(true)
+      }
     }
-
-    HrefDom.document_title("Admin | Tpls")
-    const search = db.select(VIEWCONFIG.CACHE_KEY)
-    if(!txtsearch && search){
-      set_txtsearch(search)
-      return
+    catch (error) {
+      set_error(error)
     }
-
-    await async_load_tpls()
+    finally {
+      console.log("zzz_tpl.delete.onload.formdata:",formdata)
+      set_issubmitting(false)
+    }
   }
 
   useEffect(()=>{
     async_onload()
-    return ()=> console.log("zzz_tpl.index unmounting")
-  },[page, txtsearch])
+    return ()=> console.log("zzz_tpl.delete unmounting")
+  },[])
+
 
   return {
-    scrumbs: MODCONFIG.SCRUMBS.GENERIC,
-    cachekey: VIEWCONFIG.CACHE_KEY,
-    perpage: VIEWCONFIG.PERPAGE,
-    urlpagination: VIEWCONFIG.URL_PAGINATION,
-    headers: grid.headers,
-    viewconfig: VIEWCONFIG,
-
-    page,
-    foundrows,
+    breadscrumb: MODCONFIG.SCRUMBS.GENERIC,
     success,
     error,
-    result,
+    refcode,
+    formdata,
 
-    set_txtsearch,
+    on_submit,
     issubmitting,
-    async_load_tpls,
-    on_multiconfirm,
+    isdeleted,
+    async_refresh,
+    seldisplay,
   }
 }
 
-export default ActionIndex
+export default ActionDelete;
