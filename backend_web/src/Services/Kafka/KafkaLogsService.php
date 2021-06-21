@@ -19,7 +19,7 @@ final class KafkaLogsService extends KafkaService
 {
     use LogTrait;
 
-    private const KAFKA_TOPIC = "";
+    private const KAFKA_TOPIC = "kafka-logs";
     private const REQUEST_SLEEP_TIME = 12 * 1000;
     private const KAFKA_SOCKET = "192.168.1.1:800";
 
