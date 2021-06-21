@@ -10,12 +10,12 @@ import Footer from "components/common/footer"
 import ActionClone from "modules/adm-app-product/hooks/action_clone"
 
 function ProductClone(){
-
-  const {refcode, scrumbs} = ActionClone()
-  const {error, success} = ActionClone()
-  const {formdata, on_submit} = ActionClone()
-  const {issubmitting} = ActionClone()
-  const {async_refresh, seldisplay} = ActionClone()
+  const {
+    error, success, scrumbs,
+    formdata,refcode, seldisplay,
+    issubmitting,
+    async_refresh, on_submit
+  } = ActionClone()
 
   return (
     <>

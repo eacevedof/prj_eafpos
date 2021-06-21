@@ -1,6 +1,7 @@
 import {useParams} from "react-router-dom"
-import {useEffect, useRef, useState} from "react"
+import {useCallback, useEffect, useRef, useState} from "react"
 import {async_clone, async_get_by_id} from "modules/adm-app-product/async/async_repository"
+
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {seldisplay} from "modules/common/options"
 
@@ -35,40 +36,12 @@ function ActionClone() {
 
   const before_submit = () => {}
 
-  const async_refresh = async () => {
-    await async_onload()
-  }
-
-  const on_submit = async (evt)=>{
-    evt.preventDefault()
-
-    set_issubmitting(true)
-    set_error("")
-    set_success("")
-
-    before_submit()
-    try {
-      console.log("product on_submit")
-      const r = await async_clone(formdata)
-      set_success("Product cloned. Nº: ".concat(r))
-      console.log("product cloned")
-    }
-    catch (error) {
-      set_error(error)
-    }
-    finally {
-      set_issubmitting(false)
-    }
-
-  }// on_submit
-
   const async_onload = async () => {
-
-    console.log("product.clone.onload.formdata:",formdata)
+    console.log("async_onload")
     set_issubmitting(true)
     try {
       const r = await async_get_by_id(id)
-      console.log("product.clone.onload.r",r)
+      //console.log("product.clone.onload.r",r)
       const temp = {...formdata, ...r}
       set_formdata(temp)
     }
@@ -81,14 +54,38 @@ function ActionClone() {
 
   }// async_onload
 
+  const async_refresh = async () => {
+    await async_onload()
+  }
+
+
+  const on_submit = async evt => {
+    evt.preventDefault()
+
+    set_issubmitting(true)
+    set_error("")
+    set_success("")
+
+    before_submit()
+    try {
+      const r = await async_clone(formdata)
+      set_success(str => str + "Product cloned. Nº: ".concat(r))
+    }
+    catch (error) {
+      set_error(error)
+    }
+    finally {
+      set_issubmitting(false)
+    }
+  }// on_submit
+
   useEffect(()=>{
     async_onload()
     return ()=> console.log("product.clone unmounting")
-  }, [id])
-
+  }, [])
 
   return {
-    scrumbs:MODCONFIG.SCRUMBS.GENERIC,
+    scrumbs: MODCONFIG.SCRUMBS.GENERIC,
 
     success,
     error,
@@ -99,7 +96,6 @@ function ActionClone() {
     issubmitting,
     async_refresh,
     on_submit,
-
   }
 }
 

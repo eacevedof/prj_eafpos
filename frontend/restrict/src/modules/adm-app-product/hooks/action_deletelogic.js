@@ -76,7 +76,7 @@ function ActionDeleteLogic(){
       const r = await async_deletelogic(formdata)
       console.log("product.deletelogic.on_submit.r",r)
       set_success("Num regs deleted: ".concat(r))
-      async_onload()
+      await async_onload()
     }
     catch(error){
       set_error(error)

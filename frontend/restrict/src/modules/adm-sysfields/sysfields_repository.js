@@ -7,7 +7,7 @@ const query = {
   alias: "t",
   
   fields:[
-    "t.nickname",
+    "/*sysfields*/ t.nickname",
   ],
 }
 

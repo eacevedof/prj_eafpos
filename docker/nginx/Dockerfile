@@ -7,6 +7,7 @@ RUN echo "alias ioin='cd /appdata/io/in'" >> /root/.bashrc
 RUN echo "alias ioout='cd /appdata/io/out'" >> /root/.bashrc
 RUN echo "alias conf='cd /etc/nginx/conf.d'" >> /root/.bashrc
 
+
 # COPY ./certs/*.crt /etc/ssl/certs/
 # COPY ./certs/*.key /etc/ssl/private/
 

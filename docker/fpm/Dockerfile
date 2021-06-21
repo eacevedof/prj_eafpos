@@ -14,6 +14,11 @@ RUN apt-get update \
     && docker-php-ext-install intl pdo pdo_mysql zip gd soap \
     && pecl install xdebug \
     && docker-php-ext-enable --ini-name 05-opcache.ini opcache xdebug \
+    # kafka
+    && apt-get install -y librdkafka-dev
+    && pecl install rdkafka \
+    && docker-php-ext-enable --ini-name kafka.ini rdkafka \
+
     && apt-get -y install cron vim
 
 RUN curl --insecure https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer

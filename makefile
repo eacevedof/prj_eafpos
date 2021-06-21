@@ -5,6 +5,9 @@ help: ## Show this help message
 	@echo "targets:"
 	@egrep "^(.+)\:\ ##\ (.+)" ${MAKEFILE_LIST} | column -t -c 2 -s ":#"
 
+ip:
+	ipconfig getifaddr en0
+
 rebuild: ## rebuild containers
 	docker-compose -f docker-compose.yml down
 	docker-compose -f docker-compose.yml --env-file ./docker/.env up -d --build --remove-orphans
@@ -21,6 +24,12 @@ build-web:
 
 build-be:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-be
+
+build-zookeeper:
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build zookeeper
+
+build-kafka:
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build kafka
 
 start: ## start
 	docker-compose start
@@ -41,20 +50,32 @@ restart-cron:
 restart-db:
 	docker restart php-eafpos-db
 
+restart-zookeeper:
+	docker restart zookeeper
+
+restart-kafka:
+	docker restart kafka
+
 stop: ## stop containers
 	docker-compose stop
 
-logs-web: ## Logs web
+logs-web: ## logs web
 	docker logs php-eafpos-web
 
-logs-be: ## Logs be
+logs-be: ## logs be
 	docker logs php-eafpos-be
 
-logs-db: ## Logs db
+logs-db: ## logs db
 	docker logs php-eafpos-db
 
-logs-cron: ## Logs cron
+logs-cron: ## logs cron
 	docker logs php-eafpos-cron
+
+logs-zookeeper: ## logs zookeeper
+	docker logs zookeeper
+
+logs-kafka: ## logs kafka
+	docker logs kafka
 
 ssh-be: ## fpm
 	docker exec -it --user root php-eafpos-be bash
@@ -67,6 +88,12 @@ ssh-db: ## ssh's into mysql
 
 ssh-cron: ## ssh's into crontab
 	docker exec -it --user root php-eafpos-cron sh
+
+ssh-zookeeper: ## ssh's into zookeeper
+	docker exec -it --user root zookeeper bash
+
+ssh-kafka: ## ssh's into kafka
+	docker exec -it --user root kafka bash
 
 deploy-test: ## deploy codeonly in test
 	py.sh deploy.codeonly eduardoaf

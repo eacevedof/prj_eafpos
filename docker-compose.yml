@@ -1,6 +1,44 @@
-version: '3.5'
+version: "3.5"
 
 services:
+  zookeeper:
+    # version: 3.4.13
+    image: wurstmeister/zookeeper
+    environment:
+      TZ: ${TIME_ZONE}
+    # ports:
+      # - 2181:2181
+    networks:
+      - php-eafpos-net
+      - mariadb-univ_net
+
+  kafka:
+    #version: 2.13-2.7.0
+    build:
+      context: docker/kafka
+    depends_on:
+      - zookeeper
+
+    environment:
+      TZ: ${TIME_ZONE}
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_HOST_NAME: ${IP_HOSTMACHINE}
+      KAFKA_CREATE_TOPICS: ${KAFKA_TOPIC}:1:1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      #tiempo de vida del mensaje 4 horas
+      KAFKA_LOG_RETENTION_MINUTES: 320
+      CONFIG: /opt/kafka/config
+
+    #ports:
+      #- 9092:9092
+
+    volumes:
+      - ./docker/kafka/bash:/root/bash
+    networks:
+      - php-eafpos-net
+      - mariadb-univ_net
+
   php-eafpos-db:
     # mariadb: 10.5.9
     hostname: db
