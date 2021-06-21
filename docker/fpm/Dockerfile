@@ -15,7 +15,7 @@ RUN apt-get update \
     && pecl install xdebug \
     && docker-php-ext-enable --ini-name 05-opcache.ini opcache xdebug \
     # kafka
-    && apt-get install -y librdkafka-dev
+    && apt-get install -y librdkafka-dev \
     && pecl install rdkafka \
     && docker-php-ext-enable --ini-name kafka.ini rdkafka \
 
