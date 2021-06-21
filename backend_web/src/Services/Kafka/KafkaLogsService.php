@@ -10,6 +10,10 @@
 namespace App\Services\Kafka;
 
 use App\Traits\LogTrait;
+use \RdKafka\Conf;
+use \RdKafka\Consumer;
+use \RdKafka\TopicConf;
+use \RdKafka\ConsumerTopic;
 
 final class KafkaLogsService extends KafkaService
 {
@@ -19,21 +23,21 @@ final class KafkaLogsService extends KafkaService
     private const REQUEST_SLEEP_TIME = 12 * 1000;
     private const KAFKA_SOCKET = "192.168.1.1:800";
 
-    private function get_consumer_topic(): RdKafka\TopicConf
+    private function get_consumer_topic(): ConsumerTopic
     {
-        $conf = new RdKafka\Conf();
+        $conf = new Conf();
         $conf->set("bootstrap.servers", self::KAFKA_SOCKET);
         $conf->set("group.id", "test-consumer-group");
 
-        $consumer = new RdKafka\Consumer($conf);
+        $consumer = new Consumer($conf);
 
-        $topicConf = new RdKafka\TopicConf();
+        $topicConf = new TopicConf();
         $topicConf->set("request.required.acks", 1);
         $topicConf->set("auto.commit.enable", 0);
         $topicConf->set("auto.commit.interval.ms", 100);
         $topicConf->set("offset.store.method", "broker");
 
-        $topic = $consumer->newTopic(KAFKA_TOPIC, $topicConf);
+        $topic = $consumer->newTopic(self::KAFKA_TOPIC, $topicConf);
         $topic->consumeStart(0, RD_KAFKA_OFFSET_END);
         return $topic;
     }
@@ -49,7 +53,7 @@ final class KafkaLogsService extends KafkaService
 
         $i = 0;
         while (true) {
-            $message = $topic->consume(0, REQUEST_SLEEP_TIME);
+            $message = $topic->consume(0, self::REQUEST_SLEEP_TIME);
             $now = date("Y-m-d H:i:s");
 
             if (is_null($message)) {

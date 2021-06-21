@@ -10,25 +10,18 @@
 namespace App\Controllers\Kafka;
 
 use App\Controllers\AppController;
+use App\Services\Kafka\KafkaLogsService;
 
-class KafkaController extends AppController
+final class KafkasController extends AppController
 {
-    
-    public function __construct()
-    {
-        //captura trazas de la petición en los logs
-        parent::__construct();
-    }
-    
     /**
      * ruta:
      *  <dominio>/kafka/logs
      */
     public function logs()
     {
-        $oServ = new ContextService();
-
-
-    }//index
+        $oServ = new KafkaLogsService();
+        $oServ->run();
+    }//logs
     
 }//KafkaController
