@@ -13,8 +13,8 @@ $sPath = realpath(PATH_SRC.DS."logs");
 define("PATH_LOGS",$sPath);
 
 //echo(PATH_SRC);die;
-$arConfig = realpath(PATH_SRC_CONFIG.DS."config.php");
-include($arConfig);
+//$arConfig = realpath(PATH_SRC_CONFIG.DS."config.php");
+//include($arConfig);
 
 //DOCUMENT_ROOT:es la carpeta public
 //echo $_SERVER["DOCUMENT_ROOT"];die;
@@ -57,12 +57,12 @@ if($isCLI)
     {
         $classname = $ar_arg["class"];
         $classname = str_replace(".","\\",$classname);
-        $o = new $classname();
+        $instance = new $classname();
         
         if(isset($ar_arg["method"]))
         {
             $method = $ar_arg["method"];
-            $oRflecMethod = new \ReflectionMethod($classname,$method);
+            $oRflecMethod = new \ReflectionMethod($classname, $method);
             
             //print_r($oRflecMethod->getParameters());
             $arMethArgs = [];
@@ -76,10 +76,10 @@ if($isCLI)
             
             //var_dump($oRflecMethod->getParameters());
             //$o->{$method}();
-            $mxR = $oRflecMethod->invokeArgs($o,$arMethArgs);
+            $mxR = $oRflecMethod->invokeArgs($instance, $arMethArgs);
             print_r($mxR);
-        }
-    }
-}
+        }// is method
+    }// is class
+}// is cli
 else
     echo "";
