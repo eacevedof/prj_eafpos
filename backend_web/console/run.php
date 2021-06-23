@@ -35,7 +35,7 @@ foreach ($envcontent as $env)
 //echo $_SERVER["DOCUMENT_ROOT"];die;
 //si se está en producción se desactivan los mensajes en el navegador
 $env = getenv("APP_ENV");
-if($env==="prod")
+if($env==="prod-xxx")
 {
     $sToday = date("Ymd");
     ini_set("display_errors",0);
@@ -98,7 +98,7 @@ if($isCLI)
         catch (\Exception $e) {
             echo "error:\n\t{$e->getMessage()}\n\n";
         }
-    }// is class
+    }
     else
     {
         echo "no parameter --class\n";
