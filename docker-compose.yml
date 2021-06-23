@@ -49,6 +49,7 @@ services:
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
     environment:
+      TZ: ${TIME_ZONE}
       MYSQL_USER: ${DB_USER}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
@@ -70,6 +71,7 @@ services:
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
     environment:
+      TZ: ${TIME_ZONE}
       MYSQL_USER: ${DB_USER}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
@@ -92,6 +94,9 @@ services:
 
       - 1000:100 #api sec
       - 1001:101 #spa sec
+    environment:
+      TZ: ${TIME_ZONE}
+      KAFKA_TOPIC: ${KAFKA_TOPIC}
 
     volumes:
       - ./io:/appdata/io
@@ -110,6 +115,7 @@ services:
     build:
       context: docker/fpm
     environment:
+      TZ: ${TIME_ZONE}
       # estas variables sirven para cuando se ejecuta desde consola... creo :)
       PHP_IDE_CONFIG: serverName=ServXdebug
       PHP_XDEBUG_ENABLED: 1

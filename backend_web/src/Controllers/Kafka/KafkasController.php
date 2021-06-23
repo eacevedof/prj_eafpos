@@ -10,7 +10,7 @@
 namespace App\Controllers\Kafka;
 
 use App\Controllers\AppController;
-use App\Services\Kafka\KafkaLogsService;
+use App\Services\Kafka\LogConsumerService;
 
 final class KafkasController extends AppController
 {
@@ -20,7 +20,7 @@ final class KafkasController extends AppController
      */
     public function logs()
     {
-        $oServ = new KafkaLogsService();
+        $oServ = new LogConsumerService();
         $oServ->run();
     }//logs
     

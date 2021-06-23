@@ -15,13 +15,13 @@ use \RdKafka\Consumer;
 use \RdKafka\TopicConf;
 use \RdKafka\ConsumerTopic;
 
-final class KafkaLogsService extends KafkaService
+final class LogConsumerService extends KafkaService
 {
     use LogTrait;
 
-    private const KAFKA_TOPIC = "kafka-logs";
+    private const KAFKA_TOPIC = "queue-logs";
     private const REQUEST_SLEEP_TIME = 12 * 1000;
-    private const KAFKA_SOCKET = "192.168.1.1:800";
+    private const KAFKA_SOCKET = "kafka_kafka:9092";
 
     private function get_consumer_topic(): ConsumerTopic
     {
