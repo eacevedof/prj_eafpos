@@ -41,7 +41,7 @@ if($env==="prod")
     ini_set("display_errors",0);
     ini_set("log_errors",1);
     //Define where do you want the log to go, syslog or a file of your liking with
-    ini_set("error_log","{$_SERVER["DOCUMENT_ROOT"]}/../src/logs/sys_$sToday.log"); // or ini_set("error_log", "/path/to/syslog/file")
+    ini_set("error_log",PATH_LOGS."/sys_$sToday.log"); // or ini_set("error_log", "/path/to/syslog/file")
 }
 
 //autoload de composer
@@ -73,29 +73,36 @@ if($isCLI)
     {
         $classname = $ar_arg["class"];
         $classname = str_replace(".","\\",$classname);
-        $instance = new $classname();
-        
-        if(isset($ar_arg["method"]))
-        {
+        try {
+            $instance = new $classname();
+
+            if(!$ar_arg["method"]) $ar_arg["method"] = "run";
+
             $method = $ar_arg["method"];
             $oRflecMethod = new \ReflectionMethod($classname, $method);
-            
-            //print_r($oRflecMethod->getParameters());
+
             $arMethArgs = [];
             foreach($oRflecMethod->getParameters() as $oParam)
             {
                 if(isset($ar_arg[$oParam->getName()]))
                     $arMethArgs[] =  $ar_arg[$oParam->getName()];
-                else 
+                else
                     $arMethArgs[] =  $oParam->getDefaultValue();
             }
-            
+
             //var_dump($oRflecMethod->getParameters());
             //$o->{$method}();
             $mxR = $oRflecMethod->invokeArgs($instance, $arMethArgs);
-            print_r($mxR);
-        }// is method
+            //print_r($mxR);
+        }
+        catch (\Exception $e) {
+            echo "error:\n{$e->getMessage()}\n";
+        }
     }// is class
+    else
+    {
+        echo "no parameter --class\n";
+    }
 }// is cli
 else
     echo "";
