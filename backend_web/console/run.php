@@ -4,13 +4,28 @@ define("DS",DIRECTORY_SEPARATOR);
 define("DOCROOT",__DIR__);//con $_SERVER[DOCUMENT_ROOT] y PWD no va
 $sPath = realpath(DOCROOT.DS."../src");
 define("PATH_SRC",$sPath);
-define("PATH_SRC_CONFIG",PATH_SRC.DS."config");
 $sPath = realpath(DOCROOT.DS."../public");
 define("PATH_PUBLIC",$sPath);
 $sPath = realpath(DOCROOT.DS."../vendor");
 define("PATH_VENDOR",$sPath);
-$sPath = realpath(PATH_SRC.DS."logs");
+$sPath = realpath(DOCROOT.DS."../logs");
 define("PATH_LOGS",$sPath);
+
+$envcontent = file_get_contents(DOCROOT.DS."../.env");
+$envcontent = explode(PHP_EOL, $envcontent);
+foreach ($envcontent as $env)
+{
+    if($env[0] === "#" || trim($env)==="") continue;
+    $parts = explode("=",$env);
+    $key = trim($parts[0]);
+    array_shift($parts);
+    $value = implode("=",$parts);
+    $value = trim($value);
+
+    putenv(sprintf("%s=%s", $key, $value));
+    $_ENV[$key] = $value;
+    $_SERVER[$key] = $value;
+}
 
 //echo(PATH_SRC);die;
 //$arConfig = realpath(PATH_SRC_CONFIG.DS."config.php");
@@ -19,7 +34,8 @@ define("PATH_LOGS",$sPath);
 //DOCUMENT_ROOT:es la carpeta public
 //echo $_SERVER["DOCUMENT_ROOT"];die;
 //si se está en producción se desactivan los mensajes en el navegador
-if(ENV=="p")
+$env = getenv("APP_ENV");
+if($env==="prod")
 {
     $sToday = date("Ymd");
     ini_set("display_errors",0);

@@ -17,4 +17,7 @@
   - [ejemplo ssl domain config](https://codingwithmanny.medium.com/configure-self-signed-ssl-for-nginx-docker-from-a-scratch-7c2bcd5478c6)
   - [ejemplo ssl ip](https://help.kendis.io/en/articles/3382550-configure-ssl-for-docker)
   - netstat -ap tcp | grep 90 check ports
-  
+- ejecutar el log consumer
+  - entrar en el contenedor de php
+  - dentro de la carpeta **console** ejecutar:
+    - `php run.php --class=App.Sevices.Kafka.LogConsumerService method=run`
