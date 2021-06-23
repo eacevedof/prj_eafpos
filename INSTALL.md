@@ -20,4 +20,4 @@
 - ejecutar el log consumer
   - entrar en el contenedor de php
   - dentro de la carpeta **console** ejecutar:
-    - `php run.php --class=App.Services.Kafka.LogConsumerService --method=run`
+    - `php run.php --class=App.Services.Kafka.LogConsumerService`

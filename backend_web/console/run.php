@@ -96,7 +96,7 @@ if($isCLI)
             //print_r($mxR);
         }
         catch (\Exception $e) {
-            echo "error:\n{$e->getMessage()}\n";
+            echo "error:\n\t{$e->getMessage()}\n\n";
         }
     }// is class
     else
