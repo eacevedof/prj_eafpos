@@ -89,11 +89,11 @@ ssh-db: ## ssh's into mysql
 ssh-cron: ## ssh's into crontab
 	docker exec -it --user root php-eafpos-cron sh
 
-ssh-zookeeper: ## ssh's into zookeeper
-	docker exec -it --user root zookeeper bash
+ssh-zookeeper: ## ssh's into kafka_zookeeper_1
+	docker exec -it --user root kafka_zookeeper_1 bash
 
-ssh-kafka: ## ssh's into kafka
-	docker exec -it --user root kafka bash
+ssh-kafka: ## ssh's into kafka_kafka_1
+	docker exec -it --user root kafka_kafka_1 bash
 
 deploy-test: ## deploy codeonly in test
 	py.sh deploy.codeonly eduardoaf
