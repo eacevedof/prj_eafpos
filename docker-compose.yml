@@ -122,6 +122,7 @@ services:
       XDEBUG_CONFIG: client_host=host.docker.internal client_port=9005 remote_connect_back=0
     volumes:
       - ./io:/appdata/io
+      - ./bash:/appdata/bash
       - ./backend_web:/appdata/www/backend_web
       - ./docker/fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 

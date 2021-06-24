@@ -24,5 +24,8 @@ RUN apt-get update \
 RUN curl --insecure https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
 
 RUN mkdir -p /appdata/www
+RUN mkdir -p /appdata/bash
+
+COPY ./.bashrc /root/.bashrc
 
 WORKDIR /appdata/www
