@@ -1,12 +1,6 @@
 #docker/fpm/Dockerfile
 FROM php:7.4.16-fpm
 
-RUN echo "alias ll='ls -la'" >> /root/.bashrc
-RUN echo "alias home='cd $HOME'" >> /root/.bashrc
-RUN echo "alias appdata='cd /appdata'" >> /root/.bashrc
-RUN echo "alias ioin='cd /appdata/io/in'" >> /root/.bashrc
-RUN echo "alias ioout='cd /appdata/io/out'" >> /root/.bashrc
-
 RUN apt-get update \
     && apt-get -y install --no-install-recommends \
     && apt-get install -y git acl openssl openssh-client wget curl \
@@ -24,8 +18,16 @@ RUN apt-get update \
 RUN curl --insecure https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
 
 RUN mkdir -p /appdata/www
+RUN mkdir -p /appdata/init
 RUN mkdir -p /appdata/bash
 
 COPY ./.bashrc /root/.bashrc
+COPY ./bash_init/log-consumer.sh /appdata/init/log-consumer.sh
+COPY ./bash_init/init.sh /appdata/init/init.sh
+
+RUN chmod -R +x /appdata/init
+RUN chmod -R +x /appdata/bash
 
 WORKDIR /appdata/www
+
+CMD /appdata/init/init.sh
