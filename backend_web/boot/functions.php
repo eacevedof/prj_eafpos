@@ -1,6 +1,6 @@
 <?php
 //functions.php 20200721
-function appboot_loadenv()
+function appboot_loadenv(): void
 {
     $arpaths = [
         "%PATH_PUBLIC%" => PATH_PUBLIC, "%PATH_ROOT%" => PATH_ROOT,
@@ -31,4 +31,38 @@ function appboot_loadenv()
     }//foreach envs
 
     $_SERVER += $_ENV;
+}
+
+function get_console_args($argv): array
+{
+    $_ARG = array();
+    foreach ($argv as $arg_i)
+    {
+        if (preg_match("/--([^=]+)=(.*)/",$arg_i,$arKeyVal)) {
+            $_ARG[$arKeyVal[1]] = $arKeyVal[2];
+        }
+        elseif(preg_match("/-([a-zA-Z0-9])/",$arg_i,$arKeyVal)) {
+            $_ARG[$arKeyVal[1]] = "true";
+        }
+    }
+    return $_ARG;
+}
+
+function console_loadenv(string $pathenv): void
+{
+    $envcontent = file_get_contents($pathenv);
+    $envcontent = explode(PHP_EOL, $envcontent);
+    foreach ($envcontent as $env)
+    {
+        if($env[0] === "#" || trim($env)==="") continue;
+        $parts = explode("=",$env);
+        $key = trim($parts[0]);
+        array_shift($parts);
+        $value = implode("=",$parts);
+        $value = trim($value);
+
+        putenv(sprintf("%s=%s", $key, $value));
+        $_ENV[$key] = $value;
+        $_SERVER[$key] = $value;
+    }
 }

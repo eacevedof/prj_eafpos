@@ -21,7 +21,7 @@ final class LogConsumerService extends KafkaService
 
     private const KAFKA_TOPIC = "queue-logs";
     private const REQUEST_SLEEP_TIME = 12 * 1000;
-    private const KAFKA_SOCKET = "kafka_kafka:9092";
+    private const KAFKA_SOCKET = "kafka_kafka_1:9092";
 
     private function get_consumer_topic(): ConsumerTopic
     {
