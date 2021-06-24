@@ -9,26 +9,26 @@
  */
 namespace App\Traits;
 
-use TheFramework\Components\ComponentLog;
+use App\Components\Kafka\ProducerComponent;
 
 trait KafkaLogTrait
 {
     protected function log($mxVar,$sTitle=NULL)
     {
-        $oLog = new ComponentLog("sql",PATH_LOGS);
-        $oLog->save($mxVar,$sTitle);
+        $oLog = new ProducerComponent();
+        $oLog->save($mxVar, $sTitle, ProducerComponent::TYPE_SQL);
     }
     
     protected function logd($mxVar,$sTitle=NULL)
     {
-        $oLog = new ComponentLog("debug",PATH_LOGS);
-        $oLog->save($mxVar,$sTitle);
+        $oLog = new ProducerComponent();
+        $oLog->save($mxVar, $sTitle, ProducerComponent::TYPE_DEBUG);
     }
 
     protected function logerr($mxVar,$sTitle=NULL)
     {
-        $oLog = new ComponentLog("error",PATH_LOGS);
-        $oLog->save($mxVar,$sTitle);
+        $oLog = new ProducerComponent();
+        $oLog->save($mxVar, $sTitle, ProducerComponent::TYPE_ERROR);
     }    
     
 }//KafkaLogTrait

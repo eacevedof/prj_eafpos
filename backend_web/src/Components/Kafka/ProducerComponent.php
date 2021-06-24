@@ -18,31 +18,40 @@ final class ProducerComponent
     private const REQUEST_SLEEP_TIME = 10;
     private const KAFKA_SOCKET = "kafka_kafka_1:9092";
 
+    public const TYPE_SQL = "sql";
+    public const TYPE_DEBUG = "debug";
+    public const TYPE_ERROR = "error";
+
+    private static $producer;
+
     private function get_producer(): Producer
     {
-        //https://github.com/eacevedof/prj_docker_imgs/blob/master/kafka/php/kafka/producer-2.php
-        $CONFIG["callbacks"]["on_success"] = function ($kafka, $message) {
-            file_put_contents(
-                "./on_success.log",
-                var_export($message, true), FILE_APPEND
-            );
-        };
+        if(!self::$producer)
+        {
+            //https://github.com/eacevedof/prj_docker_imgs/blob/master/kafka/php/kafka/producer-2.php
+            $CONFIG["callbacks"]["on_success"] = function ($kafka, $message) {
+                file_put_contents(
+                    "./on_success.log",
+                    var_export($message, true), FILE_APPEND
+                );
+            };
 
-        $CONFIG["callbacks"]["on_error"] = function ($kafka, $err, $reason) {
-            file_put_contents(
-                "./on_error.log",
-                sprintf("Kafka error: %s (reason: %s)", rd_kafka_err2str($err), $reason) . PHP_EOL,
-                FILE_APPEND
-            );
-        };
+            $CONFIG["callbacks"]["on_error"] = function ($kafka, $err, $reason) {
+                file_put_contents(
+                    "./on_error.log",
+                    sprintf("Kafka error: %s (reason: %s)", rd_kafka_err2str($err), $reason) . PHP_EOL,
+                    FILE_APPEND
+                );
+            };
 
-        $conf = new Conf();
-        $conf->set("metadata.broker.list", self::KAFKA_SOCKET);
-        $conf->setDrMsgCb($CONFIG["callbacks"]["on_success"]);
-        $conf->setErrorCb($CONFIG["callbacks"]["on_error"]);
+            $conf = new Conf();
+            $conf->set("metadata.broker.list", self::KAFKA_SOCKET);
+            $conf->setDrMsgCb($CONFIG["callbacks"]["on_success"]);
+            $conf->setErrorCb($CONFIG["callbacks"]["on_error"]);
 
-        $producer = new Producer($conf);
-        return $producer;
+            self::$producer = new Producer($conf);
+        }
+        return self::$producer;
     }
 
     private function get_json(array $data): string
@@ -50,9 +59,10 @@ final class ProducerComponent
         return json_encode($data);
     }
 
-    private function get_message($mxvar, string $title): array
+    private function get_message($mxvar, string $title="", string $type=""): array
     {
         $message = [
+            "type"  => $type,
             "title" => $title
         ];
 
@@ -66,13 +76,13 @@ final class ProducerComponent
         return $message;
     }
 
-    public function send($mxvar, string $title=""): void
+    public function send($mxvar, string $title="", string $type=""): void
     {
+        $message = $this->get_message($mxvar, $title, $type);
+        $json = $this->get_json($message);
+
         $producer = $this->get_producer();
         $topic = $producer->newTopic(self::KAFKA_TOPIC);
-        $message = $this->get_message($mxvar, $title);
-
-        $json = $this->get_json($message);
         $topic->produce(RD_KAFKA_PARTITION_UA, 0, $json);
 
         for ($flushRetries = 0; $flushRetries < 3; $flushRetries++)

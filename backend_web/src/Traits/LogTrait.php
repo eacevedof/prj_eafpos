@@ -9,7 +9,7 @@
  */
 namespace App\Traits;
 
-use App\Components\Kafka\ProducerComponent;
+use TheFramework\Components\ComponentLog;
 
 trait LogTrait
 {
