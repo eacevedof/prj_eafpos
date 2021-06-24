@@ -15,7 +15,7 @@ use \RdKafka\Consumer;
 use \RdKafka\TopicConf;
 use \RdKafka\ConsumerTopic;
 
-final class LogConsumerService extends KafkaService
+final class LogConsumerService
 {
     use LogTrait;
 
