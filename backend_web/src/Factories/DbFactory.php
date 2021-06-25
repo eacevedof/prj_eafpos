@@ -11,8 +11,9 @@ namespace App\Factories;
 
 use TheFramework\Components\Db\ComponentMysql;
 use TheFramework\Components\Db\Context\ComponentContext;
+use \PDO;
 
-class DbFactory 
+final class DbFactory
 {
 
     private static function get_db_idx($arContext,$sDb)
@@ -60,6 +61,35 @@ class DbFactory
         if(!$arConfig) return new ComponentMysql();
         $oDb = new ComponentMysql($arConfig);
         return $oDb;
-    }  
+    }
+
+    public static function get_pdo_by_ctx(ComponentContext $ctx, string $db=""): ?PDO
+    {
+        $arConfig = $ctx->get_selected();
+        $arConfig = self::_get_dbconfig($arConfig, $db);
+        if(!$arConfig) return null;
+
+        $arconstr["mysql:host"] = $arConfig["server"] ?? "";
+        $arconstr["dbname"] = $arConfig["database"] ?? "";
+        $arconstr["port"] = $arConfig["port"] ?? "";
+
+        $sString = "";
+        foreach($arconstr as $sK=>$sV) $sString .= "$sK=$sV;";
+
+        try {
+            $oPdo = new PDO(
+                $sString,
+                $arConfig["user"],
+                $arConfig["password"],
+                [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]
+            );
+            $oPdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION );
+            return $oPdo;
+        }
+        catch (\Exception $e)
+        {
+            return null;
+        }
+    }
 
 }//DbFactory

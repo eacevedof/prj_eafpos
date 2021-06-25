@@ -13,7 +13,7 @@ use App\Factories\DbFactory;
 use App\Factories\KafkaFactory;
 use App\Traits\LogTrait;
 use TheFramework\Components\Db\ComponentCrud;
-use TheFramework\Components\Db\ComponentMysql;
+use PDO;
 use TheFramework\Components\Db\Context\ComponentContext;
 use RdKafka\Message;
 
@@ -21,22 +21,27 @@ final class LogConsumerService
 {
     use LogTrait;
 
-    private function get_db(): ComponentMysql
+    private function _get_pdo(): ?PDO
     {
         $context = new ComponentContext($_ENV["APP_CONTEXTS"], "c1");
-        return DbFactory::get_dbobject_by_ctx($context, "db_eafpos_log");
+        return DbFactory::get_pdo_by_ctx($context, "db_eafpos_log");
     }
 
-    private function get_query(): ComponentCrud
+    private function _get_query(): ComponentCrud
     {
         $crud = new ComponentCrud();
         $crud->set_table("app_log");
         return $crud;
     }
 
-    private function save(array $data): void
+    private function _save(array $data): void
     {
-        $sql = $this->get_query()
+        if(!$pdo = $this->_get_pdo())
+        {
+            $this->logerr("No pdo created");
+            return;
+        }
+        $sql = $this->_get_query()
             ->add_insert_fv("group_type", $data["type"])
             ->add_insert_fv("title", $data["title"])
             ->add_insert_fv("message",$data["message"])
@@ -45,7 +50,7 @@ final class LogConsumerService
             ->autoinsert()
         ;
         $sql = $sql->get_sql();
-        $this->get_db()->exec($sql);
+        $pdo->exec($sql);
     }
 
     public function __invoke(Message $kafkamsg): void
@@ -53,7 +58,7 @@ final class LogConsumerService
         $data["timestamp"] = $kafkamsg->timestamp;
         $arjson = json_decode($kafkamsg->payload,1);
         $data = array_merge($data,$arjson);
-        $this->save($data);
+        $this->_save($data);
     }
 
     public function run(): void
