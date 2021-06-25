@@ -1,4 +1,5 @@
 .vscode
 .idea
-/vendor
+vendor/*
+!/vendor/theframework
 /config/*.prod.*

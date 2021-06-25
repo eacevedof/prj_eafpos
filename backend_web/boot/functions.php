@@ -22,6 +22,7 @@ function appboot_loadenv(): void
                     if ($key) {
                         $value = trim($keyval[1] ?? "");
                         $value = str_replace(array_keys($arpaths), array_values($arpaths), $value);
+                        putenv(sprintf("%s=%s", $key, $value));
                         $_ENV[$key] = $value;
                     }
                 }//if line has =
@@ -31,21 +32,6 @@ function appboot_loadenv(): void
     }//foreach envs
 
     $_SERVER += $_ENV;
-}
-
-function get_console_args($argv): array
-{
-    $_ARG = array();
-    foreach ($argv as $arg_i)
-    {
-        if (preg_match("/--([^=]+)=(.*)/",$arg_i,$arKeyVal)) {
-            $_ARG[$arKeyVal[1]] = $arKeyVal[2];
-        }
-        elseif(preg_match("/-([a-zA-Z0-9])/",$arg_i,$arKeyVal)) {
-            $_ARG[$arKeyVal[1]] = "true";
-        }
-    }
-    return $_ARG;
 }
 
 function console_loadenv(string $pathenv): void
@@ -65,4 +51,19 @@ function console_loadenv(string $pathenv): void
         $_ENV[$key] = $value;
         $_SERVER[$key] = $value;
     }
+}
+
+function get_console_args($argv): array
+{
+    $_ARG = array();
+    foreach ($argv as $arg_i)
+    {
+        if (preg_match("/--([^=]+)=(.*)/",$arg_i,$arKeyVal)) {
+            $_ARG[$arKeyVal[1]] = $arKeyVal[2];
+        }
+        elseif(preg_match("/-([a-zA-Z0-9])/",$arg_i,$arKeyVal)) {
+            $_ARG[$arKeyVal[1]] = "true";
+        }
+    }
+    return $_ARG;
 }

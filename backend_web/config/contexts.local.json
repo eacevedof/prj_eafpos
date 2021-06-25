@@ -14,8 +14,8 @@
         "password":"1234"
       },
       {
-        "alias": "db-eafpos-logs",
-        "database":"db_eafpos_logs",
+        "alias": "db-eafpos-log",
+        "database":"db_eafpos_log",
         "user":"root",
         "password":"1234"
       }

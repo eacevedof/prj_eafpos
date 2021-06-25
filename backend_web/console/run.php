@@ -3,8 +3,12 @@
 const DS = DIRECTORY_SEPARATOR;
 const DOCROOT = __DIR__;
 
+$sPath = realpath(DOCROOT.DS."..");
+define("PATH_ROOT",$sPath);
 $sPath = realpath(DOCROOT.DS."../src");
 define("PATH_SRC",$sPath);
+$sPath = realpath(DOCROOT.DS."../config");
+define("PATH_SRC_CONFIG",$sPath);
 $sPath = realpath(DOCROOT.DS."../public");
 define("PATH_PUBLIC",$sPath);
 $sPath = realpath(DOCROOT.DS."../vendor");
@@ -21,7 +25,8 @@ include_once "../vendor/autoload.php";
 //arranque de mis utilidades
 include_once "../vendor/theframework/bootstrap.php";
 
-console_loadenv($pathenv);
+appboot_loadenv();
+//console_loadenv($pathenv);
 
 $env = getenv("APP_ENV");
 if($env==="prod-xxx")

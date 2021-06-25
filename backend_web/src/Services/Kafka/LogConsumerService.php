@@ -31,17 +31,20 @@ final class LogConsumerService
     {
         $crud = new ComponentCrud();
         $crud->set_table("app_log");
+        return $crud;
     }
 
     private function save(array $data): void
     {
         $sql = $this->get_query()
-            ->add_insert_fv("group_type", $data["debug"])
+            ->add_insert_fv("group_type", $data["type"])
             ->add_insert_fv("title", $data["title"])
             ->add_insert_fv("message",$data["message"])
             ->add_insert_fv("timest", $data["timestamp"])
+            ->autoinsert()
         ;
-        $this->get_db()->query($sql->get_sql());
+        $sql = $sql->get_sql();
+        $this->get_db()->exec($sql);
     }
 
     public function __invoke(Message $kafkamsg): void
@@ -49,7 +52,6 @@ final class LogConsumerService
         $data["timestamp"] = $kafkamsg->timestamp;
         $arjson = json_decode($kafkamsg->payload,1);
         $data = array_merge($data,$arjson);
-        print_r($data);
         $this->save($data);
     }
 
