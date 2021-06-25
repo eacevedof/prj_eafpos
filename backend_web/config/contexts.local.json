@@ -12,6 +12,12 @@
         "database":"db_eafpos",
         "user":"root",
         "password":"1234"
+      },
+      {
+        "alias": "db-eafpos-logs",
+        "database":"db_eafpos_logs",
+        "user":"root",
+        "password":"1234"
       }
     ]
   }

@@ -81,7 +81,7 @@ final class ConsumerComponent
             switch ($message->err) {
                 case RD_KAFKA_RESP_ERR_NO_ERROR:
                     echo "RD_KAFKA_RESP_ERR_NO_ERROR\n";
-                    if(is_callable($fn_onresponse)) call_user_func_array($fn_onresponse, [$message->payload]);
+                    if(is_callable($fn_onresponse)) call_user_func_array($fn_onresponse, [$message]);
 
                     $this->logkafka($message->payload,"kafkalogs 2 saving in db ($i) $now");
                     break;
