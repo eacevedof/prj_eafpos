@@ -34,14 +34,14 @@ final class ProducerComponent
             //https://github.com/eacevedof/prj_docker_imgs/blob/master/kafka/php/kafka/producer-2.php
             $CONFIG["callbacks"]["on_success"] = function ($kafka, $message) use ($pathkafka) {
                 file_put_contents(
-                    "$pathkafka/on_success.log",
+                    "$pathkafka/producer_success.log",
                     var_export($message, true), FILE_APPEND
                 );
             };
 
             $CONFIG["callbacks"]["on_error"] = function ($kafka, $err, $reason) use($patherror) {
                 file_put_contents(
-                    "$patherror/on_error.log",
+                    "$patherror/producer_error.log",
                     sprintf("Kafka error: %s (reason: %s)", rd_kafka_err2str($err), $reason) . PHP_EOL,
                     FILE_APPEND
                 );
