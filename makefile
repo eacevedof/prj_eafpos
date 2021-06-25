@@ -8,6 +8,9 @@ help: ## Show this help message
 ip:
 	ipconfig getifaddr en0
 
+ps:
+	docker ps | egrep eafpos
+
 rebuild: ## rebuild containers
 	docker-compose -f docker-compose.yml down
 	docker-compose -f docker-compose.yml --env-file ./docker/.env up -d --build --remove-orphans
@@ -51,10 +54,10 @@ restart-db:
 	docker restart php-eafpos-db
 
 restart-zookeeper:
-	docker restart zookeeper
+	docker restart prj_eafpos_zookeeper_1
 
 restart-kafka:
-	docker restart kafka
+	docker restart prj_eafpos_kafka_1
 
 stop: ## stop containers
 	docker-compose stop
@@ -71,11 +74,11 @@ logs-db: ## logs db
 logs-cron: ## logs cron
 	docker logs php-eafpos-cron
 
-logs-zookeeper: ## logs zookeeper
-	docker logs zookeeper
+logs-zookeeper: ## logs prj_eafpos_zookeeper_1
+	docker logs prj_eafpos_zookeeper_1
 
 logs-kafka: ## logs kafka
-	docker logs kafka
+	docker logs prj_eafpos_kafka_1
 
 ssh-be: ## fpm
 	docker exec -it --user root php-eafpos-be bash
@@ -89,11 +92,11 @@ ssh-db: ## ssh's into mysql
 ssh-cron: ## ssh's into crontab
 	docker exec -it --user root php-eafpos-cron sh
 
-ssh-zookeeper: ## ssh's into kafka_zookeeper_1
-	docker exec -it --user root kafka_zookeeper_1 bash
+ssh-zookeeper: ## ssh's into prj_eafpos_zookeeper_1
+	docker exec -it --user root prj_eafpos_zookeeper_1 bash
 
-ssh-kafka: ## ssh's into kafka_kafka_1
-	docker exec -it --user root kafka_kafka_1 bash
+ssh-kafka: ## ssh's into prj_eafpos_kafka_1
+	docker exec -it --user root prj_eafpos_kafka_1 bash
 
 deploy-test: ## deploy codeonly in test
 	py.sh deploy.codeonly eduardoaf
