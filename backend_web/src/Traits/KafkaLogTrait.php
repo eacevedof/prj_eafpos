@@ -29,6 +29,12 @@ trait KafkaLogTrait
     {
         $oLog = new ProducerComponent();
         $oLog->save($mxVar, $sTitle, ProducerComponent::TYPE_ERROR);
-    }    
-    
+    }
+
+    protected function logkafka($mxVar,$sTitle=NULL)
+    {
+        $oLog = new ProducerComponent();
+        $oLog->save($mxVar, $sTitle, ProducerComponent::TYPE_KAFKA);
+    }
+
 }//KafkaLogTrait

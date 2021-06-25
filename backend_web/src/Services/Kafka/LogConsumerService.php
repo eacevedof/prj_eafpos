@@ -58,17 +58,17 @@ final class LogConsumerService
 
             if (is_null($message)) {
                 $message = "No more messages: $now";
-                $this->logd($message,"kafkalogs 1");
+                $this->logkafka($message,"kafkalogs 1");
                 continue;
             }
 
             switch ($message->err) {
                 case RD_KAFKA_RESP_ERR_NO_ERROR:
                     echo "RD_KAFKA_RESP_ERR_NO_ERROR\n";
-                    $this->logd($message->payload,"kafkalogs 2 saving in db ($i) $now");
+                    $this->logkafka($message->payload,"kafkalogs 2 saving in db ($i) $now");
                 break;
                 case RD_KAFKA_RESP_ERR__PARTITION_EOF:
-                    $this->logd("No more messages; will wait for more","kafkalogs 2 saving in db ($i) $now");
+                    $this->logkafka("No more messages; will wait for more","kafkalogs 2 saving in db ($i) $now");
                 break;
                 case RD_KAFKA_RESP_ERR__TIMED_OUT:
                     $this->logerr("timeout","kafkalogs 3 ($i) $now");

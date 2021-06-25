@@ -29,6 +29,12 @@ trait LogTrait
     {
         $oLog = new ComponentLog("error",PATH_LOGS);
         $oLog->save($mxVar,$sTitle);
-    }    
+    }
+
+    protected function logkafka($mxVar,$sTitle=NULL)
+    {
+        $oLog = new ComponentLog("kafka",PATH_LOGS);
+        $oLog->save($mxVar,$sTitle);
+    }
     
 }//LogTrait

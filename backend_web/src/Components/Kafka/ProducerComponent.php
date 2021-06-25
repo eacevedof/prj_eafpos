@@ -21,6 +21,7 @@ final class ProducerComponent
     public const TYPE_SQL = "sql";
     public const TYPE_DEBUG = "debug";
     public const TYPE_ERROR = "error";
+    public const TYPE_KAFKA = "kafka";
 
     private static $producer;
 
