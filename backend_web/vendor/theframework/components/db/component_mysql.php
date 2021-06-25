@@ -142,8 +142,8 @@ final class ComponentMysql
         }
         if(class_exists("\App\Components\Kafka\ProducerComponent"))
         {
-            $oLog = new \App\Components\Kafka\ProducerComponent();
-            $oLog->send($mxVar, "-- ".$sTitle, ProducerComponent::TYPE_SQL);
+            //$oLog = new \App\Components\Kafka\ProducerComponent();
+            //$oLog->send($mxVar, "-- ".$sTitle, ProducerComponent::TYPE_SQL);
         }
     }
   
