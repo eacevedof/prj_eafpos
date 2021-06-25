@@ -9,6 +9,8 @@
  */
 namespace App\Controllers;
 
+use App\Components\Kafka\ProducerComponent;
+
 final class NotFoundController extends AppController
 {
     public function index()
@@ -22,6 +24,7 @@ final class NotFoundController extends AppController
 
     public function error_404()
     {
+        (new ProducerComponent())->send(date("Y-m-d: H:i:s")." lalo","nada");
         $this->logerr($_SERVER["REQUEST_URI"],"error-404");
         $this->show_json_nok("Resource not found",404);
     }    

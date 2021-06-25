@@ -76,7 +76,7 @@ final class ProducerComponent
         return $message;
     }
 
-    public function send($mxvar, string $title="", string $type=""): void
+    public function send($mxvar, string $title="", string $type=ProducerComponent::TYPE_DEBUG): void
     {
         $message = $this->get_message($mxvar, $title, $type);
         $json = $this->get_json($message);

@@ -8,10 +8,9 @@
  * @observations
  */
 namespace App\Controllers;
+use App\Components\Kafka\ProducerComponent;
 
-use App\Controllers\AppController;
-
-class LogsController extends AppController
+final class LogsController extends AppController
 {
     public function index()
     {
