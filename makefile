@@ -18,21 +18,27 @@ rebuild: ## rebuild containers
 
 build-cron:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-cron
+	make ps
 
 build-db-:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-db
+	make ps
 
 build-web:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-web
+	make ps
 
 build-be:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-be
+	make ps
 
 build-zookeeper:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build zookeeper
+	make ps
 
 build-kafka:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build kafka
+	make ps
 
 start: ## start
 	docker-compose start

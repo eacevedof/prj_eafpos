@@ -21,7 +21,7 @@ final class LogConsumerService
 
     private const KAFKA_TOPIC = "queue-logs";
     private const REQUEST_SLEEP_TIME = 12 * 1000;
-    private const KAFKA_SOCKET = "prj_eafpos_kafka_1:9094";
+    private const KAFKA_SOCKET = "prj_eafpos_kafka_1:9092";
 
     private function get_consumer_topic(): ConsumerTopic
     {

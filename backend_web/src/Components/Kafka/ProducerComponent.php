@@ -16,7 +16,7 @@ final class ProducerComponent
 {
     private const KAFKA_TOPIC = "queue-logs";
     private const REQUEST_SLEEP_TIME = 10;
-    private const KAFKA_SOCKET = "prj_eafpos_kafka_1:9094";
+    private const KAFKA_SOCKET = "prj_eafpos_kafka_1:9092";
 
     public const TYPE_SQL = "sql";
     public const TYPE_DEBUG = "debug";
