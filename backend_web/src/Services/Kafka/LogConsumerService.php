@@ -34,8 +34,9 @@ final class LogConsumerService
         return $crud;
     }
 
-    private function _save(array $data): void
+    private function _save(?array $data): void
     {
+        if(!$data) return;
         if(!$pdo = $this->_get_pdo())
         {
             $this->logerr("No pdo created");

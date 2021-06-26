@@ -140,10 +140,10 @@ final class ComponentMysql
             $oLog = new \TheFramework\Components\ComponentLog("sql",PATH_LOGS);
             $oLog->save($mxVar,"-- ".$sTitle);
         }
-        if(class_exists("\App\Components\Kafka\ProducerComponent"))
+        if(function_exists("get_log_producer"))
         {
-            //$oLog = new \App\Components\Kafka\ProducerComponent();
-            //$oLog->send($mxVar, "-- ".$sTitle, ProducerComponent::TYPE_SQL);
+            $oLog = get_log_producer();
+            $oLog->send($mxVar, "-- ".$sTitle, "sql");
         }
     }
   

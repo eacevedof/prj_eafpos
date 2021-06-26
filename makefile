@@ -126,10 +126,10 @@ deploy-prod: ## deploy codeonly in prod
 remlogs: ## remove logs
 	rm -fr ./backend_web/logs/*
 
-frontstart: ## npm run start
+start-front: ## npm run start
 	cd frontend/restrict; npm run start
 
-frontbuild: ## npm run build
+build-front: ## npm run build
 	cd frontend/restrict; npm run build
 
 gen-cert: ## certs
