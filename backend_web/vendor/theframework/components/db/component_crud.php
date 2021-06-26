@@ -729,9 +729,10 @@ class ComponentCrud
     
     public function get_sanitized($sValue)
     {
+        // no se pq he escapado el % y el _ pero no debería
         $sFixed = str_replace("'","\'",$sValue);
-        $sFixed = str_replace("%","\%",$sFixed);
-        $sFixed = str_replace("_","\_",$sFixed);
+        //$sFixed = str_replace("%","\%",$sFixed);
+        //$sFixed = str_replace("_","\_",$sFixed); si quiero guardar  SQL_CALC_FOUND_ROWS me hace SQL\_CALC_\
         return $sFixed;
     }//get_sanitized
 
