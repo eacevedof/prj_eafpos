@@ -14,10 +14,11 @@ import Footer from "components/common/footer"
 
 function ProductIndex() {
 
-  const { scrumbs, cachekey } =  ActionIndex()
-  const { error, success} =  ActionIndex()
-  const {async_load_products, on_multiconfirm} =  ActionIndex()
-  const { result, foundrows} =  ActionIndex()
+  const { scrumbs, cachekey,
+    error, success,
+    async_load_products, on_multiconfirm,
+    result, foundrows
+  } =  ActionIndex()
 
   const {
     urlpagination,

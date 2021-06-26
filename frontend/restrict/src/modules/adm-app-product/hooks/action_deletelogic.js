@@ -4,15 +4,6 @@ import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {async_get_by_id, async_deletelogic} from "modules/adm-app-product/async/async_repository"
 import {seldisplay} from "modules/common/options"
 
-import Navbar from "components/common/navbar"
-import AlertSimple from 'components/bootstrap/alert/alertsimple'
-import ToastSimple from 'components/bootstrap/toast/toastsimple'
-import Breadscrumb from 'components/bootstrap/breadscrumb/breadscrumb'
-import RefreshAsync from 'components/bootstrap/button/refreshasync'
-import SubmitAsync from 'components/bootstrap/button/submitasync'
-import Sysfields from "components/common/sysfields"
-import Footer from "components/common/footer"
-
 const formdefault = {
   insert_user:"",
   insert_date:"",

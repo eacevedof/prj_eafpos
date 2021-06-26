@@ -11,10 +11,12 @@ import ActionDeleteLogic from "modules/adm-app-product/hooks/action_deletelogic"
 
 function ProductDeleteLogic(){
 
-  const {error, success, issubmitting, isdeleted} = ActionDeleteLogic()
-  const {breadscrumb} = ActionDeleteLogic()
-  const {seldisplay, formdata, sysdata} = ActionDeleteLogic()
-  const {on_submit, async_refresh} = ActionDeleteLogic()
+  const {
+    error, success,
+    issubmitting, isdeleted,
+    breadscrumb, seldisplay, formdata, sysdata,
+    on_submit, async_refresh
+  } = ActionDeleteLogic()
 
   return (
     <>

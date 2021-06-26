@@ -11,9 +11,10 @@ import ActionDelete from "modules/adm-app-product/hooks/action_delete";
 
 function ProductDelete(){
 
-  const {error, success} = ActionDelete()
-  const {isdeleted, issubmitting} = ActionDelete()
-  const {scrumbs, seldisplay, refcode, formdata, async_refresh, on_submit} = ActionDelete()
+  const {
+    error, success, isdeleted, issubmitting, scrumbs, seldisplay, refcode, formdata,
+    async_refresh, on_submit
+  } = ActionDelete()
 
   return (
     <>

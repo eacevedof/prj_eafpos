@@ -1,9 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React from "react"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
-
-import {useParams} from "react-router-dom"
-import {async_get_by_id} from "modules/adm-app-product/async/async_repository"
-import {seldisplay} from "modules/common/options"
 
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
@@ -12,78 +8,17 @@ import Breadscrumb from 'components/bootstrap/breadscrumb/breadscrumb'
 import RefreshAsync from 'components/bootstrap/button/refreshasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
-
-const formdefault = {
-  insert_date: "",
-  insert_user:"react",
-  update_date: "",
-  update_user:"react",
-
-  code_erp:"",
-  description:"",
-  slug:"",
-  description_full:"",
-  price_sale:"0",
-  price_sale1:"0",
-  order_by:"100",
-  display:"0",
-  url_image: "",
-  id_user: -1,
-}
+import ActionDetail from "modules/adm-app-product/hooks/action_detail"
 
 function ProductDetail(){
-
-  const {id} = useParams()
-  const [issubmitting, set_issubmitting] = useState(false)
-  const [error, set_error] = useState("")
-  const [success, set_success] = useState("")
-
-  const get_seltext = id => {
-    const arfound = seldisplay.filter(obj => obj.value===id) || []
-    //pr(arfound)
-    //return ""
-    if(arfound.length>0)
-      return arfound[0]["text"]
-    return ""
-  }
-
-  const [formdata, set_formdata] = useState(formdefault)
-
-  const async_refresh = async () => {
-    await async_onload()
-  }
- 
-  const async_onload = async () => {
-    set_issubmitting(true)
-    set_error("")
-    set_success("")
-    console.log("product.detail.onload.formdata:",formdata)
-    try{
-      const r = await async_get_by_id(id)
-      console.log("product.detail.onload.r",r)
-      
-      if(!r){
-        set_error("Product not found!")
-        return
-      }
-      else{
-        const tmpform = {...formdata, ...r}
-        set_formdata(tmpform)
-        set_success(`Product Nº:${id} refreshed!`)
-      } 
-    }
-    catch(error){
-      set_error(error)
-    }
-    finally{
-      set_issubmitting(false)
-    }    
-  }
-
-  useEffect(()=>{
-    async_onload()
-    return ()=> console.log("product.detail unmounting")
-  },[])
+  const {
+    error, success,
+    scrumbs,
+    formdata,
+    issubmitting,
+    get_seltext,
+    async_refresh,
+  } = ActionDetail()
 
   return (
     <>
@@ -91,7 +26,7 @@ function ProductDetail(){
       <main className="container">
         
         <h1 className="mt-2 mb-2">Product Info</h1>
-        <Breadscrumb urls={MODCONFIG.SCRUMBS.GENERIC}/>
+        <Breadscrumb urls={scrumbs}/>
         <div>
           {error && <AlertSimple message={error} type="danger" />}
           {success && <ToastSimple message={success} title="Success" isvisible={true} />}
