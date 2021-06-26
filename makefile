@@ -40,6 +40,10 @@ build-kafka:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build kafka
 	make ps
 
+build-redis:
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build redis
+	make ps
+
 start: ## start
 	docker-compose start
 
@@ -65,6 +69,9 @@ restart-zookeeper:
 restart-kafka:
 	docker restart prj_eafpos_kafka_1
 
+restart-redis:
+	docker restart php-eafpos-redis
+
 stop: ## stop containers
 	docker-compose stop
 
@@ -86,6 +93,9 @@ logs-zookeeper: ## logs prj_eafpos_zookeeper_1
 logs-kafka: ## logs kafka
 	docker logs prj_eafpos_kafka_1
 
+logs-redis: ## logs redis
+	docker logs php-eafpos-redis
+
 ssh-be: ## fpm
 	docker exec -it --user root php-eafpos-be bash
 
@@ -103,6 +113,9 @@ ssh-zookeeper: ## ssh's into prj_eafpos_zookeeper_1
 
 ssh-kafka: ## ssh's into prj_eafpos_kafka_1
 	docker exec -it --user root prj_eafpos_kafka_1 bash
+
+ssh-redis: ## ssh's into redis
+	docker exec -it --user root php-eafpos-redis bash
 
 deploy-test: ## deploy codeonly in test
 	py.sh deploy.codeonly eduardoaf

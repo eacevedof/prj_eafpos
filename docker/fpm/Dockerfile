@@ -12,7 +12,11 @@ RUN apt-get update \
     && apt-get install -y librdkafka-dev \
     && pecl install rdkafka \
     && docker-php-ext-enable --ini-name kafka.ini rdkafka \
-
+    #redis
+    # && apt-get install -y libzip-dev
+    && pecl install igbinary redis \
+    && docker-php-ext-enable --ini-name redis.ini igbinary redis \
+    # vim
     && apt-get -y install cron vim
 
 RUN curl --insecure https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
