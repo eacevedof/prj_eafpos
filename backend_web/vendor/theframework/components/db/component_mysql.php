@@ -142,8 +142,7 @@ final class ComponentMysql
         }
         if(function_exists("get_log_producer"))
         {
-            $oLog = get_log_producer();
-            $oLog->send($mxVar, "-- ".$sTitle, "sql");
+            get_log_producer()->send($mxVar, "-- ".$sTitle, "sql");
         }
     }
   
