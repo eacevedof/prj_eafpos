@@ -41,7 +41,7 @@ build-kafka:
 	make ps
 
 build-redis:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build redis
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-redis
 	make ps
 
 start: ## start
