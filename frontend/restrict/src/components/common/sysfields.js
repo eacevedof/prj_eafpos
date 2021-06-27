@@ -5,9 +5,9 @@ function Sysfields({formdata}){
 
   const [sysfields, set_sysfields] = useState({
     insert_user: formdata.insert_user,
-    insert_name: "",
+    insert_alias: "",
     update_user: formdata.update_user,
-    update_name: "",
+    update_alias: "",
     delete_user: formdata.delete_user,
     delete_name: "",
 
@@ -19,12 +19,12 @@ function Sysfields({formdata}){
   const [isdeleted, set_isdeleted] = useState(false)
 
   const async_onload = async () => {   
-    const insert_name = await async_get_useralias(formdata.insert_user)
-    const update_name = await async_get_useralias(formdata.update_user)
+    const insert_alias = await async_get_useralias(formdata.insert_user)
+    const update_alias = await async_get_useralias(formdata.update_user)
     const delete_name = await async_get_useralias(formdata.delete_user)
     
     if(formdata.delete_date) set_isdeleted(true)
-    set_sysfields({...formdata, insert_name, update_name, delete_name})
+    set_sysfields({...formdata, insert_alias, update_alias, delete_name})
   }
 
   useEffect(()=>{
@@ -40,13 +40,13 @@ function Sysfields({formdata}){
         <div className="col-3">Created at:</div>
         <div className="col-3">{sysfields.insert_date}</div>
         <div className="col-3">Created by:</div>
-        <div className="col-3">{sysfields.insert_name}</div>
+        <div className="col-3">{sysfields.insert_alias}</div>
       </div>
       <div className="row">
         <div className="col-3">Modified at:</div>
         <div className="col-3">{sysfields.update_date}</div>
         <div className="col-3">Modified by:</div>
-        <div className="col-3">{sysfields.update_name}</div>
+        <div className="col-3">{sysfields.update_alias}</div>
       </div>    
       {
         isdeleted ? (
