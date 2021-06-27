@@ -1,6 +1,6 @@
 import helpapify from "helpers/apify"
 import apidb from "providers/apidb"
-import {is_defined, is_undefined} from "helpers/functions"
+import {is_defined, is_undefined, pr} from "helpers/functions"
 
 const query = {
   table: "base_user",
@@ -30,10 +30,10 @@ const async_get_useralias = async userid => {
 
   const query = get_objselect(userid)
   const r = await apidb.async_get_list(query)
-  //pr(r)
+  //pr(r.result)
   if(is_defined(r.error)) return r.error
 
-  if(is_defined(r.result)) return r.result[0].nickname
+  if(is_defined(r.result)) return r.result[0]["nickname"]
 
 }
 

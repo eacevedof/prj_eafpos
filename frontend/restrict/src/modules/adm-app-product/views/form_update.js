@@ -143,7 +143,7 @@ function ProductUpdate(){
             :null
           }
 
-          <Sysfields sysdata={formdata} />
+          <Sysfields formdata={formdata} />
           
         </form>
       </main>
