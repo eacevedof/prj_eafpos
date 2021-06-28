@@ -139,8 +139,7 @@ services:
       - php-eafpos-net
       - mariadb-univ_net
 
-  redis:
-    # image: redis
+  php-eafpos-redis:
     build:
       context: docker/redis
     hostname: redis

@@ -75,6 +75,27 @@ restart-redis:
 stop: ## stop containers
 	docker-compose stop
 
+stop-db: ## stop db
+	docker stop php-eafpos-db
+
+stop-cron: ## stop cron
+	docker stop php-eafpos-cron
+
+stop-be: ## stop be
+	docker stop php-eafpos-be
+
+stop-web: ## stop web
+	docker stop php-eafpos-web
+
+stop-redis: ## stop redis
+	docker stop php-eafpos-redis
+
+stop-zookeeper: ## stop zookeeper
+	docker stop zookeeper
+
+stop-kafka: ## stop kafka
+	docker stop kafka
+
 logs-web: ## logs web
 	docker logs php-eafpos-web
 
