@@ -11,10 +11,12 @@ namespace App\Behaviours;
 
 use App\Models\AppModel;
 use App\Services\Dbs\CoreQueriesService;
-use App\Factories\RedisFactory;
+use App\Traits\CacheQueryTrait;
 
 final class SchemaBehaviour extends AppModel
 {
+    use CacheQueryTrait;
+
     private $oQServ;
     private $iFoundrows;
     
@@ -35,9 +37,10 @@ final class SchemaBehaviour extends AppModel
 
     public function execute($sSQL)
     {
-        $r = $this->oDb->exec($sSQL);
+        $r = ($cached = $this->cacheget($sSQL)) ?? $this->oDb->exec($sSQL);
         if($this->oDb->is_error())
             $this->add_error($this->oDb->get_errors());
+        $this->cacheset($sSQL, $r);
         return $r;
     }    
     
@@ -47,7 +50,7 @@ final class SchemaBehaviour extends AppModel
         SELECT schema_name as dbname
         FROM information_schema.schemata
         ORDER BY schema_name;";
-        $arRows = $this->query($sSQL);
+        $arRows = $this->cacheget($sSQL) ?? $this->query($sSQL);
         return $arRows;
     }
     
