@@ -2,6 +2,8 @@ version: "3.5"
 
 services:
   php-eafpos-zookeeper:
+    #hostname: zookeeper
+    container_name: php-eafpos-zookeeper
     # version: 3.4.13
     image: wurstmeister/zookeeper
     environment:
@@ -13,6 +15,8 @@ services:
       - mariadb-univ_net
 
   php-eafpos-kafka:
+    hostname: kafka
+    container_name: php-eafpos-kafka
     #version: 2.13-2.7.0
     build:
       context: docker/kafka
