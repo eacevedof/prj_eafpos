@@ -33,11 +33,11 @@ build-be:
 	make ps
 
 build-zookeeper:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build zookeeper
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-zookeeper
 	make ps
 
 build-kafka:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build kafka
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-kafka
 	make ps
 
 build-redis:

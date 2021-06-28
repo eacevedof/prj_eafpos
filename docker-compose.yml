@@ -1,7 +1,7 @@
 version: "3.5"
 
 services:
-  zookeeper:
+  php-eafpos-zookeeper:
     # version: 3.4.13
     image: wurstmeister/zookeeper
     environment:
@@ -12,12 +12,12 @@ services:
       - php-eafpos-net
       - mariadb-univ_net
 
-  kafka:
+  php-eafpos-kafka:
     #version: 2.13-2.7.0
     build:
       context: docker/kafka
     depends_on:
-      - zookeeper
+      - php-eafpos-zookeeper
 
     environment:
       TZ: ${TIME_ZONE}
