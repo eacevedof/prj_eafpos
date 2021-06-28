@@ -23,19 +23,19 @@ final class RedisComponent
         }
     }
 
-    public function set_key(string $key):RedisComponent
+    public function set_key(string $key): RedisComponent
     {
         $this->key = $key;
         return $this;
     }
 
-    public function set_value($mxvalue):RedisComponent
+    public function set_value($mxvalue): RedisComponent
     {
         $this->value = $mxvalue;
         return $this;
     }
 
-    public function set_ttl(float $seconds):RedisComponent
+    public function set_ttl(float $seconds): RedisComponent
     {
         $this->ttl = $seconds;
         return $this;
