@@ -11,8 +11,9 @@ namespace App\Behaviours;
 
 use App\Models\AppModel;
 use App\Services\Dbs\CoreQueriesService;
+use App\Factories\RedisFactory;
 
-class SchemaBehaviour extends AppModel
+final class SchemaBehaviour extends AppModel
 {
     private $oQServ;
     private $iFoundrows;
@@ -23,7 +24,7 @@ class SchemaBehaviour extends AppModel
         $this->oQServ = new CoreQueriesService();
     }
     
-    public function query($sSQL,$iCol=NULL,$iRow=NULL)
+    public function query($sSQL, $iCol=NULL, $iRow=NULL)
     {
         $r = $this->oDb->query($sSQL,$iCol,$iRow);
         $this->iFoundrows = $this->oDb->get_foundrows();

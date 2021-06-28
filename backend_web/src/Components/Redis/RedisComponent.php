@@ -41,8 +41,29 @@ final class RedisComponent
         return $this;
     }
 
-    private function get(string $key)
+    private function get(): string
     {
+        return self::$redis->get($this->key);
+    }
 
+    private function save(): void
+    {
+        self::$redis->set($this->key, $this->value);
+    }
+
+    private function save_query(): RedisComponent
+    {
+        $hash = md5($this->value);
+        $json = json_encode($this->value);
+        self::$redis->set($hash, $json);
+        return $this;
+    }
+
+    private function get_query(): array
+    {
+        $hash = md5($this->value);
+        $json = self::$redis->get($hash);
+        $array = json_decode($json, 1);
+        return $array;
     }
 }
