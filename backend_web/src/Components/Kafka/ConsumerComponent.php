@@ -22,7 +22,7 @@ final class ConsumerComponent
 
     private const KAFKA_TOPIC = "queue-logs";
     private const REQUEST_SLEEP_TIME = 30 * 1000;
-    private const KAFKA_SOCKET = "prj_eafpos_kafka_1:9092";
+    private const KAFKA_SOCKET = "php-eafpos-kafka:9092";
 
     private static $consumer;
 

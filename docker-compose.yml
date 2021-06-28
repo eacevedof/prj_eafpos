@@ -33,7 +33,7 @@ services:
       #KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
       #KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
 
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: php-eafpos-zookeeper:2181
       KAFKA_BROKER_ID: 1
       KAFKA_TOPIC_1: ${KAFKA_TOPIC}
       #topic-name:partition:replicas
@@ -144,10 +144,10 @@ services:
       - mariadb-univ_net
 
   php-eafpos-redis:
-    build:
-      context: docker/redis
     hostname: redis
     container_name: php-eafpos-redis
+    build:
+      context: docker/redis
     environment:
       TZ: ${TIME_ZONE}
 
