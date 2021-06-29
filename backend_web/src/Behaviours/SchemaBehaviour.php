@@ -51,7 +51,7 @@ final class SchemaBehaviour extends AppModel
         ORDER BY schema_name;";
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 1800);
+        $this->addto_cache($sSQL, $arRows, 3600);
         return $arRows;
     }
     
@@ -60,7 +60,7 @@ final class SchemaBehaviour extends AppModel
         $sSQL = $this->oQServ->get_tables($sDb);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 1800);
+        $this->addto_cache($sSQL, $arRows, 3600);
         return $arRows;
     }
     
@@ -69,7 +69,7 @@ final class SchemaBehaviour extends AppModel
         $sSQL = $this->oQServ->get_tables($sDb,$sTable);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL,0);
-        $this->addto_cache($sSQL, $arRows, 1800);
+        $this->addto_cache($sSQL, $arRows, 3600);
         return $arRows;        
     }
    
@@ -78,7 +78,7 @@ final class SchemaBehaviour extends AppModel
         $sSQL = $this->oQServ->get_fields($sDb,$sTable);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 1800);
+        $this->addto_cache($sSQL, $arRows, 3600);
         return $arRows;
     }
 
@@ -87,7 +87,7 @@ final class SchemaBehaviour extends AppModel
         $sSQL = $this->oQServ->get_fields_min($sDb,$sTable);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 1800);
+        $this->addto_cache($sSQL, $arRows, 3600);
         return $arRows;
     }
 
@@ -96,7 +96,7 @@ final class SchemaBehaviour extends AppModel
         $sSQL = $this->oQServ->get_field($sDb,$sTable,$sField);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 1800);
+        $this->addto_cache($sSQL, $arRows, 3600);
         return $arRows;
     }    
     
