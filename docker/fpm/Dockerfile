@@ -13,10 +13,9 @@ RUN apt-get update \
     && pecl install rdkafka \
     && docker-php-ext-enable --ini-name kafka.ini rdkafka \
     #redis
-    # && apt-get install -y libzip-dev
-    #  /usr/local/lib/php/extensions
-    && pecl install igbinary redis \
-    && docker-php-ext-enable --ini-name redis.ini igbinary redis \
+    # en las pregunta todo debe ser no (no vale con n)
+    && pecl install redis \
+    && docker-php-ext-enable --ini-name redis.ini redis \
     # vim
     && apt-get -y install cron vim
 
