@@ -20,9 +20,11 @@ final class ConsumerComponent
 {
     use LogTrait;
 
+    private const KAFKA_NUM_PARTITION = 0;
     private const KAFKA_TOPIC = "queue-logs";
-    private const REQUEST_SLEEP_TIME = 30 * 1000;
     private const KAFKA_SOCKET = "php-eafpos-kafka:9092";
+    private const REQUEST_WAIT_TIME = 30 * 1000;
+    private const KAFKA_BATCH_SIZE = 10;
 
     private static $consumer;
 
@@ -59,30 +61,36 @@ final class ConsumerComponent
         $consumer = $this->_get_consumer();
         $topicconf = $this->_get_topic();
         $topic = $consumer->newTopic(self::KAFKA_TOPIC, $topicconf);
-        $topic->consumeStart(0, RD_KAFKA_OFFSET_END);
+        $topic->consumeStart(self::KAFKA_NUM_PARTITION, RD_KAFKA_OFFSET_END);
         return $topic;
     }
 
     public function run($fn_onresponse): void
     {
+        $now = date("Y-m-d H:i:s");
+        echo "start consumer-component at - $now\n";
         $topic = $this->_get_consumer_topic();
 
         $i = 0;
-        while (true) {
-            $message = $topic->consume(0, self::REQUEST_SLEEP_TIME);
+        //$messages = [];
+        while (true)
+        {
+            //$message = $topic->consume(self::KAFKA_NUM_PARTITION, self::REQUEST_WAIT_TIME);
+            //ConsumerTopic::consumeBatch ( integer $partition , integer $timeout_ms , integer $batch_size ) : array
+            $messages = $topic->consumeBatch(self::KAFKA_NUM_PARTITION, self::REQUEST_WAIT_TIME, self::REQUEST_WAIT_TIME);
             $now = date("Y-m-d H:i:s");
 
-            if (is_null($message)) {
+            if (is_null($messages)) {
                 $message = "No more messages: $now";
                 $this->logkafka($message,"kafkalogs 1");
                 continue;
             }
 
-            switch ($message->err) {
+            switch ($messages->err) {
                 case RD_KAFKA_RESP_ERR_NO_ERROR:
                     echo "RD_KAFKA_RESP_ERR_NO_ERROR ($now)\n";
-                    if(is_callable($fn_onresponse)) call_user_func_array($fn_onresponse, [$message]);
-                    $this->logkafka($message->payload,"RD_KAFKA_RESP_ERR_NO_ERROR saving in db ($i) $now");
+                    if(is_callable($fn_onresponse) && $messages) call_user_func_array($fn_onresponse, [$messages]);
+                    $this->logkafka($messages,"RD_KAFKA_RESP_ERR_NO_ERROR possible saving if not empty ($i) $now");
                     break;
                 case RD_KAFKA_RESP_ERR__PARTITION_EOF:
                     $this->logkafka("No more messages; will wait for more","kafkalogs 2 saving in db ($i) $now");
@@ -91,11 +99,12 @@ final class ConsumerComponent
                     $this->logkafka("timeout","RD_KAFKA_RESP_ERR__TIMED_OUT: ($i) $now");
                     break;
                 default:
-                    $this->logkafka($message->errstr(),"Exception: ($i) $now");
-                    throw new \Exception($message->errstr(), $message->err);
+                    $this->logkafka($messages->errstr(),"Exception: ($i) $now");
+                    throw new \Exception($messages->errstr(), $messages->err);
                     break;
             }
             $i++;
         }
-    }//run    
+    }//run
+
 }

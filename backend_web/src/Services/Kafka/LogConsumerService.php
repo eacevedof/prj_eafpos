@@ -42,24 +42,39 @@ final class LogConsumerService
             $this->logerr("No pdo created");
             return;
         }
-        $sql = $this->_get_query()
-            ->add_insert_fv("group_type", $data["type"])
-            ->add_insert_fv("title", $data["title"])
-            ->add_insert_fv("message",$data["message"])
-            ->add_insert_fv("timest", $data["timestamp"])
-            ->add_insert_fv("code_cache",uniqid())
-            ->autoinsert()
-        ;
-        $sql = $sql->get_sql();
+
+        $sqls = [];
+        foreach ($data as $message)
+        {
+            $sql = $this->_get_query()
+                ->add_insert_fv("group_type", $message["type"])
+                ->add_insert_fv("title", $message["title"])
+                ->add_insert_fv("message", $message["message"])
+                ->add_insert_fv("timest", $message["timestamp"])
+                ->add_insert_fv("code_cache", uniqid())
+                ->autoinsert();
+            $sql = $sql->get_sql();
+            $sqls[] = $sql;
+        }
+        $sql = implode(";",$sqls).";";
+        //$this->logkafka($sql,"to save in db");
         $pdo->exec($sql);
     }
 
-    public function __invoke(Message $kafkamsg): void
+    public function __invoke(array $kafkamessages): void
     {
-        $data["timestamp"] = $kafkamsg->timestamp;
-        $arjson = json_decode($kafkamsg->payload,1);
-        $data = array_merge($data,$arjson);
-        $this->_save($data);
+        $parsed = [];
+        foreach($kafkamessages as $message)
+        {
+            if ($message->timestamp === -1) continue;
+
+            $data=[];
+            $data["timestamp"] = $message->timestamp;
+            $arjson = json_decode($message->payload,1);
+            $data = array_merge($data, $arjson);
+            $parsed[] = $data;
+        }
+        $this->_save($parsed);
     }
 
     public function run(): void
