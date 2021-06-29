@@ -26,7 +26,7 @@ final class ConsumerComponent
 
     private static $consumer;
 
-    private function get_config(): Conf
+    private function _get_consumer_config(): Conf
     {
         $conf = new Conf();
         $conf->set("bootstrap.servers", self::KAFKA_SOCKET);
@@ -34,30 +34,30 @@ final class ConsumerComponent
         return $conf;        
     }
     
-    private function get_topic(): TopicConf
+    private function _get_topic(): TopicConf
     {
         $topicconf = new TopicConf();
         $topicconf->set("request.required.acks", 1);
         $topicconf->set("auto.commit.enable", 0);
-        $topicconf->set("auto.commit.interval.ms", 100);
+        $topicconf->set("auto.commit.interval.ms", 1000);
         $topicconf->set("offset.store.method", "broker");
         return $topicconf;
     }
     
-    private function get_consumer(): Consumer
+    private function _get_consumer(): Consumer
     {
         if(!self::$consumer) {
-            $config = $this->get_config();
+            $config = $this->_get_consumer_config();
             $consumer = new Consumer($config);
             self::$consumer = $consumer;
         }
         return self::$consumer;
     }
     
-    private function get_consumer_topic(): ConsumerTopic
+    private function _get_consumer_topic(): ConsumerTopic
     {
-        $consumer = $this->get_consumer();
-        $topicconf = $this->get_topic();
+        $consumer = $this->_get_consumer();
+        $topicconf = $this->_get_topic();
         $topic = $consumer->newTopic(self::KAFKA_TOPIC, $topicconf);
         $topic->consumeStart(0, RD_KAFKA_OFFSET_END);
         return $topic;
@@ -65,7 +65,7 @@ final class ConsumerComponent
 
     public function run($fn_onresponse): void
     {
-        $topic = $this->get_consumer_topic();
+        $topic = $this->_get_consumer_topic();
 
         $i = 0;
         while (true) {
