@@ -72,10 +72,8 @@ final class ConsumerComponent
         $topic = $this->_get_consumer_topic();
 
         $i = 0;
-        //$messages = [];
         while (true)
         {
-            //$message = $topic->consume(self::KAFKA_NUM_PARTITION, self::REQUEST_WAIT_TIME);
             //ConsumerTopic::consumeBatch ( integer $partition , integer $timeout_ms , integer $batch_size ) : array
             $messages = $topic->consumeBatch(self::KAFKA_NUM_PARTITION, self::REQUEST_WAIT_TIME, self::REQUEST_WAIT_TIME);
             $now = date("Y-m-d H:i:s");
