@@ -8,7 +8,7 @@ final class RedisComponent
 {
     private const REDIS_SERVER = "host.docker.internal";
     private const REDIS_PORT = "6379";
-    private static Redis $redis;
+    private static $redis;
 
     private string $key;
     private $value;

@@ -13,12 +13,12 @@ use App\Factories\RedisFactory;
 
 trait CacheQueryTrait
 {
-    protected function cacheget(string $query): array
+    protected function get_cached(string $query): array
     {
         return RedisFactory::get()->set_key($query)->get_query();
     }
 
-    protected function cacheset(string $query, array $array, float $ttl=300): void
+    protected function addto_cache(string $query, array $array, float $ttl=300): void
     {
         RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($array)->save_query();
     }

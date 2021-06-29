@@ -14,6 +14,7 @@ RUN apt-get update \
     && docker-php-ext-enable --ini-name kafka.ini rdkafka \
     #redis
     # && apt-get install -y libzip-dev
+    #  /usr/local/lib/php/extensions
     && pecl install igbinary redis \
     && docker-php-ext-enable --ini-name redis.ini igbinary redis \
     # vim

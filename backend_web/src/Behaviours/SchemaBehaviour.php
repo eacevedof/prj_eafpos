@@ -28,7 +28,7 @@ final class SchemaBehaviour extends AppModel
     
     public function query($sSQL, $iCol=NULL, $iRow=NULL)
     {
-        $r = $this->oDb->query($sSQL,$iCol,$iRow);
+        $r = $this->oDb->query($sSQL, $iCol, $iRow);
         $this->iFoundrows = $this->oDb->get_foundrows();
         if($this->oDb->is_error())
             $this->add_error($this->oDb->get_errors());
@@ -37,10 +37,9 @@ final class SchemaBehaviour extends AppModel
 
     public function execute($sSQL)
     {
-        $r = ($cached = $this->cacheget($sSQL)) ?? $this->oDb->exec($sSQL);
+        $r = $this->oDb->exec($sSQL);
         if($this->oDb->is_error())
             $this->add_error($this->oDb->get_errors());
-        $this->cacheset($sSQL, $r);
         return $r;
     }    
     
@@ -50,25 +49,27 @@ final class SchemaBehaviour extends AppModel
         SELECT schema_name as dbname
         FROM information_schema.schemata
         ORDER BY schema_name;";
-        $arRows = $this->cacheget($sSQL) ?? $this->query($sSQL);
+        if($arRows = $this->get_cached($sSQL)) return $arRows;
+        $arRows = $this->query($sSQL);
+        $this->addto_cache($sSQL, $arRows);
         return $arRows;
     }
     
     public function get_tables($sDb="")
     {
         $sSQL = $this->oQServ->get_tables($sDb);
-        //bug($sSQL);
-        $arRows = $this->query($sSQL,0);
-        //bug($arRows);
+        if($arRows = $this->get_cached($sSQL)) return $arRows;
+        $arRows = $this->query($sSQL);
+        $this->addto_cache($sSQL, $arRows);
         return $arRows;
     }
     
     public function get_table($sTable,$sDb="")
     {
         $sSQL = $this->oQServ->get_tables($sDb,$sTable);
-        //bug($sSQL);
+        if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL,0);
-        //bug($arRows);
+        $this->addto_cache($sSQL, $arRows);
         return $arRows;        
     }
    
