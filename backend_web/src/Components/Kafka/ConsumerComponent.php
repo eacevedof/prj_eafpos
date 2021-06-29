@@ -23,7 +23,7 @@ final class ConsumerComponent
     private const KAFKA_NUM_PARTITION = 0;
     private const KAFKA_TOPIC = "queue-logs";
     private const KAFKA_SOCKET = "php-eafpos-kafka:9092";
-    private const REQUEST_WAIT_TIME = 30 * 1000;
+    private const REQUEST_WAIT_TIME = 15 * 1000;
     private const KAFKA_BATCH_SIZE = 10;
 
     private static $consumer;
