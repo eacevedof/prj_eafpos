@@ -76,24 +76,27 @@ final class SchemaBehaviour extends AppModel
     public function get_fields_info($sTable,$sDb="")
     {
         $sSQL = $this->oQServ->get_fields($sDb,$sTable);
+        if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        //bug($arRows);die;
+        $this->addto_cache($sSQL, $arRows);
         return $arRows;
     }
 
     public function get_fields($sTable,$sDb="")
     {
         $sSQL = $this->oQServ->get_fields_min($sDb,$sTable);
+        if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        //bug($arRows);die;
+        $this->addto_cache($sSQL, $arRows);
         return $arRows;
     }
 
     public function get_field_info($sField,$sTable,$sDb="")
     {
         $sSQL = $this->oQServ->get_field($sDb,$sTable,$sField);
+        if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        //bug($arRows);die;
+        $this->addto_cache($sSQL, $arRows);
         return $arRows;
     }    
     

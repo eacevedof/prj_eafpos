@@ -53,7 +53,7 @@ final class RedisComponent
 
     public function save_query(): RedisComponent
     {
-        $hash = md5($this->key);
+        $hash = "query-".md5($this->key);
         $json = json_encode($this->value);
         self::$redis->set($hash, $json);
         return $this;
@@ -61,9 +61,10 @@ final class RedisComponent
 
     public function get_query(): array
     {
-        $hash = md5($this->key);
+        $hash = "query-".md5($this->key);
         $json = self::$redis->get($hash);
-        $array = json_decode($json, 1);
+        if(!$json) return [];
+        $array = json_decode($json, true);
         return $array;
     }
 }
