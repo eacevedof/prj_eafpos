@@ -3,7 +3,8 @@ import {add} from "helpers/functions"
 export default () =>{
   const q = {
     init(){
-      this.table= ""
+      this.cache_time = 0
+      this.table = ""
       this.foundrows = 0
       this.distinct = 0
       this.fields = []
@@ -13,6 +14,11 @@ export default () =>{
       this.having = []
       this.orderby = []
       this.limit = {perpage:null, regfrom:0}
+      return this
+    },
+
+    set_cache_time(fsecs) {
+      this.cache_time = fsecs
       return this
     },
 
@@ -110,6 +116,7 @@ export default () =>{
     get_query(){
       const oform = new FormData()
 
+      oform.append("queryparts[cache_time]", this.cache_time)
       //table
       oform.append("queryparts[table]",this.table)
 

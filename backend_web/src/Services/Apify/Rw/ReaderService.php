@@ -14,10 +14,12 @@ use TheFramework\Components\Db\ComponentCrud;
 use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
-
+use App\Traits\CacheQueryTrait;
 
 class ReaderService extends AppService
 {
+    use CacheQueryTrait;
+
     private $idContext;
     private $sDb;
     
@@ -25,6 +27,7 @@ class ReaderService extends AppService
     private $oBehav;
     private $sSQL;
     private $iFoundrows;
+    private $fCacheTime = 0;
 
     public function __construct(string $idContext="", string $sDbalias="")
     {
@@ -66,7 +69,6 @@ class ReaderService extends AppService
                 $arTmp[$arField[0]] = $arField[1] ?? "ASC";
             }
         }
-        //pr($oCrud);die;
         $oCrud->set_orderby($arTmp);
 
         if(isset($arParams["limit"]["perpage"]))
@@ -74,20 +76,33 @@ class ReaderService extends AppService
 
         $oCrud->get_selectfrom();
         $sql =  $oCrud->get_sql();
-        //$this->logd($sql,"_get_parsed_tosql.sql");
-        //pr($sql,"sql");
         return $sql;
     }
 
-    public function read_raw($sSQL)
+    public function read_raw($sSQL): array
     {
         if(!$sSQL) return [];
         $this->sSQL = $sSQL;
+
+        if($ttl = $this->fCacheTime) {
+            if($r = $this->get_cached($sSQL)) {
+                $this->iFoundrows = $this->get_cachedcount($sSQL);
+                return $r;
+            }
+        }
+
         $r = $this->oBehav->read_raw($sSQL);
         $this->iFoundrows = $this->oBehav->get_foundrows();
         if($this->oBehav->is_error()) {
+            if($ttl) $this->delete_all($sSQL);
             $this->logerr($errors = $this->oBehav->get_errors(),"readservice.read_raw");
             $this->add_error($errors);
+            return $r;
+        }
+
+        if($ttl) {
+            $this->addto_cache($sSQL, $r, $ttl);
+            $this->addto_cachecount($sSQL, $this->iFoundrows, $ttl);
         }
         return $r;
     }
@@ -98,14 +113,13 @@ class ReaderService extends AppService
             $this->logerr($error = "get_read No params","readservice.get_read");
             return $this->add_error($error);
         }
+
+        $this->fCacheTime = $arParams["cache_time"] ?? 0;
         $sSQL = $this->_get_parsed_tosql($arParams);
         $this->sSQL = $sSQL;
         $r = $this->read_raw($sSQL);
         return $r;
     }
-
-    
-    public function get_sql(){return $this->sSQL;}
 
     public function get_foundrows(){return $this->iFoundrows;}
 

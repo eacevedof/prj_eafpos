@@ -56,6 +56,7 @@ final class RedisComponent
         $hash = "query-".md5($this->key);
         $json = json_encode($this->value);
         self::$redis->set($hash, $json);
+        self::$redis->expire($hash, $this->ttl);
         return $this;
     }
 
@@ -66,5 +67,27 @@ final class RedisComponent
         if(!$json) return [];
         $array = json_decode($json, true);
         return $array;
+    }
+
+    public function save_querycount(): RedisComponent
+    {
+        $hash = "query-count-".md5($this->key);
+        self::$redis->set($hash, (int) $this->value);
+        self::$redis->expire($hash, $this->ttl);
+        return $this;
+    }
+
+    public function get_querycount(): int
+    {
+        $hash = "query-count-".md5($this->key);
+        $count = self::$redis->get($hash);
+        return (int) $count;
+    }
+
+    public function delete_query_and_count(): void
+    {
+        $hash1 = "query-".md5($this->key);
+        $hash2 = "query-count-".md5($this->key);
+        self::$redis->del($hash1, $hash2);
     }
 }
