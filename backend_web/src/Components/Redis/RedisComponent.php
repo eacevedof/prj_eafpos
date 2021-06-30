@@ -12,7 +12,7 @@ final class RedisComponent
 
     private string $key;
     private $value;
-    private float $ttl; //seconds
+    private float $ttl; //seconds ejemplo
 
     public function __construct()
     {
