@@ -105,9 +105,8 @@ export const filterconf = [
 ]
 
 export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
-
   const objselect = select()
-    .set_comment("products")
+    .set_comment("product-list")
     .set_cache_time(500)
     .set_table(_query.table, _query.alias)
     .is_foundrows(1)
