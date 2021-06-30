@@ -49,7 +49,7 @@ class ReaderService extends AppService
         if($this->isError) return;
 
         $oCrud = new ComponentCrud();
-        if(!isset($arParams["comment"])) $oCrud->set_comment($arParams["comment"]);
+        if(isset($arParams["comment"])) $oCrud->set_comment($arParams["comment"]);
         $oCrud->set_table($arParams["table"]);
         if(isset($arParams["distinct"])) $oCrud->is_distinct($arParams["distinct"]);
         if(isset($arParams["foundrows"])) $oCrud->is_foundrows($arParams["foundrows"]);
