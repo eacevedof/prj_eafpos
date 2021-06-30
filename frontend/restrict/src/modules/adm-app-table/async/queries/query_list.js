@@ -67,15 +67,15 @@ export const grid = {
     },
 
     {text: "label-code_erp", value: "code_erp"},
-{text: "label-description", value: "description"},
-{text: "label-diner_names", value: "diner_names"},
-{text: "label-diner_num", value: "diner_num"},
-{text: "label-coord_x", value: "coord_x"},
-{text: "label-coord_y", value: "coord_y"},
-{text: "label-time_start", value: "time_start"},
-{text: "label-id_user", value: "id_user"},
-{text: "label-order_by", value: "order_by"},
-{text: "label-reserved", value: "reserved"}
+    {text: "label-description", value: "description"},
+    {text: "label-diner_names", value: "diner_names"},
+    {text: "label-diner_num", value: "diner_num"},
+    {text: "label-coord_x", value: "coord_x"},
+    {text: "label-coord_y", value: "coord_y"},
+    {text: "label-time_start", value: "time_start"},
+    {text: "label-id_user", value: "id_user"},
+    {text: "label-order_by", value: "order_by"},
+    {text: "label-reserved", value: "reserved"}
   ]
 }
 
@@ -104,6 +104,8 @@ export const filterconf = [
 
 export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
   const objselect = select()
+    .set_comment("tables")
+    .set_cache_time(500)
     .set_table(_query.table, _query.alias)
     .is_foundrows(1)
     .set_fields(_query.fields)

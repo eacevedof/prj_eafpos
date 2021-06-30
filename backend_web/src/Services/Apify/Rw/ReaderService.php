@@ -44,12 +44,12 @@ class ReaderService extends AppService
     
     private function _get_parsed_tosql($arParams)
     {
-        //pr($arParams,"_get_parsed_tosql");die;
-        $oCrud = new ComponentCrud();
         if(!isset($arParams["table"])) $this->add_error("get_sql no table");
         if(!isset($arParams["fields"]) || !is_array($arParams["fields"])) $this->add_error("get_sql no fields");
         if($this->isError) return;
 
+        $oCrud = new ComponentCrud();
+        if(!isset($arParams["comment"])) $oCrud->set_comment($arParams["comment"]);
         $oCrud->set_table($arParams["table"]);
         if(isset($arParams["distinct"])) $oCrud->is_distinct($arParams["distinct"]);
         if(isset($arParams["foundrows"])) $oCrud->is_foundrows($arParams["foundrows"]);

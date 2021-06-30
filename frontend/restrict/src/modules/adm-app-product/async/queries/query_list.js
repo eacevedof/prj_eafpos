@@ -1,3 +1,4 @@
+import select from "helpers/query_select"
 import helpapify from "helpers/apify"
 import {is_empty} from "helpers/functions"
 
@@ -28,7 +29,7 @@ export const VIEWCONFIG = {
 }
 
 //consulta
-const query = {
+const _query = {
 
   table: "app_product",
   alias: "t",
@@ -88,8 +89,8 @@ export const filterconf = [
   {
     //tabla principal
     table:{
-      name: query.table,
-      alias: query.alias,
+      name: _query.table,
+      alias: _query.alias,
 
       fields:[
         {name: "id", labels:["n","n","id"]},
@@ -103,47 +104,34 @@ export const filterconf = [
   {}
 ]
 
-//fabfica de query
 export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
 
-  const objselect = helpapify.select
-  objselect.reset()
-  
-  objselect.table = `${query.table} ${query.alias}`
-  objselect.foundrows = 1 //que devuelva el total de filas
-  objselect.distinct = 1  //que aplique distinct
-  
-  query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
-  
+  const objselect = select()
+    .set_comment("products")
+    .set_cache_time(500)
+    .set_table(_query.table, _query.alias)
+    .is_foundrows(1)
+    .set_fields(_query.fields)
+    .set_joins(_query.joins)
+    .add_where(_query.where)
+    .set_limit(VIEWCONFIG.PERPAGE, 0)
+    .add_orderby(`${_query.alias}.id DESC`)
+
   if(!is_empty(objparam.filters.fields)){
-    //pr(objparam.filters,"objparam.filter")
     const strcond = objparam.filters
-                    .fields
-                    .map(filter => `${filter.field} LIKE '%${filter.value}%'`)
-                    .join(` ${objparam.filters.op} `)
+        .fields
+        .map(filter => `${filter.field} LIKE '%${filter.value}%'`)
+        .join(` ${objparam.filters.op} `)
 
-    //pr(strcond,"strcond")
-    objselect.where.push(`(${strcond})`)
+    objselect.add_where(`(${strcond})`)
   }
 
-  if(!is_empty(query.joins)){
-    query.joins.forEach(join => objselect.joins.push(join))
-  }
-
-  if(!is_empty(query.where)){
-    query.where.forEach(cond => objselect.where.push(cond))
-  } 
-
-  objselect.limit.perpage = VIEWCONFIG.PERPAGE
-  objselect.limit.regfrom = 0
   if(!is_empty(objparam.page)){
-    //pr(objparam.page,"page")
-    objselect.limit.perpage = objparam.page.ippage
-    objselect.limit.regfrom = objparam.page.ifrom
+    objselect
+        .set_regfrom(objparam.page.ifrom)
+        .set_perpage(objparam.page.ippage)
   }
 
-  objselect.orderby.push(`${query.alias}.id DESC`)
-  //pr(objselect,"get_obj_list.objselect")
   return objselect
 
 }//get_obj_list
