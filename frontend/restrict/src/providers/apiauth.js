@@ -12,8 +12,8 @@ const Apiauth = {
     try {
       const data = new FormData()
       //data.append("apify-origindomain","*")
-      data.append("user",objlogin.username)
-      data.append("password",objlogin.password)
+      data.append("apify-user",objlogin.username)
+      data.append("apify-password",objlogin.password)
       
       console.log("apidb.async_get_apifytoken",url)
       const response = await axios.post(url, data)

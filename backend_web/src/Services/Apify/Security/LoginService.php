@@ -6,8 +6,11 @@ use TheFramework\Components\Formatter\ComponentMoment;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 
-class LoginService extends AppService
+final class LoginService extends AppService
 {
+    private const POST_USER_KEY = "apify-user";
+    private const POST_PASSWORD_KEY = "apify-password";
+
     private $domain = null;
     private $arlogin = null;
     /**
@@ -24,15 +27,14 @@ class LoginService extends AppService
         $this->_load_encdec();
     }
 
-    private function _get_encdec_config()
+    private function _get_encdec_config(): array
     {
         $sPathfile = $this->get_env("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
-        //$this->logd($sPathfile,"pathfile");
         $arconf = (new ComponentConfig($sPathfile))->get_node("domain",$this->domain);
         return $arconf;
     }
 
-    private function _load_encdec()
+    private function _load_encdec(): void
     {
         $config = $this->_get_encdec_config();
         if(!$config) throw new \Exception("Domain {$this->domain} is not authorized 2");
@@ -43,7 +45,7 @@ class LoginService extends AppService
         $this->encdec->set_sslsalt($config["sslsalt"]??"");
     }
 
-    private function _get_login_config($domain="")
+    private function _get_login_config(string $domain=""): array
     {
         if(!$domain) $domain = $this->domain;
         $sPathfile = $_ENV["APP_LOGIN"] ?? __DIR__.DIRECTORY_SEPARATOR."login.json";
@@ -51,31 +53,35 @@ class LoginService extends AppService
         return $arconfig;
     }
 
-    private function _get_user_password($domain, $username)
+    private function _get_user_password(string $domain, string $username): string
     {
         $arconfig = $this->_get_login_config($domain);
         foreach($arconfig["users"] as $aruser)
-            if($aruser["user"] === $username)
-                return $aruser["password"] ?? "";
+            if($aruser[self::POST_USER_KEY] === $username)
+                return $aruser[self::POST_PASSWORD_KEY] ?? "";
 
-        return false;
+        return "";
     }
 
-    private function _get_remote_ip(){return $_SERVER["REMOTE_ADDR"]  ?? "127.0.0.1";}
+    private function _get_remote_ip(): string {return $_SERVER["REMOTE_ADDR"]  ?? "127.0.0.1";}
 
-    private function _get_data_tokenized()
+    private function _get_user_agent(): string {return $_SERVER["HTTP_USER_AGENT"] ?? ":)"; }
+
+    private function _get_data_tokenized(): string
     {
-        $username = $this->arlogin["user"] ?? "";
+        $username = $this->arlogin[self::POST_USER_KEY] ?? "";
         $arpackage = [
             "salt0"    => date("Ymd-His"),
             "domain"   => $this->domain,
             "salt1"    => rand(0,3),
             "remoteip" => $this->_get_remote_ip(),
-            "salt2"    => rand(4,8),
+            "salt2"    => rand(3,7),
+            "useragent" => md5($this->_get_user_agent()),
+            "salt3"    => rand(7,11),
             "username" => $username,
-            "salt3"    => rand(8,12),
+            "salt4"    => rand(11,15),
             "password" => md5($this->_get_user_password($this->domain, $username)),
-            "salt4"    => rand(12,15),
+            "salt5"    => rand(15,19),
             "today"    => date("Ymd-His"),
         ];
 
@@ -84,12 +90,12 @@ class LoginService extends AppService
         return $token;
     }
 
-    public function get_token()
+    public function get_token(): string
     {
-        $username = $this->arlogin["user"] ?? "";
-        $password = $this->arlogin["password"] ?? "";
+        $username = $this->arlogin[self::POST_USER_KEY] ?? "";
         if(!$username) throw new \Exception("No user provided");
 
+        $password = $this->arlogin[self::POST_PASSWORD_KEY] ?? "";
         if(!$password) throw new \Exception("No password provided");
 
         $config = $this->_get_login_config();
@@ -98,41 +104,28 @@ class LoginService extends AppService
         $users = $config["users"] ?? [];
         foreach ($users as $user)
         {
-            //$hashpass = $this->encdec->get_hashpassword($postpassw);
-            //print_r($hashpass);die;
-            if($user["user"] === $username && $this->encdec->check_hashpassword($password,$user["password"])) {
+            if($user["apifyuser"] === $username && $this->encdec->check_hashpassword($password, $user["apifypassword"])) {
                 return $this->_get_data_tokenized();
             }
         }
         throw new \Exception("Bad user or password");
     }
 
-    private function _is_publicip()
+    private function _validate_package($arpackage): void
     {
-        $ip = $this->_get_remote_ip();
-        $r = filter_var(
-            $ip,
-            FILTER_VALIDATE_IP,
-            FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE |  FILTER_FLAG_NO_RES_RANGE
-        );
-        //$this->logd($r,"_is_publicip $ip");
-        return $r;
-    }
+        if(count($arpackage)!==12) throw new Exception("Wrong token submitted (pieces)");
 
-    private function validate_package($arpackage)
-    {
-        $this->logd($this->get_env(),"validate_package.ENV");
-        //$this->logd($arpackage,"validate_package.arpaackage");
-        if(count($arpackage)!==10) throw new Exception("Wrong token submitted (pieces)");
-
-        list($s0,$domain,$s1,$remoteip,$s2,$username,$s3,$password,$s4,$date) = $arpackage;
+        list($s0,$domain,$s1,$remoteip,$s2,$useragent,$s3,$username,$s4,$password,$s5,$date) = $arpackage;
 
         if($domain!==$this->domain) throw new Exception("Domain {$this->domain} is not authorized 1");
 
         //hago validacion en local por peticiones entre las ips de docker y mi maquina host que usan distitntas ips
-        if (!$this->is_envlocal() && $remoteip !== $this->_get_remote_ip()) throw new Exception("Wrong source {$remoteip} in token");
+        if (!$this->is_envlocal() && $remoteip !== $this->_get_remote_ip())
+            throw new Exception("Wrong source {$remoteip} in token");
 
-        $md5pass = $this->_get_user_password($domain,$username);
+        if($useragent !== md5($this->_get_user_agent())) throw new Exception("Wrong user agent");
+
+        $md5pass = $this->_get_user_password($domain, $username);
         $md5pass = md5($md5pass);
         if($md5pass!==$password) throw new Exception("Wrong user or password submitted");
 
@@ -144,14 +137,13 @@ class LoginService extends AppService
             throw new Exception("Token has expired");
     }
 
-
-    public function is_valid($token)
+    public function is_valid(?string $token): bool
     {
+        if(!$token) return false;
+
         $instring = $this->encdec->get_ssldecrypted($token);
-        //$this->logd($instring,"is_valid.instring of token $token");
-        //print_r($instring);die;
         $arpackage = explode("|",$instring);
-        $this->validate_package($arpackage);
+        $this->_validate_package($arpackage);
         return true;
     }
 }

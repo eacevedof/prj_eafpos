@@ -3,14 +3,13 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name App\Controllers\AppController 
- * @file AppController.php v1.1.0
- * @date 28-06-2019 10:41 SPAIN
+ * @file AppController.php v1.2.0
+ * @date 01-07-2021 20:14 SPAIN
  * @observations
  */
 namespace App\Controllers;
 
 use App\Services\Apify\Security\LoginService;
-use http\Exception;
 use TheFramework\Helpers\HelperJson;
 use App\Services\Apify\Security\SignatureService;
 use App\Traits\LogTrait;
@@ -18,7 +17,7 @@ use App\Traits\EnvTrait;
 use App\Traits\ErrorTrait;
 
 
-class AppController  
+abstract class AppController
 {
     use ErrorTrait;
     use LogTrait;
@@ -101,46 +100,46 @@ class AppController
     public function send_http_status($iCode) 
     {
         $arCodes = array(
-            100 => 'HTTP/1.1 100 Continue',
-            101 => 'HTTP/1.1 101 Switching Protocols',
-            200 => 'HTTP/1.1 200 OK',
-            201 => 'HTTP/1.1 201 Created',
-            202 => 'HTTP/1.1 202 Accepted',
-            203 => 'HTTP/1.1 203 Non-Authoritative Information',
-            204 => 'HTTP/1.1 204 No Content',
-            205 => 'HTTP/1.1 205 Reset Content',
-            206 => 'HTTP/1.1 206 Partial Content',
-            300 => 'HTTP/1.1 300 Multiple Choices',
-            301 => 'HTTP/1.1 301 Moved Permanently',
-            302 => 'HTTP/1.1 302 Found',
-            303 => 'HTTP/1.1 303 See Other',
-            304 => 'HTTP/1.1 304 Not Modified',
-            305 => 'HTTP/1.1 305 Use Proxy',
-            307 => 'HTTP/1.1 307 Temporary Redirect',
-            400 => 'HTTP/1.1 400 Bad Request',
-            401 => 'HTTP/1.1 401 Unauthorized',
-            402 => 'HTTP/1.1 402 Payment Required',
-            403 => 'HTTP/1.1 403 Forbidden',
-            404 => 'HTTP/1.1 404 Not Found',
-            405 => 'HTTP/1.1 405 Method Not Allowed',
-            406 => 'HTTP/1.1 406 Not Acceptable',
-            407 => 'HTTP/1.1 407 Proxy Authentication Required',
-            408 => 'HTTP/1.1 408 Request Time-out',
-            409 => 'HTTP/1.1 409 Conflict',
-            410 => 'HTTP/1.1 410 Gone',
-            411 => 'HTTP/1.1 411 Length Required',
-            412 => 'HTTP/1.1 412 Precondition Failed',
-            413 => 'HTTP/1.1 413 Request Entity Too Large',
-            414 => 'HTTP/1.1 414 Request-URI Too Large',
-            415 => 'HTTP/1.1 415 Unsupported Media Type',
-            416 => 'HTTP/1.1 416 Requested Range Not Satisfiable',
-            417 => 'HTTP/1.1 417 Expectation Failed',
-            500 => 'HTTP/1.1 500 Internal Server Error',
-            501 => 'HTTP/1.1 501 Not Implemented',
-            502 => 'HTTP/1.1 502 Bad Gateway',
-            503 => 'HTTP/1.1 503 Service Unavailable',
-            504 => 'HTTP/1.1 504 Gateway Time-out',
-            505 => 'HTTP/1.1 505 HTTP Version Not Supported',
+            100 => "HTTP/1.1 100 Continue",
+            101 => "HTTP/1.1 101 Switching Protocols",
+            200 => "HTTP/1.1 200 OK",
+            201 => "HTTP/1.1 201 Created",
+            202 => "HTTP/1.1 202 Accepted",
+            203 => "HTTP/1.1 203 Non-Authoritative Information",
+            204 => "HTTP/1.1 204 No Content",
+            205 => "HTTP/1.1 205 Reset Content",
+            206 => "HTTP/1.1 206 Partial Content",
+            300 => "HTTP/1.1 300 Multiple Choices",
+            301 => "HTTP/1.1 301 Moved Permanently",
+            302 => "HTTP/1.1 302 Found",
+            303 => "HTTP/1.1 303 See Other",
+            304 => "HTTP/1.1 304 Not Modified",
+            305 => "HTTP/1.1 305 Use Proxy",
+            307 => "HTTP/1.1 307 Temporary Redirect",
+            400 => "HTTP/1.1 400 Bad Request",
+            401 => "HTTP/1.1 401 Unauthorized",
+            402 => "HTTP/1.1 402 Payment Required",
+            403 => "HTTP/1.1 403 Forbidden",
+            404 => "HTTP/1.1 404 Not Found",
+            405 => "HTTP/1.1 405 Method Not Allowed",
+            406 => "HTTP/1.1 406 Not Acceptable",
+            407 => "HTTP/1.1 407 Proxy Authentication Required",
+            408 => "HTTP/1.1 408 Request Time-out",
+            409 => "HTTP/1.1 409 Conflict",
+            410 => "HTTP/1.1 410 Gone",
+            411 => "HTTP/1.1 411 Length Required",
+            412 => "HTTP/1.1 412 Precondition Failed",
+            413 => "HTTP/1.1 413 Request Entity Too Large",
+            414 => "HTTP/1.1 414 Request-URI Too Large",
+            415 => "HTTP/1.1 415 Unsupported Media Type",
+            416 => "HTTP/1.1 416 Requested Range Not Satisfiable",
+            417 => "HTTP/1.1 417 Expectation Failed",
+            500 => "HTTP/1.1 500 Internal Server Error",
+            501 => "HTTP/1.1 501 Not Implemented",
+            502 => "HTTP/1.1 502 Bad Gateway",
+            503 => "HTTP/1.1 503 Service Unavailable",
+            504 => "HTTP/1.1 504 Gateway Time-out",
+            505 => "HTTP/1.1 505 HTTP Version Not Supported",
         );
 
         header($arCodes[$iCode]);
@@ -153,7 +152,7 @@ class AppController
     protected function get_post($sKey=NULL)
     {
         if(!$sKey) return $_POST;
-        return (isset($_POST[$sKey])?$_POST[$sKey]:"");
+        return (isset($_POST[$sKey]) ? $_POST[$sKey] : "");
     }
 
     /**
@@ -209,19 +208,19 @@ class AppController
         return null;
 /*
  Ejemplo de all:
-  'Host' => 'localhost:10000',
-  'Connection' => 'keep-alive',
-  'Content-Length' => '883',
-  'Accept' => 'application/json, text/plain, * /*',
-  'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
-  'Content-Type' => 'multipart/form-data; boundary=----WebKitFormBoundaryvqgSyJucPdRuOBVB',
-  'Origin' => 'http://localhost:3000',
-  'Sec-Fetch-Site' => 'same-site',
-  'Sec-Fetch-Mode' => 'cors',
-  'Sec-Fetch-Dest' => 'empty',
-  'Referer' => 'http://localhost:3000/admin/product/516',
-  'Accept-Encoding' => 'gzip, deflate, br',
-  'Accept-Language' => 'es-ES,es;q=0.9,en;q=0.8,lt;q=0.7',
+  "Host" => "localhost:10000",
+  "Connection" => "keep-alive",
+  "Content-Length" => "883",
+  "Accept" => "application/json, text/plain, * /*",
+  "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36",
+  "Content-Type" => "multipart/form-data; boundary=----WebKitFormBoundaryvqgSyJucPdRuOBVB",
+  "Origin" => "http://localhost:3000",
+  "Sec-Fetch-Site" => "same-site",
+  "Sec-Fetch-Mode" => "cors",
+  "Sec-Fetch-Dest" => "empty",
+  "Referer" => "http://localhost:3000/admin/product/516",
+  "Accept-Encoding" => "gzip, deflate, br",
+  "Accept-Language" => "es-ES,es;q=0.9,en;q=0.8,lt;q=0.7",
  */
     }
 

@@ -6,13 +6,13 @@ include("../boot/appbootstrap.php");
 // Allow from any origin
 if(isset($_SERVER["HTTP_ORIGIN"]))
 {
-    //No 'Access-Control-Allow-Origin' header is present on the requested resource.
+    //No "Access-Control-Allow-Origin" header is present on the requested resource.
     //should do a check here to match $_SERVER["HTTP_ORIGIN"] to a
     //whitelist of safe domains
     header("Access-Control-Allow-Origin: {$_SERVER["HTTP_ORIGIN"]}");
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Max-Age: 86400");    // cache for 1 day
-    //header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+    //header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 }
 
 // Access-Control headers are received during OPTIONS requests
@@ -35,20 +35,32 @@ if($_ENV["APP_ENV"]=="prod")
 }
 
 //autoload de composer
-include_once '../vendor/autoload.php';
+include_once "../vendor/autoload.php";
 //arranque de mis utilidades
-include_once '../vendor/theframework/bootstrap.php';
+include_once "../vendor/theframework/bootstrap.php";
 //rutas, mapeo de url => controlador.metodo()
-$arRoutes = include_once '../src/routes/routes.php';
+$arRoutes = include_once "../src/routes/routes.php";
 
 use TheFramework\Components\ComponentRouter;
-$oR = new ComponentRouter($arRoutes);
-$arRun = $oR->get_rundata();
-//pr($arRun,"arRun");die;
-//limpio las rutas
-unset($arRoutes);
+try {
+    $oR = new ComponentRouter($arRoutes);
+    $arRun = $oR->get_rundata();
+    unset($arRoutes);
 
-//con el controlador devuelto en $arRun lo instancio
-$oController = new $arRun["controller"]();
-//ejecuto el método asociado
-$oController->{$arRun["method"]}();
+    $oController = new $arRun["controller"]();
+    $oController->{$arRun["method"]}();
+}
+catch (\Exception $ex)
+{
+    http_response_code(500);
+    $response = [
+        "status" => false,
+        "errors" => [
+            "general exception",
+            $ex->getMessage()
+        ],
+        "data" => []
+    ];
+    echo json_encode($response);
+}
+

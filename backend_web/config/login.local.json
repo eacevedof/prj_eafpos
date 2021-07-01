@@ -4,9 +4,9 @@
     "users": [
       {
         "id": 1,
-        "user": "fulanito",
+        "apifyuser": "fulanito",
         "word": "MaFaLDa1234",
-        "password": "$2y$10$e4sj2EpOJpImt4qsiqLXl.5zKTomyoDGCCdisIhAIJipVlTTtpESq"
+        "apifypassword": "$2y$10$e4sj2EpOJpImt4qsiqLXl.5zKTomyoDGCCdisIhAIJipVlTTtpESq"
       }
     ]
   }

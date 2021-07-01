@@ -13,7 +13,7 @@ use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\Rw\ReaderService;
 
-class ReaderController extends AppController
+final class ReaderController extends AppController
 {
     
     public function __construct()
@@ -27,7 +27,7 @@ class ReaderController extends AppController
     /**
      * /apify/read?context=c&dbname=d
      */
-    public function index()
+    public function index(): void
     {
         $idContext = $this->get_get("context");
         $sDbalias = $this->get_get("schemainfo");
@@ -52,10 +52,8 @@ class ReaderController extends AppController
     /**
      * /apify/read/raw?context=c&dbname=d
      */
-    public function raw()
+    public function raw(): void
     {
-        //bugpg();
-        //print_r("ReaderController.raw()");
         $idContext = $this->get_get("context");
         $sDb = $this->get_get("dbname");
 

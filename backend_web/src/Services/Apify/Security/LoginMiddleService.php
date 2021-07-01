@@ -4,8 +4,11 @@ use App\Services\AppService;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 
-class LoginMiddleService extends AppService
+final class LoginMiddleService extends AppService
 {
+    private const POST_USER_KEY = "apify-user";
+    private const POST_PASSWORD_KEY = "apify-password";
+
     private $origin = null;
     private $post = [];
     /**
@@ -22,15 +25,14 @@ class LoginMiddleService extends AppService
         $this->_load_encdec();
     }
 
-    private function _get_encdec_config()
+    private function _get_encdec_config(): array
     {
         $sPathfile = $this->get_env("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
-        //$this->logd($sPathfile,"pathfile");
         $arconf = (new ComponentConfig($sPathfile))->get_node("domain",$this->origin);
         return $arconf;
     }
 
-    private function _load_encdec()
+    private function _load_encdec(): void
     {
         $config = $this->_get_encdec_config();
         //$this->logd($config,"_load_encdec");
@@ -42,7 +44,7 @@ class LoginMiddleService extends AppService
         $this->encdec->set_sslsalt($config["sslsalt"]??"");
     }
 
-    private function _get_login_config($hostname="")
+    private function _get_login_config($hostname=""): array
     {
         if(!$hostname) $hostname = $this->origin;
         $sPathfile = $_ENV["APP_LOGIN"] ?? __DIR__.DIRECTORY_SEPARATOR."login.json";
@@ -50,31 +52,35 @@ class LoginMiddleService extends AppService
         return $arconfig;
     }
 
-    private function _get_user_password($hostname, $username)
+    private function _get_user_password($hostname, $username): string
     {
         $arconfig = $this->_get_login_config($hostname);
         foreach($arconfig["users"] as $aruser)
             if($aruser["user"] === $username)
-                return $aruser["password"] ?? "";
+                return $aruser[self::POST_PASSWORD_KEY] ?? "";
 
-        return false;
+        return "";
     }
 
-    private function _get_remote_ip(){return $this->post["remoteip"];}
+    private function _get_remote_ip(): string {return $this->post["remoteip"] ?? "";}
 
-    private function _get_data_tokenized()
+    private function _get_user_agent(): string {return $this->post["useragent"] ?? ":)"; }
+
+    private function _get_data_tokenized(): string
     {
-        $username = $this->post["user"];
+        $username = $this->post[self::POST_USER_KEY];
         $arpackage = [
             "salt0"    => date("Ymd-His"),
-            "domain" => $this->origin, //nombre de la maquina que hace la petición suele ser *
+            "domain"   => $this->domain,
             "salt1"    => rand(0,3),
-            "remoteip" => $this->_get_remote_ip(), //viene por post
-            "salt2"    => rand(4,8),
+            "remoteip" => $this->_get_remote_ip(),
+            "salt2"    => rand(3,7),
+            "useragent" => md5($this->_get_user_agent()),
+            "salt3"    => rand(7,11),
             "username" => $username,
-            "salt3"    => rand(8,12),
-            "password" => md5($this->_get_user_password($this->origin, $username)),
-            "salt4"    => rand(12,15),
+            "salt4"    => rand(11,15),
+            "password" => md5($this->_get_user_password($this->domain, $username)),
+            "salt5"    => rand(15,19),
             "today"    => date("Ymd-His"),
         ];
 
@@ -84,23 +90,28 @@ class LoginMiddleService extends AppService
         return $token;
     }
 
-    public function get_token()
+    public function get_token(): string
     {
         if(!$this->origin) throw new \Exception("No origin domain provided");
-        $username = $this->post["user"] ?? "";
-        $password = $this->post["password"] ?? "";
-        $remoteip = $this->post["remoteip"] ?? "";
-
-        if(!$remoteip) throw new \Exception("No remote ip provided");
+        $username = $this->post[self::POST_USER_KEY] ?? "";
         if(!$username) throw new \Exception("No user provided");
+
+        $password = $this->post[self::POST_PASSWORD_KEY] ?? "";
         if(!$password) throw new \Exception("No password provided");
+
+        $remoteip = $this->post["remoteip"] ?? "";
+        if(!$remoteip) throw new \Exception("No remote ip provided");
+
         $config = $this->_get_login_config();
         if(!$config) throw new \Exception("Source hostname not authorized");
 
         $users = $config["users"] ?? [];
         foreach ($users as $user)
         {
-            if($user["user"] === $username && $this->encdec->check_hashpassword($password,$user["password"])) {
+            if($user["apifyuser"] === $username &&
+                $this->encdec->check_hashpassword($password, $user["apifypassword"])
+            )
+            {
                 return $this->_get_data_tokenized();
             }
         }

@@ -15,7 +15,6 @@ const Apidb = {
       objform.append("apify-usertoken",apifytoken)
       
       const fields = await axios.post(url,objform)
-      //pr(fields,"alert fields:")
       if(is_undefined(fields.data.data))
         throw new Error("Wrong data received from server. Get fields")
       return fields.data.data
@@ -34,7 +33,6 @@ const Apidb = {
     try {
    
       const objform = objselect.get_query()
-      //objform.append("apify-origindomain","*")
       objform.append("apify-usertoken",apifytoken)
       
       console.log("apidb.async_get_list",url)

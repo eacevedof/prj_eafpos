@@ -14,7 +14,7 @@ use App\Services\Apify\Security\LoginMiddleService;
 use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 
-class LoginController extends AppController
+final class LoginController extends AppController
 {
 
     /**
@@ -25,17 +25,17 @@ class LoginController extends AppController
     {
         $oJson = new HelperJson();
         try{
-            $domain = $this->get_domain(); //excepcion
-            $oServ = new LoginService($domain,$this->get_post());
+            $domain = $this->get_domain(); //exception
+            $oServ = new LoginService($domain, $this->get_post());
             $token = $oServ->get_token();
             $oJson->set_payload(["token"=>$token])->show();
         }
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.index");
-            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)->
-            set_error([$e->getMessage()])->
-            show(1);
+            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)
+                ->set_error([$e->getMessage()])
+                ->show(1);
         }
     }
     /**
@@ -56,9 +56,9 @@ class LoginController extends AppController
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.middle");
-            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)->
-            set_error([$e->getMessage()])->
-            show(1);
+            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)
+                ->set_error([$e->getMessage()])
+                ->show(1);
         }
         $this->logd("middle end");
     }
@@ -86,9 +86,9 @@ class LoginController extends AppController
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.is_valid_token");
-            $oJson->set_code(HelperJson::CODE_FORBIDDEN)->
-            set_error([$e->getMessage()])->
-            show(1);
+            $oJson->set_code(HelperJson::CODE_FORBIDDEN)
+                ->set_error([$e->getMessage()])
+                ->show(1);
         }
     }
 }//LoginController

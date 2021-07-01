@@ -11,7 +11,7 @@
  */
 namespace TheFramework\Helpers;
 
-class HelperJson 
+final class HelperJson
 {
     const CODE_CONTINUE = 100;  
     const CODE_SWITCHING_PROTOCOLS = 101;  
@@ -259,7 +259,7 @@ class HelperJson
 
     public function set_code($iCode)
     {
-        $this->arResponse["payload"]["status"] = (boolean)($iCode<300);        
+        $this->arResponse["payload"]["status"] = ($iCode<300);
         $this->arResponse["header"]["http"]["code"] = $iCode;
         $this->arResponse["header"]["http"]["message"] = "$iCode {$this->arCodes[$iCode]}";
         return $this;
@@ -267,7 +267,7 @@ class HelperJson
 
     public function set_message($sErrMessage)
     {
-        $this->arResponse["payload"]["message"] = $sErrMessage?$sErrMessage:$this->arResponse["header"]["http"]["message"];
+        $this->arResponse["payload"]["message"] = $sErrMessage?? $this->arResponse["header"]["http"]["message"];
         return $this;        
     }
 
