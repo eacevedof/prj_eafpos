@@ -1,7 +1,4 @@
-import React, {useEffect} from "react"
-import {useHistory} from "react-router-dom"
-import db from "helpers/localdb"
-import {async_get_one_by_tpvcode, async_update_rnd} from "modules/login/async/async_repository"
+import React from "react"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
 import KeyboardSecret from "components/bootstrap/app/keyboards/keyboard_secret"

@@ -1,16 +1,18 @@
 import helpapify from "helpers/apify"
+import insert from "helpers/query_insert"
+import select from "helpers/query_select"
 import {get_sanitized} from "helpers/functions"
 import get_uuid from "helpers/random"
 
-const query = {
+const _query = {
   table: "base_user",
+  table_session: "app_user_sessions",
   alias: "t",
 
   fields:[
     "t.id",
     "t.fullname",
     "t.code_cache",
-    "t.tpv_uuid"
   ],
 
   where:[
@@ -19,55 +21,37 @@ const query = {
   ],
 }
 
-export const get_one_by_tpvcode = tpvcode => {
-
+export const get_user_by_tpvcode = tpvcode => {
   const code = get_sanitized(tpvcode)
-  const objselect = helpapify.select
-  objselect.reset()
-  
-  objselect.table = `${query.table} ${query.alias}`  
-  query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
-  query.where.forEach(cond => objselect.where.push(cond))
-  objselect.where.push(`t.tpv_code = '${code}'`)
+  const objselect = select()
+      .set_comment("get_user_by_tpvcode")
+      .set_table(_query.table, _query.alias)
+      .set_fields(_query.fields)
+      .set_wheres(_query.where)
+      .add_where(`t.tpv_code = '${code}'`)
   return objselect
 
 }//get_one
 
-export const get_id_by_tpvuuid = tpvuuid => {
-  const objselect = helpapify.select
-  objselect.reset()
-
-  objselect.table = `${query.table} ${query.alias}`
-  objselect.fields.push(`t.id`)
-  const uuid = get_sanitized(tpvuuid)
-  objselect.where.push(`t.tpv_uuid = '${uuid}'`)
+export const get_id_by_usersession = usersession => {
+  const objselect = select()
+      .set_comment("get_id_by_usersession")
+      .set_table(_query.table_session, _query.alias)
+      .add_field("t.id")
+      .add_where("user_session",usersession)
   return objselect
+}//get_id_by_usersession
 
-}//get_one_by_tpvuuid
-
-export const get_one_by_tpvuuid = tpvuuid => {
-  const objselect = helpapify.select
-  objselect.reset()
-
-  objselect.table = `${query.table} ${query.alias}`
-  query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
-  query.where.forEach(cond => objselect.where.push(cond))
-
-  const uuid = get_sanitized(tpvuuid)
-  objselect.where.push(`t.tpv_uuid = '${uuid}'`)
-  return objselect
-
-}//get_one_by_tpvuuid
-
-export const get_update_uuid = codecache => {
-  const objupdate = helpapify.update
-  objupdate.reset()
-  objupdate.table = query.table
-  objupdate.extra = {autosysfields:1 }
-  objupdate.fields.push({k:"update_platform",v:"3"})
-  objupdate.fields.push({k:"tpv_uuid",v:get_uuid()})
-  objupdate.where.push(`code_cache='${codecache}'`)
-  return objupdate
+export const get_insert_uuid = (token, codecache) => {
+  const objinsert = insert()
+      .set_comment("get_insert_uuid")
+      .set_table(_query.table_session)
+      .add_field("update_platform","3")
+      .add_field("apify_token", token)
+      .add_field("code_cache", codecache)
+      .add_field("user_session", get_uuid())
+      .add_extra("autosysfields", 1)
+  return objinsert
 }
 
 

@@ -72,9 +72,10 @@ class WriterService extends AppService
         $issysfields = $arParams["autosysfields"] ?? 0;
         if($issysfields){
             $useruuid = $arParams["useruuid"];
-            $sysfields = (new SysfieldsService($this->idContext, $this->sDb,$this->action,$useruuid))->get();
+            $sysfields = (new SysfieldsService($this->idContext, $this->sDb, $this->action, $useruuid))->get();
 //$this->logd($sysfields,"_add_sysfields $this->action");
-            foreach ($sysfields as $sysfield=>$value){
+            foreach ($sysfields as $sysfield=>$value)
+            {
                 if(in_array($this->action,["update","deletelogic"])) $oCrud->add_update_fv($sysfield, $value);
                 if($this->action=="insert") $oCrud->add_insert_fv($sysfield, $value);
             }

@@ -3,10 +3,16 @@ import {add} from "helpers/functions"
 export default () =>{
   const q = {
     init(){
+      this.comment = ""
       this.table =  ""
       this.fields = []
       this.where = []
       this.extras = []
+      return this
+    },
+
+    set_comment(comment) {
+      this.table = comment ?? ""
       return this
     },
 
@@ -48,6 +54,7 @@ export default () =>{
     get_query(){
       const oform = new FormData()
       oform.append("action","update")
+      oform.append("queryparts[comment]",this.comment)
       oform.append("queryparts[table]",this.table)
 
       this.fields.forEach( field => {

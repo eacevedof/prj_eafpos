@@ -1,29 +1,26 @@
 import {useEffect} from "react"
 import {useHistory} from "react-router-dom"
 import db from "helpers/localdb"
-import {async_get_one_by_tpvcode, async_update_rnd} from "modules/login/async/async_repository"
+import {async_get_user_by_tpvcode, async_insert_rnd} from "modules/login/async/async_repository"
 
 function CustomLogin() {
   const history = useHistory()
 
   const on_submit = async tpvcode => {
     const pincode = tpvcode.toString()
-    let r = await async_get_one_by_tpvcode(pincode)
+    let r = await async_get_user_by_tpvcode(pincode)
     console.log("result r tpv", r)
     db.delete("user_session")
     if(parseInt(r.foundrows)===1) {
-      console.log("async_get_one_by_tpvcode",r)
-      const usercode = r.result[0]["code_cache"]
-      r = await async_update_rnd(usercode)
-      r = await async_get_one_by_tpvcode(pincode)
+      console.log("async_get_user_by_tpvcode",r)
+      const token = db.select("token_dbsapify")
+      const codecache = r.result[0]["code_cache"]
+      await async_insert_rnd(token, codecache)
 
-      db.save("useruuid",usercode)
-      db.save("user_session",r.result[0])
-      r = db.select("last_location")
-      console.log("r",r)
+      let url = db.select("last_location")
       db.delete("last_location")
-      if (r && r!=="" && r!=="/") {
-        return history.push(r)
+      if (url && url!=="" && url!=="/") {
+        return history.push(url)
       }
       history.push("/pos")
     }

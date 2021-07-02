@@ -11,7 +11,7 @@ const Session = ({component}) => {
 
   const on_idle = () => {
     if(db.select("user_session")){
-      db.delete("useruuid")
+      db.delete("codecache")
       db.delete("user_session")
       if(location.pathname!=="/")
         db.save("last_location", location.pathname)
