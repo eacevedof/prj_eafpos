@@ -30,25 +30,26 @@ export const get_user_by_tpvcode = tpvcode => {
       .set_wheres(_query.where)
       .add_where(`t.tpv_code = '${code}'`)
   return objselect
-
-}//get_one
+}
 
 export const get_id_by_usersession = usersession => {
+  const code = get_sanitized(usersession)
   const objselect = select()
       .set_comment("get_id_by_usersession")
       .set_table(_query.table_session, _query.alias)
       .add_field("t.id")
-      .add_where("user_session",usersession)
+      .add_where(`t.user_session = '${code}'`)
   return objselect
 }//get_id_by_usersession
 
-export const get_insert_uuid = (token, codecache) => {
+export const get_insert_uuid = (token, usermini) => {
   const objinsert = insert()
       .set_comment("get_insert_uuid")
       .set_table(_query.table_session)
       .add_field("update_platform","3")
       .add_field("apify_token", token)
-      .add_field("user_codecache", codecache)
+      .add_field("id_user", usermini?.id)
+      .add_field("user_codecache", usermini?.code_cache)
       .add_field("user_session", get_uuid())
       .add_extra("autosysfields", 1)
   return objinsert

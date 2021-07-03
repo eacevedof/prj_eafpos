@@ -14,8 +14,9 @@ function CustomLogin() {
     if(parseInt(r.foundrows)===1) {
       console.log("async_get_user_by_tpvcode",r)
       const token = db.select("token_apify")
-      const codecache = r.result[0]["code_cache"]
-      await async_insert_rnd(token, codecache)
+      const usermini = r.result[0]
+      await async_insert_rnd(token, usermini)
+      db.save("user_session", usermini.code_cache)
 
       let url = db.select("last_location")
       db.delete("last_location")

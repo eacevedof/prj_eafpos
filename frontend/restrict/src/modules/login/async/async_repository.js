@@ -16,8 +16,15 @@ export const async_is_pinned = async usersession => {
   return r
 }
 
-export const async_insert_rnd = async (token, codecache) => {
-  const objquery = get_insert_uuid(token, codecache)
+export const async_insert_rnd = async (token, usermini) => {
+  const objquery = get_insert_uuid(token, usermini)
+  const r = await apidb.async_insert(objquery)
+  if(is_defined(r.error)) throw r.error
+  return r
+}
+
+export const async_get_ = async (token, usermini) => {
+  const objquery = get_insert_uuid(token, usermini)
   const r = await apidb.async_insert(objquery)
   if(is_defined(r.error)) throw r.error
   return r
