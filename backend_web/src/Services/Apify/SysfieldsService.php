@@ -16,130 +16,113 @@ use App\Factories\DbFactory;
 
 final class SysfieldsService extends AppService
 {
-    private $usertable = "base_user";
-    private $codecachefield = "code_cache";
+    private const USER_TABLE = "base_user";
+    private const USER_UUID_FIELD = "code_cache";
 
-    private $codecache = "";
-    private $action = "";
-    private $sDb;
+    private string $codecachevalue;
+    private string $action;
+    private string $dbname;
+    private $oBehav;
 
-    public function __construct($idContext="",$sDb="", $action="", $useruuid="")
+    private const ACTION_INSERT = "insert";
+    private const ACTION_UPDATE = "update";
+    private const ACTION_DELETE = "deletelogic";
+
+    private const INSERT_FIELDS = ["insert_user","insert_date","insert_platform","code_cache"];
+    private const UPDATE_FIELDS = ["update_user","update_date","update_platform"];
+    private const DELETE_FIELDS = ["delete_user","delete_date","delete_platform"];
+    
+    public function __construct(string $idContext="", string $dbname="", string $action="", ?string $codecache="")
     {
-        $this->idContext = $idContext;
-        $this->sDb = $sDb;
+        $this->dbname = $dbname;
         $this->action = $action;
-        $this->codecache = $useruuid;
+        $this->codecachevalue = str_replace(["'","%"," "],"",$codecache??"");
 
-        $this->oContext = new ComponentContext($_ENV["APP_CONTEXTS"], $idContext);
-        $oDb = DbFactory::get_dbobject_by_ctx($this->oContext, $sDb);
+        $ctx = new ComponentContext($_ENV["APP_CONTEXTS"], $idContext);
+        $oDb = DbFactory::get_dbobject_by_ctx($ctx, $dbname);
         $this->oBehav = new SchemaBehaviour($oDb);
     }
-        
-    private function _get_allfields()
+    
+    private function _get_table_user(): array
     {
-        $allfields = $this->oBehav->get_fields($this->usertable, $this->sDb);
+        return $this->oBehav->get_table(self::USER_TABLE, $this->dbname);
+    }
+    
+    private function _get_allfields(): array
+    {
+        $allfields = $this->oBehav->get_fields(self::USER_TABLE, $this->dbname);
         if(!$allfields) return [];
         return array_column($allfields,"field_name");
     }
 
-    private function _get_table_user()
+    private function _get_userid_from_db(): ?string
     {
-        return $this->oBehav->get_table($this->usertable, $this->sDb);
-    }
-
-    private function _get_userid()
-    {
-        if($this->codecache==="null") return null;
-        $sql = "SELECT id FROM $this->usertable WHERE $this->codecachefield='$this->codecache'";
+        if($this->codecachevalue==="null") return null;
+        $sql = "SELECT id FROM self::USER_TABLE WHERE self::USER_UUID_FIELD='$this->codecachevalue'";
         $id = $this->oBehav->query($sql,0,0);
         if(!$id) $id = null;
         return $id;
     }
 
-    private function _get_platform(){}
-
-    private function _get_autofilled()
+    private function _get_sysfields_by_action(): array
     {
-        $action = $this->action;
-        if($action==="deletelogic") $action = "delete";
-        
-        $fields = [
-            "{$action}_date" => date("YmdHis"),
-            "{$action}_user" => $this->_get_userid(),
-        ];
-
-        if($action==="insert")
-            //fields[codecache] = uuid
-            $fields[$this->codecachefield] = $this->_get_uuid();
-
-        return $fields;
-    }
-    
-    private function _get_sysfields()
-    {
-        $action = $this->action;
-        if($action==="deletelogic") $action = "delete";
-        $fields = [
-            "{$action}_date", "{$action}_user"
-        ];
-
-        if($action === "insert") $fields[] = $this->codecachefield;
-        return $fields;
-    }
-
-    private function _get_uuid()
-    {
-        return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-            // 32 bits for "time_low"
-            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-            // 16 bits for "time_mid"
-            mt_rand( 0, 0xffff ),
-            // 16 bits for "time_hi_and_version",
-            // four most significant bits holds version number 4
-            mt_rand( 0, 0x0fff ) | 0x4000,
-            // 16 bits, 8 bits for "clk_seq_hi_res",
-            // 8 bits for "clk_seq_low",
-            // two most significant bits holds zero and one for variant DCE1.1
-            mt_rand( 0, 0x3fff ) | 0x8000,
-            // 48 bits for "node"
-            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
-        );
-    }
-
-    private function _exist_sysfields()
-    {
-        $allfields = $this->_get_allfields();
-        $sysfields = $this->_get_sysfields();
-
-        foreach ($sysfields as $sysfield)
-            if(!in_array($sysfield, $allfields))
-            {
-                return false;
-            }
-        return true;
-    }
-
-    private function _isvalid()
-    {
-        if(!$this->action) return false;
-        if(!$this->_get_table_user()) return false;
-        if(!$this->_exist_sysfields()) return false;
-        return true;
-    }
-
-    public function get()
-    {
-        if(!$this->_isvalid()) return [];
-
         switch ($this->action)
         {
-            case "insert":
-            case "update":
-            case "deletelogic":
-                return $this->_get_autofilled();
-            default:
-                return [];
+            case self::ACTION_INSERT:
+                return self::INSERT_FIELDS;
+            case self::ACTION_UPDATE:
+                return self::UPDATE_FIELDS;
+            case self::ACTION_DELETE:
+                return self::DELETE_FIELDS;
         }
+    }
+
+    private function _get_platform(): string { return ""; }
+
+    private function _get_autofilled(): array
+    {
+        $finalfields = $this->_get_final_fields();
+        foreach ($finalfields as $fieldname => $value) 
+        {
+            if(strstr($fieldname,"_date")) $finalfields[$fieldname] = date("YmdHis");
+            if(strstr($fieldname,"_user")) $finalfields[$fieldname] = $this->_get_userid_from_db();
+            if(strstr($fieldname,"_platform")) $finalfields[$fieldname] = $this->_get_platform();
+            if($fieldname === self::USER_UUID_FIELD) $finalfields[$fieldname] = uniqid();
+        }
+        return $finalfields;
+    }
+
+    private function _get_final_fields(): array
+    {
+        $allfields = $this->_get_allfields();
+        $sysfields = $this->_get_sysfields_by_action();
+
+        $final = [];
+        foreach ($sysfields as $sysfield)
+        {
+            if(in_array($sysfield, $allfields))
+                $final[$sysfield] = "";
+        }
+        return $final;
+    }
+
+    private function _is_valid_action(): bool
+    {
+        return in_array($this->action, [self::ACTION_INSERT, self::ACTION_UPDATE, self::ACTION_DELETE]);
+    }
+
+    private function _is_sysfields(): bool
+    {
+        if(!$this->_get_table_user()) return false;
+        if(!$this->_get_final_fields()) return false;
+        return true;
+    }
+
+    public function get(): array
+    {
+        if(!$this->_is_valid_action()) return [];
+        if(!$this->_is_sysfields()) return [];
+        return $this->_get_autofilled();
     }
     
 }//SysfieldsService

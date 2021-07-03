@@ -18,7 +18,8 @@ final class SchemaBehaviour extends AppModel
     use CacheQueryTrait;
 
     private $oQServ;
-    private $iFoundrows;
+    private int $iFoundrows;
+    private const CACHE_TIME = 3600;
     
     public function __construct($oDb=NULL) 
     {
@@ -45,13 +46,13 @@ final class SchemaBehaviour extends AppModel
     
     public function get_schemas()
     {
-        $sSQL = " -- get_schemas
+        $sSQL = "-- get_schemas
         SELECT schema_name as dbname
         FROM information_schema.schemata
         ORDER BY schema_name;";
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 3600);
+        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
         return $arRows;
     }
     
@@ -60,16 +61,16 @@ final class SchemaBehaviour extends AppModel
         $sSQL = $this->oQServ->get_tables($sDb);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 3600);
+        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
         return $arRows;
     }
     
-    public function get_table($sTable,$sDb="")
+    public function get_table(strint $sTable, string $sDb=""): array
     {
         $sSQL = $this->oQServ->get_tables($sDb,$sTable);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL,0);
-        $this->addto_cache($sSQL, $arRows, 3600);
+        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
         return $arRows;        
     }
    
@@ -78,7 +79,7 @@ final class SchemaBehaviour extends AppModel
         $sSQL = $this->oQServ->get_fields($sDb,$sTable);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 3600);
+        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
         return $arRows;
     }
 
@@ -87,7 +88,7 @@ final class SchemaBehaviour extends AppModel
         $sSQL = $this->oQServ->get_fields_min($sDb,$sTable);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 3600);
+        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
         return $arRows;
     }
 
@@ -96,7 +97,7 @@ final class SchemaBehaviour extends AppModel
         $sSQL = $this->oQServ->get_field($sDb,$sTable,$sField);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
         $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, 3600);
+        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
         return $arRows;
     }    
     
