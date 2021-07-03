@@ -122,7 +122,7 @@ export default () =>{
     get_query(){
       const oform = new FormData()
 
-      oform.append("queryparts[comment]", this.comment)
+      if(this.comment) oform.append("queryparts[comment]", this.comment)
       oform.append("queryparts[cache_time]", this.cache_time)
       //table
       oform.append("queryparts[table]",this.table)

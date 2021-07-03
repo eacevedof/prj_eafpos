@@ -49,10 +49,9 @@ export default () => {
     get_query(){
       const oform = new FormData()
       oform.append("action","deletelogic")
-      oform.append("queryparts[table]", this.table)
-      if(this.comment)
-        oform.append("queryparts[comment]", this.comment)
+      if(this.comment) oform.append("queryparts[comment]", this.comment)
 
+      oform.append("queryparts[table]", this.table)
       if(this.platform)
         oform.append(`queryparts[fields][delete_platform]`,this.platform)
 

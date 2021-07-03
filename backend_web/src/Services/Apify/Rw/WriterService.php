@@ -128,6 +128,7 @@ class WriterService extends AppService
         if(!isset($arParams["fields"])) return $this->add_error("_get_insert_sql no fields");
 
         $oCrud = new ComponentCrud();
+        $oCrud->set_comment(str_replace(["*","/",],"",trim($arParams["comment"])));
         $oCrud->set_table($arParams["table"]);
         foreach($arParams["fields"] as $sFieldName=>$sFieldValue)
             if($sFieldValue==="null")
@@ -151,6 +152,7 @@ class WriterService extends AppService
         //if(!isset($arParams["pks"])) return $this->add_error("_get_update_sql no pks");
 
         $oCrud = new ComponentCrud();
+        $oCrud->set_comment(str_replace(["*","/",],"",$arParams["comment"]));
         $oCrud->set_table($arParams["table"]);
 
         foreach($arParams["fields"] as $sFieldName=>$sFieldValue)
@@ -182,6 +184,7 @@ class WriterService extends AppService
         if(!isset($arParams["table"])) return $this->add_error("_get_delete_sql no table");
 
         $oCrud = new ComponentCrud();
+        $oCrud->set_comment(str_replace(["*","/",],"",$arParams["comment"]));
         $oCrud->set_table($arParams["table"]);
         if(isset($arParams["where"]))
             foreach($arParams["where"] as $sWhere)
@@ -199,6 +202,7 @@ class WriterService extends AppService
         if(!isset($arParams["table"])) return $this->add_error("__get_deletelogic_sql no table");
 
         $oCrud = new ComponentCrud();
+        $oCrud->set_comment(str_replace(["*","/",],"",$arParams["comment"]));
         $oCrud->set_table($arParams["table"]);
         $this->_add_sysfields($oCrud, $arParams);
 

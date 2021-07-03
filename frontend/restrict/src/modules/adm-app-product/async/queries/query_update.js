@@ -6,6 +6,7 @@ const _TABLE = "app_product"
 
 export const get_obj_update = (objparam={fields:{},keys:[]},dbfields=[])=>{
   const queryupdate = update()
+    .set_comment("product-update")
     .set_table(_TABLE)
     .add_extra("autosysfields", 1)
     .add_field("update_platform", "3")

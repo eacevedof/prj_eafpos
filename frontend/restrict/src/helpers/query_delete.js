@@ -43,8 +43,8 @@ export default () =>{
     get_query(){
       const oform = new FormData()
       oform.append("action","delete")
+      if(this.comment) oform.append("queryparts[comment]", this.comment)
       oform.append("queryparts[table]",this.table)
-      oform.append("queryparts[comment]",this.comment)
       this.where.forEach((strcond,i) => {
         oform.append(`queryparts[where][${i}]`,strcond)
       });
