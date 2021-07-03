@@ -32,6 +32,7 @@ final class WriterController extends AppController
         $dbalias = $this->get_get("schemainfo");
         $arParts = $this->get_post("queryparts");
         $action = $this->get_post("action");
+        $arParts["useruuid"] = $this->get_post("useruuid");
         $table = $arParts["table"];
 
         $oJson = new HelperJson();

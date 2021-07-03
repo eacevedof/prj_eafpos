@@ -17,7 +17,7 @@ use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
 use App\Services\Apify\SysfieldsService;
 
-class WriterService extends AppService
+final class WriterService extends AppService
 {
     private const USER_UUID_KEY = "useruuid";
     private const ACTIONS = ["insert", "update", "delete", "deletelogic", "drop", "alter"];
@@ -47,7 +47,7 @@ class WriterService extends AppService
         $this->fields = array_column($this->oBehav->get_fields($table, $this->dbname),"field_name");
     }
         
-    private function _get_parsed_tosql($arParams)
+    private function _get_parsed_tosql(array $arParams)
     {
         if(!in_array($action = $this->action, self::ACTIONS)) 
             return $this->add_error("action: {$action} not found!");
@@ -247,8 +247,7 @@ class WriterService extends AppService
     
     public function write($arParams)
     {
-        $action = $this->action;
-        $sql = $this->_get_parsed_tosql($arParams, $action);
+        $sql = $this->_get_parsed_tosql($arParams, $this->action);
         return $this->write_raw($sql);
     }
 

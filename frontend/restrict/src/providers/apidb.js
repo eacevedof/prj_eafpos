@@ -3,6 +3,8 @@ import axios from "axios"
 import db from "helpers/localdb"
 import {is_undefined, get_error} from "../helpers/functions"
 
+const get_code_cache = () => db.select("session_user")?.code_cache ?? ""
+
 const Apidb = {
   
   async_get_fields: async (table) =>{
@@ -12,8 +14,9 @@ const Apidb = {
     try{
       const objform = new FormData()
       //objform.append("apify-origindomain","*")
-      objform.append("apify-usertoken",apifytoken)
-      
+      objform.append("apify-usertoken", apifytoken)
+      objform.append("useruuid", get_code_cache())
+
       const fields = await axios.post(url,objform)
       if(is_undefined(fields.data.data))
         throw new Error("Wrong data received from server. Get fields")
@@ -33,7 +36,8 @@ const Apidb = {
     try {
    
       const objform = objselect.get_query()
-      objform.append("apify-usertoken",apifytoken)
+      objform.append("apify-usertoken", apifytoken)
+      objform.append("useruuid", get_code_cache())
       
       console.log("apidb.async_get_list",url)
       const response = await axios.post(url, objform)
@@ -58,8 +62,9 @@ const Apidb = {
     try {
       const objform = objinsert.get_query()
       //objform.append("apify-origindomain","*")
-      objform.append("apify-usertoken",apifytoken)
-      
+      objform.append("apify-usertoken", apifytoken)
+      objform.append("useruuid", get_code_cache())
+
       console.log("apidb.async_insert",url)
       const response = await axios.post(url, objform)
       //pr(response,"async_insert")
@@ -83,7 +88,8 @@ const Apidb = {
     try {
  
       const objform = objupdate.get_query()
-      objform.append("apify-usertoken",apifytoken)
+      objform.append("apify-usertoken", apifytoken)
+      objform.append("useruuid", get_code_cache())
       //objform.append("apify-origindomain","*")
 
       console.log("apidb.async_update",url)
@@ -110,7 +116,8 @@ const Apidb = {
     try {
       const objform = objdelete.get_query()
       //objform.append("apify-origindomain","*")
-      objform.append("apify-usertoken",apifytoken)
+      objform.append("apify-usertoken", apifytoken)
+      objform.append("useruuid", get_code_cache())
       
       console.log("apidb.async_delete",url)
       const response = await axios.post(url, objform)
