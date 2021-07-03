@@ -65,7 +65,8 @@ final class ProducerComponent
     {
         $message = [
             "type"  => $type,
-            "title" => $title
+            "title" => $title,
+            "useruuid" => $_POST["useruuid"] ?? "-"
         ];
 
         if(is_string($mxvar) || is_numeric($mxvar)) {
