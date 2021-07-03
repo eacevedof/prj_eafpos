@@ -9,6 +9,7 @@
  */
 namespace App\Services\Apify;
 
+use App\Traits\CacheQueryTrait;
 use TheFramework\Components\Db\Context\ComponentContext;
 use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
@@ -16,6 +17,8 @@ use App\Factories\DbFactory;
 
 final class SysfieldsService extends AppService
 {
+    use CacheQueryTrait;
+
     private const USER_TABLE = "base_user";
     private const USER_UUID_FIELD = "code_cache";
 
@@ -62,9 +65,13 @@ final class SysfieldsService extends AppService
         $table = self::USER_TABLE;
         $field = self::USER_UUID_FIELD;
         if(!$this->codecachevalue || $this->codecachevalue==="null") return null;
-        $sql = "SELECT id FROM $table WHERE $field='$this->codecachevalue'";
+        $sql = "/*_get_userid_from_db*/ SELECT id FROM $table WHERE $field='$this->codecachevalue'";
+        if($id = $this->get_cachedsingle($sql)) return $id;
+
         $id = $this->oBehav->query($sql,0,0);
-        if(!$id) $id = null;
+        $this->addto_cachesingle($sql, $id, 3600);
+
+        if(!$id) return null;
         return $id;
     }
 

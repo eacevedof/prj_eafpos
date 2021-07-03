@@ -12,7 +12,7 @@ export default () =>{
     },
 
     set_comment(comment) {
-      this.table = comment ?? ""
+      this.comment = comment ?? ""
       return this
     },
 

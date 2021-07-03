@@ -23,6 +23,16 @@ trait CacheQueryTrait
         RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($array)->save_query();
     }
 
+    protected function get_cachedsingle(string $query): string
+    {
+        return RedisFactory::get()->set_key($query)->get_querysingle();
+    }
+
+    protected function addto_cachesingle(string $query, string $value, float $ttl=300): void
+    {
+        RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($value)->save_querysingle();
+    }
+
     protected function get_cachedcount(string $query): int
     {
         return RedisFactory::get()->set_key($query)->get_querycount();

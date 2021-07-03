@@ -69,6 +69,21 @@ final class RedisComponent
         return $array;
     }
 
+    public function get_querysingle(): string
+    {
+        $hash = "query-single-".md5($this->key);
+        if(!$value = self::$redis->get($hash)) return "";
+        return $value;
+    }
+
+    public function save_querysingle(): RedisComponent
+    {
+        $hash = "query-single-".md5($this->key);
+        self::$redis->set($hash, $this->value);
+        self::$redis->expire($hash, $this->ttl);
+        return $this;
+    }
+
     public function save_querycount(): RedisComponent
     {
         $hash = "query-count-".md5($this->key);

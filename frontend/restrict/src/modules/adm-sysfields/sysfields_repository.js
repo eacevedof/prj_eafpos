@@ -17,7 +17,6 @@ const get_objselect = userid =>{
       .set_cache_time(3600)
       .set_table(_query.table, _query.alias)
       .set_fields(_query.fields)
-      .is_foundrows(1)
       .add_where(`t.id = '${userid}'`)
   return objselect
 }
