@@ -49,7 +49,7 @@ function ZzzTplDelete(){
 
           %FORM_DELETE%
 
-          <Sysfields sysdata={formdata} />
+          <Sysfields formdata={formdata} />
           {
             isdeleted ? null:(
               <div className="col-12">

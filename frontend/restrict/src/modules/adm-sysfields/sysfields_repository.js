@@ -1,38 +1,33 @@
-import helpapify from "helpers/apify"
+import select from "helpers/query_select"
 import apidb from "providers/apidb"
-import {is_defined, is_undefined, pr} from "helpers/functions"
+import {is_defined, is_undefined} from "helpers/functions"
 
-const query = {
+const _query = {
   table: "base_user",
   alias: "t",
   
   fields:[
-    "/*sysfields*/ t.nickname",
+    "t.nickname",
   ],
 }
 
 const get_objselect = userid =>{
-  const objselect = helpapify.select
-  objselect.reset()
-
-  objselect.table = `${query.table} ${query.alias}`
-  objselect.foundrows = 1 //que devuelva el total de filas
-    
-  query.fields.forEach(fieldconf => objselect.fields.push(fieldconf)) 
-  objselect.where.push(`t.id = '${userid}'`)
-
+  const objselect = select()
+      .set_comment("sysfields")
+      .set_cache_time(3600)
+      .set_table(_query.table, _query.alias)
+      .set_fields(_query.fields)
+      .is_foundrows(1)
+      .add_where(`t.id = '${userid}'`)
   return objselect
 }
 
 const async_get_useralias = async userid => {
-  //pr(userid)
   if(!userid || isNaN(userid) || is_undefined(userid)) return ""
 
   const query = get_objselect(userid)
   const r = await apidb.async_get_list(query)
-  //pr(r.result)
   if(is_defined(r.error)) return r.error
-
   if(is_defined(r.result)) return r.result[0]["nickname"]
 
 }

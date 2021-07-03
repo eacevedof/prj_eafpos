@@ -99,7 +99,7 @@ function ActionDelete(){
   },[])
 
   return {
-    breadscrumb: MODCONFIG.SCRUMBS.GENERIC,
+    scrumbs: MODCONFIG.SCRUMBS.GENERIC,
     success,
     error,
     refcode,

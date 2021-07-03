@@ -92,7 +92,7 @@ function ProductDetail(){
             </div>
           </div>                      
 
-          <Sysfields sysdata={formdata} />          
+          <Sysfields formdata={formdata} />          
         </div>
       </main>
       <Footer />

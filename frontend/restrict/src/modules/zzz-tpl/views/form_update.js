@@ -134,7 +134,7 @@ function ZzzTplUpdate(){
             <SubmitAsync innertext="Save" type="primary" issubmitting={issubmitting} />
           </div>
 
-          <Sysfields sysdata={formdata} />
+          <Sysfields formdata={formdata} />
         </form>
       </main>
       <Footer />

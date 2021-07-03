@@ -105,7 +105,7 @@ function ProductClone(){
             </div>
           </div>
 
-          <Sysfields sysdata={formdata} />
+          <Sysfields formdata={formdata} />
           
           <div className="col-12">
             <SubmitAsync innertext="Clone" type="primary" issubmitting={issubmitting} />

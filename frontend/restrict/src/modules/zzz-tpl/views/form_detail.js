@@ -88,7 +88,7 @@ function ZzzTplDetail(){
 
           %FORM_DETAIL%
 
-          <Sysfields sysdata={formdata} />          
+          <Sysfields formdata={formdata} />          
         </div>
       </main>
       <Footer />

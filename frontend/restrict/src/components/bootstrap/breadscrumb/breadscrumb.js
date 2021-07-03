@@ -1,8 +1,7 @@
-import React from 'react';
-import { NavLink } from "react-router-dom";
+import React from "react"
+import { NavLink } from "react-router-dom"
 import shortid from "shortid"
 
-//import {GlobalContext} from '../../context/global_context';
 
 //https://v5.getbootstrap.com/docs/5.0/components/breadcrumb/
 function Breadscrumb({urls}) {

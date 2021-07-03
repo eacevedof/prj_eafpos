@@ -107,7 +107,7 @@ function ProductDelete(){
             </div>
           </div>
 
-          <Sysfields sysdata={formdata} />
+          <Sysfields formdata={formdata} />
           {
             isdeleted ? null:(
               <div className="col-12">
