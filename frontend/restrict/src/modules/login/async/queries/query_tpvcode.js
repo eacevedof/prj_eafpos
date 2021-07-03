@@ -1,4 +1,3 @@
-import helpapify from "helpers/apify"
 import insert from "helpers/query_insert"
 import select from "helpers/query_select"
 import {get_sanitized} from "helpers/functions"
@@ -69,5 +68,8 @@ export const get_session_id = (token, codecache) => {
       .add_field("t.session_id")
       .add_where(`t.token_apify = '${codtoken}'`)
       .add_where(`t.user_codecache = '${codcache}'`)
+      .add_orderby(`t.id DESC`)
+      .set_perpage(1)
+
   return objselect
 }//get_session_id
