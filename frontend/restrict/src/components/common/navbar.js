@@ -2,7 +2,7 @@
 import React from "react"
 //import React, {useEffect, useState} from "react"
 import { NavLink } from "react-router-dom"
-import {async_ispinned} from "modules/login/async/login_checker";
+import {async_is_pinned} from "modules/login/async/login_checker"
 
 function Navbar() {
 
@@ -11,7 +11,7 @@ function Navbar() {
 
   const async_onload = async () => {
     try {
-      const ispinned = await async_ispinned()
+      const ispinned = await async_is_pinned()
       set_is_pinned(ispinned)
     }
     catch(error) {

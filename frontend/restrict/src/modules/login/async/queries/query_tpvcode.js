@@ -32,27 +32,42 @@ export const get_user_by_tpvcode = tpvcode => {
   return objselect
 }
 
-export const get_id_by_usersession = usersession => {
-  const code = get_sanitized(usersession)
-  const objselect = select()
-      .set_comment("get_id_by_usersession")
-      .set_table(_query.table_session, _query.alias)
-      .add_field("t.id")
-      .add_where(`t.user_session = '${code}'`)
-  return objselect
-}//get_id_by_usersession
-
 export const get_insert_uuid = (token, usermini) => {
   const objinsert = insert()
       .set_comment("get_insert_uuid")
       .set_table(_query.table_session)
       .add_field("update_platform","3")
-      .add_field("apify_token", token)
+      .add_field("token_apify", token)
       .add_field("id_user", usermini?.id)
       .add_field("user_codecache", usermini?.code_cache)
-      .add_field("user_session", get_uuid())
+      .add_field("session_id", get_uuid())
       .add_extra("autosysfields", 1)
   return objinsert
 }
 
+export const get_is_ssesion = (token, sessionid, usersession) => {
+  const sessid = get_sanitized(sessionid)
+  const codtoken = get_sanitized(token)
 
+  const objselect = select()
+      .set_comment("get_is_ssesion")
+      .set_table(_query.table_session, _query.alias)
+      .add_field("t.session_id")
+      .add_where(`t.token_apify = '${codtoken}'`)
+      .add_where(`t.session_id = '${sessid}'`)
+      .add_where(`t.user_codecache = '${usersession?.code_cache}'`)
+  return objselect
+}//get_is_ssesion
+
+export const get_session_id = (token, codecache) => {
+  const codtoken = get_sanitized(token)
+  const codcache = get_sanitized(codecache)
+
+  const objselect = select()
+      .set_comment("get_session_id")
+      .set_table(_query.table_session, _query.alias)
+      .add_field("t.session_id")
+      .add_where(`t.token_apify = '${codtoken}'`)
+      .add_where(`t.user_codecache = '${codcache}'`)
+  return objselect
+}//get_session_id

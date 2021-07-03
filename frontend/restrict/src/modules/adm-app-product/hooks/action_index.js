@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {async_get_list, async_multidelete, async_multideletelogic} from "../async/async_repository";
 import {get_pages} from "helpers/functions";
 import {grid, VIEWCONFIG} from "../async/queries/query_list";
-import {async_ispinned} from "../../login/async/login_checker";
+import {async_is_pinned} from "modules/login/async/login_checker";
 import HrefDom from "helpers/href_dom";
 import db from "helpers/localdb";
 import {MODCONFIG} from "modules/adm-app-product/config/config"
@@ -47,7 +47,7 @@ function ActionIndex(){
 
   const async_onload = async () => {
     console.log("product.index.async_onload")
-    const ispinned = await async_ispinned()
+    const ispinned = await async_is_pinned()
 
     if(!ispinned){
       history.push("/admin")

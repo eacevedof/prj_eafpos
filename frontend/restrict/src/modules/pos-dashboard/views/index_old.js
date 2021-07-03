@@ -9,7 +9,7 @@ import Footer from "components/common/footer"
 //import HrefDom from "helpers/href_dom"
 //import Api from "providers/api"
 //import { NavLink } from 'react-router-dom';
-import {async_ispinned} from "modules/login/async/login_checker"
+import {async_is_pinned} from "modules/login/async/login_checker"
 import "modules/common/pos_table.css"
 
 function PosIndex() {
@@ -33,7 +33,7 @@ function PosIndex() {
     let is_pinned = false
     try {
       set_successg({message:"all right"})
-      is_pinned = await async_ispinned()
+      is_pinned = await async_is_pinned()
     }
     catch(error) {
       set_errorg({message:error})

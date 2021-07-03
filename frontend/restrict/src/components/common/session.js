@@ -10,9 +10,10 @@ const Session = ({component}) => {
   let location = useLocation()
 
   const on_idle = () => {
-    if(db.select("user_session")){
-      db.delete("codecache")
-      db.delete("user_session")
+    if(db.select("session_user")){
+      db.delete("session_user")
+      db.delete("session_id")
+
       if(location.pathname!=="/")
         db.save("last_location", location.pathname)
       history.push("/")

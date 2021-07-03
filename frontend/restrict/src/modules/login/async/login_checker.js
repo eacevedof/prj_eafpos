@@ -1,7 +1,7 @@
 import apiauth from "providers/apiauth"
 import db from "helpers/localdb"
 import {is_defined} from "helpers/functions"
-import {async_is_pinned} from "modules/login/async/async_repository"
+import {async_in_session} from "modules/login/async/async_repository"
 
 const USER = "fulanito"
 const PASSWORD = "MaFaLDa1234"
@@ -16,27 +16,26 @@ export const async_gettoken = async () => {
   return apifytoken
 }// async_gettoken
 
-export const async_islogged = async () => {
+export const async_is_tokenized = async () => {
   const apifytoken = db.select("token_apify")
   if(!apifytoken) return false
 
   const response = await apiauth.async_is_validtoken()
-  console.log("modules.login.async_islogged.async_is_validtoken.response",response)
+  console.log("modules.login.async_is_tokenized.async_is_validtoken.response",response)
 
   if(is_defined(response.error)){
     return false
   }  
 
   return true
-}// async_islogged
+}// async_is_tokenized
 
-export const async_ispinned = async () => {
-  const usersession = db.select("user_session")
-  if(!usersession) return false
-
-  const response = await async_is_pinned(usersession.tpv_uuid)
+export const async_is_pinned = async () => {
+  const response = await async_in_session()
+  if(!response) return false
+  
   if(is_defined(response.error)){
     return false
   }  
   return true
-}// async_ispinned
+}// async_is_pinned

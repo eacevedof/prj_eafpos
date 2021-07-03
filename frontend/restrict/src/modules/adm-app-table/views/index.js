@@ -6,7 +6,7 @@ import { get_pages } from "helpers/functions"
 import db from "helpers/localdb" 
 import HrefDom from "helpers/href_dom"
 
-import {async_islogged} from "modules/login/async/login_checker"
+import {async_is_tokenized} from "modules/login/async/login_checker"
 import {async_get_list, async_multidelete, async_multideletelogic} from "modules/adm-app-table/async/async_repository"
 
 import {VIEWCONFIG, grid} from "modules/adm-app-table/async/queries/query_list"
@@ -61,7 +61,7 @@ function AppTableIndex() {
 
   const async_onload = async () => {
     console.log("app_table.index.async_onload")
-    const islogged = await async_islogged()
+    const islogged = await async_is_tokenized()
     if(!islogged){
       history.push("/")
       return
