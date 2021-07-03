@@ -49,6 +49,7 @@ export const get_is_ssesion = (token, sessionid, usersession) => {
   const codtoken = get_sanitized(token)
 
   const objselect = select()
+      .set_cache_time(180)
       .set_comment("get_is_ssesion")
       .set_table(_query.table_session, _query.alias)
       .add_field("t.session_id")

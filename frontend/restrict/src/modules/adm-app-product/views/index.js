@@ -17,10 +17,7 @@ function ProductIndex() {
   const { scrumbs, cachekey,
     error, success,
     async_load_products, on_multiconfirm,
-    result, foundrows
-  } =  ActionIndex()
 
-  const {
     urlpagination,
     perpage,
     page,
@@ -29,6 +26,8 @@ function ProductIndex() {
 
     set_txtsearch,
     issubmitting,
+
+    result, foundrows,
   } =  ActionIndex()
 
   return (

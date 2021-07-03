@@ -1,11 +1,11 @@
-import {useHistory, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {async_get_list, async_multidelete, async_multideletelogic} from "../async/async_repository";
-import {get_pages} from "helpers/functions";
-import {grid, VIEWCONFIG} from "../async/queries/query_list";
-import {async_is_pinned} from "modules/pos-login/async/login_checker";
-import HrefDom from "helpers/href_dom";
-import db from "helpers/localdb";
+import {useHistory, useParams} from "react-router-dom"
+import {useCallback, useEffect, useState} from "react"
+import {async_get_list, async_multidelete, async_multideletelogic} from "../async/async_repository"
+import {get_pages} from "helpers/functions"
+import {grid, VIEWCONFIG} from "../async/queries/query_list"
+import {async_is_pinned} from "modules/pos-login/async/login_checker"
+import HrefDom from "helpers/href_dom"
+import db from "helpers/localdb"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 
 function ActionIndex(){
@@ -34,7 +34,7 @@ function ActionIndex(){
     await async_load_products()
   }
 
-  async function async_load_products(){
+  const async_load_products = useCallback(async () =>{
     set_issubmitting(true)
     const r = await async_get_list(page, txtsearch)
     const ipages = get_pages(r.foundrows, VIEWCONFIG.PERPAGE)
@@ -43,7 +43,7 @@ function ActionIndex(){
     set_issubmitting(false)
     set_result(r.result)
     set_foundrows(r.foundrows)
-  }
+  },[txtsearch])
 
   const async_onload = async () => {
     console.log("product.index.async_onload")
