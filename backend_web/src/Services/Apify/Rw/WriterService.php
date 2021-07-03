@@ -9,6 +9,7 @@
  */
 namespace App\Services\Apify\Rw;
 
+use PHPUnit\Runner\Exception;
 use TheFramework\Components\Db\Context\ComponentContext;
 use TheFramework\Components\Db\ComponentCrud;
 use App\Services\AppService;
@@ -19,52 +20,58 @@ use App\Services\Apify\SysfieldsService;
 class WriterService extends AppService
 {
     private const USER_UUID_KEY = "useruuid";
+    private const ACTIONS = ["insert", "update", "delete", "deletelogic", "drop", "alter"];
+
+    private array $fields;
+
     private string $idcontext;
     private string $dbname;
 
     private $oContext;
     private $oBehav;
     
-    private $arActions;
-    private $action;
+    private string $action;
 
-    public function __construct(string $idcontext="", string $dbnamealias="")
+    public function __construct(string $idcontext="", string $dbalias="", string $table="")
     {
+        if(!$idcontext) throw new Exception("No context provided");
+        if(!$dbalias) throw new Exception("No db-alias received");
+        if(!$table) throw new Exception("No table received");
+
         $this->idcontext = $idcontext;
 
-        $this->oContext = new ComponentContext($this->get_env("APP_CONTEXTS"),$idcontext);
-        $this->dbname = $this->oContext->get_dbname($dbnamealias);
-        $oDb = DbFactory::get_dbobject_by_ctx($this->oContext,$this->dbname);
-        $this->oBehav = new SchemaBehaviour($oDb);
-        $this->arActions = ["insert", "update", "delete", "deletelogic", "drop", "alter"];
+        $this->oContext = new ComponentContext($this->get_env("APP_CONTEXTS"), $idcontext);
+        $this->dbname = $this->oContext->get_dbname($dbalias);
+        $db = DbFactory::get_dbobject_by_ctx($this->oContext, $this->dbname);
+        $this->oBehav = new SchemaBehaviour($db);
+        $this->fields = array_column($this->oBehav->get_fields($table, $this->dbname),"field_name");
     }
         
     private function _get_parsed_tosql($arParams)
     {
-        $sAction = $this->action;
-        if(!isset($sAction)) return $this->add_error("_get_parsed_tosql no param action");
-        if(!in_array($sAction,$this->arActions)) return $this->add_error("action: {$sAction} not found!");
+        if(!in_array($action = $this->action, self::ACTIONS)) 
+            return $this->add_error("action: {$action} not found!");
 
-        switch ($sAction) {
+        switch ($action) {
             case "insert":
-                $this->_unset_sysfields($arParams,$sAction);
-                $sSQL = $this->_get_insert_sql($arParams);
+                $this->_unset_sysfields($arParams, $action);
+                $sql = $this->_get_insert_sql($arParams);
             break;
             case "update":
-                $this->_unset_sysfields($arParams,$sAction);
-                $sSQL = $this->_get_update_sql($arParams);
+                $this->_unset_sysfields($arParams, $action);
+                $sql = $this->_get_update_sql($arParams);
             break;   
             case "delete":
-                $sSQL = $this->_get_delete_sql($arParams);
+                $sql = $this->_get_delete_sql($arParams);
             break;
             case "deletelogic":
-                $this->_unset_sysfields($arParams,$sAction);
-                $sSQL = $this->__get_deletelogic_sql($arParams);
+                $this->_unset_sysfields($arParams, $action);
+                $sql = $this->__get_deletelogic_sql($arParams);
             break;
             default:
-                return $this->add_error("_get_parsed_tosql","action: $sAction not implemented!");
+                return $this->add_error("_get_parsed_tosql","action: $action not implemented!");
         }
-        return $sSQL;
+        return $sql;
     }
 
     private function _add_sysfields(ComponentCrud $oCrud, $arParams): void
@@ -85,12 +92,17 @@ class WriterService extends AppService
         }
     }
 
-    private function _unset_sysfields(&$arParams, $sAction)
+    /**
+     * elimina posibles escrituras directas en otros campos
+     * @param $arParams
+     * @param $action
+     */
+    private function _unset_sysfields(&$arParams, $action)
     {
         $issysfields = $arParams["autosysfields"] ?? 0;
         if($issysfields)
         {
-            switch ($sAction) {
+            switch ($action) {
                 case "insert":
                     $arUnset = ["update_date", "update_user", "update_platform", "delete_date", "delete_user", "delete_platform"];
                     break;
@@ -124,7 +136,8 @@ class WriterService extends AppService
                 $oCrud->add_insert_fv($sFieldName,$sFieldValue);
 
         $this->_add_sysfields($oCrud, $arParams);
-        $oCrud->add_insert_fv("update_date",null,0);
+        if(in_array("update_date",$this->fields))
+            $oCrud->add_insert_fv("update_date",null,0);
 
         $oCrud->autoinsert();
         
@@ -133,7 +146,6 @@ class WriterService extends AppService
 
     private function _get_update_sql($arParams)
     {
-//$this->logd($arParams,"_get_update_sql.arparam");
         if(!isset($arParams["table"])) return $this->add_error("_get_update_sql no table");
         if(!isset($arParams["fields"])) return $this->add_error("_get_update_sql no fields");
         //if(!isset($arParams["pks"])) return $this->add_error("_get_update_sql no pks");
@@ -151,20 +163,18 @@ class WriterService extends AppService
 
         if(isset($arParams["pks"]))
             foreach($arParams["pks"] as $sFieldName=>$sFieldValue)
-            {
                 $oCrud->add_pk_fv($sFieldName,$sFieldValue);
-            }
+
 
         if(isset($arParams["where"]))
             foreach($arParams["where"] as $sWhere)
-            {
                 $oCrud->add_and($sWhere);
-            }
+
 
         $oCrud->autoupdate();
-        $sSQL = $oCrud->get_sql();
-        //pr($sSQL);die;
-        return $sSQL;
+        $sql = $oCrud->get_sql();
+        //pr($sql);die;
+        return $sql;
     }//_get_update_sql
 
     private function _get_delete_sql($arParams)
@@ -179,9 +189,9 @@ class WriterService extends AppService
                 $oCrud->add_and($sWhere);
             }        
         $oCrud->autodelete();
-        $sSQL = $oCrud->get_sql();
+        $sql = $oCrud->get_sql();
         
-        return $sSQL;      
+        return $sql;      
     }//_get_delete_sql
 
     private function __get_deletelogic_sql($arParams)
@@ -210,20 +220,20 @@ class WriterService extends AppService
             }
 
         $oCrud->autoupdate();
-        $sSQL = $oCrud->get_sql();
-        //pr($sSQL);die;
-        return $sSQL;
+        $sql = $oCrud->get_sql();
+        //pr($sql);die;
+        return $sql;
     }//__get_deletelogic_sql
 
 //==================================
 //      PUBLIC
 //==================================
-    public function write_raw($sSQL)
+    public function write_raw($sql)
     {
-        if(!$sSQL) return [];
+        if(!$sql) return [];
         if(!$this->isError)
         {
-            $r = $this->oBehav->write_raw($sSQL);
+            $r = $this->oBehav->write_raw($sql);
             if($this->oBehav->is_error())
                 $this->add_error($this->oBehav->get_errors());
             return $r;
@@ -233,14 +243,12 @@ class WriterService extends AppService
     
     public function write($arParams)
     {
-        $sAction = $this->action;
-        $sSQL = $this->_get_parsed_tosql($arParams,$sAction);
-        //print_r($sSQL);die;
-        return $this->write_raw($sSQL);
+        $action = $this->action;
+        $sql = $this->_get_parsed_tosql($arParams, $action);
+        return $this->write_raw($sql);
     }
 
     public function get_lastinsert_id(){return $this->oBehav->get_lastinsert_id();}
 
     public function set_action($action){$this->action = $action; return $this;}
-    
 }//WriterService

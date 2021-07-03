@@ -13,7 +13,7 @@ use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\Rw\WriterService;
 
-class WriterController extends AppController
+final class WriterController extends AppController
 {
     
     public function __construct()
@@ -28,31 +28,43 @@ class WriterController extends AppController
      */
     public function index()
     {
-        $idContext = $this->get_get("context");
-        $sDbalias = $this->get_get("schemainfo");
+        $idcontext = $this->get_get("context");
+        $dbalias = $this->get_get("schemainfo");
         $arParts = $this->get_post("queryparts");
-        $sAction = $this->get_post("action");
-        
-        $oServ = new WriterService($idContext,$sDbalias);
-        $arJson = $oServ->set_action($sAction)->write($arParts);
+        $action = $this->get_post("action");
+        $table = $arParts["table"];
 
         $oJson = new HelperJson();
-        if($oServ->is_error()) 
-            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
-                    set_error($oServ->get_errors())->
-                    set_message("database error")->
-                    show(1);
+        try 
+        {
+            $oServ = new WriterService($idcontext, $dbalias, $table);
+            $arJson = $oServ->set_action($action)->write($arParts);
 
-        if($sAction=="insert") 
-            $oJson->set_code(HelperJson::CODE_CREATED)->set_message("resource created");
-        elseif($sAction=="update")
-            $oJson->set_message("resource updated");
-        elseif($sAction=="delete")
-            $oJson->set_message("resource deleted");
-        elseif($sAction=="deletelogic")
-            $oJson->set_message("resource deleted *");
+            if ($oServ->is_error())
+                $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)
+                    ->set_error($oServ->get_errors())
+                    ->set_message("database error")
+                    ->show(1);
 
-        $oJson->set_payload(["result"=>$arJson,"lastid"=>$oServ->get_lastinsert_id()])->show();
+            if ($action == "insert")
+                $oJson->set_code(HelperJson::CODE_CREATED)->set_message("resource created");
+            elseif ($action == "update")
+                $oJson->set_message("resource updated");
+            elseif ($action == "delete")
+                $oJson->set_message("resource deleted");
+            elseif ($action == "deletelogic")
+                $oJson->set_message("resource deleted *");
+
+            $oJson->set_payload(["result" => $arJson, "lastid" => $oServ->get_lastinsert_id()])->show();
+        }
+        catch (\Exception $ex)
+        {
+            $this->logerr($ex->getMessage(),"writecontroller-exception");
+            $oJson->set_code(HelperJson::CODE_BAD_REQUEST)
+                ->set_error(["exception"])
+                ->set_message($ex->getMessage())
+                ->show();
+        }
     }//index
 
     /**
@@ -60,12 +72,12 @@ class WriterController extends AppController
      */
     public function raw()
     {
-        $idContext = $this->get_get("context");
+        $idcontext = $this->get_get("context");
         $sDb = $this->get_get("dbname");
-        $sAction = $this->get_post("action");
+        $action = $this->get_post("action");
         $sSQL = $this->get_post("query");
         
-        $oServ = new WriterService($idContext,$sDb);
+        $oServ = new WriterService($idcontext,$sDb);
         $arJson = $oServ->write_raw($sSQL);
 
         $oJson = new HelperJson();
@@ -75,13 +87,13 @@ class WriterController extends AppController
                     set_message("database error")->
                     show(1);
 
-        if($sAction=="insert") 
+        if($action=="insert") 
             $oJson->set_code(HelperJson::CODE_CREATED)->set_message("resource created");
-        elseif($sAction=="update")
+        elseif($action=="update")
             $oJson->set_message("resource updated");
-        elseif($sAction=="delete")
+        elseif($action=="delete")
             $oJson->set_message("resource deleted");
-        elseif($sAction=="deletelogic")
+        elseif($action=="deletelogic")
             $oJson->set_message("resource deleted *");
 
         $oJson->set_payload($arJson)->show();
