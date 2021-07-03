@@ -35,8 +35,8 @@ const _query = {
 
 export const get_obj_entity = (objparam={filters:{}})=>{
   const objselect = select()
+    .set_comment("product-entity")
     .set_table(_query.table, _query.alias)
-    .is_foundrows(1)
     .is_distinct(1)
     .set_joins(_query.joins)
     .set_wheres(_query.where)
