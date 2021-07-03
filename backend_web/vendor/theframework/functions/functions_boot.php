@@ -18,7 +18,7 @@ function core_isfile_includepath($sFilePath)
 
 function core_router
 ($sModuleParam,$sSectionParam,$sViewParam,$sPackageParam
-,$sDefController="status",$sAccessMethod="login",$sDefMethod="get_list",$sDefMethod404="error_404")
+,$sDefController="status",$sAccessMethod="pos-login",$sDefMethod="get_list",$sDefMethod404="error_404")
 {
     if(defined("TFW_DEFAULT_CONTROLLER"))
         if(TFW_DEFAULT_CONTROLLER!="")
@@ -88,7 +88,7 @@ function core_router
         $arReturn["controller_name"] = $sDefController;
         $sPathController = $sPackage.DIRECTORY_SEPARATOR.$sDefController;
         $sPathController .= DIRECTORY_SEPARATOR."controller_$sDefController";
-        //No hay partial (tab) ni metodo => homes->login
+        //No hay partial (tab) ni metodo => homes->pos-login
         if(!$sPartialController && !$sMethod)
             $arReturn["controller_method"] = $sDefMethod;
         else

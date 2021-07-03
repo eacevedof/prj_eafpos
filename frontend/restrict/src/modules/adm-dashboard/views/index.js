@@ -1,7 +1,7 @@
 import React, {useEffect} from "react"
 import { NavLink } from "react-router-dom"
 import {useHistory} from "react-router-dom"
-import {async_is_pinned} from "modules/login/async/login_checker"
+import {async_is_pinned} from "modules/pos-login/async/login_checker"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
 

@@ -2,7 +2,7 @@
 import React from "react"
 //import React, {useEffect, useState} from "react"
 import { NavLink } from "react-router-dom"
-import {async_is_pinned} from "modules/login/async/login_checker"
+import {async_is_pinned} from "modules/pos-login/async/login_checker"
 
 function Navbar() {
 

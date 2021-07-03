@@ -47,7 +47,7 @@ final class LoginMiddleService extends AppService
     private function _get_login_config($hostname=""): array
     {
         if(!$hostname) $hostname = $this->origin;
-        $sPathfile = $_ENV["APP_LOGIN"] ?? __DIR__.DIRECTORY_SEPARATOR."login.json";
+        $sPathfile = $_ENV["APP_LOGIN"] ?? __DIR__.DIRECTORY_SEPARATOR."pos-login.json";
         $arconfig = (new ComponentConfig($sPathfile))->get_node("domain",$hostname);
         return $arconfig;
     }

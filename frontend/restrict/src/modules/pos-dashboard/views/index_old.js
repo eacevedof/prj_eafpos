@@ -9,7 +9,7 @@ import Footer from "components/common/footer"
 //import HrefDom from "helpers/href_dom"
 //import Api from "providers/api"
 //import { NavLink } from 'react-router-dom';
-import {async_is_pinned} from "modules/login/async/login_checker"
+import {async_is_pinned} from "modules/pos-login/async/login_checker"
 import "modules/common/pos_table.css"
 
 function PosIndex() {

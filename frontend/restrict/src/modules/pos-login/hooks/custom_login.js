@@ -1,7 +1,7 @@
 import {useEffect} from "react"
 import {useHistory} from "react-router-dom"
 import db from "helpers/localdb"
-import {async_get_session_id, async_get_user_by_tpvcode, async_insert_rnd} from "modules/login/async/async_repository"
+import {async_get_session_id, async_get_user_by_tpvcode, async_insert_rnd} from "modules/pos-login/async/async_repository"
 
 function CustomLogin() {
   const history = useHistory()
@@ -34,7 +34,7 @@ function CustomLogin() {
   useEffect(() => {
     db.delete("session_user")
     db.delete("session_id")
-    return () => console.log("login.insert.unmounting")
+    return () => console.log("pos-login.insert.unmounting")
   },[])
   
   return {

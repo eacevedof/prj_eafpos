@@ -19,7 +19,7 @@ final class LoginController extends AppController
 
     /**
      * ruta:
-     *  <dominio>/apifiy/security/login
+     *  <dominio>/apifiy/security/pos-login
      */
     public function index()
     {
@@ -42,7 +42,7 @@ final class LoginController extends AppController
      * Para servidores intermediarios
      * El serv tiene que hacer un forward en POST de remoteip y remotehost
      * ruta:
-     *  <dominio>/apifiy/security/login-middle
+     *  <dominio>/apifiy/security/pos-login-middle
      */
     public function middle()
     {
@@ -74,9 +74,9 @@ final class LoginController extends AppController
             //$token = $this->get_header("apify-auth");
             //$token = $this->get_header("authorization");
             $domain = $this->get_domain(); //excepcion
-            $this->logd($domain,"login.is_valid_token.domain");
+            $this->logd($domain,"pos-login.is_valid_token.domain");
             $token = $this->get_post(self::KEY_APIFYUSERTOKEN);
-            $this->logd($token,"login.is_valid_token.post");
+            $this->logd($token,"pos-login.is_valid_token.post");
             $this->logd("domain: $domain, token: $token");
             if(!$token) throw new \Exception("No token provided");
             $oServ = new LoginService($domain);

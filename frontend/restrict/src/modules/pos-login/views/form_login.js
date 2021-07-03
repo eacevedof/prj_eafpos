@@ -2,7 +2,7 @@ import React from "react"
 import Navbar from "components/common/navbar"
 import Footer from "components/common/footer"
 import KeyboardSecret from "components/bootstrap/app/keyboards/keyboard_secret"
-import CustomLogin from "modules/login/hooks/custom_login";
+import CustomLogin from "modules/pos-login/hooks/custom_login";
 
 function FormLogin() {
 

@@ -48,7 +48,7 @@ final class LoginService extends AppService
     private function _get_login_config(string $domain=""): array
     {
         if(!$domain) $domain = $this->domain;
-        $sPathfile = $_ENV["APP_LOGIN"] ?? __DIR__.DIRECTORY_SEPARATOR."login.json";
+        $sPathfile = $_ENV["APP_LOGIN"] ?? __DIR__.DIRECTORY_SEPARATOR."pos-login.json";
         $arconfig = (new ComponentConfig($sPathfile))->get_node("domain",$domain);
         return $arconfig;
     }
