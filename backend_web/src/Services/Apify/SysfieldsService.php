@@ -59,8 +59,10 @@ final class SysfieldsService extends AppService
 
     private function _get_userid_from_db(): ?string
     {
+        $table = self::USER_TABLE;
+        $field = self::USER_UUID_FIELD;
         if(!$this->codecachevalue || $this->codecachevalue==="null") return null;
-        $sql = "SELECT id FROM self::USER_TABLE WHERE self::USER_UUID_FIELD='$this->codecachevalue'";
+        $sql = "SELECT id FROM $table WHERE $field='$this->codecachevalue'";
         $id = $this->oBehav->query($sql,0,0);
         if(!$id) $id = null;
         return $id;
