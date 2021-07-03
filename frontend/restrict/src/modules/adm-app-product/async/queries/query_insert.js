@@ -6,7 +6,7 @@ const _TABLE = "app_product"
 
 export const get_obj_insert = (objparam={fields:{}})=>{
   const queryinsert = insert()
-    .set_table("product-insert")
+    .set_comment("product-insert")
     .set_table(_TABLE)
     .add_extra("autosysfields", 1)
     .add_extra("codecache", db.select("codecache"))
