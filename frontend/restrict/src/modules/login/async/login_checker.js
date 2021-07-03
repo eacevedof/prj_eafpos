@@ -17,7 +17,7 @@ export const async_gettoken = async () => {
 }// async_gettoken
 
 export const async_islogged = async () => {
-  const apifytoken = db.select("token_dbsapify")
+  const apifytoken = db.select("token_apify")
   if(!apifytoken) return false
 
   const response = await apiauth.async_is_validtoken()

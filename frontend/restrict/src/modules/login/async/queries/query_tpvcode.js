@@ -48,7 +48,7 @@ export const get_insert_uuid = (token, codecache) => {
       .set_table(_query.table_session)
       .add_field("update_platform","3")
       .add_field("apify_token", token)
-      .add_field("code_cache", codecache)
+      .add_field("user_codecache", codecache)
       .add_field("user_session", get_uuid())
       .add_extra("autosysfields", 1)
   return objinsert

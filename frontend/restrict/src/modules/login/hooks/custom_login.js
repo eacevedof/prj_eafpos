@@ -13,7 +13,7 @@ function CustomLogin() {
     db.delete("user_session")
     if(parseInt(r.foundrows)===1) {
       console.log("async_get_user_by_tpvcode",r)
-      const token = db.select("token_dbsapify")
+      const token = db.select("token_apify")
       const codecache = r.result[0]["code_cache"]
       await async_insert_rnd(token, codecache)
 

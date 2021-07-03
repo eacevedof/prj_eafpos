@@ -32,7 +32,7 @@ const Apiauth = {
   },//async_get_apifytoken
 
   async_is_validtoken: async () => {
-    const apifytoken = db.select("token_dbsapify")
+    const apifytoken = db.select("token_apify")
     //pr(apifytoken,"async_is_valid_token recuperado de db");
     const url = `${APIFY_BASEURL}/apify/security/is-valid-token`
     try {

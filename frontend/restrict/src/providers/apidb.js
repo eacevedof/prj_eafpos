@@ -6,7 +6,7 @@ import {is_undefined, get_error} from "../helpers/functions"
 const Apidb = {
   
   async_get_fields: async (table) =>{
-    const apifytoken = db.select("token_dbsapify")
+    const apifytoken = db.select("token_apify")
     const url = `${APIFY_BASEURL}/apify/fields/${APIFY_CONTEXT}/${APIFY_SCHEMA}/${table}`
 
     try{
@@ -26,7 +26,7 @@ const Apidb = {
   },
 
   async_get_list: async objselect => {
-    const apifytoken = db.select("token_dbsapify")
+    const apifytoken = db.select("token_apify")
     const url = `${APIFY_BASEURL}/apify/read?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     //hay que enviar header: apify-auth: token
@@ -52,7 +52,7 @@ const Apidb = {
   },
 
   async_insert: async (objinsert) => {
-    const apifytoken = db.select("token_dbsapify")
+    const apifytoken = db.select("token_apify")
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
@@ -77,7 +77,7 @@ const Apidb = {
   },
 
   async_update: async (objupdate) => {
-    const apifytoken = db.select("token_dbsapify")
+    const apifytoken = db.select("token_apify")
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
     //hay que enviar header: apify-auth: token
     try {
@@ -104,7 +104,7 @@ const Apidb = {
 
   async_delete: async(objdelete) => {
 
-    const apifytoken = db.select("token_dbsapify")
+    const apifytoken = db.select("token_apify")
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {

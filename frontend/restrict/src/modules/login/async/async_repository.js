@@ -17,7 +17,7 @@ export const async_is_pinned = async usersession => {
 }
 
 export const async_insert_rnd = async (token, codecache) => {
-  const objquery = get_insert_uuid(codecache)
+  const objquery = get_insert_uuid(token, codecache)
   const r = await apidb.async_insert(objquery)
   if(is_defined(r.error)) throw r.error
   return r

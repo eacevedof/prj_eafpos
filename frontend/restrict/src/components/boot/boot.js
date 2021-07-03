@@ -33,17 +33,17 @@ function Boot() {
     const islogged = await async_islogged()
 
     if(islogged){
-      apifytoken = db.select("token_dbsapify")
+      apifytoken = db.select("token_apify")
     }
     else {
       apifytoken = await async_gettoken()
-      db.save("token_dbsapify",apifytoken)
+      db.save("token_apify",apifytoken)
     }
 
     console.log("boot.apifytoken:",apifytoken)
     if(!apifytoken){
       set_errorg({title:"Error", message:"Empty token"})
-      db.delete("token_dbsapify")
+      db.delete("token_apify")
     }
     else
       set_errorg({})
