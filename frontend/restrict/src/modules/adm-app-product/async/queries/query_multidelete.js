@@ -8,6 +8,7 @@ const _query = {
 
 export const get_obj_multidelete = (objparam={keys:[]}) =>{
   const querydelete = qdelete()
+    .set_comment("product-multidelete")
     .set_table(_query.table)
   
   if(is_empty(objparam.keys)) {

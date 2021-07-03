@@ -5,6 +5,7 @@ const _TABLE = "app_product"
 
 export const get_obj_delete = (objparam={fields:{},keys:[]})=>{
   const querydelete = qdelete()
+    .set_comment("product-delete")
     .set_table(_TABLE)
 
   if(isset(objparam.fields) && isset(objparam.keys)){

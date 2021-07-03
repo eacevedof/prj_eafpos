@@ -6,6 +6,7 @@ const _TABLE = "app_product"
 
 export const get_obj_deletelogic = (objparam={fields:{},keys:[]})=>{
   const querydeletel = deletelogic()
+    .set_comment("product-deletelogic")
     .set_table(_TABLE)
     .add_extra("autosysfields", "1")
     .add_extra("codecache", db.select("codecache"))

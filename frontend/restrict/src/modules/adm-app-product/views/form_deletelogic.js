@@ -14,7 +14,7 @@ function ProductDeleteLogic(){
   const {
     error, success,
     issubmitting, isdeleted,
-    breadscrumb, seldisplay, formdata, sysdata,
+    breadscrumb, seldisplay, formdata,
     on_submit, async_refresh
   } = ActionDeleteLogic()
 
@@ -102,7 +102,7 @@ function ProductDeleteLogic(){
             </div>
           </div>
 
-          <Sysfields sysdata={sysdata} />
+          <Sysfields formdata={formdata} />
           {
             isdeleted ? null:(
               <div className="col-12">

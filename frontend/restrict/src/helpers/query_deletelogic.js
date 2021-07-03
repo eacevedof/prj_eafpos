@@ -3,10 +3,16 @@ import {add} from "helpers/functions"
 export default () => {
   const q = {
     init(){
+      this.comment = ""
       this.table =  ""
       this.platform = ""
       this.where = []
       this.extras = []
+      return this
+    },
+
+    set_comment(comment) {
+      this.comment = comment ?? ""
       return this
     },
 
@@ -44,6 +50,8 @@ export default () => {
       const oform = new FormData()
       oform.append("action","deletelogic")
       oform.append("queryparts[table]", this.table)
+      if(this.comment)
+        oform.append("queryparts[comment]", this.comment)
 
       if(this.platform)
         oform.append(`queryparts[fields][delete_platform]`,this.platform)

@@ -7,6 +7,7 @@ const _TABLE = "app_product"
 export const get_obj_multideletelogic = (objparam={key:"", keys:[]})=>{
   const querydeletel = deletelogic()
     .set_table(_TABLE)
+    .set_comment("product-multideletelogic")
     .add_extra("autosysfields", "1")
     .add_extra("codecache", db.select("codecache"))
     .set_platform("3")

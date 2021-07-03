@@ -3,9 +3,15 @@ import {add} from "helpers/functions"
 export default () =>{
   const q = {
     init(){
+      this.comment = ""
       this.table =  ""
       this.where = []
       this.extras = []
+      return this
+    },
+
+    set_comment(comment){
+      this.comment = comment
       return this
     },
 
@@ -38,6 +44,7 @@ export default () =>{
       const oform = new FormData()
       oform.append("action","delete")
       oform.append("queryparts[table]",this.table)
+      oform.append("queryparts[comment]",this.comment)
       this.where.forEach((strcond,i) => {
         oform.append(`queryparts[where][${i}]`,strcond)
       });
