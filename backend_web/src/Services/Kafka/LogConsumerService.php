@@ -48,6 +48,7 @@ final class LogConsumerService
         {
             $sql = $this->_get_query()
                 ->add_insert_fv("group_type", $message["type"])
+                ->add_insert_fv("user_uuid", $_POST["useruuid"] ?? "-")
                 ->add_insert_fv("title", $message["title"])
                 ->add_insert_fv("message", $message["message"])
                 ->add_insert_fv("timest", $message["timestamp"])
