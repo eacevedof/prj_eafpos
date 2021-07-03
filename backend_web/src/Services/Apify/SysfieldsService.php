@@ -19,6 +19,7 @@ final class SysfieldsService extends AppService
     private const USER_TABLE = "base_user";
     private const USER_UUID_FIELD = "code_cache";
 
+    private string $targettable;
     private string $codecachevalue;
     private string $action;
     private string $dbname;
@@ -32,8 +33,11 @@ final class SysfieldsService extends AppService
     private const UPDATE_FIELDS = ["update_user","update_date","update_platform"];
     private const DELETE_FIELDS = ["delete_user","delete_date","delete_platform"];
     
-    public function __construct(string $idContext="", string $dbname="", string $action="", ?string $codecache="")
+    public function __construct(
+        string $targettable, string $idContext="", string $dbname="", string $action="", ?string $codecache=""
+    )
     {
+        $this->targettable = $targettable;
         $this->dbname = $dbname;
         $this->action = $action;
         $this->codecachevalue = str_replace(["'","%"," "],"",$codecache??"");
@@ -47,17 +51,15 @@ final class SysfieldsService extends AppService
     {
         return $this->oBehav->get_table(self::USER_TABLE, $this->dbname);
     }
-    
-    private function _get_allfields(): array
+
+    private function _get_target_fields(): array
     {
-        $allfields = $this->oBehav->get_fields(self::USER_TABLE, $this->dbname);
-        if(!$allfields) return [];
-        return array_column($allfields,"field_name");
+        return array_column($this->oBehav->get_fields($this->targettable, $this->dbname),"field_name");
     }
 
     private function _get_userid_from_db(): ?string
     {
-        if($this->codecachevalue==="null") return null;
+        if(!$this->codecachevalue || $this->codecachevalue==="null") return null;
         $sql = "SELECT id FROM self::USER_TABLE WHERE self::USER_UUID_FIELD='$this->codecachevalue'";
         $id = $this->oBehav->query($sql,0,0);
         if(!$id) $id = null;
@@ -84,17 +86,24 @@ final class SysfieldsService extends AppService
         $finalfields = $this->_get_final_fields();
         foreach ($finalfields as $fieldname => $value) 
         {
-            if(strstr($fieldname,"_date")) $finalfields[$fieldname] = date("YmdHis");
-            if(strstr($fieldname,"_user")) $finalfields[$fieldname] = $this->_get_userid_from_db();
-            if(strstr($fieldname,"_platform")) $finalfields[$fieldname] = $this->_get_platform();
-            if($fieldname === self::USER_UUID_FIELD) $finalfields[$fieldname] = uniqid();
+            if(strstr($fieldname,"_date"))
+                $finalfields[$fieldname] = date("YmdHis");
+
+            if(strstr($fieldname,"_user"))
+                $finalfields[$fieldname] = $this->_get_table_user() ? $this->_get_userid_from_db(): "-1";
+
+            if(strstr($fieldname,"_platform"))
+                $finalfields[$fieldname] = $this->_get_platform();
+
+            if($fieldname === self::USER_UUID_FIELD)
+                $finalfields[$fieldname] = uniqid();
         }
         return $finalfields;
     }
 
     private function _get_final_fields(): array
     {
-        $allfields = $this->_get_allfields();
+        $allfields = $this->_get_target_fields();
         $sysfields = $this->_get_sysfields_by_action();
 
         $final = [];
@@ -106,22 +115,9 @@ final class SysfieldsService extends AppService
         return $final;
     }
 
-    private function _is_valid_action(): bool
-    {
-        return in_array($this->action, [self::ACTION_INSERT, self::ACTION_UPDATE, self::ACTION_DELETE]);
-    }
-
-    private function _is_sysfields(): bool
-    {
-        if(!$this->_get_table_user()) return false;
-        if(!$this->_get_final_fields()) return false;
-        return true;
-    }
-
     public function get(): array
     {
-        if(!$this->_is_valid_action()) return [];
-        if(!$this->_is_sysfields()) return [];
+        if(!in_array($this->action, [self::ACTION_INSERT, self::ACTION_UPDATE, self::ACTION_DELETE])) return [];
         return $this->_get_autofilled();
     }
     

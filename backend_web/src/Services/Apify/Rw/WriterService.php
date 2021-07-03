@@ -18,8 +18,9 @@ use App\Services\Apify\SysfieldsService;
 
 class WriterService extends AppService
 {
-    private $idContext;
-    private $sDb;
+    private const USER_UUID_KEY = "useruuid";
+    private string $idcontext;
+    private string $dbname;
 
     private $oContext;
     private $oBehav;
@@ -27,16 +28,15 @@ class WriterService extends AppService
     private $arActions;
     private $action;
 
-    public function __construct($idContext="",$sDbalias="")
+    public function __construct(string $idcontext="", string $dbnamealias="")
     {
-        //$this->logd($_POST,"write post");
-        $this->idContext = $idContext;
+        $this->idcontext = $idcontext;
 
-        $this->oContext = new ComponentContext($this->get_env("APP_CONTEXTS"),$idContext);
-        $this->sDb = $this->oContext->get_dbname($sDbalias);
-        $oDb = DbFactory::get_dbobject_by_ctx($this->oContext,$this->sDb);
+        $this->oContext = new ComponentContext($this->get_env("APP_CONTEXTS"),$idcontext);
+        $this->dbname = $this->oContext->get_dbname($dbnamealias);
+        $oDb = DbFactory::get_dbobject_by_ctx($this->oContext,$this->dbname);
         $this->oBehav = new SchemaBehaviour($oDb);
-        $this->arActions = ["insert","update","delete","deletelogic","drop","alter"];
+        $this->arActions = ["insert", "update", "delete", "deletelogic", "drop", "alter"];
     }
         
     private function _get_parsed_tosql($arParams)
@@ -67,22 +67,25 @@ class WriterService extends AppService
         return $sSQL;
     }
 
-    private function _add_sysfields(ComponentCrud $oCrud, $arParams)
+    private function _add_sysfields(ComponentCrud $oCrud, $arParams): void
     {
-        $issysfields = $arParams["autosysfields"] ?? 0;
-        if($issysfields){
-            $useruuid = $arParams["useruuid"];
-            $sysfields = (new SysfieldsService($this->idContext, $this->sDb, $this->action, $useruuid))->get();
-//$this->logd($sysfields,"_add_sysfields $this->action");
-            foreach ($sysfields as $sysfield=>$value)
-            {
-                if(in_array($this->action,["update","deletelogic"])) $oCrud->add_update_fv($sysfield, $value);
-                if($this->action=="insert") $oCrud->add_insert_fv($sysfield, $value);
-            }
+        if(!$table = $arParams["table"]) return;
+        if(!($arParams["autosysfields"] ?? false)) return;
+
+        $sysfields = (
+            new SysfieldsService($table, $this->idcontext, $this->dbname, $this->action, $arParams[self::USER_UUID_KEY])
+        )->get();
+
+        foreach ($sysfields as $sysfield=>$value)
+        {
+            if(in_array($this->action, ["update", "deletelogic"]))
+                $oCrud->add_update_fv($sysfield, $value);
+            if($this->action==="insert")
+                $oCrud->add_insert_fv($sysfield, $value);
         }
     }
 
-    private function _unset_sysfields(&$arParams,$sAction)
+    private function _unset_sysfields(&$arParams, $sAction)
     {
         $issysfields = $arParams["autosysfields"] ?? 0;
         if($issysfields)
@@ -109,7 +112,6 @@ class WriterService extends AppService
 
     private function _get_insert_sql($arParams)
     {
-//$this->logd($arParams,"_get_insert_sql.arparam");
         if(!isset($arParams["table"])) return $this->add_error("_get_insert_sql no table");
         if(!isset($arParams["fields"])) return $this->add_error("_get_insert_sql no fields");
 

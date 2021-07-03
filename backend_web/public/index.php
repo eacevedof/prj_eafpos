@@ -52,6 +52,7 @@ try {
 }
 catch (\Exception $ex)
 {
+    lg($ex->getMessage(),"main-error","error");
     http_response_code(500);
     $response = [
         "status" => false,

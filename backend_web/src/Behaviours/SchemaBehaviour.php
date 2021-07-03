@@ -65,7 +65,7 @@ final class SchemaBehaviour extends AppModel
         return $arRows;
     }
     
-    public function get_table(strint $sTable, string $sDb=""): array
+    public function get_table(string $sTable, string $sDb=""): array
     {
         $sSQL = $this->oQServ->get_tables($sDb,$sTable);
         if($arRows = $this->get_cached($sSQL)) return $arRows;
