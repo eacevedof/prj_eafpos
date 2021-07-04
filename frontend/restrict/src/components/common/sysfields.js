@@ -27,11 +27,8 @@ function Sysfields({formdata}){
     if(formdata.delete_date) set_isdeleted(true)
     set_sysfields({...formdata, insert_alias, update_alias, delete_name})
   }, [
-      formmini.insert_user,
     formmini.insert_date,
-    formmini.update_user,
     formmini.update_date,
-    formmini.delete_user,
     formmini.delete_date
   ])
 
@@ -41,11 +38,8 @@ function Sysfields({formdata}){
     return () => console.log("sysfields.unmount")
 
   },[
-    formmini.insert_user,
     formmini.insert_date,
-    formmini.update_user,
     formmini.update_date,
-    formmini.delete_user,
     formmini.delete_date
   ])
 
