@@ -20,9 +20,9 @@ function Sysfields({formdata}){
   const [isdeleted, set_isdeleted] = useState(false)
 
   const async_onload = useCallback(async () => {
-    const insert_alias = await async_get_useralias(formdata.insert_user)
-    const update_alias = await async_get_useralias(formdata.update_user)
-    const delete_name = await async_get_useralias(formdata.delete_user)
+    const insert_alias = await async_get_useralias(formmini.insert_user)
+    const update_alias = await async_get_useralias(formmini.update_user)
+    const delete_name = await async_get_useralias(formmini.delete_user)
     
     if(formdata.delete_date) set_isdeleted(true)
     set_sysfields({...formdata, insert_alias, update_alias, delete_name})
@@ -33,7 +33,6 @@ function Sysfields({formdata}){
   ])
 
   useEffect(()=>{
-    
     async_onload()
     return () => console.log("sysfields.unmount")
 
@@ -69,7 +68,6 @@ function Sysfields({formdata}){
       }
     </>
   )
-
 }
 
 export default Sysfields;
