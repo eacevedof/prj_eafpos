@@ -43,7 +43,7 @@ function ActionIndex(){
     set_issubmitting(false)
     set_result(r.result)
     set_foundrows(r.foundrows)
-  },[txtsearch])
+  },[txtsearch, page])
 
   const async_onload = async () => {
     console.log("product.index.async_onload")
