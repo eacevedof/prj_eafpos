@@ -14,7 +14,7 @@ use App\Components\Encrypt\EncryptComponent;
 
 final class EncryptsService 
 {
-      public function get_rules(): array
+    public function get_rules(): array
     {
         //get alphabet
         //get steps
@@ -29,12 +29,16 @@ final class EncryptsService
     {
         $STEPS = 10;
         $MENSAJE_ORIG = "Hola MunDO cruel";
-        $MENSAJE_ORIG = "Hola ";
-        $MENSAJE_ORIG = "A x";
+        //$MENSAJE_ORIG = "Hola ";
+        //$MENSAJE_ORIG = "A x";
+        //$MENSAJE_ORIG = "Hola Mundo";
+        //$MENSAJE_ORIG = " ";
 
         echo $MENSAJE_ORIG;
         echo "\n<br/>";
-        $o = new EncryptComponent();
+        $alphabet = EncryptComponent::ALPHABET;
+        shuffle($alphabet);
+        $o = new EncryptComponent($alphabet);
         $msg = $o->get_encrypted($MENSAJE_ORIG, $STEPS);
         print_r($msg);
         echo "\n<br/>";

@@ -3,14 +3,14 @@ namespace App\Components\Encrypt;
 
 final class EncryptComponent
 {
-    private const STEPS_MIN = 10;
+    private const STEPS_MIN = 5;
     private const STEPS_MAX= 26;
 
-    private const ALPHABET = [
+    public const ALPHABET = [
         "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
         "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
         "0","1","2","3","4","5","6","7","8","9",
-        " ",".", ",", ";", "%", "_", "-"
+        " ",".", ",", ";", "%", "_", "-",">","<","=","(",")","[","]","'","\""
     ];
 
     private array $alphabet = [];
@@ -19,17 +19,6 @@ final class EncryptComponent
     {
         $this->alphabet = $alphabet;
         if(!$alphabet) $this->alphabet = self::ALPHABET;
-    }
-
-    private function get_rnd_alphabet(): string
-    {
-        //strcmp($var1, $var2)
-    }
-
-    public function get_rules(): array
-    {
-        //get alphabet
-        //get steps
     }
 
     private function _get_pair(string $char, int $steps): string
@@ -43,13 +32,12 @@ final class EncryptComponent
         }
 
         $mod = $total % $ilen;
-        //$final = $poschar + $mod;
         return $alphabet[$mod];
-        //return $alphabet[$final];
     }
 
     public function get_encrypted(string $string, int $steps): string
     {
+        if($string === "") return $string;
         if($steps>self::STEPS_MAX || $steps<self::STEPS_MIN) {
             throw Exception("steps {$steps} is not allowed.");
         }
@@ -72,13 +60,15 @@ final class EncryptComponent
             return $alphabet[$total];
         }
 
-        $final = abs($total) % $ilen;
-        //$final = $poschar - $final;
+        $final = $steps % $ilen;
+        $final = $poschar - $final;
+        if($final<0) $final = $ilen + $final;
         return $alphabet[$final];
     }
 
     public function get_decrypted(string $string, int $steps): string
     {
+        if($string === "") return $string;
         if($steps>self::STEPS_MAX || $steps<self::STEPS_MIN) {
             throw Exception("steps {$steps} is not allowed.");
         }
