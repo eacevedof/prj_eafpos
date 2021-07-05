@@ -38,12 +38,11 @@ final class EncryptComponent
 
         $ilen = count($alphabet);
         $poschar = array_search($char, $alphabet);
-        if($steps < $ilen) {
-            $final = $poschar + $steps;
-            return $alphabet[$final];
+        if($total = ($poschar+$steps) < $ilen) {
+            return $alphabet[$total];
         }
 
-        $final = $steps % $ilen;
+        $final = $total % $ilen;
         $final = $poschar + $final;
         return $alphabet[$final];
     }
@@ -54,12 +53,11 @@ final class EncryptComponent
 
         $ilen = count($alphabet);
         $poschar = array_search($char, $alphabet);
-        if($steps < $ilen) {
-            $final = $poschar - $steps;
-            return $alphabet[$final];
+        if($total = ($poschar-$steps) > 0) {
+            return $alphabet[$total];
         }
 
-        $final = $steps % $ilen;
+        $final = $total % $ilen;
         $final = $poschar - $final;
         return $alphabet[$final];
     }
