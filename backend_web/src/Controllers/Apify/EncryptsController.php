@@ -9,10 +9,8 @@
  */
 namespace App\Controllers\Apify;
 
-use App\Services\Apify\ContextService;
-use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
-use App\Services\Apify\DbsService;
+use App\Services\Apify\EncryptsService;
 
 final class EncryptsController extends AppController
 {
@@ -28,6 +26,9 @@ final class EncryptsController extends AppController
      */
     public function index(): void
     {
+        $service = new EncryptsService();
+        $service->test();
+        die;
         $oJson = new HelperJson();
 
 

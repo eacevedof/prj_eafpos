@@ -10,6 +10,7 @@
 namespace App\Services\Apify;
 
 use App\Factories\RedisFactory;
+use App\Components\Encrypt\EncryptComponent;
 
 final class EncryptsService 
 {
@@ -37,6 +38,16 @@ final class EncryptsService
     public function get_decrypted(array $post): array
     {
 
+    }
+
+    public function test()
+    {
+        $STEPS = 18;
+        $o = new EncryptComponent();
+        $msg = $o->get_encrypted("Hola MunDO cruel", $STEPS);
+        print_r($msg);
+        $msg = $o->get_decrypted($msg, $STEPS);
+        print_r($msg);
     }
 
 }//EncryptsService

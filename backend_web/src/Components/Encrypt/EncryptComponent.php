@@ -1,5 +1,5 @@
 <?php
-use App\Components\Encrypt;
+namespace App\Components\Encrypt;
 
 final class EncryptComponent
 {
