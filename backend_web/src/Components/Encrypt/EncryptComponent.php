@@ -72,7 +72,7 @@ final class EncryptComponent
             return $alphabet[$total];
         }
 
-        $final = $total % $ilen;
+        $final = abs($total) % $ilen;
         //$final = $poschar - $final;
         return $alphabet[$final];
     }
