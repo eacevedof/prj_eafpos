@@ -38,13 +38,28 @@ final class EncryptComponent
 
         $ilen = count($alphabet);
         $poschar = array_search($char, $alphabet);
-        if($total = ($poschar+$steps) < $ilen) {
+        if(($total = $poschar+$steps) < $ilen) {
             return $alphabet[$total];
         }
 
-        $final = $total % $ilen;
-        $final = $poschar + $final;
-        return $alphabet[$final];
+        $mod = $total % $ilen;
+        //$final = $poschar + $mod;
+        return $alphabet[$mod];
+        //return $alphabet[$final];
+    }
+
+    public function get_encrypted(string $string, int $steps): string
+    {
+        if($steps>self::STEPS_MAX || $steps<self::STEPS_MIN) {
+            throw Exception("steps {$steps} is not allowed.");
+        }
+
+        $chars = str_split($string);
+        $result = [];
+        foreach ($chars as $char)
+            $result[] = $this->_get_pair($char, $steps);
+
+        return implode("", $result);
     }
 
     private function _get_pair_reverse(string $char, int $steps): string
@@ -53,12 +68,12 @@ final class EncryptComponent
 
         $ilen = count($alphabet);
         $poschar = array_search($char, $alphabet);
-        if($total = ($poschar-$steps) > 0) {
+        if(($total = $poschar-$steps) > 0) {
             return $alphabet[$total];
         }
 
         $final = $total % $ilen;
-        $final = $poschar - $final;
+        //$final = $poschar - $final;
         return $alphabet[$final];
     }
 
@@ -72,20 +87,6 @@ final class EncryptComponent
         $result = [];
         foreach ($chars as $char)
             $result[] = $this->_get_pair_reverse($char, $steps);
-
-        return implode("", $result);
-    }
-
-    public function get_encrypted(string $string, int $steps): string
-    {
-        if($steps>self::STEPS_MAX || $steps<self::STEPS_MIN) {
-            throw Exception("steps {$steps} is not allowed.");
-        }
-
-        $chars = str_split($string);
-        $result = [];
-        foreach ($chars as $char)
-            $result[] = $this->_get_pair($char, $steps);
 
         return implode("", $result);
     }

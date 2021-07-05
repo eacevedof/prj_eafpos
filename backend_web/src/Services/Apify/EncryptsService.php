@@ -43,9 +43,13 @@ final class EncryptsService
     public function test()
     {
         $STEPS = 18;
+        $MENSAJE_ORIG = "Hola MunDO cruel";
+        echo $MENSAJE_ORIG;
+        echo "\n<br/>";
         $o = new EncryptComponent();
-        $msg = $o->get_encrypted("Hola MunDO cruel", $STEPS);
+        $msg = $o->get_encrypted($MENSAJE_ORIG, $STEPS);
         print_r($msg);
+        echo "\n<br/>";
         $msg = $o->get_decrypted($msg, $STEPS);
         print_r($msg);
     }
