@@ -14,22 +14,7 @@ use App\Components\Encrypt\EncryptComponent;
 
 final class EncryptsService 
 {
-    private array $alphabet = [
-        "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","x","y","z",
-        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","X","Y","Z",
-        "0","1","2","3","4","5","6","7","8","9"
-    ];
-
-    private array $numbers = [
-
-    ];
-
-    private function get_rnd_alphabet(): string
-    {
-
-    }
-
-    public function get_rules(): array
+      public function get_rules(): array
     {
         //get alphabet
         //get steps
@@ -42,8 +27,11 @@ final class EncryptsService
 
     public function test()
     {
-        $STEPS = 18;
+        $STEPS = 10;
         $MENSAJE_ORIG = "Hola MunDO cruel";
+        $MENSAJE_ORIG = "Hola ";
+        $MENSAJE_ORIG = "A x";
+
         echo $MENSAJE_ORIG;
         echo "\n<br/>";
         $o = new EncryptComponent();
