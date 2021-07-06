@@ -49,6 +49,7 @@ const Apiauth = {
       if(is_undefined(response.data.data.isvalid))
         throw new Error("Wrong data received from server. Token validation")
 
+
       return response.data.data.isvalid
     } 
     catch (e) {

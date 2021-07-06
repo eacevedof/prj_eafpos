@@ -34,14 +34,14 @@ final class EncryptsService
             "key" => $key,
         ];
 
-        RedisFactory::get()->set("encrypt-$key",json_encode($encrypt));
+        RedisFactory::get()->set("encrypt-$key",json_encode($encrypt),60);
         return $encrypt;
     }
 
     public function get_decrypted(array $post): array
     {
         if(!$enckey = $post["apify_enckey"]) throw new Exception("missing apify_enckey");
-        $json = RedisFactory::get()->get_($enckey);
+        $json = RedisFactory::get()->get_("encrypt-$enckey");
         $encrypt = json_decode($json, 1);
         list($alphabet, $steps, $key) = $encrypt;
 

@@ -1,6 +1,7 @@
 import {APIFY_BASEURL, APIFY_CONTEXT, APIFY_SCHEMA} from "../config/constants"
 import axios from "axios"
 import db from "helpers/localdb"
+import auth from "providers/apiauth"
 import {is_undefined, get_error} from "../helpers/functions"
 
 const get_code_cache = () => db.select("session_user")?.code_cache ?? ""
@@ -38,6 +39,9 @@ const Apidb = {
       const objform = objselect.get_query()
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
+
+      const encrypt = await auth.async_get_encrypt()
+      console.log("ENCRYPT", encrypt)
       
       console.log("apidb.async_get_list",url)
       const response = await axios.post(url, objform)

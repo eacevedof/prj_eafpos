@@ -51,9 +51,10 @@ final class RedisComponent
         self::$redis->set($this->key, $this->value);
     }
 
-    public function set(string $key, string $value): void
+    public function set(string $key, string $value, float $expire=300): void
     {
         self::$redis->set($key, $value);
+        self::$redis->expire($key, $expire);
     }
 
     public function get_(string $key)
