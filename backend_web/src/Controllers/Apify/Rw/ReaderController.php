@@ -12,6 +12,7 @@ namespace App\Controllers\Apify\Rw;
 use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\Rw\ReaderService;
+use App\Factories\EncryptFactory;
 
 final class ReaderController extends AppController
 {
@@ -31,7 +32,8 @@ final class ReaderController extends AppController
     {
         $idContext = $this->get_get("context");
         $sDbalias = $this->get_get("schemainfo");
-        $arParts = $this->get_post("queryparts");
+        //$arParts = $this->get_post("queryparts");
+        $arParts = EncryptFactory::get()->get_decrypted($this->get_post());
         
         $oServ = new ReaderService($idContext, $sDbalias);
         $arJson = $oServ->get_read($arParts);

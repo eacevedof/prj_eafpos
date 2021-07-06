@@ -12,6 +12,7 @@ namespace App\Controllers\Apify\Rw;
 use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\Rw\WriterService;
+use App\Factories\EncryptFactory;
 
 final class WriterController extends AppController
 {
@@ -30,7 +31,9 @@ final class WriterController extends AppController
     {
         $idcontext = $this->get_get("context");
         $dbalias = $this->get_get("schemainfo");
-        $arParts = $this->get_post("queryparts");
+        //$arParts = $this->get_post("queryparts");
+        $arParts = EncryptFactory::get()->get_decrypted($this->get_post());
+
         $action = $this->get_post("action");
         $arParts["useruuid"] = $this->get_post("useruuid");
         $table = $arParts["table"];
