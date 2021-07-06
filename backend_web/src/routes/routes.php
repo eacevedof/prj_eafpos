@@ -10,7 +10,7 @@ return [
     ["url"=>"/apify/contexts/{id}","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
     
     ["url"=>"/apify/dbs/{id_context}","controller"=>"App\Controllers\Apify\DbsController","method"=>"index"],//schemas
-    ["url"=>"/apify/encrypt","controller"=>"App\Controllers\Apify\EncryptsController","method"=>"index"],
+    ["url"=>"/apify/encrypt","controller"=>"App\Controllers\Apify\Security\EncryptsController","method"=>"index"],
     
     ["url"=>"/apify/tables/{id_context}/{schemainfo}","controller"=>"App\Controllers\Apify\TablesController","method"=>"index"],
     //["url"=>"/apify/tables/{id_context}","controller"=>"App\Controllers\Apify\TablesController","method"=>"index"], standby pq me obliga a recorre todas las bds

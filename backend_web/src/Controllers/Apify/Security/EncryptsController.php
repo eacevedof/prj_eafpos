@@ -7,7 +7,7 @@
  * @date 27-06-2019 18:17 SPAIN
  * @observations
  */
-namespace App\Controllers\Apify;
+namespace App\Controllers\Apify\Security;
 
 use App\Controllers\AppController;
 use App\Factories\EncryptFactory;
