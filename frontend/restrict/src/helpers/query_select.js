@@ -120,47 +120,25 @@ export default () =>{
     },
 
     get_query(){
-      const oform = new FormData()
 
-      if(this.comment) oform.append("queryparts[comment]", this.comment)
-      oform.append("queryparts[cache_time]", this.cache_time)
-      //table
-      oform.append("queryparts[table]",this.table)
+      const objdata = {}
+      if(this.comment) objdata["queryparts[comment]"] = this.comment
+      objdata["queryparts[cache_time]"] = this.cache_time
+      objdata["queryparts[table]"] = this.table
+      if(this.foundrows) objdata["queryparts[foundrows]"] = this.foundrows
+      if(this.distinct) objdata["queryparts[distinct]"] = this.distinct
 
-      if(this.foundrows)
-        oform.append("queryparts[foundrows]",this.foundrows)
-
-      if(this.distinct)
-        oform.append("queryparts[distinct]",this.distinct)
-
-      this.fields.forEach((field,i) => {
-        oform.append(`queryparts[fields][${i}]`,field)
-      });
-
-      this.joins.forEach((join,i) => {
-        oform.append(`queryparts[joins][${i}]`,join)
-      });
-
-      this.where.forEach((strcond,i) => {
-        oform.append(`queryparts[where][${i}]`,strcond)
-      });
-
-      this.groupby.forEach((field,i) => {
-        oform.append(`queryparts[groupby][${i}]`,field)
-      });
-
-      this.having.forEach((metric,i) => {
-        oform.append(`queryparts[having][${i}]`,metric)
-      });
-
-      this.orderby.forEach((field,i) => {
-        oform.append(`queryparts[orderby][${i}]`,field)
-      });
+      this.fields.forEach((field,i) => objdata[`queryparts[fields][${i}]`] = field)
+      this.joins.forEach((join,i) => objdata[`queryparts[joins][${i}]`] = join)
+      this.where.forEach((strcond,i) => objdata[`queryparts[where][${i}]`] = strcond)
+      this.groupby.forEach((field,i) => objdata[`queryparts[groupby][${i}]`] = field)
+      this.having.forEach((metric,i) => objdata[`queryparts[having][${i}]`] = metric)
+      this.orderby.forEach((field,i) => objdata[`queryparts[orderby][${i}]`] = field)
 
       if(this.limit.perpage){
         if(this.limit.perpage!==null)
-          oform.append(`queryparts[limit][perpage]`,this.limit.perpage)
-        oform.append(`queryparts[limit][regfrom]`,this.limit.regfrom)
+          objdata[`queryparts[limit][perpage]`] = this.limit.perpage
+        objdata[`queryparts[limit][regfrom]`] = this.limit.regfrom
       }
 
       return oform

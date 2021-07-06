@@ -41,7 +41,7 @@ const Apidb = {
       const objform = objselect.get_query()
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
-      debugger
+      //debugger
       const encrypt = await auth.async_get_encrypt()
 
       //console.log("apidb.async_get_list",url)
