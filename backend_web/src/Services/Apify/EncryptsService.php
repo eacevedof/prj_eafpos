@@ -16,6 +16,18 @@ final class EncryptsService
 {
     public function get_rules(): array
     {
+        $redis = RedisFactory::get();
+        $alphabet = EncryptComponent::ALPHABET;
+        shuffle($alphabet);
+        $ilen = count($alphabet)*(75/100);
+        $imax = ceil($ilen);
+        $ilen = count($alphabet)*(15/100);
+        $imax = ceil($ilen);
+
+        $encrypt = [
+            "alphabet" => $alphabet,
+            ""
+        ];
         //get alphabet
         //get steps
     }

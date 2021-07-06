@@ -41,7 +41,7 @@ final class RedisComponent
         return $this;
     }
 
-    public function get(): string
+    public function get_bykey(): string
     {
         return self::$redis->get($this->key);
     }
@@ -49,6 +49,16 @@ final class RedisComponent
     public function save(): void
     {
         self::$redis->set($this->key, $this->value);
+    }
+
+    public function set(string $key, string $value): void
+    {
+        self::$redis->set($key, $value);
+    }
+
+    public function get_(string $key)
+    {
+        return self::$redis->get($key);
     }
 
     public function save_query(): RedisComponent

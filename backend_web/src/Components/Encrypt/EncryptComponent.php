@@ -36,12 +36,22 @@ final class EncryptComponent
         return $alphabet[$mod];
     }
 
+    private function _limit_exception(int $steps): void
+    {
+        //return;
+        $ilen = count($this->alphabet);
+        if($steps>self::STEPS_MAX || $steps<self::STEPS_MIN ||
+            ($steps % $ilen === 0 && $steps>=$ilen)
+        ) {
+            throw Exception("steps {$steps} is not allowed.");
+        }
+    }
+
+
     public function get_encrypted(string $string, int $steps): string
     {
         if($string === "") return $string;
-        if($steps>self::STEPS_MAX || $steps<self::STEPS_MIN) {
-            throw Exception("steps {$steps} is not allowed.");
-        }
+        $this->_limit_exception($steps);
 
         $chars = str_split($string);
         $result = [];
@@ -70,9 +80,7 @@ final class EncryptComponent
     public function get_decrypted(string $string, int $steps): string
     {
         if($string === "") return $string;
-        if($steps>self::STEPS_MAX || $steps<self::STEPS_MIN) {
-            throw Exception("steps {$steps} is not allowed.");
-        }
+        $this->_limit_exception($steps);
         $chars = str_split($string);
 
         $result = [];
