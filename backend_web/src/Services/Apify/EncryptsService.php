@@ -16,25 +16,45 @@ final class EncryptsService
 {
     public function get_rules(): array
     {
-        $redis = RedisFactory::get();
         $alphabet = EncryptComponent::ALPHABET;
         shuffle($alphabet);
+        $ilen = count($alphabet)*(15/100);
+        $imin = ceil($ilen);
+
         $ilen = count($alphabet)*(75/100);
         $imax = ceil($ilen);
-        $ilen = count($alphabet)*(15/100);
-        $imax = ceil($ilen);
 
+        $steps = random_int($imin, $imax);
+
+        $key = uniqid();
         $encrypt = [
             "alphabet" => $alphabet,
-            ""
+            "steps" => $steps,
+            "key" => $key,
         ];
-        //get alphabet
-        //get steps
+
+        RedisFactory::get()->set("encrypt-$key",json_encode($encrypt));
+        return $encrypt;
     }
 
     public function get_decrypted(array $post): array
     {
+        $enckey = $post["apify_enckey"];
 
+        $json = RedisFactory::get()->get_($enckey);
+        $encrypt = json_decode($json, 1);
+        list($alphabet, $steps, $key) = $encrypt;
+        $encrypt = new EncryptComponent($alphabet);
+        $queryparts = $post["queryparts"];
+        $decrypted = [];
+        foreach ($queryparts as $key => $value)
+        {
+            $key = $encrypt->get_decrypted($key, $steps);
+            $value = $encrypt->get_decrypted($value, $steps);
+            $decrypted[$key] = $value;
+        }
+
+        return $decrypted;
     }
 
     public function test()
