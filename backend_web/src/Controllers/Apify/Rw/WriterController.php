@@ -32,7 +32,8 @@ final class WriterController extends AppController
         $idcontext = $this->get_get("context");
         $dbalias = $this->get_get("schemainfo");
         //$arParts = $this->get_post("queryparts");
-        $arParts = EncryptFactory::get()->get_decrypted($this->get_post());
+        $post = $this->get_post();
+        $arParts = EncryptFactory::get()->get_decrypted($post);
 
         $action = $this->get_post("action");
         $arParts["useruuid"] = $this->get_post("useruuid");

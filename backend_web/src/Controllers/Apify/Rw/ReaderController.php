@@ -33,6 +33,7 @@ final class ReaderController extends AppController
         $idContext = $this->get_get("context");
         $sDbalias = $this->get_get("schemainfo");
         //$arParts = $this->get_post("queryparts");
+        $post = $this->get_post();
         $arParts = EncryptFactory::get()->get_decrypted($this->get_post());
         
         $oServ = new ReaderService($idContext, $sDbalias);

@@ -151,7 +151,7 @@ abstract class AppController
      */
     protected function get_post($sKey=NULL)
     {
-        if(!$sKey) return $_POST;
+        if(!$sKey) return $_POST ?? [];
         return (isset($_POST[$sKey]) ? $_POST[$sKey] : "");
     }
 
@@ -160,7 +160,7 @@ abstract class AppController
      */
     protected function get_files($sKey=NULL)
     {
-        if(!$sKey) return $_FILES;
+        if(!$sKey) return $_FILES ?? [];
         return (isset($_FILES[$sKey])?$_FILES[$sKey]:"");
     }
     
@@ -171,7 +171,7 @@ abstract class AppController
      */
     protected function get_get($sKey=NULL)
     {
-        if(!$sKey) return $_GET;
+        if(!$sKey) return $_GET ?? [];
         return (isset($_GET[$sKey])?$_GET[$sKey]:"");
     }
     
