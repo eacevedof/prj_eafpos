@@ -14,7 +14,7 @@ use App\Components\Encrypt\EncryptComponent;
 
 final class EncryptsService 
 {
-    public function get_rules(): array
+    public function get_random_rule(): array
     {
         $alphabet = EncryptComponent::ALPHABET;
         shuffle($alphabet);

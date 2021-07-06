@@ -10,14 +10,14 @@
 namespace App\Controllers\Apify;
 
 use App\Controllers\AppController;
-use App\Services\Apify\EncryptsService;
+use App\Factories\EncryptFactory;
+use App\Services\Apify\Security\LoginService;
+use TheFramework\Helpers\HelperJson;
 
 final class EncryptsController extends AppController
 {
-
     public function __construct()
     {
-        //captura trazas de la petición en los logs
         parent::__construct();
     }
     
@@ -26,32 +26,17 @@ final class EncryptsController extends AppController
      */
     public function index(): void
     {
-        $service = new EncryptsService();
-        $service->test();
-        die;
+        $isvalid = (new LoginService($this->get_domain()))->is_valid($this->get_post(self::KEY_APIFYUSERTOKEN));
         $oJson = new HelperJson();
 
-
-
-
-        $idContext = $this->get_get("id_context");
-
-        $oServ = new ContextService();
-        if(!$oServ->is_context($idContext))
-            $oJson->set_code(HelperJson::CODE_NOT_FOUND)
-                ->set_error("context does not exist")
-                ->show(1);
-
-        $oServ = new DbsService($idContext);
-        $arJson = $oServ->get_all();
-
-        if($oServ->is_error())
+        if(!$isvalid)
             $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)
-                ->set_error($oServ->get_errors())
-                ->set_message("database error")
+                ->set_error(["wrong token"])
+                ->set_message("wrong token")
                 ->show(1);
 
-        $oJson->set_payload($arJson)->show();
-    }//index
+        $rule = EncryptFactory::get()->get_random_rule();
+        $oJson->set_payload($rule)->show();
+    }
 
 }//Encrypt
