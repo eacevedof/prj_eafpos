@@ -57,6 +57,21 @@ const Apiauth = {
     }    
   },
 
+  async_get_encrypt: async () => {
+    const apifytoken = db.select("token_apify")
+    const url = `${APIFY_BASEURL}/apify/security/encrypt`
+    try {
+      const data = new FormData()
+      data.append("apify-usertoken", apifytoken)
+      const response = await axios.post(url, data)
+      console.log("async-get-encrypt", response.data.data)
+      return response.data.data
+    }
+    catch (e) {
+      return get_error(e)
+    }
+  },
+
 }//Apiauth
 
 export default Apiauth;
