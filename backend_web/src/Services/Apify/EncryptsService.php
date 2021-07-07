@@ -11,7 +11,7 @@ namespace App\Services\Apify;
 
 use App\Factories\RedisFactory;
 use App\Components\Encrypt\EncryptComponent;
-use PHPUnit\Runner\Exception;
+use \Exception;
 
 final class EncryptsService 
 {
@@ -45,7 +45,7 @@ final class EncryptsService
         if(!$enckey = $post[self::APIFY_ENCKEY]) throw new Exception("missing apify_enckey");
         $json = RedisFactory::get()->get_("encrypt-$enckey");
         $encrypt = json_decode($json, 1);
-        list($alphabet, $steps, $key) = $encrypt;
+        extract($encrypt);
 
         $encrypt = new EncryptComponent($alphabet);
         if(!$queryparts = $post["queryparts"]) throw new Exception("missing queryparts");
@@ -54,8 +54,18 @@ final class EncryptsService
         foreach ($queryparts as $key => $value)
         {
             $key = $encrypt->get_decrypted($key, $steps);
-            $value = $encrypt->get_decrypted($value, $steps);
-            $decrypted[$key] = $value;
+            if(is_string($value)){
+                $value = $encrypt->get_decrypted($value, $steps);
+                $decrypted[$key] = $value;
+            }
+            elseif (is_array($value)) {
+                foreach ($value as $k => $v)
+                {
+                    $k = $encrypt->get_decrypted($k, $steps);
+                    $v = $encrypt->get_decrypted($v, $steps);
+                    $decrypted[$key][$k] = $v;
+                }
+            }
         }
 
         return $decrypted;

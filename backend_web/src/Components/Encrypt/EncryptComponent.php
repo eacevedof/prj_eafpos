@@ -1,5 +1,6 @@
 <?php
 namespace App\Components\Encrypt;
+use \Exception;
 
 final class EncryptComponent
 {
@@ -38,7 +39,7 @@ final class EncryptComponent
 
     private function _limit_exception(int $steps): void
     {
-        //return;
+        return;
         $ilen = count($this->alphabet);
         if($steps>self::STEPS_MAX || $steps<self::STEPS_MIN ||
             ($steps % $ilen === 0 && $steps>=$ilen)
