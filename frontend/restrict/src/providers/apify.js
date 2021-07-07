@@ -1,7 +1,7 @@
 import {APIFY_BASEURL, APIFY_CONTEXT, APIFY_SCHEMA} from "../config/constants"
 import axios from "axios"
 import db from "helpers/localdb"
-import auth from "providers/apiauth"
+import auth from "providers/apifyauth"
 import {is_undefined, get_error} from "../helpers/functions"
 import get_encrypted, {get_select_form}  from "helpers/encrypt";
 

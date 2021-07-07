@@ -3,7 +3,7 @@ import axios from "axios"
 import {is_undefined, get_error} from "../helpers/functions"
 import db from "../helpers/localdb"
 
-const Apiauth = {
+const Apifyauth = {
 
   async_get_apifytoken: async (objlogin)=>{
 
@@ -73,6 +73,6 @@ const Apiauth = {
     }
   },
 
-}//Apiauth
+}//Apifyauth
 
-export default Apiauth;
+export default Apifyauth;

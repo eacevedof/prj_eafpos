@@ -1,4 +1,4 @@
-import apiauth from "providers/apiauth"
+import apiauth from "providers/apifyauth"
 import db from "helpers/localdb"
 import {is_defined} from "helpers/functions"
 import {async_in_session} from "modules/pos-login/async/async_repository"
