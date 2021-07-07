@@ -18,8 +18,57 @@ const get_encrypted = alphabet => steps => string => {
   return result.join("")
 }
 
-const get_form_select = (query, fnencrypt) => {
+const get_select_form = (query, fnencrypt) => {
+  let key = ""
+  let value = ""
 
+  const form = new FormData()
+
+  key = fnencrypt("cache_time")
+  value = fnencrypt(query["cache_time"])
+  form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("table")
+  value = fnencrypt(query["table"])
+  form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("foundrows")
+  value = fnencrypt(query["foundrows"])
+  form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("distinct")
+  value = fnencrypt(query["distinct"])
+  form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("fields")
+  query.fields.forEach((field,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
+
+  key = fnencrypt("joins")
+  query.joins.forEach((join,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(join)))
+
+  key = fnencrypt("where")
+  query.where.forEach((strcond,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
+
+  key = fnencrypt("where")
+  query.groupby.forEach((field,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
+
+  key = fnencrypt("having")
+  query.having.forEach((metric,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(metric)))
+
+  key = fnencrypt("orderby")
+  query.orderby.forEach((field,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
+
+  if(query.limit.perpage) {
+    key = fnencrypt("limit")
+    let key2 = fnencrypt("perpage")
+    if(query.limit.perpage !== null) {
+      form.append(`queryparts[${key}][${key2}]`, fnencrypt(query.limit.perpage))
+    }
+    key2 = fnencrypt("regfrom")
+    form.append(`queryparts[${key}][${key2}]`, fnencrypt(query.limit.regfrom))
+  }
+
+  return form
 }
 
 export default get_encrypted

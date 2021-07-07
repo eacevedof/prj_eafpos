@@ -15,6 +15,8 @@ use PHPUnit\Runner\Exception;
 
 final class EncryptsService 
 {
+    private const APIFY_ENCKEY = "apify-enckey";
+
     public function get_random_rule(): array
     {
         $alphabet = EncryptComponent::ALPHABET;
@@ -40,7 +42,7 @@ final class EncryptsService
 
     public function get_decrypted(array $post): array
     {
-        if(!$enckey = $post["apify_enckey"]) throw new Exception("missing apify_enckey");
+        if(!$enckey = $post[self::APIFY_ENCKEY]) throw new Exception("missing apify_enckey");
         $json = RedisFactory::get()->get_("encrypt-$enckey");
         $encrypt = json_decode($json, 1);
         list($alphabet, $steps, $key) = $encrypt;
@@ -57,27 +59,6 @@ final class EncryptsService
         }
 
         return $decrypted;
-    }
-
-    public function test()
-    {
-        $STEPS = 10;
-        $MENSAJE_ORIG = "Hola MunDO cruel";
-        //$MENSAJE_ORIG = "Hola ";
-        //$MENSAJE_ORIG = "A x";
-        //$MENSAJE_ORIG = "Hola Mundo";
-        //$MENSAJE_ORIG = " ";
-
-        echo $MENSAJE_ORIG;
-        echo "\n<br/>";
-        $alphabet = EncryptComponent::ALPHABET;
-        shuffle($alphabet);
-        $o = new EncryptComponent($alphabet);
-        $msg = $o->get_encrypted($MENSAJE_ORIG, $STEPS);
-        print_r($msg);
-        echo "\n<br/>";
-        $msg = $o->get_decrypted($msg, $STEPS);
-        print_r($msg);
     }
 
 }//EncryptsService

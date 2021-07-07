@@ -2,13 +2,12 @@ import {APIFY_BASEURL, APIFY_CONTEXT, APIFY_SCHEMA} from "../config/constants"
 import axios from "axios"
 import db from "helpers/localdb"
 import auth from "providers/apiauth"
-import encrypt from "helpers/encrypt"
-
 import {is_undefined, get_error} from "../helpers/functions"
+import get_encrypted, {get_select_form}  from "helpers/encrypt";
 
 const get_code_cache = () => db.select("session_user")?.code_cache ?? ""
 
-const Apidb = {
+const Apify = {
   
   async_get_fields: async (table) =>{
     const apifytoken = db.select("token_apify")
@@ -37,16 +36,17 @@ const Apidb = {
 
     //hay que enviar header: apify-auth: token
     try {
-   
-      const objform = objselect.get_query()
-      objform.append("apify-usertoken", apifytoken)
-      objform.append("useruuid", get_code_cache())
-      //debugger
-      const encrypt = await auth.async_get_encrypt()
 
-      //console.log("apidb.async_get_list",url)
+      const encrypt = await auth.async_get_encrypt()
+      const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
+      const query = objselect.get_self()
+
+      const objform = get_select_form(query, fnencrypt())
+      objform.append("apify-usertoken", apifytoken)
+      objform.append("apify-enckey", encrypt.key)
+      objform.append("useruuid", get_code_cache())
+
       const response = await axios.post(url, objform)
-      //console.log("apidb.async_get_list.response",response)
 
       if(is_undefined(response.data.data))
         throw new Error("Wrong data received from server. Resultset")
@@ -142,4 +142,4 @@ const Apidb = {
 }//Apidb
 
 
-export default Apidb;
+export default Apify;
