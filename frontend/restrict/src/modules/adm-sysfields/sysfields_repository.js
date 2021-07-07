@@ -1,4 +1,4 @@
-import select from "helpers/query_select"
+import select from "helpers/query/query_select"
 import apidb from "providers/apidb"
 import {is_defined, is_undefined} from "helpers/functions"
 

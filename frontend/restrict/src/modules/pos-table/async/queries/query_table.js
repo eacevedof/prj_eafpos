@@ -1,5 +1,5 @@
 import {get_sanitized} from "helpers/functions"
-import select from "helpers/query_select";
+import select from "helpers/query/query_select"
 
 const _query = {
   table: "app_table",

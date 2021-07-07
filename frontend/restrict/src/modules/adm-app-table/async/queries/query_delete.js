@@ -1,4 +1,4 @@
-import qdelete from "helpers/query_delete"
+import qdelete from "helpers/query/query_delete"
 import {isset, is_empty} from "helpers/functions"
 
 const _TABLE = "app_table"

@@ -1,4 +1,4 @@
-import insert from "helpers/query_insert"
+import insert from "helpers/query/query_insert"
 
 const _TABLE = "app_product"
 

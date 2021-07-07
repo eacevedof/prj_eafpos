@@ -11,11 +11,15 @@ const get_pair = alphabet => char => steps => {
 }
 
 
-const get_encrypted = alphabet => string => steps => {
+const get_encrypted = alphabet => steps => string => {
   if(string==="") return string
   const chars = string.split("")
   const result = chars.map(ch => get_pair(alphabet)(ch)(steps))
   return result.join("")
+}
+
+const get_form_select = (query, fnencrypt) => {
+
 }
 
 export default get_encrypted

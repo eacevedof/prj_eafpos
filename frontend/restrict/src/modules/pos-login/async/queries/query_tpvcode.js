@@ -1,5 +1,5 @@
-import insert from "helpers/query_insert"
-import select from "helpers/query_select"
+import insert from "helpers/query/query_insert"
+import select from "helpers/query/query_select"
 import {get_sanitized} from "helpers/functions"
 import get_uuid from "helpers/random"
 

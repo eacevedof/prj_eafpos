@@ -1,4 +1,4 @@
-import deletelogic from "helpers/query_deletelogic"
+import deletelogic from "helpers/query/query_deletelogic"
 import {isset} from "helpers/functions"
 import db from "helpers/localdb"
 

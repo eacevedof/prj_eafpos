@@ -1,4 +1,4 @@
-import insert from "helpers/query_insert"
+import insert from "helpers/query/query_insert"
 import {get_keys, is_empty} from "helpers/functions"
 import db from "helpers/localdb"
 

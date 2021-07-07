@@ -119,8 +119,8 @@ export default () =>{
       return this
     },
 
-    get_query() {
-
+    get_self() {
+      return this
     },
 
     get_form(){

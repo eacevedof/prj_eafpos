@@ -1,4 +1,4 @@
-import select from "helpers/query_select"
+import select from "helpers/query/query_select"
 import {is_empty} from "helpers/functions"
 
 export const VIEWCONFIG = {
