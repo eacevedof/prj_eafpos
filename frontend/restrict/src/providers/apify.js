@@ -25,7 +25,7 @@ const Apify = {
       return fields.data.data
     }
     catch (e) {
-      console.error("ERROR: apidb.async_get_fields.url:",url,"e:",e)
+      console.error("ERROR: apify.async_get_fields.url:",url,"e:",e)
       return get_error(e)
     }    
   },
@@ -54,7 +54,7 @@ const Apify = {
       return response.data.data
     } 
     catch (e) {
-      console.error("ERROR: apidb.async_get_list.url:",url,"e:",e)
+      console.error("ERROR: apify.async_get_list.url:",url,"e:",e)
       return get_error(e)
     }
   },
@@ -69,10 +69,10 @@ const Apify = {
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
 
-      console.log("apidb.async_insert",url)
+      console.log("apify.async_insert",url)
       const response = await axios.post(url, objform)
       //pr(response,"async_insert")
-      console.log("apidb.async_insert.response",response)
+      console.log("apify.async_insert.response",response)
 
       if(is_undefined(response.data.data.lastid))
         throw new Error("Wrong data received from server. insert lastid")
@@ -80,7 +80,7 @@ const Apify = {
       return response.data.data.lastid
     } 
     catch (e) {
-      console.error("ERROR: apidb.async_insert.url:",url,"e:",e)
+      console.error("ERROR: apify.async_insert.url:",url,"e:",e)
       return get_error(e)
     }
   },
@@ -96,10 +96,10 @@ const Apify = {
       objform.append("useruuid", get_code_cache())
       //objform.append("apify-origindomain","*")
 
-      console.log("apidb.async_update",url)
+      console.log("apify.async_update",url)
       const response = await axios.post(url, objform)
 
-      console.log("apidb.async_update.response",response)
+      console.log("apify.async_update.response",response)
 
       if(is_undefined(response.data.data.result))
         throw new Error("Wrong data received from server. Update result")
@@ -107,7 +107,7 @@ const Apify = {
       return response.data.data.result
     } 
     catch (e) {
-      console.error("ERROR: apidb.async_update.url:",url,"e:",e)
+      console.error("ERROR: apify.async_update.url:",url,"e:",e)
       return get_error(e)
     }
   },
@@ -123,10 +123,10 @@ const Apify = {
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
       
-      console.log("apidb.async_delete",url)
+      console.log("apify.async_delete",url)
       const response = await axios.post(url, objform)
 
-      console.log("apidb.async_delete.response",response)
+      console.log("apify.async_delete.response",response)
       //devuelve el num de registros afectados
       if(is_undefined(response.data.data.result))
         throw new Error("Wrong data received from server. Delete result")
@@ -134,12 +134,12 @@ const Apify = {
       return response.data.data.result
     } 
     catch (e) {
-      console.error("ERROR: apidb.async_delete.url:",url,"e:",e)
+      console.error("ERROR: apify.async_delete.url:",url,"e:",e)
       return get_error(e)
     }
   }, //async_delete
 
-}//Apidb
+}//apify
 
 
 export default Apify;

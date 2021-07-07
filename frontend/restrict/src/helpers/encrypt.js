@@ -18,7 +18,9 @@ const get_encrypted = alphabet => steps => string => {
   return result.join("")
 }
 
-const get_select_form = (query, fnencrypt) => {
+export default get_encrypted
+
+export const get_select_form = (query, fnencrypt) => {
   let key = ""
   let value = ""
 
@@ -70,5 +72,3 @@ const get_select_form = (query, fnencrypt) => {
 
   return form
 }
-
-export default get_encrypted

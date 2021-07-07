@@ -1,5 +1,5 @@
 import select from "helpers/query/query_select"
-import apidb from "providers/apidb"
+import apify from "providers/apify"
 import {is_defined, is_undefined} from "helpers/functions"
 
 const _query = {
@@ -25,7 +25,7 @@ const async_get_useralias = async userid => {
   if(!userid || isNaN(userid) || is_undefined(userid)) return ""
 
   const query = get_objselect(userid)
-  const r = await apidb.async_get_list(query)
+  const r = await apify.async_get_list(query)
   if(is_defined(r.error)) return r.error
   if(is_defined(r.result)) return r.result[0]["nickname"]
 

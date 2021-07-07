@@ -1,6 +1,6 @@
 import { is_defined, get_pagefrom } from "helpers/functions"
 
-import apidb from "providers/apidb"
+import apify from "providers/apify"
 import apiup from "providers/apiupload"
 
 import {get_filteror} from "helpers/filter"
@@ -25,7 +25,7 @@ export const async_get_list = async (page, search="") => {
 
   const objparam = {page:{ippage,ifrom},filters:objfilter}
   const objquery = get_obj_list(objparam)
-  const r = await apidb.async_get_list(objquery)
+  const r = await apify.async_get_list(objquery)
   if(is_defined(r.error)) throw r.error
   return r
 }
@@ -34,7 +34,7 @@ export const async_get_by_id = async (id) => {
   if(!id) return []
   const objparam = {filters:{fields:[{field:"id",value:id}]}}
   const query = get_obj_entity(objparam)
-  const r = await apidb.async_get_list(query)
+  const r = await apify.async_get_list(query)
   
   if(is_defined(r.error)) throw r.error
   
@@ -48,7 +48,7 @@ export const async_insert = async (formdata) => {
   const objparam = {fields:{...formdata}}
   const objquery = get_obj_insert(objparam)
 
-  const r = await apidb.async_insert(objquery)
+  const r = await apify.async_insert(objquery)
   if(is_defined(r.error)) throw r.error
 
   return r
@@ -65,7 +65,7 @@ export const async_update = async formdata => {
   const dbfields = Object.keys(temp).map(field_name => ({field_name}))
   const objparam = {fields:temp, keys}
   const objquery = get_obj_update(objparam, dbfields)
-  const r = await apidb.async_update(objquery)
+  const r = await apify.async_update(objquery)
   
   if(is_defined(r.error)) throw r.error
   return r
@@ -75,7 +75,7 @@ export const async_delete = async (formdata)=>{
   const keys = ["id"]
   const objparam = {fields:{...formdata}, keys}
   const objquery = get_obj_delete(objparam)
-  const r = await apidb.async_delete(objquery)
+  const r = await apify.async_delete(objquery)
   if(is_defined(r.error)) throw r.error
   return r
 }
@@ -91,7 +91,7 @@ export const async_clone = async (formdata)=>{
   
   const objparam = {fields:temp}
   const objquery = get_obj_insert(objparam)
-  const r = await apidb.async_insert(objquery)
+  const r = await apify.async_insert(objquery)
 
   if(is_defined(r.error)) throw r.error
 
@@ -108,7 +108,7 @@ export const async_deletelogic = async (formdata)=>{
   const dbfields = [{field_name:"id"}]
   const objparam = {fields:objdellog, keys}
   const objquery = get_obj_deletelogic(objparam, dbfields)
-  const r = await apidb.async_update(objquery)
+  const r = await apify.async_update(objquery)
   
   if(is_defined(r.error)) throw r.error
   
@@ -123,7 +123,7 @@ export const async_get_maxuploadsize = async () => {
 export const async_multidelete = async arkeys => {
   const objparam = {key:"id", keys:arkeys}
   const objquery = get_obj_multidelete(objparam)
-  const r = await apidb.async_delete(objquery)
+  const r = await apify.async_delete(objquery)
 
   if(is_defined(r.error)) throw r.error
 
@@ -133,7 +133,7 @@ export const async_multidelete = async arkeys => {
 export const async_multideletelogic = async arkeys => {
   const objparam = {key:"id", keys:arkeys}
   const objquery = get_obj_multideletelogic(objparam)
-  const r = await apidb.async_update(objquery)
+  const r = await apify.async_update(objquery)
 
   if(is_defined(r.error)) throw r.error
 
