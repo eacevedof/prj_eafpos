@@ -61,7 +61,6 @@ final class EncryptsService
             elseif (is_array($value)) {
                 foreach ($value as $k => $v)
                 {
-                    $k = $encrypt->get_decrypted($k, $steps);
                     $v = $encrypt->get_decrypted($v, $steps);
                     $decrypted[$key][$k] = $v;
                 }
