@@ -40,6 +40,7 @@ export const get_select_form = (query, fnencrypt) => {
   form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("distinct")
+  console.log("key",key)
   value = fnencrypt(query["distinct"].toString())
   form.append(`queryparts[${key}]`, value)
 
@@ -52,7 +53,7 @@ export const get_select_form = (query, fnencrypt) => {
   key = fnencrypt("where")
   query.where.forEach((strcond,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
 
-  key = fnencrypt("where")
+  key = fnencrypt("groupby")
   query.groupby.forEach((field,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
 
   key = fnencrypt("having")
