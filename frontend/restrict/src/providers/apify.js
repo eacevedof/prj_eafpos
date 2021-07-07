@@ -2,8 +2,8 @@ import {APIFY_BASEURL, APIFY_CONTEXT, APIFY_SCHEMA} from "../config/constants"
 import axios from "axios"
 import db from "helpers/localdb"
 import auth from "providers/apifyauth"
-import {is_undefined, get_error} from "../helpers/functions"
-import get_encrypted, {get_select_form}  from "helpers/encrypt";
+import {is_undefined, get_error} from "helpers/functions"
+import get_encrypted, {get_select_form}  from "helpers/encrypt"
 
 const get_code_cache = () => db.select("session_user")?.code_cache ?? ""
 
@@ -41,7 +41,7 @@ const Apify = {
       const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
       const query = objselect.get_self()
 
-      const objform = get_select_form(query, fnencrypt())
+      const objform = get_select_form(query, fnencrypt)
       objform.append("apify-usertoken", apifytoken)
       objform.append("apify-enckey", encrypt.key)
       objform.append("useruuid", get_code_cache())

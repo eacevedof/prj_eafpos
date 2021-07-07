@@ -10,8 +10,8 @@ const get_pair = alphabet => char => steps => {
   return alphabet[mod]
 }
 
-
 const get_encrypted = alphabet => steps => string => {
+  //debugger
   if(string==="") return string
   const chars = string.split("")
   const result = chars.map(ch => get_pair(alphabet)(ch)(steps))
@@ -27,7 +27,8 @@ export const get_select_form = (query, fnencrypt) => {
   const form = new FormData()
 
   key = fnencrypt("cache_time")
-  value = fnencrypt(query["cache_time"])
+  value = fnencrypt(query["cache_time"].toString())
+
   form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("table")
@@ -35,11 +36,11 @@ export const get_select_form = (query, fnencrypt) => {
   form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("foundrows")
-  value = fnencrypt(query["foundrows"])
+  value = fnencrypt(query["foundrows"].toString())
   form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("distinct")
-  value = fnencrypt(query["distinct"])
+  value = fnencrypt(query["distinct"].toString())
   form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("fields")
@@ -64,11 +65,13 @@ export const get_select_form = (query, fnencrypt) => {
     key = fnencrypt("limit")
     let key2 = fnencrypt("perpage")
     if(query.limit.perpage !== null) {
-      form.append(`queryparts[${key}][${key2}]`, fnencrypt(query.limit.perpage))
+      form.append(`queryparts[${key}][${key2}]`, fnencrypt(query.limit.perpage.toString()))
     }
     key2 = fnencrypt("regfrom")
-    form.append(`queryparts[${key}][${key2}]`, fnencrypt(query.limit.regfrom))
+    form.append(`queryparts[${key}][${key2}]`, fnencrypt(query.limit.regfrom.toString()))
   }
 
+  console.log("key",key)
+  debugger
   return form
 }
