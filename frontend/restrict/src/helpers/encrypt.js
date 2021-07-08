@@ -1,7 +1,7 @@
-const get_pair = alphabet => char => steps => {
-  if(!alphabet.includes(char)) return char;
+const get_pair = alphabet => steps => char => {
+  const ipos = alphabet.indexOf(char)
+  if(ipos === -1) return char
   const ilen = alphabet.length;
-  const ipos = alphabet.map((ch, i) => (ch === char) ? i : null).filter(i => i !== null)[0]
   const total = ipos + steps
   if (total < ilen) {
     return alphabet[total]
@@ -13,8 +13,8 @@ const get_pair = alphabet => char => steps => {
 const get_encrypted = alphabet => steps => string => {
   //debugger
   if(string==="") return string
-  const chars = string.split("")
-  const result = chars.map(ch => get_pair(alphabet)(ch)(steps))
+  const fnmemo = get_pair(alphabet)(steps)
+  const result = string.split("").map(ch => fnmemo(ch))
   return result.join("")
 }
 
@@ -32,11 +32,9 @@ export const get_select_form = (query, fnencrypt) => {
     form.append(`queryparts[${key}]`, value)
   }
 
-  if (query.table) {
-    key = fnencrypt("table")
-    value = fnencrypt(query["table"])
-    form.append(`queryparts[${key}]`, value)
-  }
+  key = fnencrypt("table")
+  value = fnencrypt(query["table"])
+  form.append(`queryparts[${key}]`, value)
 
   if (query.foundrows) {
     key = fnencrypt("foundrows")
@@ -50,20 +48,16 @@ export const get_select_form = (query, fnencrypt) => {
     form.append(`queryparts[${key}]`, value)
   }
 
-  if (query.fields) {
-    key = fnencrypt("fields")
-    query.fields.forEach((field, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
-  }
+  key = fnencrypt("fields")
+  query.fields.forEach((field, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
 
   if (query.joins) {
-      key = fnencrypt("joins")
+    key = fnencrypt("joins")
     query.joins.forEach((join, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(join)))
   }
 
-  if (query.where) {
-    key = fnencrypt("where")
-    query.where.forEach((strcond, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
-  }
+  key = fnencrypt("where")
+  query.where.forEach((strcond, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
 
   if (query.groupby) {
     key = fnencrypt("groupby")
@@ -75,7 +69,7 @@ export const get_select_form = (query, fnencrypt) => {
     query.having.forEach((metric, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(metric)))
   }
 
-  if(query.groupby) {
+  if(query.orderby) {
     key = fnencrypt("orderby")
     query.orderby.forEach((field, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
   }

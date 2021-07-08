@@ -14,7 +14,7 @@ function CustomLogin() {
     db.delete("session_user")
     db.delete("session_id")
     if(parseInt(r.foundrows)===1) {
-      debugger
+      //debugger
       const encrypt = await auth.async_get_encrypt()
       db.save("apify-encrypt", encrypt)
 
