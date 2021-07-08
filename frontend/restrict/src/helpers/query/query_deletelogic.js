@@ -64,6 +64,11 @@ export default () => {
       })
       return oform
     },
+
+    get_self(){
+      return this
+    }
+
   }//q
 
   return q.init()

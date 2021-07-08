@@ -119,10 +119,6 @@ export default () =>{
       return this
     },
 
-    get_self() {
-      return this
-    },
-
     get_form(){
       const oform = new FormData()
 
@@ -154,7 +150,11 @@ export default () =>{
       }
 
       return oform
-    },    
+    },
+
+    get_self(){
+      return this
+    }
   }//q
 
   return q.init()
