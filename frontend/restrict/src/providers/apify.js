@@ -52,7 +52,7 @@ const Apify = {
 
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
-
+      objselect.reset()
       const response = await axios.post(url, objform)
 
       if(is_undefined(response.data.data))
@@ -85,7 +85,7 @@ const Apify = {
 
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
-
+      objinsert.reset()
       const response = await axios.post(url, objform)
 
       if(is_undefined(response.data.data.lastid))
@@ -118,6 +118,7 @@ const Apify = {
 
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
+      objupdate.reset()
       const response = await axios.post(url, objform)
 
       if(is_undefined(response.data.data.result))
@@ -150,8 +151,7 @@ const Apify = {
         objform = objdelete.get_form()
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
-
-      objdelete.init()
+      objdelete.reset()
       const response = await axios.post(url, objform)
 
       if(is_undefined(response.data.data.result))
