@@ -28,8 +28,8 @@ return [
     ["url"=>"/apify/security/encrypt","controller"=>"App\Controllers\Apify\Security\EncryptsController","method"=>"index"],
 
 //tokens
-    ["url"=>"/apify/security/pos-login","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"index"],
-    ["url"=>"/apify/security/pos-login-middle","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"middle"],
+    ["url"=>"/apify/security/login","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"index"],
+    ["url"=>"/apify/security/login-middle","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"middle"],
     ["url"=>"/apify/security/is-valid-token","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"is_valid_token"],
 
 //resto de rutas    
