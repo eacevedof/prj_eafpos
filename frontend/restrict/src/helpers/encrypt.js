@@ -162,3 +162,34 @@ export const get_insert_form = (query, fnencrypt) => {
   return form
 
 }
+
+export const get_update_form = (query, fnencrypt) => {
+  let key = ""
+  let value = ""
+
+  const form = new FormData()
+
+  form.append("action","update")
+
+  key = fnencrypt("cache_time")
+  value = fnencrypt(query["cache_time"].toString())
+  form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("comment")
+  value = fnencrypt(query.comment.toString())
+  if(query.comment) form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("table")
+  value = fnencrypt(query.table.toString())
+  if(query.table) form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("fields")
+  query.fields.forEach( field => form.append(`queryparts[${key}][${fnencrypt(field.f)}]`, fnencrypt(field.v)))
+
+  key = fnencrypt("where")
+  query.where.forEach((strcond,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
+
+  query.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, fnencrypt(prop.v)))
+
+  return form
+}
