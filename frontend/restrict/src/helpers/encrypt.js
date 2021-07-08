@@ -87,17 +87,50 @@ export const get_delete_form = (query, fnencrypt) => {
   form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("comment")
-  value = fnencrypt(this.comment.toString())
-  if(this.comment) form.append(`queryparts[${key}]`, value)
+  value = fnencrypt(query.comment.toString())
+  if(query.comment) form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("table")
-  value = fnencrypt(this.table.toString())
-  if(this.table) form.append(`queryparts[${key}]`, value)
+  value = fnencrypt(query.table.toString())
+  if(query.table) form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("where")
   query.where.forEach((strcond,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
 
-  this.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, fnencrypt(prop.v)))
+  query.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, fnencrypt(prop.v)))
 
   return form
+}
+
+export const get_deletelogic_form = (query, fnencrypt) => {
+  let key = ""
+  let value = ""
+
+  const form = new FormData()
+
+  form.append("action","deletelogic")
+
+  key = fnencrypt("cache_time")
+  value = fnencrypt(query["cache_time"].toString())
+  form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("comment")
+  value = fnencrypt(query.comment.toString())
+  if(query.comment) form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("table")
+  value = fnencrypt(query.table.toString())
+  if(query.table) form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("delete_platform")
+  value = fnencrypt(query.platform.toString())
+  if(query.platform)
+    form.append(`queryparts[${fnencrypt("fields")}][${key}]`, value)
+
+  key = fnencrypt("where")
+  query.where.forEach((strcond,i) => form.append(`queryparts[${key}][${i}]`,fnencrypt(strcond)))
+
+  query.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, fnencrypt(prop.v)))
+  return form
+
 }

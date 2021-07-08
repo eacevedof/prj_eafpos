@@ -129,6 +129,8 @@ export default () =>{
       oform.append("queryparts[cache_time]", this.cache_time)
       oform.append("queryparts[table]", this.table)
 
+      if(this.comment) oform.append("queryparts[comment]",this.comment)
+
       if(this.foundrows) oform.append("queryparts[foundrows]",this.foundrows)
 
       if(this.distinct) oform.append("queryparts[distinct]",this.distinct)
