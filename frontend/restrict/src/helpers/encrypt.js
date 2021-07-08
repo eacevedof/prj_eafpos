@@ -110,10 +110,6 @@ export const get_deletelogic_form = (query, fnencrypt) => {
 
   form.append("action","deletelogic")
 
-  key = fnencrypt("cache_time")
-  value = fnencrypt(query["cache_time"].toString())
-  form.append(`queryparts[${key}]`, value)
-
   key = fnencrypt("comment")
   value = fnencrypt(query.comment.toString())
   if(query.comment) form.append(`queryparts[${key}]`, value)
@@ -143,10 +139,6 @@ export const get_insert_form = (query, fnencrypt) => {
 
   form.append("action","insert")
 
-  key = fnencrypt("cache_time")
-  value = fnencrypt(query["cache_time"].toString())
-  form.append(`queryparts[${key}]`, value)
-
   key = fnencrypt("comment")
   value = fnencrypt(query.comment.toString())
   if(query.comment) form.append(`queryparts[${key}]`, value)
@@ -170,10 +162,6 @@ export const get_update_form = (query, fnencrypt) => {
   const form = new FormData()
 
   form.append("action","update")
-
-  key = fnencrypt("cache_time")
-  value = fnencrypt(query["cache_time"].toString())
-  form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("comment")
   value = fnencrypt(query.comment.toString())
