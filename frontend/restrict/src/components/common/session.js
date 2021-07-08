@@ -13,6 +13,7 @@ const Session = ({component}) => {
     if(db.select("session_user")){
       db.delete("session_user")
       db.delete("session_id")
+      db.delete("apify-encrypt")
 
       if(location.pathname!=="/")
         db.save("last_location", location.pathname)

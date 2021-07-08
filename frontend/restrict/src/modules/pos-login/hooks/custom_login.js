@@ -13,6 +13,7 @@ function CustomLogin() {
 
     db.delete("session_user")
     db.delete("session_id")
+    db.delete("apify-encrypt")
     if(parseInt(r.foundrows)===1) {
       //debugger
       const encrypt = await auth.async_get_encrypt()
@@ -38,6 +39,7 @@ function CustomLogin() {
   useEffect(() => {
     db.delete("session_user")
     db.delete("session_id")
+    db.delete("apify-encrypt")
     return () => console.log("pos-login.insert.unmounting")
   },[])
   

@@ -46,6 +46,7 @@ final class EncryptsService
         if(!$enckey = $post[self::APIFY_ENCKEY]) return $post["queryparts"] ?? [];
 
         $json = RedisFactory::get()->get_("encrypt-$enckey");
+        if (!$json) throw new \Exception("enckey not found", 404);
         $encrypt = json_decode($json, 1);
         extract($encrypt);
 

@@ -53,9 +53,11 @@ const Apify = {
       else
         objform = objselect.get_form()
 
+      window.lg("form",objform)
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
       objselect.reset()
+
       const response = await axios.post(url, objform)
 
       if(is_undefined(response.data.data))
