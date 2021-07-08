@@ -3,7 +3,7 @@ import axios from "axios"
 import db from "helpers/localdb"
 import auth from "providers/apifyauth"
 import {is_undefined, get_error} from "helpers/functions"
-import get_encrypted, {get_delete_form, get_select_form, get_update_form} from "helpers/encrypt"
+import get_encrypted, {get_delete_form, get_select_form, get_update_form, get_insert_form} from "helpers/encrypt"
 
 const get_code_cache = () => db.select("session_user")?.code_cache ?? ""
 
