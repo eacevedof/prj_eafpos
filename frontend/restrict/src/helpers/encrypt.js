@@ -21,6 +21,7 @@ const get_encrypted = alphabet => steps => string => {
 export default get_encrypted
 
 export const get_select_form = (query, fnencrypt) => {
+  console.time("get_select_form")
   let key = ""
   let value = ""
 
@@ -71,6 +72,7 @@ export const get_select_form = (query, fnencrypt) => {
     form.append(`queryparts[${key}][${key2}]`, fnencrypt(query.limit.regfrom.toString()))
   }
 
+  console.timeEnd("get_select_form")
   return form
 }
 

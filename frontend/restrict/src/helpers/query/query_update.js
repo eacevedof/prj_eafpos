@@ -2,12 +2,16 @@ import {add} from "helpers/functions"
 
 export default () =>{
   const q = {
-    init(){
+    reset(){
       this.comment = ""
       this.table =  ""
       this.fields = []
       this.where = []
       this.extras = []
+    },
+
+    init(){
+      this.reset()
       return this
     },
 

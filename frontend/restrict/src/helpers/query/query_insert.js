@@ -1,10 +1,14 @@
 export default () =>{
   const q = {
-    init(){
+    reset(){
       this.comment = ""
       this.table =  ""
       this.fields = []
       this.extras = []
+    },
+
+    init(){
+      this.reset()
       return this
     },
 

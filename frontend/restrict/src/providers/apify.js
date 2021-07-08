@@ -148,9 +148,10 @@ const Apify = {
       }
       else
         objform = objdelete.get_form()
-
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
+
+      objdelete.init()
       const response = await axios.post(url, objform)
 
       if(is_undefined(response.data.data.result))

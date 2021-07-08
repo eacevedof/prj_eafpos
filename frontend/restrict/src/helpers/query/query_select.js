@@ -2,7 +2,7 @@ import {add} from "helpers/functions"
 
 export default () =>{
   const q = {
-    init(){
+    reset(){
       this.comment = ""
       this.cache_time = 0
       this.table = ""
@@ -15,6 +15,10 @@ export default () =>{
       this.having = []
       this.orderby = []
       this.limit = {perpage:null, regfrom:0}
+    },
+
+    init(){
+      this.reset()
       return this
     },
 
