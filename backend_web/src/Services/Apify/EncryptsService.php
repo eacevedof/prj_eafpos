@@ -16,6 +16,7 @@ use \Exception;
 final class EncryptsService 
 {
     private const APIFY_ENCKEY = "apify-enckey";
+    private const APIFY_ENCKEY_TTL = 1800;
 
     public function get_random_rule(): array
     {
@@ -36,7 +37,7 @@ final class EncryptsService
             "key" => $key,
         ];
 
-        RedisFactory::get()->set("encrypt-$key",json_encode($encrypt),60);
+        RedisFactory::get()->set("encrypt-$key",json_encode($encrypt),self::APIFY_ENCKEY_TTL);
         return $encrypt;
     }
 
