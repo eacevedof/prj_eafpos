@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect} from "react"
+import React, {useContext, useEffect} from "react"
 import {GlobalContext} from "components/context/global_context"
 import Session from "components/common/session"
 import db from "helpers/localdb"
@@ -40,7 +40,6 @@ function Boot() {
       db.save("token_apify",apifytoken)
     }
 
-    console.log("boot.apifytoken:",apifytoken)
     if(!apifytoken){
       set_errorg({title:"Error", message:"Empty token"})
       db.delete("token_apify")
