@@ -3,7 +3,7 @@ import axios from "axios"
 import db from "helpers/localdb"
 import auth from "providers/apifyauth"
 import {is_undefined, get_error} from "helpers/functions"
-import get_encrypted, {get_select_form}  from "helpers/encrypt"
+import get_encrypted, {get_delete_form, get_select_form, get_update_form} from "helpers/encrypt"
 
 const get_code_cache = () => db.select("session_user")?.code_cache ?? ""
 
@@ -89,22 +89,21 @@ const Apify = {
   async_update: async (objupdate) => {
     const apifytoken = db.select("token_apify")
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
-    //hay que enviar header: apify-auth: token
+
     try {
- 
-      const objform = objupdate.get_query()
+      const encrypt = await auth.async_get_encrypt()
+      const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
+      const query = objupdate.get_self()
+
+      const objform = get_update_form(query, fnencrypt)
       objform.append("apify-usertoken", apifytoken)
+      objform.append("apify-enckey", encrypt.key)
       objform.append("useruuid", get_code_cache())
-      //objform.append("apify-origindomain","*")
-
-      console.log("apify.async_update",url)
       const response = await axios.post(url, objform)
-
-      console.log("apify.async_update.response",response)
 
       if(is_undefined(response.data.data.result))
         throw new Error("Wrong data received from server. Update result")
-      //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
+
       return response.data.data.result
     } 
     catch (e) {
@@ -113,25 +112,25 @@ const Apify = {
     }
   },
 
-  async_delete: async(objdelete) => {
+  async_delete: async (objdelete) => {
 
     const apifytoken = db.select("token_apify")
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
-      const objform = objdelete.get_query()
-      //objform.append("apify-origindomain","*")
+      const encrypt = await auth.async_get_encrypt()
+      const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
+      const query = objdelete.get_self()
+
+      const objform = get_delete_form(query, fnencrypt)
       objform.append("apify-usertoken", apifytoken)
+      objform.append("apify-enckey", encrypt.key)
       objform.append("useruuid", get_code_cache())
-      
-      console.log("apify.async_delete",url)
       const response = await axios.post(url, objform)
 
-      console.log("apify.async_delete.response",response)
-      //devuelve el num de registros afectados
       if(is_undefined(response.data.data.result))
         throw new Error("Wrong data received from server. Delete result")
-      //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
+
       return response.data.data.result
     } 
     catch (e) {
