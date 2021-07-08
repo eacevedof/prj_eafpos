@@ -37,13 +37,20 @@ const Apify = {
     //hay que enviar header: apify-auth: token
     try {
 
-      const encrypt = await auth.async_get_encrypt()
-      const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
-      const query = objselect.get_self()
+      //const encrypt = await auth.async_get_encrypt()
+      const encrypt = db.select("apify-encrypt");
+      //debugger
+      let objform = null
+      if(encrypt) {
+        const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
+        const query = objselect.get_self()
+        objform = get_select_form(query, fnencrypt)
+        objform.append("apify-enckey", encrypt.key)
+      }
+      else
+        objform = objselect.get_form()
 
-      const objform = get_select_form(query, fnencrypt)
       objform.append("apify-usertoken", apifytoken)
-      objform.append("apify-enckey", encrypt.key)
       objform.append("useruuid", get_code_cache())
 
       const response = await axios.post(url, objform)
@@ -64,13 +71,19 @@ const Apify = {
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
-      const encrypt = await auth.async_get_encrypt()
-      const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
-      const query = objinsert.get_self()
+      //const encrypt = await auth.async_get_encrypt()
+      const encrypt = db.select("apify-encrypt");
+      let objform = null
+      if(encrypt) {
+        const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
+        const query = objinsert.get_self()
+        objform = get_insert_form(query, fnencrypt)
+        objform.append("apify-enckey", encrypt.key)
+      }
+      else
+        objform = objinsert.get_form()
 
-      const objform = get_insert_form(query, fnencrypt)
       objform.append("apify-usertoken", apifytoken)
-      objform.append("apify-enckey", encrypt.key)
       objform.append("useruuid", get_code_cache())
 
       const response = await axios.post(url, objform)
@@ -91,13 +104,19 @@ const Apify = {
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
-      const encrypt = await auth.async_get_encrypt()
-      const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
-      const query = objupdate.get_self()
+      //const encrypt = await auth.async_get_encrypt()
+      const encrypt = db.select("apify-encrypt");
+      let objform = null
+      if(encrypt) {
+        const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
+        const query = objupdate.get_self()
+        objform = get_update_form(query, fnencrypt)
+        objform.append("apify-enckey", encrypt.key)
+      }
+      else
+        objform = objupdate.get_form()
 
-      const objform = get_update_form(query, fnencrypt)
       objform.append("apify-usertoken", apifytoken)
-      objform.append("apify-enckey", encrypt.key)
       objform.append("useruuid", get_code_cache())
       const response = await axios.post(url, objform)
 
@@ -118,13 +137,19 @@ const Apify = {
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
-      const encrypt = await auth.async_get_encrypt()
-      const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
-      const query = objdelete.get_self()
+      //const encrypt = await auth.async_get_encrypt()
+      const encrypt = db.select("apify-encrypt");
+      let objform = null
+      if(encrypt) {
+        const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
+        const query = objdelete.get_self()
+        objform = get_update_form(query, fnencrypt)
+        objform.append("apify-enckey", encrypt.key)
+      }
+      else
+        objform = objdelete.get_form()
 
-      const objform = get_delete_form(query, fnencrypt)
       objform.append("apify-usertoken", apifytoken)
-      objform.append("apify-enckey", encrypt.key)
       objform.append("useruuid", get_code_cache())
       const response = await axios.post(url, objform)
 

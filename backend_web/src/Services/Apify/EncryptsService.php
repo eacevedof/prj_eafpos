@@ -43,7 +43,8 @@ final class EncryptsService
 
     public function get_decrypted(array $post): array
     {
-        if(!$enckey = $post[self::APIFY_ENCKEY]) throw new Exception("missing apify_enckey");
+        if(!$enckey = $post[self::APIFY_ENCKEY]) return $post;
+
         $json = RedisFactory::get()->get_("encrypt-$enckey");
         $encrypt = json_decode($json, 1);
         extract($encrypt);

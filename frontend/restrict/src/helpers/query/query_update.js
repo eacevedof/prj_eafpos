@@ -51,7 +51,7 @@ export default () =>{
       return this
     },
 
-    get_query(){
+    get_form(){
       const oform = new FormData()
       oform.append("action","update")
       if(this.comment) oform.append("queryparts[comment]", this.comment)
