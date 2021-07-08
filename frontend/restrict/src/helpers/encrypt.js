@@ -73,3 +73,31 @@ export const get_select_form = (query, fnencrypt) => {
 
   return form
 }
+
+export const get_delete_form = (query, fnencrypt) => {
+  let key = ""
+  let value = ""
+
+  const form = new FormData()
+
+  key = fnencrypt("cache_time")
+  value = fnencrypt(query["cache_time"].toString())
+
+  form.append("action","delete")
+  form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("comment")
+  value = fnencrypt(this.comment.toString())
+  if(this.comment) form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("table")
+  value = fnencrypt(this.table.toString())
+  if(this.table) form.append(`queryparts[${key}]`, value)
+
+  key = fnencrypt("where")
+  query.where.forEach((strcond,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
+
+  this.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, fnencrypt(prop.v)))
+
+  return form
+}
