@@ -51,6 +51,7 @@ final class EncryptsService
         if(!$queryparts = $post["queryparts"]) throw new Exception("missing queryparts");
 
         $decrypted = [];
+        $isfieldkv = in_array($post["action"],["insert","update","deletelogic"]);
         foreach ($queryparts as $key => $value)
         {
             $key = $encrypt->get_decrypted($key, $steps);
@@ -59,8 +60,10 @@ final class EncryptsService
                 $decrypted[$key] = $value;
             }
             elseif (is_array($value)) {
+                $isfields = $key === "fields";
                 foreach ($value as $k => $v)
                 {
+                    if($isfieldkv && $isfields) $k = $encrypt->get_decrypted($k, $steps);
                     $v = $encrypt->get_decrypted($v, $steps);
                     $decrypted[$key][$k] = $v;
                 }

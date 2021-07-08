@@ -128,8 +128,8 @@ export const get_deletelogic_form = (query, fnencrypt) => {
 
   query.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, fnencrypt(prop.v.toString())))
   return form
-
 }
+
 
 export const get_insert_form = (query, fnencrypt) => {
   let key = ""
