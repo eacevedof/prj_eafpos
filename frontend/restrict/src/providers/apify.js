@@ -64,19 +64,20 @@ const Apify = {
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
-      const objform = objinsert.get_query()
-      //objform.append("apify-origindomain","*")
+      const encrypt = await auth.async_get_encrypt()
+      const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
+      const query = objinsert.get_self()
+
+      const objform = get_insert_form(query, fnencrypt)
       objform.append("apify-usertoken", apifytoken)
+      objform.append("apify-enckey", encrypt.key)
       objform.append("useruuid", get_code_cache())
 
-      console.log("apify.async_insert",url)
       const response = await axios.post(url, objform)
-      //pr(response,"async_insert")
-      console.log("apify.async_insert.response",response)
 
       if(is_undefined(response.data.data.lastid))
         throw new Error("Wrong data received from server. insert lastid")
-      //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
+
       return response.data.data.lastid
     } 
     catch (e) {
