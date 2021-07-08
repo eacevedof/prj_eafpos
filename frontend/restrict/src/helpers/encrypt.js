@@ -21,46 +21,64 @@ const get_encrypted = alphabet => steps => string => {
 export default get_encrypted
 
 export const get_select_form = (query, fnencrypt) => {
-  console.time("get_select_form")
   let key = ""
   let value = ""
 
   const form = new FormData()
 
-  key = fnencrypt("cache_time")
-  value = fnencrypt(query["cache_time"].toString())
+  if (query.cache_time) {
+    key = fnencrypt("cache_time")
+    value = fnencrypt(query["cache_time"].toString())
+    form.append(`queryparts[${key}]`, value)
+  }
 
-  form.append(`queryparts[${key}]`, value)
+  if (query.table) {
+    key = fnencrypt("table")
+    value = fnencrypt(query["table"])
+    form.append(`queryparts[${key}]`, value)
+  }
 
-  key = fnencrypt("table")
-  value = fnencrypt(query["table"])
-  form.append(`queryparts[${key}]`, value)
+  if (query.foundrows) {
+    key = fnencrypt("foundrows")
+    value = fnencrypt(query["foundrows"].toString())
+    form.append(`queryparts[${key}]`, value)
+  }
 
-  key = fnencrypt("foundrows")
-  value = fnencrypt(query["foundrows"].toString())
-  form.append(`queryparts[${key}]`, value)
+  if (query.distinct) {
+    key = fnencrypt("distinct")
+    value = fnencrypt(query["distinct"].toString())
+    form.append(`queryparts[${key}]`, value)
+  }
 
-  key = fnencrypt("distinct")
-  value = fnencrypt(query["distinct"].toString())
-  form.append(`queryparts[${key}]`, value)
+  if (query.fields) {
+    key = fnencrypt("fields")
+    query.fields.forEach((field, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
+  }
 
-  key = fnencrypt("fields")
-  query.fields.forEach((field,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
+  if (query.joins) {
+      key = fnencrypt("joins")
+    query.joins.forEach((join, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(join)))
+  }
 
-  key = fnencrypt("joins")
-  query.joins.forEach((join,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(join)))
+  if (query.where) {
+    key = fnencrypt("where")
+    query.where.forEach((strcond, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
+  }
 
-  key = fnencrypt("where")
-  query.where.forEach((strcond,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
+  if (query.groupby) {
+    key = fnencrypt("groupby")
+    query.groupby.forEach((field, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
+  }
 
-  key = fnencrypt("groupby")
-  query.groupby.forEach((field,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
+  if (query.having) {
+    key = fnencrypt("having")
+    query.having.forEach((metric, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(metric)))
+  }
 
-  key = fnencrypt("having")
-  query.having.forEach((metric,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(metric)))
-
-  key = fnencrypt("orderby")
-  query.orderby.forEach((field,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
+  if(query.groupby) {
+    key = fnencrypt("orderby")
+    query.orderby.forEach((field, i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(field)))
+  }
 
   if(query.limit.perpage) {
     key = fnencrypt("limit")
@@ -72,7 +90,6 @@ export const get_select_form = (query, fnencrypt) => {
     form.append(`queryparts[${key}][${key2}]`, fnencrypt(query.limit.regfrom.toString()))
   }
 
-  console.timeEnd("get_select_form")
   return form
 }
 

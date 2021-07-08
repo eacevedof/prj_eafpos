@@ -44,7 +44,9 @@ const Apify = {
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objselect.get_self()
+        console.time("get_select_form")
         objform = get_select_form(query, fnencrypt)
+        console.timeEnd("get_select_form")
         objform.append("apify-enckey", encrypt.key)
       }
       else
