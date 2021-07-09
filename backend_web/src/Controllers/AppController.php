@@ -24,6 +24,7 @@ abstract class AppController
     use EnvTrait;
 
     protected const KEY_APIFYUSERTOKEN = "apify-usertoken";
+    protected const KEY_API_SIGNATURE = "API_SIGNATURE";
     //protected const KEY_APIFYDOMAIN= "apify-origindomain";
 
     public function __construct() 
@@ -37,8 +38,8 @@ abstract class AppController
         try{
             $post = $this->get_post();
             $domain = $this->get_domain(); //trata excepcion
-            $token = $post["API_SIGNATURE"] ?? "";
-            unset($post["API_SIGNATURE"]);
+            $token = $post[self::KEY_API_SIGNATURE] ?? "";
+            unset($post[self::KEY_API_SIGNATURE]);
             $oServ = new SignatureService($domain,$post);
             return $oServ->is_valid($token);
         }
@@ -65,9 +66,9 @@ abstract class AppController
         {
             $this->logerr($e->getMessage(),"AppController.check_usertoken");
             $oJson = new HelperJson();
-            $oJson->set_code(HelperJson::CODE_FORBIDDEN)->
-            set_error([$e->getMessage()])->
-            show(1);
+            $oJson->set_code(HelperJson::CODE_FORBIDDEN)
+                ->set_error([$e->getMessage()])
+                ->show(1);
         }
     }
 
