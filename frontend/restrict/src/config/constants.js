@@ -1,7 +1,7 @@
 export const APP_ENV = process.env.NODE_ENV
 export const APP_VERSION = process.env.REACT_APP_ENV_APPVERSION
 
-//necesita: token_apify
+//necesita: apify-token
 export const APIFY_BASEURL = process.env.REACT_APP_ENV_APIFY_BASEURL
 export const APIFY_CONTEXT = process.env.REACT_APP_ENV_APIFY_CONTEXT
 export const APIFY_SCHEMA = process.env.REACT_APP_ENV_APIFY_SCHEMA

@@ -19,7 +19,7 @@ function CustomLogin() {
       const encrypt = await auth.async_get_encrypt()
       db.save("apify-encrypt", encrypt)
 
-      const token = db.select("token_apify")
+      const token = db.select("apify-token")
       const usermini = r.result[0]
       await async_insert_rnd(token, usermini)
       r = await async_get_session_id(token, usermini?.code_cache)

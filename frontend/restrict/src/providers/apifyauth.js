@@ -32,7 +32,7 @@ const Apifyauth = {
   },//async_get_apifytoken
 
   async_is_validtoken: async () => {
-    const apifytoken = db.select("token_apify")
+    const apifytoken = db.select("apify-token")
     //pr(apifytoken,"async_is_valid_token recuperado de db");
     const url = `${APIFY_BASEURL}/apify/security/is-valid-token`
     try {
@@ -59,7 +59,7 @@ const Apifyauth = {
   },
 
   async_get_encrypt: async () => {
-    const apifytoken = db.select("token_apify")
+    const apifytoken = db.select("apify-token")
     const url = `${APIFY_BASEURL}/apify/security/encrypt`
     try {
       const data = new FormData()

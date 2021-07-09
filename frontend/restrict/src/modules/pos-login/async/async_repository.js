@@ -17,7 +17,7 @@ export const async_in_session = async () => {
   const sessionid = db.select("session_id")
   if(!sessionid) return false
 
-  const token = db.select("token_apify")
+  const token = db.select("apify-token")
 
   const objquery = get_is_ssesion(token, sessionid, usersession)
   const r = await apify.async_get_list(objquery)

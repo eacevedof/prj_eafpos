@@ -9,7 +9,7 @@ const get_code_cache = () => db.select("session_user")?.code_cache ?? ""
 const Apify = {
   
   async_get_fields: async (table) =>{
-    const apifytoken = db.select("token_apify")
+    const apifytoken = db.select("apify-token")
     const url = `${APIFY_BASEURL}/apify/fields/${APIFY_CONTEXT}/${APIFY_SCHEMA}/${table}`
 
     try{
@@ -30,7 +30,7 @@ const Apify = {
   },
 
   async_get_list: async objselect => {
-    const apifytoken = db.select("token_apify")
+    const apifytoken = db.select("apify-token")
     const url = `${APIFY_BASEURL}/apify/read?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     //hay que enviar header: apify-auth: token
@@ -71,7 +71,7 @@ const Apify = {
   },
 
   async_insert: async (objinsert) => {
-    const apifytoken = db.select("token_apify")
+    const apifytoken = db.select("apify-token")
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
@@ -104,7 +104,7 @@ const Apify = {
   },
 
   async_update: async (objupdate) => {
-    const apifytoken = db.select("token_apify")
+    const apifytoken = db.select("apify-token")
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
@@ -138,7 +138,7 @@ const Apify = {
 
   async_delete: async (objdelete) => {
 
-    const apifytoken = db.select("token_apify")
+    const apifytoken = db.select("apify-token")
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
