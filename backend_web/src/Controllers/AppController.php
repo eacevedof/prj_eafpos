@@ -89,7 +89,7 @@ abstract class AppController
     protected function show_json_nok($sMessage,$iCode)
     {
         $arTmp = [
-            "data" => ["mesage"=>$sMessage,"code"=>$iCode]
+            "data" => ["message"=>$sMessage,"code"=>$iCode]
         ];
         
         $sJson = json_encode($arTmp);
@@ -144,7 +144,7 @@ abstract class AppController
         );
 
         header($arCodes[$iCode]);
-        return array("code"=>$iCode,"error"=>$arCodes[$iCode]);
+        return ["code"=>$iCode,"error"=>$arCodes[$iCode]];
     }//send_http_status
     
     /**
@@ -178,18 +178,18 @@ abstract class AppController
     
     protected function is_get($sKey=NULL){if($sKey) return isset($_GET[$sKey]); return count($_GET)>0;}
     
-    protected function request_log()
+    protected function request_log(): void
     {
         $sReqUri = $_SERVER["REQUEST_URI"];
-        $this->logd($_SERVER["HTTP_USER_AGENT"] ?? "","HTTP_USER_AGENT");
-        $this->logd($_SERVER["REMOTE_ADDR"] ?? "","REMOTE_ADDR");
-        $this->logd($_SERVER["REMOTE_HOST"] ?? "","REMOTE_HOST");
-        $this->logd($_SERVER["HTTP_HOST"] ?? "","HTTP_HOST");
+        $this->logreq($_SERVER["HTTP_USER_AGENT"] ?? "","HTTP_USER_AGENT");
+        $this->logreq($_SERVER["REMOTE_ADDR"] ?? "","REMOTE_ADDR");
+        $this->logreq($_SERVER["REMOTE_HOST"] ?? "","REMOTE_HOST");
+        $this->logreq($_SERVER["HTTP_HOST"] ?? "","HTTP_HOST");
         //$this->logd($_SERVER["REMOTE_USER"] ?? "","REMOTE_USER");
 
-        $this->logd($this->get_get(),"$sReqUri GET");
-        $this->logd($this->get_post(),"$sReqUri POST");
-        $this->logd($this->get_files(),"$sReqUri FILES");
+        $this->logreq($this->get_get(),"$sReqUri GET");
+        $this->logreq($this->get_post(),"$sReqUri POST");
+        $this->logreq($this->get_files(),"$sReqUri FILES");
     }
     
     protected function response_json($arData)

@@ -13,25 +13,31 @@ use TheFramework\Components\ComponentLog;
 
 trait LogTrait
 {
-    protected function log($mxVar,$sTitle=NULL)
+    protected function log($mxVar,$sTitle=NULL): void
     {
         $oLog = new ComponentLog("sql",PATH_LOGS);
         $oLog->save($mxVar,$sTitle);
     }
-    
-    protected function logd($mxVar,$sTitle=NULL)
+
+    protected function logreq($mxVar, $sTitle=NULL): void
+    {
+        $oLog = new ComponentLog("request",PATH_LOGS);
+        $oLog->save($mxVar, $sTitle);
+    }
+
+    protected function logd($mxVar,$sTitle=NULL): void
     {
         $oLog = new ComponentLog("debug",PATH_LOGS);
         $oLog->save($mxVar,$sTitle);
     }
 
-    protected function logerr($mxVar,$sTitle=NULL)
+    protected function logerr($mxVar,$sTitle=NULL): void
     {
         $oLog = new ComponentLog("error",PATH_LOGS);
         $oLog->save($mxVar,$sTitle);
     }
 
-    protected function logkafka($mxVar,$sTitle=NULL)
+    protected function logkafka($mxVar,$sTitle=NULL): void
     {
         $oLog = new ComponentLog("kafka",PATH_LOGS);
         $oLog->save($mxVar,$sTitle);
