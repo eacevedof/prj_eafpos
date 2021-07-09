@@ -1,6 +1,7 @@
 import {APIFY_BASEURL, APIFY_CONTEXT, APIFY_SCHEMA} from "../config/constants"
 import axios from "axios"
 import db from "helpers/localdb"
+import auth from "providers/apifyauth"
 import {is_undefined, get_error} from "helpers/functions"
 import get_encrypted, {get_delete_form, get_select_form, get_update_form, get_insert_form} from "helpers/encrypt"
 
@@ -36,8 +37,8 @@ const Apify = {
     //hay que enviar header: apify-auth: token
     try {
 
-      //const encrypt = await auth.async_get_encrypt()
-      const encrypt = db.select("apify-encrypt");
+      const encrypt = await auth.async_get_encrypt()
+      //const encrypt = db.select("apify-encrypt");
       //debugger
       let objform = null
       if(encrypt) {
@@ -75,8 +76,8 @@ const Apify = {
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
-      //const encrypt = await auth.async_get_encrypt()
-      const encrypt = db.select("apify-encrypt");
+      const encrypt = await auth.async_get_encrypt()
+      //const encrypt = db.select("apify-encrypt");
       let objform = null
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
@@ -108,8 +109,8 @@ const Apify = {
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
-      //const encrypt = await auth.async_get_encrypt()
-      const encrypt = db.select("apify-encrypt");
+      const encrypt = await auth.async_get_encrypt()
+      //const encrypt = db.select("apify-encrypt");
       let objform = null
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)

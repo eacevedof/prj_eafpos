@@ -18,7 +18,7 @@ final class EncryptsService
 {
     use LogTrait;
     private const APIFY_ENCKEY = "apify-enckey";
-    private const APIFY_ENCKEY_TTL = 1800;
+    private const APIFY_ENCKEY_TTL = 60;
 
     public function get_random_rule(): array
     {
