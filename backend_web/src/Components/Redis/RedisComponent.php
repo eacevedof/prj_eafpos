@@ -57,7 +57,7 @@ final class RedisComponent
         self::$redis->expire($key, $expire);
     }
 
-    public function get_bykey(string $key)
+    public function get(string $key)
     {
         return self::$redis->get($key);
     }
