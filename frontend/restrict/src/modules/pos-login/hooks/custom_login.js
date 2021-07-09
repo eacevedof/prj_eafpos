@@ -2,7 +2,6 @@ import {useEffect} from "react"
 import {useHistory} from "react-router-dom"
 import db from "helpers/localdb"
 import {async_get_session_id, async_get_user_by_tpvcode, async_insert_rnd} from "modules/pos-login/async/async_repository"
-import auth from "providers/apifyauth";
 
 function CustomLogin() {
   const history = useHistory()
@@ -13,11 +12,7 @@ function CustomLogin() {
 
     db.delete("session_user")
     db.delete("session_id")
-    db.delete("apify-encrypt")
     if(parseInt(r.foundrows)===1) {
-      //debugger
-      const encrypt = await auth.async_get_encrypt()
-      db.save("apify-encrypt", encrypt)
 
       const token = db.select("apify-token")
       const usermini = r.result[0]
@@ -39,7 +34,6 @@ function CustomLogin() {
   useEffect(() => {
     db.delete("session_user")
     db.delete("session_id")
-    db.delete("apify-encrypt")
     return () => console.log("pos-login.insert.unmounting")
   },[])
   

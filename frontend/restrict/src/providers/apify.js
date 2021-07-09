@@ -38,8 +38,6 @@ const Apify = {
     try {
 
       const encrypt = await auth.async_get_encrypt()
-      //const encrypt = db.select("apify-encrypt");
-      //debugger
       let objform = null
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
@@ -77,7 +75,6 @@ const Apify = {
 
     try {
       const encrypt = await auth.async_get_encrypt()
-      //const encrypt = db.select("apify-encrypt");
       let objform = null
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
@@ -110,7 +107,6 @@ const Apify = {
 
     try {
       const encrypt = await auth.async_get_encrypt()
-      //const encrypt = db.select("apify-encrypt");
       let objform = null
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
@@ -143,8 +139,7 @@ const Apify = {
     const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
 
     try {
-      //const encrypt = await auth.async_get_encrypt()
-      const encrypt = db.select("apify-encrypt");
+      const encrypt = await auth.async_get_encrypt()
       let objform = null
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
