@@ -43,15 +43,12 @@ const Apify = {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objselect.get_self()
         window.lg("query",query)
-        console.time("get_select_form")
         objform = get_select_form(query, fnencrypt)
-        console.timeEnd("get_select_form")
         objform.append("apify-enckey", encrypt.key)
       }
       else
         objform = objselect.get_form()
 
-      window.lg("form",objform)
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
       objselect.reset()
@@ -79,6 +76,7 @@ const Apify = {
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objinsert.get_self()
+        window.lg("query-insert",query)
         objform = get_insert_form(query, fnencrypt)
         objform.append("apify-enckey", encrypt.key)
       }
@@ -111,6 +109,7 @@ const Apify = {
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objupdate.get_self()
+        window.lg("query-update",query)
         objform = get_update_form(query, fnencrypt)
         objform.append("apify-enckey", encrypt.key)
       }
@@ -144,6 +143,7 @@ const Apify = {
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objdelete.get_self()
+        window.lg("query-delete",query)
         objform = get_update_form(query, fnencrypt)
         objform.append("apify-enckey", encrypt.key)
       }
