@@ -39,7 +39,7 @@ final class EncryptsService
             "key" => $key,
         ];
 
-        RedisFactory::get()->set("encrypt-$key",json_encode($encrypt),self::APIFY_ENCKEY_TTL);
+        RedisFactory::get()->set("encrypt-$key", json_encode($encrypt),self::APIFY_ENCKEY_TTL);
         return $encrypt;
     }
 
@@ -56,24 +56,28 @@ final class EncryptsService
         if(!$queryparts = $post["queryparts"]) throw new Exception("missing queryparts");
 
         $decrypted = [];
-        $isfieldkv = in_array($post["action"],["insert","update","deletelogic"]);
+        $isfieldkv = in_array($action = $post["action"], ["insert", "update", "deletelogic"]);
         foreach ($queryparts as $key => $value)
         {
             $key = $encrypt->get_decrypted($key, $steps);
-            if(is_string($value)){
+            if(is_string($value))
+            {
                 $value = $encrypt->get_decrypted($value, $steps);
                 $decrypted[$key] = $value;
             }
-            elseif (is_array($value)) {
+            elseif (is_array($value))
+            {
                 $isfields = $key === "fields";
                 foreach ($value as $k => $v)
                 {
-                    if($isfieldkv && $isfields) $k = $encrypt->get_decrypted($k, $steps);
+                    //limit no va por accion
+                    if(($isfieldkv && $isfields) || ($key==="limit" && !$action))
+                        $k = $encrypt->get_decrypted($k, $steps);
                     $v = $encrypt->get_decrypted($v, $steps);
                     $decrypted[$key][$k] = $v;
                 }
             }
-        }
+        }//foreach queryparts
 
         $this->logreq($decrypted, "encrypts-service.get_decrypted");
         return $decrypted;
