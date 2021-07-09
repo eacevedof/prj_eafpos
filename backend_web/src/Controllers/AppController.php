@@ -201,7 +201,7 @@ abstract class AppController
     protected function get_header($key=null)
     {
         $all = getallheaders();
-        $this->logd($all,"get_header.all");
+        $this->logreq($all,"get_header.all");
         if(!$key) return $all;
         foreach ($all as $k=>$v)
             if(strtolower($k)===strtolower($key))

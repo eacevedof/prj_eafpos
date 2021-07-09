@@ -11,10 +11,12 @@ namespace App\Services\Apify;
 
 use App\Factories\RedisFactory;
 use App\Components\Encrypt\EncryptComponent;
+use App\Traits\LogTrait;
 use \Exception;
 
 final class EncryptsService 
 {
+    use LogTrait;
     private const APIFY_ENCKEY = "apify-enckey";
     private const APIFY_ENCKEY_TTL = 1800;
 
@@ -45,7 +47,7 @@ final class EncryptsService
     {
         if(!$enckey = $post[self::APIFY_ENCKEY]) return $post["queryparts"] ?? [];
 
-        $json = RedisFactory::get()->get_("encrypt-$enckey");
+        $json = RedisFactory::get()->get_bykey("encrypt-$enckey");
         if (!$json) throw new \Exception("enckey not found", 404);
         $encrypt = json_decode($json, 1);
         extract($encrypt);
@@ -73,6 +75,7 @@ final class EncryptsService
             }
         }
 
+        $this->logreq($decrypted, "encrypts-service.get_decrypted");
         return $decrypted;
     }
 

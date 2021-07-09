@@ -74,10 +74,10 @@ final class LoginController extends AppController
             //$token = $this->get_header("apify-auth");
             //$token = $this->get_header("authorization");
             $domain = $this->get_domain(); //excepcion
-            $this->logd($domain,"pos-login.is_valid_token.domain");
+            $this->logreq($domain,"pos-login.is_valid_token.domain");
             $token = $this->get_post(self::KEY_APIFYUSERTOKEN);
-            $this->logd($token,"pos-login.is_valid_token.post");
-            $this->logd("domain: $domain, token: $token");
+            $this->logreq($token,"pos-login.is_valid_token.post");
+            $this->logreq("domain: $domain, token: $token");
             if(!$token) throw new \Exception("No token provided");
             $oServ = new LoginService($domain);
             $oServ->is_valid($token);
