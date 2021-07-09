@@ -13,7 +13,9 @@ const get_pair = alphabet => steps => char => {
 const get_encrypted = alphabet => steps => string => {
   //debugger
   if(string==="") return string
+  console.time("get-pair")
   const fnmemo = get_pair(alphabet)(steps)
+  console.timeEnd("get-pair")
   const result = string.split("").map(ch => fnmemo(ch))
   return result.join("")
 }
