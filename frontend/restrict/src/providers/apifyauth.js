@@ -65,7 +65,7 @@ const Apifyauth = {
       const data = new FormData()
       data.append("apify-usertoken", apifytoken)
       const response = await axios.post(url, data)
-      window.lg("async-get-encrypt", response.data.data)
+      //window.lg("async-get-encrypt", response.data.data)
       return response.data.data
     }
     catch (e) {

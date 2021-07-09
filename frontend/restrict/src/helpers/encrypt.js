@@ -12,7 +12,7 @@ const get_pair = alphabet => steps => char => {
 
 const get_encrypted = alphabet => steps => string => {
   //debugger
-  if(string==="") return string
+  if(string===null || string==="undefined" || string==="") return ""
   const fnmemo = get_pair(alphabet)(steps)
   const result = string.split("").map(ch => fnmemo(ch))
   return result.join("")
@@ -161,9 +161,9 @@ export const get_insert_form = (query, fnencrypt) => {
   if(query.table) form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("fields")
-  query.fields.forEach( field => form.append(`queryparts[${key}][${fnencrypt(field.f)}]`, fnencrypt(field.v.toString())))
+  query.fields.forEach( field => form.append(`queryparts[${key}][${fnencrypt(field.f)}]`, field.v ? fnencrypt(field.v.toString()) : "" ))
 
-  query.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, fnencrypt(prop.v.toString())))
+  query.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, prop.v ? fnencrypt(prop.v.toString()) : "" ))
   return form
 
 }

@@ -9,7 +9,6 @@ export const get_obj_update = (objparam={fields:{},keys:[]},dbfields=[])=>{
     .set_table(_TABLE)
     .add_extra("autosysfields", 1)
     .add_field("update_platform", "3")
-    .add_extra("codecache", db.select("codecache"))
 
   if(!is_defined(objparam.keys)) return null
   //evita que se actualicen todos los registros que no son una entidad
