@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {useParams} from "react-router-dom"
+import {useHistory, useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {async_get_by_id, async_deletelogic} from "modules/adm-app-product/async/async_repository"
 import {seldisplay} from "modules/common/options"
@@ -28,20 +28,20 @@ const formdefault = {
 
 function ActionDeleteLogic(){
 
-  const {id} = useParams()
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
   const [issubmitting, set_issubmitting] = useState(false)
   const [isdeleted, set_isdeleted] = useState(false)
   const [formdata, set_formdata] = useState(formdefault)
 
+  const history = useHistory()
+  const {id} = useParams()
+
   const before_submit = () => {}
 
-  const async_refresh = async () => {
-    await async_onload()
-  }
+  const async_refresh = async () => await async_onload()
 
-  const on_submit = async evt => {
+  const on_submit = useCallback(async evt => {
     evt.preventDefault()
     set_issubmitting(true)
     set_error("")
@@ -52,7 +52,7 @@ function ActionDeleteLogic(){
     try {
       const r = await async_deletelogic(formdata)
       set_success("Num regs deleted: ".concat(r))
-      await async_onload()
+      history.push("/admin/products")
     }
     catch(error){
       set_error(error)
@@ -60,7 +60,7 @@ function ActionDeleteLogic(){
     finally{
       set_issubmitting(false)
     }
-  }
+  },[])
 
   const async_onload = useCallback(async () => {
     set_issubmitting(true)
@@ -85,7 +85,7 @@ function ActionDeleteLogic(){
   },[])
 
   return {
-    breadscrumb: MODCONFIG.SCRUMBS.GENERIC,
+    scrumbs: MODCONFIG.SCRUMBS.GENERIC,
     success,
     error,
     formdata,

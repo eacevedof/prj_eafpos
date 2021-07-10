@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef} from "react"
-import {useParams} from "react-router-dom"
+import React, {useState, useEffect, useRef, useCallback} from "react"
+import {useHistory, useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import { is_empty } from "helpers/functions";
 import {async_get_by_id, async_delete} from "modules/adm-app-product/async/async_repository"
@@ -29,69 +29,56 @@ const formdefault = {
 
 function ActionDelete(){
 
-  const {id} = useParams()
   const [issubmitting, set_issubmitting] = useState(false)
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
-  const refcode = useRef(null)
-  const [isdeleted, set_isdeleted] = useState(false)
-
   const [formdata, set_formdata] = useState(formdefault)
 
-  const before_submit = () => {}
+  const history = useHistory()
+  const {id} = useParams()
+  const refcode = useRef(null)
 
-  const async_refresh = async () => {
-    await async_onload()
-  }
-
-  const on_submit = async (evt)=>{
-    console.log("product.delete.on_submit.formdata:",formdata)
-    evt.preventDefault()
-
-    set_issubmitting(true)
-    set_error("")
-    set_success("")
-    //hacer insert y enviar fichero
-    before_submit()
-
-    try {
-      const r = await async_delete(formdata)
-      console.log("product.delete.on_submit.r",r)
-      set_success("Num regs deleted: ".concat(r))
-      //async_onload()
-      set_isdeleted(true)
-      refcode.current.focus()
-    }
-    catch (error) {
-      set_error(error)
-    }
-    finally {
-      set_issubmitting(false)
-    }
-  } // on_submit
-
-  const async_onload = async () => {
+  const async_onload = useCallback(async () => {
     set_issubmitting(true)
     try {
       const r = await async_get_by_id(id)
-
-      console.log("product.delete.onload.r",r)
       const tmpform = {...formdata, ...r}
-      console.log("product.delete.onload.tmpform",tmpform)
       set_formdata(tmpform)
       if(is_empty(r)){
         set_error("Product not found")
-        set_isdeleted(true)
       }
     }
     catch (error) {
       set_error(error)
     }
     finally {
-      console.log("product.delete.onload.formdata:",formdata)
       set_issubmitting(false)
     }
-  }
+  },[])
+
+  const async_refresh = async () => await async_onload()
+
+  const before_submit = () => {}
+
+  const on_submit = useCallback(async evt => {
+    evt.preventDefault()
+
+    set_issubmitting(true)
+    set_error("")
+    set_success("")
+
+    try {
+      before_submit()
+      const r = await async_delete(formdata)
+      set_success("Num regs deleted: ".concat(r))
+      history.push("/admin/products")
+    }
+    catch (error) {
+      set_error(error)
+      set_issubmitting(false)
+    }
+
+  },[formdata]) //on_submit
 
   useEffect(()=>{
     async_onload()
@@ -104,13 +91,12 @@ function ActionDelete(){
     error,
     refcode,
     formdata,
+    issubmitting,
+    seldisplay,
 
     on_submit,
-    issubmitting,
     async_refresh,
-    seldisplay,
   }
-  
 }
 
 export default ActionDelete;
