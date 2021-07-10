@@ -1,5 +1,5 @@
 import {is_defined } from "helpers/functions"
-import apify from "providers/apify"
+import apify from "helpers/providers/apify"
 import {get_obj_list, get_one_by_uuid} from "./queries/query_table"
 
 export const async_get_onbe_by_uuid = async uuid => {

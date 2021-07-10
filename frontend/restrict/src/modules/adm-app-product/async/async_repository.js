@@ -1,7 +1,7 @@
 import { is_defined, get_pagefrom } from "helpers/functions"
 
-import apify from "providers/apify"
-import apiup from "providers/apiupload"
+import apify from "helpers/providers/apify"
+import apiup from "helpers/providers/apiupload"
 
 import {get_filteror} from "helpers/filter"
 import {get_filtercmd, is_command} from "helpers/filtercmd"

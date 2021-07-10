@@ -1,7 +1,7 @@
-import {APIFY_BASEURL} from "../config/constants"
+import {APIFY_BASEURL} from "../../config/constants"
 import axios from "axios"
-import {is_undefined, get_error} from "../helpers/functions"
-import db from "../helpers/localdb"
+import {is_undefined, get_error} from "../functions"
+import db from "../localdb"
 
 const Apifyauth = {
 

@@ -1,5 +1,5 @@
 import select from "helpers/query/query_select"
-import apify from "providers/apify"
+import apify from "helpers/providers/apify"
 import {is_defined, is_undefined} from "helpers/functions"
 
 const _query = {

@@ -1,5 +1,5 @@
 import {is_defined } from "helpers/functions"
-import apify from "providers/apify"
+import apify from "helpers/providers/apify"
 import {get_user_by_tpvcode, get_is_ssesion, get_insert_uuid, get_session_id} from "./queries/query_tpvcode"
 import db from "helpers/localdb"
 
