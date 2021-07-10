@@ -21,3 +21,8 @@
   - entrar en el contenedor de php
   - dentro de la carpeta **console** ejecutar:
     - `php run.php --class=App.Services.Kafka.LogConsumerService`
+  
+### helpers
+```sql
+SELECT  FROM_UNIXTIME(timest/1000,'%Y-%m-%d %H:%i:%s') timest, TRIM(message) m , TRIM(title) t FROM app_log ORDER BY id DESC
+```
