@@ -64,7 +64,7 @@ function ActionUpdate(){
     const tmpform = { ...formdata }
     tmpform[id] = elem.value.includes("C:\\fakepath\\") ? "" : elem.value
     updatefile(elem)
-    console.log("product.updatform.changed", tmpform)
+    //console.log("product.updatform.changed", tmpform)
     set_formdata(tmpform)
   },[formdata])
 
