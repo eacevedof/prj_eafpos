@@ -185,12 +185,12 @@ export const get_update_form = (query, fnencrypt) => {
   if(query.table) form.append(`queryparts[${key}]`, value)
 
   key = fnencrypt("fields")
-  query.fields.forEach( field => form.append(`queryparts[${key}][${fnencrypt(field.f)}]`, fnencrypt(field.v)))
+  query.fields.forEach( field => form.append(`queryparts[${key}][${fnencrypt(field.f)}]`, field.v ? fnencrypt(field.v.toString()) : "" ))
 
   key = fnencrypt("where")
   query.where.forEach((strcond,i) => form.append(`queryparts[${key}][${i}]`, fnencrypt(strcond)))
 
-  query.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, fnencrypt(prop.v)))
+  query.extras.forEach( prop => form.append(`queryparts[${fnencrypt(prop.p)}]`, prop.v ? fnencrypt(prop.v.toString()) : "" ))
 
   return form
 }
