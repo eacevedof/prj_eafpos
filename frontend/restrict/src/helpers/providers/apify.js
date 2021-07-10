@@ -144,7 +144,7 @@ const Apify = {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objdelete.get_self()
         window.lg("query-delete",query)
-        objform = get_update_form(query, fnencrypt)
+        objform = get_delete_form(query, fnencrypt)
         objform.append("apify-enckey", encrypt.key)
       }
       else

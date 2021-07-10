@@ -26,6 +26,7 @@ export const get_select_form = (query, fnencrypt) => {
 
   const form = new FormData()
 
+  form.append("action","select")
   if (query.cache_time) {
     key = fnencrypt("cache_time")
     value = fnencrypt(query["cache_time"].toString())
@@ -92,9 +93,6 @@ export const get_delete_form = (query, fnencrypt) => {
   let value = ""
 
   const form = new FormData()
-
-  key = fnencrypt("cache_time")
-  value = fnencrypt(query["cache_time"].toString())
 
   form.append("action","delete")
   form.append(`queryparts[${key}]`, value)
