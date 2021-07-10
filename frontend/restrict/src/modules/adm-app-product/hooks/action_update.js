@@ -59,41 +59,25 @@ function ActionUpdate(){
   }
 
   const updateform = useCallback(evt => {
-    //console.log("updateform.e.target",e.target)
-    //pr("updateform.evt.target",evt.target)
     const elem = evt.target
-    console.log("updateform.element:",elem)
-
     const id = get_id(elem)
-    console.log("updateform.id",id)
-
     const tmpform = { ...formdata }
-    //pr(elem.value,"v")
-
     tmpform[id] = elem.value.includes("C:\\fakepath\\") ? "" : elem.value
     updatefile(elem)
-
-    console.log("updateform.value tmpform:",tmpform)
+    console.log("product.updatform.changed", tmpform)
     set_formdata(tmpform)
-    console.log("updateform.formdata",formdata)
   },[formdata])
 
   const before_submit = () => {
-    //pr(formdata.url_image.size);pr(maxsize)
-    
     if(isset(inputfile) && is_defined(inputfile.size)){
       if(inputfile.size > maxsize)
-        //throw new Error(`File is larger than allowed. File:${inputfile.size}, allowed:${maxsize}`)
         throw `File ${inputfile.name} is larger than allowed. File size: ${inputfile.size}, Max allowed: ${maxsize}`
     }
   }
 
-  const async_refresh = async () => {
-    await async_onload()
-  }
+  const async_refresh = async () => await async_onload()
 
-  const on_submit = async (evt)=>{
-    console.log("product.update.on_submit.formdata:",formdata)
+  const on_submit = useCallback(async evt => {
     evt.preventDefault()
 
     set_issubmitting(true)
@@ -101,15 +85,12 @@ function ActionUpdate(){
     set_success("")
     
     try{
-      console.log("product.update.on_submit.inputfile",inputfile)
-      //hacer insert y enviar fichero
       before_submit()
 
       const url_image = inputfile ? inputfile : formdata.url_image
+      console.log("product.update.on_submit.formdata:",formdata)
       const r = await async_update({...formdata, url_image})
 
-      console.log("product.update.on_submit.r",r)
- 
       set_success("Num regs updated: ".concat(r))
       async_onload()
       set_inputfile(null)
@@ -123,31 +104,27 @@ function ActionUpdate(){
     finally{
       set_issubmitting(false)
     }
-  } // on_submit
+  },[formdata])// on_submit
 
-  const async_onload = async () => {
+  const async_onload = useCallback(async () => {
     set_issubmitting(true)
     try {
       const r = await async_get_by_id(id)
-      console.log("product.update.onload.r",r)
       const temp = {...formdata, ...r}
       set_formdata(temp)
 
       const size = await async_get_maxuploadsize()
       set_maxsize(size)
-
-      console.log("product.update.onload.formdata:",formdata)
       set_issubmitting(false)
       refcode.current.focus()      
     }
     catch (error) {
-      console.log("product.update.onload.error",error)
       set_error(error)
     }
     finally {
       set_issubmitting(false)
     }
-  }
+  }, [])
 
   useEffect(()=>{
     async_onload()
@@ -159,8 +136,9 @@ function ActionUpdate(){
     on_submit,
     success, error,
     refcode, formdata, updateform,
-    issubmitting, async_refresh, seldisplay, reffile,
-    maxsize, inputfile
+    issubmitting, seldisplay, reffile,
+    maxsize, inputfile,
+    async_refresh
   }
 }
 
