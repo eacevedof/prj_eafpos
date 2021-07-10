@@ -1,5 +1,4 @@
 import React from "react"
-import {MODCONFIG} from "modules/adm-app-product/config/config"
 
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
