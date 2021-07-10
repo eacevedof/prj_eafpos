@@ -94,7 +94,6 @@ export const async_clone = async (formdata)=>{
   const r = await apify.async_insert(objquery)
 
   if(is_defined(r.error)) throw r.error
-
   return r
 }
 
@@ -111,7 +110,6 @@ export const async_deletelogic = async (formdata) => {
   const r = await apify.async_deletelogic(objquery)
   
   if(is_defined(r.error)) throw r.error
-  
   return r
 }
 
@@ -126,17 +124,14 @@ export const async_multidelete = async arkeys => {
   const r = await apify.async_delete(objquery)
 
   if(is_defined(r.error)) throw r.error
-
   return r
 }
 
 export const async_multideletelogic = async arkeys => {
   const objparam = {key:"id", keys:arkeys}
   const objquery = get_obj_multideletelogic(objparam)
-  //pr(objquery,"objquery")
   const r = await apify.async_deletelogic(objquery)
 
   if(is_defined(r.error)) throw r.error
-
   return r
 }
