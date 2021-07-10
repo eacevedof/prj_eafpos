@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 
 import {useParams} from "react-router-dom"
@@ -41,11 +41,9 @@ function ActionDetail(){
   const [success, set_success] = useState("")
   const [formdata, set_formdata] = useState(formdefault)
 
-  const async_refresh = async () => {
-    await async_onload()
-  }
+  const async_refresh = async () => await async_onload()
 
-  const async_onload = async () => {
+  const async_onload = useCallback(async () => {
     set_issubmitting(true)
     set_error("")
     set_success("")
@@ -70,7 +68,7 @@ function ActionDetail(){
     finally{
       set_issubmitting(false)
     }
-  }
+  },[])
 
   useEffect(()=>{
     async_onload()

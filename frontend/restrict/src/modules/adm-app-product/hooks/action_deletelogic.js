@@ -56,11 +56,9 @@ function ActionDeleteLogic(){
     }
     catch(error){
       set_error(error)
-    }
-    finally{
       set_issubmitting(false)
     }
-  },[])
+  },[formdata])
 
   const async_onload = useCallback(async () => {
     set_issubmitting(true)

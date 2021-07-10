@@ -2,20 +2,21 @@ import React from "react"
 import Navbar from "components/common/navbar"
 import AlertSimple from 'components/bootstrap/alert/alertsimple'
 import ToastSimple from 'components/bootstrap/toast/toastsimple'
-import Breadscrumb from 'components/bootstrap/breadscrumb/breadscrumb'
 import RefreshAsync from 'components/bootstrap/button/refreshasync'
 import SubmitAsync from 'components/bootstrap/button/submitasync'
 import Sysfields from "components/common/sysfields"
 import Footer from "components/common/footer"
 import ActionDeleteLogic from "modules/adm-app-product/hooks/action_deletelogic"
+import Breadscrumb from "components/bootstrap/breadscrumb/breadscrumb"
 
 function ProductDeleteLogic(){
-
   const {
     error, success,
     issubmitting, isdeleted,
-    breadscrumb, seldisplay, formdata,
-    on_submit, async_refresh
+    scrumbs, seldisplay, formdata,
+
+    on_submit,
+    async_refresh
   } = ActionDeleteLogic()
 
   return (
@@ -24,7 +25,7 @@ function ProductDeleteLogic(){
       <main className="container">
         
         <h1 className="mt-2 mb-2">Product delete log.</h1>
-        <Breadscrumb urls={breadscrumb}/>
+        <Breadscrumb urls={scrumbs}/>
 
         <form className="row g-3" onSubmit={on_submit}>
           {success && <AlertSimple message={success} type="success"  />}
