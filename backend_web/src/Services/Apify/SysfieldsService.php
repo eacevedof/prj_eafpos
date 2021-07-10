@@ -47,7 +47,7 @@ final class SysfieldsService extends AppService
         $this->dbname = $dbname;
         $this->action = $action;
 
-        $codecache = $params[self::UUID_FIELD] ?? "";
+        $codecache = $params[self::USER_UUID_KEY] ?? "";
         $this->codecachevalue = str_replace(["'","%"," "],"", $codecache);
 
         $ctx = new ComponentContext($_ENV["APP_CONTEXTS"], $idContext);
