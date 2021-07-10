@@ -118,7 +118,9 @@ final class RedisComponent
 
     public function cache_del_all(string $table): void
     {
-        $keys = self::$redis->keys("query-*-$table-*");
+        $keys1 = self::$redis->keys("query-$table-*");
+        $keys = self::$redis->keys("query-count-$table-*");
+        $keys = array_merge($keys1,$keys);
         foreach ($keys as $key)
             self::$redis->del($key);
     }
