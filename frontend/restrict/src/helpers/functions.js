@@ -97,7 +97,7 @@ export const get_localip = () => {
 
 export const get_sanitized = value => {
   if(!value) return ""
-  return value.replaceAll("'","\'")
+  return value.toString().replaceAll("'","\'")
 }
 
 export const add = function (obj, toadd) {

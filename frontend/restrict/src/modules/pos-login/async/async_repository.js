@@ -22,7 +22,7 @@ export const async_in_session = async () => {
   const objquery = get_is_ssesion(token, sessionid, usersession)
   const r = await apify.async_get_list(objquery)
   if(is_defined(r.error)) throw r.error
-  return r
+  return r.foundrows
 }
 
 export const async_insert_rnd = async (token, usermini) => {

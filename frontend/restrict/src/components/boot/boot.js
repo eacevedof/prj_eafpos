@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react"
+import React, {useCallback, useContext, useEffect} from "react"
 import {GlobalContext} from "components/context/global_context"
 import Session from "components/common/session"
 import db from "helpers/localdb"
@@ -28,7 +28,7 @@ function Boot() {
 
   const {set_apifytoken, set_errorg} = useContext(GlobalContext)
 
-  const async_onload = async () => {
+  const async_onload = useCallback(async () => {
     let apifytoken = ""
     const islogged = await async_is_tokenized()
 
@@ -49,11 +49,12 @@ function Boot() {
     
     set_apifytoken(apifytoken)
 
-  }// async_onload
+  }, [])// async_onload
 
   useEffect(() => {
-    console.log("boot.useeffect")
     async_onload()
+    console.log("boot.useeffect")
+
   }, []);
 
   return (
