@@ -9,16 +9,18 @@
  */
 namespace App\Services\Apify\Rw;
 
-use PHPUnit\Runner\Exception;
 use TheFramework\Components\Db\Context\ComponentContext;
 use TheFramework\Components\Db\ComponentCrud;
 use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
 use App\Services\Apify\SysfieldsService;
+use App\Traits\CacheQueryTrait;
 
 final class WriterService extends AppService
 {
+    use CacheQueryTrait;
+
     private const ACTIONS = ["insert", "update", "delete", "deletelogic", "drop", "alter"];
 
     private array $fields;
@@ -30,12 +32,15 @@ final class WriterService extends AppService
     private $oBehav;
     
     private string $action;
+    private string $maintable;
 
     public function __construct(string $idcontext="", string $dbalias="", string $table="")
     {
-        if(!$idcontext) throw new Exception("No context provided");
-        if(!$dbalias) throw new Exception("No db-alias received");
-        if(!$table) throw new Exception("No table received");
+        if(!$idcontext) $this->_exeption("no context provided");
+        if(!$dbalias) $this->_exeption("no db-alias received");
+        
+        //table puede ir vacio si se desea ejecutar una consulta en crudo (raw)
+        //if(!$table) $this->_exeption("no table received");
 
         $this->idcontext = $idcontext;
 
@@ -45,60 +50,15 @@ final class WriterService extends AppService
         $this->oBehav = new SchemaBehaviour($db);
         $this->fields = array_column($this->oBehav->get_fields($table, $this->dbname),"field_name");
     }
-        
-    private function _get_parsed_tosql(array $arParams)
-    {
-        if(!in_array($action = $this->action, self::ACTIONS)) 
-            return $this->add_error("action: {$action} not found!");
-
-        switch ($action) {
-            case "insert":
-                $this->_unset_sysfields($arParams, $action);
-                $sql = $this->_get_insert_sql($arParams);
-            break;
-            case "update":
-                $this->_unset_sysfields($arParams, $action);
-                $sql = $this->_get_update_sql($arParams);
-            break;   
-            case "delete":
-                $sql = $this->_get_delete_sql($arParams);
-            break;
-            case "deletelogic":
-                $this->_unset_sysfields($arParams, $action);
-                $sql = $this->__get_deletelogic_sql($arParams);
-            break;
-            default:
-                return $this->add_error("_get_parsed_tosql","action: $action not implemented!");
-        }
-        return $sql;
-    }
-
-    private function _add_sysfields(ComponentCrud $oCrud, $arParams): void
-    {
-        if(!$table = $arParams["table"]) return;
-        if(!($arParams["autosysfields"] ?? false)) return;
-
-        $sysfields = (
-            new SysfieldsService($table, $this->idcontext, $this->dbname, $this->action, $arParams)
-        )->get();
-
-        foreach ($sysfields as $sysfield=>$value)
-        {
-            if(in_array($this->action, ["update", "deletelogic"]))
-                $oCrud->add_update_fv($sysfield, $value);
-            if($this->action==="insert")
-                $oCrud->add_insert_fv($sysfield, $value);
-        }
-    }
 
     /**
      * elimina posibles escrituras directas en otros campos
-     * @param $arParams
+     * @param $qparams
      * @param $action
      */
-    private function _unset_sysfields(&$arParams, $action)
+    private function _unset_sysfields(&$qparams, $action): void
     {
-        $issysfields = $arParams["autosysfields"] ?? 0;
+        $issysfields = $qparams["autosysfields"] ?? 0;
         if($issysfields)
         {
             switch ($action) {
@@ -116,26 +76,25 @@ final class WriterService extends AppService
             }
 
             foreach ($arUnset as $fieldname)
-                if (isset($arParams["fields"][$fieldname]))
-                    unset($arParams["fields"][$fieldname]);
+                if (isset($qparams["fields"][$fieldname]))
+                    unset($qparams["fields"][$fieldname]);
         }
     }
 
-    private function _get_insert_sql($arParams)
+    private function _get_insert_sql(array $qparams): string
     {
-        if(!isset($arParams["table"])) return $this->add_error("_get_insert_sql no table");
-        if(!isset($arParams["fields"])) return $this->add_error("_get_insert_sql no fields");
+        if(!isset($qparams["fields"])) $this->_exeption("_get_insert_sql no fields");
 
         $oCrud = new ComponentCrud();
-        $oCrud->set_comment(str_replace(["*","/",],"",trim($arParams["comment"])));
-        $oCrud->set_table($arParams["table"]);
-        foreach($arParams["fields"] as $sFieldName=>$sFieldValue)
+        $oCrud->set_comment(str_replace(["*","/",],"",trim($qparams["comment"])));
+        $oCrud->set_table($qparams["table"]);
+        foreach($qparams["fields"] as $sFieldName=>$sFieldValue)
             if($sFieldValue==="null")
                 $oCrud->add_insert_fv($sFieldName,null,0);
             else
                 $oCrud->add_insert_fv($sFieldName,$sFieldValue);
 
-        $this->_add_sysfields($oCrud, $arParams);
+        $this->_add_sysfields($oCrud, $qparams);
         if(in_array("update_date",$this->fields))
             $oCrud->add_insert_fv("update_date",null,0);
 
@@ -144,31 +103,30 @@ final class WriterService extends AppService
         return $oCrud->get_sql();
     }
 
-    private function _get_update_sql($arParams)
+    private function _get_update_sql(array $qparams): string
     {
-        if(!isset($arParams["table"])) return $this->add_error("_get_update_sql no table");
-        if(!isset($arParams["fields"])) return $this->add_error("_get_update_sql no fields");
-        //if(!isset($arParams["pks"])) return $this->add_error("_get_update_sql no pks");
+        if(!isset($qparams["fields"])) $this->_exeption("_get_update_sql no fields");
+        //if(!isset($qparams["pks"])) return $this->add_error("_get_update_sql no pks");
 
         $oCrud = new ComponentCrud();
-        $oCrud->set_comment(str_replace(["*","/",],"",$arParams["comment"]));
-        $oCrud->set_table($arParams["table"]);
+        $oCrud->set_comment(str_replace(["*","/",],"",$qparams["comment"]));
+        $oCrud->set_table($qparams["table"]);
 
-        foreach($arParams["fields"] as $sFieldName=>$sFieldValue)
+        foreach($qparams["fields"] as $sFieldName=>$sFieldValue)
             if($sFieldValue==="null")
                 $oCrud->add_update_fv($sFieldName,null,0);
             else
                 $oCrud->add_update_fv($sFieldName,$sFieldValue);
 
-        $this->_add_sysfields($oCrud, $arParams);
+        $this->_add_sysfields($oCrud, $qparams);
 
-        if(isset($arParams["pks"]))
-            foreach($arParams["pks"] as $sFieldName=>$sFieldValue)
+        if(isset($qparams["pks"]))
+            foreach($qparams["pks"] as $sFieldName=>$sFieldValue)
                 $oCrud->add_pk_fv($sFieldName,$sFieldValue);
 
 
-        if(isset($arParams["where"]))
-            foreach($arParams["where"] as $sWhere)
+        if(isset($qparams["where"]))
+            foreach($qparams["where"] as $sWhere)
                 $oCrud->add_and($sWhere);
 
 
@@ -178,15 +136,13 @@ final class WriterService extends AppService
         return $sql;
     }//_get_update_sql
 
-    private function _get_delete_sql($arParams)
+    private function _get_delete_sql(array $qparams): string
     {
-        if(!isset($arParams["table"])) return $this->add_error("_get_delete_sql no table");
-
         $oCrud = new ComponentCrud();
-        $oCrud->set_comment(str_replace(["*","/",],"",$arParams["comment"]));
-        $oCrud->set_table($arParams["table"]);
-        if(isset($arParams["where"]))
-            foreach($arParams["where"] as $sWhere)
+        $oCrud->set_comment(str_replace(["*","/",],"",$qparams["comment"]));
+        $oCrud->set_table($qparams["table"]);
+        if(isset($qparams["where"]))
+            foreach($qparams["where"] as $sWhere)
             {
                 $oCrud->add_and($sWhere);
             }        
@@ -196,28 +152,26 @@ final class WriterService extends AppService
         return $sql;      
     }//_get_delete_sql
 
-    private function __get_deletelogic_sql($arParams)
+    private function _get_deletelogic_sql(array $qparams): string
     {
-        if(!isset($arParams["table"])) return $this->add_error("__get_deletelogic_sql no table");
-
         $oCrud = new ComponentCrud();
-        $oCrud->set_comment(str_replace(["*","/",],"",$arParams["comment"]));
-        $oCrud->set_table($arParams["table"]);
-        $this->_add_sysfields($oCrud, $arParams);
+        $oCrud->set_comment(str_replace(["*","/",],"",$qparams["comment"]));
+        $oCrud->set_table($qparams["table"]);
+        $this->_add_sysfields($oCrud, $qparams);
 
-        $oCrud->add_update_fv("delete_platform",$arParams["fields"]["delete_platform"]);
+        $oCrud->add_update_fv("delete_platform",$qparams["fields"]["delete_platform"]);
         //como el registro tiene el trigger del update si quiero marcar el softdelete tambien actualizaría el update_date
         //si paso en formato de tags obligo que el update_date=update_date es decir se mantenga el update_date anterior
         $oCrud->add_update_fv("update_date","%%update_date%%",0);
 
-        if(isset($arParams["pks"]))
-            foreach($arParams["pks"] as $sFieldName=>$sFieldValue)
+        if(isset($qparams["pks"]))
+            foreach($qparams["pks"] as $sFieldName=>$sFieldValue)
             {
                 $oCrud->add_pk_fv($sFieldName,$sFieldValue);
             }
 
-        if(isset($arParams["where"]))
-            foreach($arParams["where"] as $sWhere)
+        if(isset($qparams["where"]))
+            foreach($qparams["where"] as $sWhere)
             {
                 $oCrud->add_and($sWhere);
             }
@@ -226,27 +180,66 @@ final class WriterService extends AppService
         $sql = $oCrud->get_sql();
         //pr($sql);die;
         return $sql;
-    }//__get_deletelogic_sql
+    }//_get_deletelogic_sql
 
 //==================================
 //      PUBLIC
 //==================================
-    public function write_raw($sql)
+    public function write_raw(string $sql)
     {
-        if(!$sql) return [];
-        if(!$this->isError)
-        {
-            $r = $this->oBehav->write_raw($sql);
-            if($this->oBehav->is_error())
-                $this->add_error($this->oBehav->get_errors());
-            return $r;
+        $r = $this->oBehav->write_raw($sql);
+        if($this->oBehav->is_error()) {
+            $this->add_error($this->oBehav->get_errors());
+            return -1;
         }
-        return -1;
+        //si todo ha ido bien refresco cache
+        $this->delete_by_table($this->maintable);
+        return $r;
     }
-    
-    public function write($arParams)
+
+    private function _add_sysfields(ComponentCrud $oCrud, $qparams): void
     {
-        $sql = $this->_get_parsed_tosql($arParams, $this->action);
+        if(!($qparams["autosysfields"] ?? false)) return;
+
+        $sysfields = (
+            new SysfieldsService($this->maintable, $this->idcontext, $this->dbname, $this->action, $qparams)
+        )->get();
+
+        foreach ($sysfields as $sysfield=>$value)
+        {
+            if(in_array($this->action, ["update", "deletelogic"]))
+                $oCrud->add_update_fv($sysfield, $value);
+            if($this->action==="insert")
+                $oCrud->add_insert_fv($sysfield, $value);
+        }
+    }
+
+    private function _get_parsed_tosql(array $qparams): string
+    {
+        switch ($action = $this->action)
+        {
+            case "insert":
+                $this->_unset_sysfields($qparams, $action);
+                return $this->_get_insert_sql($qparams);
+            case "update":
+                $this->_unset_sysfields($qparams, $action);
+                return $this->_get_update_sql($qparams);
+            case "delete":
+                return $this->_get_delete_sql($qparams);
+            case "deletelogic":
+                $this->_unset_sysfields($qparams, $action);
+                return $this->_get_deletelogic_sql($qparams);
+        }
+    }
+
+    public function write(array $qparams)
+    {
+        if(!is_array($qparams)) $this->_exeption("write params is not an array");
+        if(!$this->maintable = $qparams["table"]) $this->_exeption("missing write table");
+        if(!in_array($action = $this->action, self::ACTIONS))
+            $this->_exeption("action {$action} not recognized!");
+
+        $sql = $this->_get_parsed_tosql($qparams, $this->action);
         return $this->write_raw($sql);
     }
 
