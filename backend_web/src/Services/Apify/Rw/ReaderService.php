@@ -16,27 +16,27 @@ use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
 use App\Traits\CacheQueryTrait;
 
-class ReaderService extends AppService
+final class ReaderService extends AppService
 {
     use CacheQueryTrait;
 
-    private $idContext;
-    private $sDb;
+    private $idcontext;
+    private $dbname;
     
     private $oContext;
     private $oBehav;
-    private $sSQL;
+    private $sql;
     private $iFoundrows;
-    private $fCacheTime = 0;
+    private $cachettl = 0;
 
-    public function __construct(string $idContext="", string $sDbalias="")
+    public function __construct(string $idcontext="", string $dbalias="")
     {
-        $this->idContext = $idContext;
+        $this->idcontext = $idcontext;
 
-        if(!$this->idContext) return $this->add_error("Error in context: $idContext");
-        $this->oContext = new ComponentContext($_ENV["APP_CONTEXTS"], $idContext);
-        $this->sDb = $this->oContext->get_dbname($sDbalias);
-        $oDb = DbFactory::get_dbobject_by_ctx($this->oContext,$this->sDb);
+        if(!$this->idcontext) return $this->add_error("Error in context: $idcontext");
+        $this->oContext = new ComponentContext($_ENV["APP_CONTEXTS"], $idcontext);
+        $this->dbname = $this->oContext->get_dbname($dbalias);
+        $oDb = DbFactory::get_dbobject_by_ctx($this->oContext, $this->dbname);
         if($oDb->is_error()) return $this->add_error($oDb->get_errors());
 
         $this->oBehav = new SchemaBehaviour($oDb);
@@ -48,17 +48,17 @@ class ReaderService extends AppService
         if(!isset($arParams["fields"]) || !is_array($arParams["fields"])) $this->add_error("get_sql no fields");
         if($this->isError) return;
 
-        $oCrud = new ComponentCrud();
-        if(isset($arParams["comment"])) $oCrud->set_comment($arParams["comment"]);
-        $oCrud->set_table($arParams["table"]);
-        if(isset($arParams["distinct"])) $oCrud->is_distinct($arParams["distinct"]);
-        if(isset($arParams["foundrows"])) $oCrud->is_foundrows($arParams["foundrows"]);
+        $crud = new ComponentCrud();
+        if(isset($arParams["comment"])) $crud->set_comment($arParams["comment"]);
+        $crud->set_table($arParams["table"]);
+        if(isset($arParams["distinct"])) $crud->is_distinct($arParams["distinct"]);
+        if(isset($arParams["foundrows"])) $crud->is_foundrows($arParams["foundrows"]);
 
-        $oCrud->set_getfields($arParams["fields"]);
-        $oCrud->set_joins($arParams["joins"]??[]);
-        $oCrud->set_and($arParams["where"]??[]);
-        $oCrud->set_groupby($arParams["groupby"]??[]);
-        $oCrud->set_having($arParams["having"]??[]);
+        $crud->set_getfields($arParams["fields"]);
+        $crud->set_joins($arParams["joins"] ?? []);
+        $crud->set_and($arParams["where"] ?? []);
+        $crud->set_groupby($arParams["groupby"] ?? []);
+        $crud->set_having($arParams["having"] ?? []);
 
         $arTmp = [];
         if(isset($arParams["orderby"]))
@@ -69,40 +69,40 @@ class ReaderService extends AppService
                 $arTmp[$arField[0]] = $arField[1] ?? "ASC";
             }
         }
-        $oCrud->set_orderby($arTmp);
+        $crud->set_orderby($arTmp);
 
         if(isset($arParams["limit"]["perpage"]))
-            $oCrud->set_limit($arParams["limit"]["perpage"] ?? 1000,$arParams["limit"]["regfrom"]??0);
+            $crud->set_limit($arParams["limit"]["perpage"] ?? 1000,$arParams["limit"]["regfrom"]??0);
 
-        $oCrud->get_selectfrom();
-        $sql =  $oCrud->get_sql();
+        $crud->get_selectfrom();
+        $sql =  $crud->get_sql();
         return $sql;
     }
 
-    public function read_raw($sSQL): array
+    public function read_raw($sql): array
     {
-        if(!$sSQL) return [];
-        $this->sSQL = $sSQL;
+        if(!$sql) return [];
+        $this->sql = $sql;
 
-        if($ttl = $this->fCacheTime) {
-            if($r = $this->get_cached($sSQL)) {
-                $this->iFoundrows = $this->get_cachedcount($sSQL);
+        if($ttl = $this->cachettl) {
+            if($r = $this->get_cached($sql)) {
+                $this->iFoundrows = $this->get_cachedcount($sql);
                 return $r;
             }
         }
 
-        $r = $this->oBehav->read_raw($sSQL);
+        $r = $this->oBehav->read_raw($sql);
         $this->iFoundrows = $this->oBehav->get_foundrows();
         if($this->oBehav->is_error()) {
-            if($ttl) $this->delete_all($sSQL);
+            if($ttl) $this->delete_all($sql);
             $this->logerr($errors = $this->oBehav->get_errors(),"readservice.read_raw");
             $this->add_error($errors);
             return $r;
         }
 
         if($ttl) {
-            $this->addto_cache($sSQL, $r, $ttl);
-            $this->addto_cachecount($sSQL, $this->iFoundrows, $ttl);
+            $this->addto_cache($sql, $r, $ttl);
+            $this->addto_cachecount($sql, $this->iFoundrows, $ttl);
         }
         return $r;
     }
@@ -114,10 +114,10 @@ class ReaderService extends AppService
             return $this->add_error($error);
         }
 
-        $this->fCacheTime = $arParams["cache_time"] ?? 0;
-        $sSQL = $this->_get_parsed_tosql($arParams);
-        $this->sSQL = $sSQL;
-        $r = $this->read_raw($sSQL);
+        $this->cachettl = $arParams["cache_time"] ?? 0;
+        $sql = $this->_get_parsed_tosql($arParams);
+        $this->sql = $sql;
+        $r = $this->read_raw($sql);
         return $r;
     }
 
