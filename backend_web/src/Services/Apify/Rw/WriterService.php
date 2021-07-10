@@ -19,7 +19,6 @@ use App\Services\Apify\SysfieldsService;
 
 final class WriterService extends AppService
 {
-    private const USER_UUID_KEY = "useruuid";
     private const ACTIONS = ["insert", "update", "delete", "deletelogic", "drop", "alter"];
 
     private array $fields;
@@ -80,7 +79,7 @@ final class WriterService extends AppService
         if(!($arParams["autosysfields"] ?? false)) return;
 
         $sysfields = (
-            new SysfieldsService($table, $this->idcontext, $this->dbname, $this->action, $arParams[self::USER_UUID_KEY])
+            new SysfieldsService($table, $this->idcontext, $this->dbname, $this->action, $arParams)
         )->get();
 
         foreach ($sysfields as $sysfield=>$value)

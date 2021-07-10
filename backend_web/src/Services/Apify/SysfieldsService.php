@@ -19,9 +19,11 @@ final class SysfieldsService extends AppService
 {
     use CacheQueryTrait;
 
+    private const USER_UUID_KEY = "useruuid";
     private const USER_TABLE = "base_user";
-    private const USER_UUID_FIELD = "code_cache";
+    private const UUID_FIELD = "code_cache";
 
+    private array $params;
     private string $targettable;
     private string $codecachevalue;
     private string $action;
@@ -37,13 +39,16 @@ final class SysfieldsService extends AppService
     private const DELETE_FIELDS = ["delete_user","delete_date","delete_platform"];
     
     public function __construct(
-        string $targettable, string $idContext="", string $dbname="", string $action="", ?string $codecache=""
+        string $targettable, string $idContext="", string $dbname="", string $action="", array $params
     )
     {
+        $this->params = $params;
         $this->targettable = $targettable;
         $this->dbname = $dbname;
         $this->action = $action;
-        $this->codecachevalue = str_replace(["'","%"," "],"",$codecache??"");
+
+        $codecache = $params[self::UUID_FIELD] ?? "";
+        $this->codecachevalue = str_replace(["'","%"," "],"", $codecache);
 
         $ctx = new ComponentContext($_ENV["APP_CONTEXTS"], $idContext);
         $oDb = DbFactory::get_dbobject_by_ctx($ctx, $dbname);
@@ -63,7 +68,7 @@ final class SysfieldsService extends AppService
     private function _get_userid_from_db(): ?string
     {
         $table = self::USER_TABLE;
-        $field = self::USER_UUID_FIELD;
+        $field = self::UUID_FIELD;
         if(!$this->codecachevalue || $this->codecachevalue==="null") return null;
         $sql = "/*_get_userid_from_db*/ SELECT id FROM $table WHERE $field='$this->codecachevalue'";
         if($id = $this->get_cachedsingle($sql)) return $id;
@@ -88,11 +93,21 @@ final class SysfieldsService extends AppService
         }
     }
 
-    private function _get_platform(): string { return ""; }
+    private function _get_platform(): string 
+    { 
+        foreach ($this->params["fields"] ?? [] as $field => $value)
+        {
+            if(in_array($field,"insert_platform","update_platform", "delete_platform"))
+                return $value;
+        }
+        return "";
+    }
 
     private function _get_autofilled(): array
     {
+        //el inner de los campos por accion y los existentes en tabla
         $finalfields = $this->_get_final_fields();
+        
         foreach ($finalfields as $fieldname => $value) 
         {
             if(strstr($fieldname,"_date"))
@@ -104,7 +119,7 @@ final class SysfieldsService extends AppService
             if(strstr($fieldname,"_platform"))
                 $finalfields[$fieldname] = $this->_get_platform();
 
-            if($fieldname === self::USER_UUID_FIELD)
+            if($fieldname === self::UUID_FIELD)
                 $finalfields[$fieldname] = uniqid();
         }
         return $finalfields;
