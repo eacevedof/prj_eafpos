@@ -15,7 +15,6 @@ use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
 use App\Traits\CacheQueryTrait;
-use \Exception;
 
 final class ReaderService extends AppService
 {
@@ -44,28 +43,28 @@ final class ReaderService extends AppService
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     
-    private function _get_parsed_tosql($arParams)
+    private function _get_parsed_tosql(array $qparams): string
     {
-        if(!isset($arParams["table"])) throw new Exception("_get_parsed_tosql no table");
-        if(!isset($arParams["fields"]) || !is_array($arParams["fields"])) throw new Exception("_get_parsed_tosql no array fields");;
+        if(!isset($qparams["fields"]) || !is_array($qparams["fields"]))
+            $this->_exeption("invalid or empty fields in read params");
 
         $crud = new ComponentCrud();
-        if($arParams["comment"] ?? "") $crud->set_comment($arParams["comment"]);
+        if($qparams["comment"] ?? "") $crud->set_comment($qparams["comment"]);
 
-        $crud->set_table($this->maintable = $arParams["table"]);
-        if(isset($arParams["distinct"])) $crud->is_distinct($arParams["distinct"]);
-        if(isset($arParams["foundrows"])) $crud->is_foundrows($arParams["foundrows"]);
+        $crud->set_table($this->maintable = $qparams["table"]);
+        if(isset($qparams["distinct"])) $crud->is_distinct($qparams["distinct"]);
+        if(isset($qparams["foundrows"])) $crud->is_foundrows($qparams["foundrows"]);
 
-        $crud->set_getfields($arParams["fields"]);
-        $crud->set_joins($arParams["joins"] ?? []);
-        $crud->set_and($arParams["where"] ?? []);
-        $crud->set_groupby($arParams["groupby"] ?? []);
-        $crud->set_having($arParams["having"] ?? []);
+        $crud->set_getfields($qparams["fields"]);
+        $crud->set_joins($qparams["joins"] ?? []);
+        $crud->set_and($qparams["where"] ?? []);
+        $crud->set_groupby($qparams["groupby"] ?? []);
+        $crud->set_having($qparams["having"] ?? []);
 
         $arTmp = [];
-        if(isset($arParams["orderby"]))
+        if(isset($qparams["orderby"]))
         {
-            foreach($arParams["orderby"] as $sField)
+            foreach($qparams["orderby"] as $sField)
             {
                 $arField = explode(" ",trim($sField));
                 $arTmp[$arField[0]] = $arField[1] ?? "ASC";
@@ -73,19 +72,16 @@ final class ReaderService extends AppService
         }
         $crud->set_orderby($arTmp);
 
-        if(isset($arParams["limit"]["perpage"]))
-            $crud->set_limit($arParams["limit"]["perpage"] ?? 1000,$arParams["limit"]["regfrom"]??0);
+        if(isset($qparams["limit"]["perpage"]))
+            $crud->set_limit($qparams["limit"]["perpage"] ?? 1000,$qparams["limit"]["regfrom"]??0);
 
         $crud->get_selectfrom();
         $sql =  $crud->get_sql();
         return $sql;
     }
 
-    public function read_raw($sql): array
+    public function read_raw(string $sql): array
     {
-        if(!$sql) return [];
-        $this->sql = $sql;
-
         if($ttl = $this->cachettl) {
             if($r = $this->get_cached($sql, $this->maintable)) {
                 $this->foundrows = $this->get_cachedcount($sql, $this->maintable);
@@ -109,16 +105,14 @@ final class ReaderService extends AppService
         return $r;
     }
     
-    public function get_read($arParams)
+    public function get_read($qparams)
     {
-        if(!$arParams) {
-            $this->logerr($error = "get_read no params","readservice.get_read");
-            return $this->add_error($error);
-        }
+        if(!is_array($qparams)) $this->_exeption("read params is not an array");
+        if(!$table = trim($qparams["table"])) $this->_exeption("missing read table");
 
-        $this->cachettl = (int) $arParams["cache_time"] ?? 0;
-        $sql = $this->_get_parsed_tosql($arParams);
-        $this->sql = $sql;
+        $this->maintable = explode(" ", $table)[0];
+        $this->cachettl = (int) $qparams["cache_time"] ?? 0;
+        $sql = $this->_get_parsed_tosql($qparams);
         $r = $this->read_raw($sql);
         return $r;
     }
