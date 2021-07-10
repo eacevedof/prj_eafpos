@@ -51,7 +51,7 @@ final class ReaderService extends AppService
         $crud = new ComponentCrud();
         if($qparams["comment"] ?? "") $crud->set_comment($qparams["comment"]);
 
-        $crud->set_table($this->maintable = $qparams["table"]);
+        $crud->set_table($qparams["table"]);
         if(isset($qparams["distinct"])) $crud->is_distinct($qparams["distinct"]);
         if(isset($qparams["foundrows"])) $crud->is_foundrows($qparams["foundrows"]);
 
@@ -82,22 +82,27 @@ final class ReaderService extends AppService
 
     public function read_raw(string $sql): array
     {
-        if($ttl = $this->cachettl) {
+        //intento leer cache
+        if($ttl = $this->cachettl)
+        {
             if($r = $this->get_cached($sql, $this->maintable)) {
                 $this->foundrows = $this->get_cachedcount($sql, $this->maintable);
                 return $r;
             }
         }
 
+        //leo de bd
         $r = $this->oBehav->read_raw($sql);
         $this->foundrows = $this->oBehav->get_foundrows();
-        if($this->oBehav->is_error()) {
+        if($this->oBehav->is_error())
+        {
             if($ttl) $this->delete_all($sql, $this->maintable);
             $this->logerr($errors = $this->oBehav->get_errors(),"readservice.read_raw");
             $this->add_error($errors);
             return $r;
         }
 
+        //la consulta ha ido bien. guardo en cache
         if($ttl) {
             $this->addto_cache($sql, $r, $ttl, $this->maintable);
             $this->addto_cachecount($sql, $this->foundrows, $ttl, $this->maintable);
@@ -105,7 +110,7 @@ final class ReaderService extends AppService
         return $r;
     }
     
-    public function get_read($qparams)
+    public function get_read(array $qparams): array
     {
         if(!is_array($qparams)) $this->_exeption("read params is not an array");
         if(!$table = trim($qparams["table"])) $this->_exeption("missing read table");
