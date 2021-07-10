@@ -15,6 +15,7 @@ use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
 use App\Traits\CacheQueryTrait;
+use \Exception;
 
 final class ReaderService extends AppService
 {
@@ -25,9 +26,10 @@ final class ReaderService extends AppService
     
     private $oContext;
     private $oBehav;
-    private $sql;
-    private $iFoundrows;
-    private $cachettl = 0;
+    private string $sql;
+    private int $iFoundrows;
+    private float $cachettl = 0;
+    private string $maintable = "";
 
     public function __construct(string $idcontext="", string $dbalias="")
     {
@@ -44,13 +46,13 @@ final class ReaderService extends AppService
     
     private function _get_parsed_tosql($arParams)
     {
-        if(!isset($arParams["table"])) $this->add_error("get_sql no table");
-        if(!isset($arParams["fields"]) || !is_array($arParams["fields"])) $this->add_error("get_sql no fields");
-        if($this->isError) return;
+        if(!isset($arParams["table"])) throw new Exception("_get_parsed_tosql no table");
+        if(!isset($arParams["fields"]) || !is_array($arParams["fields"])) throw new Exception("_get_parsed_tosql no array fields");;
 
         $crud = new ComponentCrud();
-        if(isset($arParams["comment"])) $crud->set_comment($arParams["comment"]);
-        $crud->set_table($arParams["table"]);
+        if($arParams["comment"] ?? "") $crud->set_comment($arParams["comment"]);
+
+        $crud->set_table($this->maintable = $arParams["table"]);
         if(isset($arParams["distinct"])) $crud->is_distinct($arParams["distinct"]);
         if(isset($arParams["foundrows"])) $crud->is_foundrows($arParams["foundrows"]);
 
@@ -114,7 +116,7 @@ final class ReaderService extends AppService
             return $this->add_error($error);
         }
 
-        $this->cachettl = $arParams["cache_time"] ?? 0;
+        $this->cachettl = (int) $arParams["cache_time"] ?? 0;
         $sql = $this->_get_parsed_tosql($arParams);
         $this->sql = $sql;
         $r = $this->read_raw($sql);

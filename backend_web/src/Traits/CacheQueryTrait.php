@@ -13,14 +13,14 @@ use App\Factories\RedisFactory;
 
 trait CacheQueryTrait
 {
-    protected function get_cached(string $query): array
+    protected function get_cached(string $query, string $table=""): array
     {
-        return RedisFactory::get()->set_key($query)->get_query();
+        return RedisFactory::get()->set_key($query)->get_query($table);
     }
 
-    protected function addto_cache(string $query, array $array, float $ttl=300): void
+    protected function addto_cache(string $query, array $array, float $ttl=300, string $table=""): void
     {
-        RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($array)->save_query();
+        RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($array)->save_query($table);
     }
 
     protected function get_cachedsingle(string $query): string
@@ -33,18 +33,23 @@ trait CacheQueryTrait
         RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($value)->save_querysingle();
     }
 
-    protected function get_cachedcount(string $query): int
+    protected function get_cachedcount(string $query, string $table=""): int
     {
-        return RedisFactory::get()->set_key($query)->get_querycount();
+        return RedisFactory::get()->set_key($query)->get_querycount($table);
     }
 
-    protected function addto_cachecount(string $query, int $count, float $ttl=300): void
+    protected function addto_cachecount(string $query, int $count, float $ttl=300, string $table=""): void
     {
-        RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($count)->save_querycount();
+        RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($count)->save_querycount($table);
     }
 
-    protected function delete_all(string $query): void
+    protected function delete_all(string $query, string $table=""): void
     {
-        RedisFactory::get()->set_key($query)->delete_query_and_count();
+        RedisFactory::get()->set_key($query)->delete_query_and_count($table);
+    }
+
+    protected function delete_by_table(string $table): void
+    {
+        RedisFactory::get()->delete_by_table($table);
     }
 }//CacheQueryTrait
