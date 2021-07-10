@@ -71,7 +71,7 @@ final class EncryptsService
                 foreach ($value as $k => $v)
                 {
                     //limit no va por accion
-                    if(($isfieldkv && $isfields) || ($key==="limit" && !$action))
+                    if(($isfieldkv && $isfields) || ($key==="limit" && $action==="select"))
                         $k = $encrypt->get_decrypted($k, $steps);
                     $v = $encrypt->get_decrypted($v, $steps);
                     $decrypted[$key][$k] = $v;
