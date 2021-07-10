@@ -15,17 +15,16 @@ const Apify = {
 
     try{
       const objform = new FormData()
-      //objform.append("apify-origindomain","*")
       objform.append("apify-usertoken", apifytoken)
       objform.append("useruuid", get_code_cache())
 
-      const fields = await axios.post(url,objform)
-      if(is_undefined(fields.data.data))
+      const response = await axios.post(url,objform)
+      window.lg("async_get_fields", response?.data)
+      if(is_undefined(response.data.data))
         throw new Error("Wrong data received from server. Get fields")
-      return fields.data.data
+      return response.data.data
     }
     catch (e) {
-      console.error("ERROR: apify.async_get_fields.url:",url,"e:",e)
       return get_error(e)
     }    
   },
@@ -36,7 +35,6 @@ const Apify = {
 
     //hay que enviar header: apify-auth: token
     try {
-
       const encrypt = await auth.async_get_encrypt()
       let objform = null
       if(encrypt) {
@@ -54,6 +52,7 @@ const Apify = {
       objselect.reset()
 
       const response = await axios.post(url, objform)
+      window.lg("async_get_list", response?.data)
 
       if(is_undefined(response.data.data))
         throw new Error("Wrong data received from server. Resultset")
@@ -76,7 +75,7 @@ const Apify = {
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objinsert.get_self()
-        window.lg("query-insert",query)
+        window.lg("async_insert.query",query)
         objform = get_insert_form(query, fnencrypt)
         objform.append("apify-enckey", encrypt.key)
       }
@@ -87,6 +86,7 @@ const Apify = {
       objform.append("useruuid", get_code_cache())
       objinsert.reset()
       const response = await axios.post(url, objform)
+      window.lg("async_insert.response", response?.data)
 
       if(is_undefined(response.data.data.lastid))
         throw new Error("Wrong data received from server. insert lastid")
@@ -94,7 +94,6 @@ const Apify = {
       return response.data.data.lastid
     } 
     catch (e) {
-      console.error("ERROR: apify.async_insert.url:",url,"e:",e)
       return get_error(e)
     }
   },
@@ -109,7 +108,7 @@ const Apify = {
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objupdate.get_self()
-        window.lg("query-update",query)
+        window.lg("async_update.query",query)
         objform = get_update_form(query, fnencrypt)
         objform.append("apify-enckey", encrypt.key)
       }
@@ -120,14 +119,13 @@ const Apify = {
       objform.append("useruuid", get_code_cache())
       objupdate.reset()
       const response = await axios.post(url, objform)
-
+      window.lg("async_update.response", response?.data)
       if(is_undefined(response.data.data.result))
         throw new Error("Wrong data received from server. Update result")
 
       return response.data.data.result
     } 
     catch (e) {
-      console.error("ERROR: apify.async_update.url:",url,"e:",e)
       return get_error(e)
     }
   },
@@ -142,7 +140,7 @@ const Apify = {
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objdeletelogic.get_self()
-        window.lg("query-deletelogic",query)
+        window.lg("async_deletelogic.query", query)
         objform = get_deletelogic_form(query, fnencrypt)
         objform.append("apify-enckey", encrypt.key)
       }
@@ -153,14 +151,13 @@ const Apify = {
       objform.append("useruuid", get_code_cache())
       objdeletelogic.reset()
       const response = await axios.post(url, objform)
-
+      window.lg("async_deletelogic.response", response?.data)
       if(is_undefined(response.data.data.result))
         throw new Error("Wrong data received from server. deletelogic result")
 
       return response.data.data.result
     }
     catch (e) {
-      console.error("ERROR: apify.async_deletelogic.url:",url,"e:",e)
       return get_error(e)
     }
   },
@@ -176,7 +173,7 @@ const Apify = {
       if(encrypt) {
         const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
         const query = objdelete.get_self()
-        window.lg("query-delete",query)
+        window.lg("async_delete.query", query)
         objform = get_delete_form(query, fnencrypt)
         objform.append("apify-enckey", encrypt.key)
       }
@@ -186,6 +183,7 @@ const Apify = {
       objform.append("useruuid", get_code_cache())
       objdelete.reset()
       const response = await axios.post(url, objform)
+      window.lg("async_delete.response", response)
 
       if(is_undefined(response.data.data.result))
         throw new Error("Wrong data received from server. Delete result")
@@ -193,7 +191,6 @@ const Apify = {
       return response.data.data.result
     } 
     catch (e) {
-      console.error("ERROR: apify.async_delete.url:",url,"e:",e)
       return get_error(e)
     }
   }, //async_delete

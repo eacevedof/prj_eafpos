@@ -11,15 +11,10 @@ const Apifyauth = {
     
     try {
       const data = new FormData()
-      //data.append("apify-origindomain","*")
       data.append("apify-user",objlogin.username)
       data.append("apify-password",objlogin.password)
-      
-      console.log("apify.async_get_apifytoken",url)
       const response = await axios.post(url, data)
-
-      console.log("apify.async_get_apifytoken.response",response)
-      //pr(response)
+      window.lg("async_get_apifytoken.response", response)
       if(is_undefined(response.data.data.token))
         throw new Error("Wrong data received from server. No token")
 
@@ -33,23 +28,14 @@ const Apifyauth = {
 
   async_is_validtoken: async () => {
     const apifytoken = db.select("apify-token")
-    //pr(apifytoken,"async_is_valid_token recuperado de db");
     const url = `${APIFY_BASEURL}/apify/security/is-valid-token`
     try {
       const data = new FormData()
-      //data.append("apify-origindomain","*")
       data.append("apify-usertoken",apifytoken)
-
-      console.log("apify.async_is_validtoken.url",url)
-      
       const response = await axios.post(url,data)
-      console.log("apify.async_is_validtoken.response raw",response)
-      //pr(response,"async_is_valid_token")
-      
+      window.lg("async_is_validtoken.response", response)
       if(is_undefined(response.data.data.isvalid))
         throw new Error("Wrong data received from server. Token validation")
-
-
       return response.data.data.isvalid
     } 
     catch (e) {
@@ -65,7 +51,7 @@ const Apifyauth = {
       const data = new FormData()
       data.append("apify-usertoken", apifytoken)
       const response = await axios.post(url, data)
-      //window.lg("async-get-encrypt", response.data.data)
+      window.lg("async_get_encrypt", response)
       return response.data.data
     }
     catch (e) {

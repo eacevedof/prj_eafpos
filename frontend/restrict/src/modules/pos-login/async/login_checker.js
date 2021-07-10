@@ -8,7 +8,6 @@ const PASSWORD = "MaFaLDa1234"
 
 export const async_gettoken = async () => {
   const objuser = {username: USER, password: PASSWORD}
-  console.log("pos-login.index.objuser",objuser)
   const apifytoken = await apiauth.async_get_apifytoken(objuser)
   if(is_defined(apifytoken.error))
     return ""
@@ -21,8 +20,6 @@ export const async_is_tokenized = async () => {
   if(!apifytoken) return false
 
   const response = await apiauth.async_is_validtoken()
-  console.log("modules.pos-login.async_is_tokenized.async_is_validtoken.response",response)
-
   if(is_defined(response.error)){
     return false
   }  
