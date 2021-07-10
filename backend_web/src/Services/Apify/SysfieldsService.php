@@ -97,7 +97,7 @@ final class SysfieldsService extends AppService
     { 
         foreach ($this->params["fields"] ?? [] as $field => $value)
         {
-            if(in_array($field,"insert_platform","update_platform", "delete_platform"))
+            if(in_array($field, ["insert_platform","update_platform", "delete_platform"]))
                 return $value;
         }
         return "";
