@@ -116,9 +116,9 @@ final class RedisComponent
         self::$redis->del($hash1, $hash2);
     }
 
-    public function delete_by_table(string $table): void
+    public function cache_del_all(string $table): void
     {
-        $keys = self::$redis->keys("query-$table-");
+        $keys = self::$redis->keys("query-*-$table-*");
         foreach ($keys as $key)
             self::$redis->del($key);
     }

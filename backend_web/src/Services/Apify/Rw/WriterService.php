@@ -193,7 +193,7 @@ final class WriterService extends AppService
             return -1;
         }
         //si todo ha ido bien refresco cache
-        $this->delete_by_table($this->maintable);
+        $this->cache_del_all($this->maintable);
         return $r;
     }
 

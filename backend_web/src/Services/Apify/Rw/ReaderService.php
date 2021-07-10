@@ -96,7 +96,7 @@ final class ReaderService extends AppService
         $this->foundrows = $this->oBehav->get_foundrows();
         if($this->oBehav->is_error())
         {
-            if($ttl) $this->delete_all($sql, $this->maintable);
+            if($ttl) $this->cache_del_qandcount($sql, $this->maintable);
             $this->logerr($errors = $this->oBehav->get_errors(),"readservice.read_raw");
             $this->add_error($errors);
             return $r;

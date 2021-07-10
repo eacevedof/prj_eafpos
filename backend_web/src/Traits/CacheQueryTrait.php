@@ -43,13 +43,13 @@ trait CacheQueryTrait
         RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($count)->save_querycount($table);
     }
 
-    protected function delete_all(string $query, string $table=""): void
+    protected function cache_del_qandcount(string $query, string $table=""): void
     {
         RedisFactory::get()->set_key($query)->delete_query_and_count($table);
     }
 
-    protected function delete_by_table(string $table): void
+    protected function cache_del_all(string $table): void
     {
-        RedisFactory::get()->delete_by_table($table);
+        RedisFactory::get()->cache_del_all($table);
     }
 }//CacheQueryTrait
