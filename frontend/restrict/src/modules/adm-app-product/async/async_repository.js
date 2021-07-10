@@ -134,7 +134,7 @@ export const async_multideletelogic = async arkeys => {
   const objparam = {key:"id", keys:arkeys}
   const objquery = get_obj_multideletelogic(objparam)
   //pr(objquery,"objquery")
-  const r = await apify.async_update(objquery)
+  const r = await apify.async_deletelogic(objquery)
 
   if(is_defined(r.error)) throw r.error
 
