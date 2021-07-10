@@ -1,6 +1,6 @@
 import {add} from "helpers/functions"
 
-export default () => {
+const deletelogic = () => {
   const q = {
     reset() {
       this.comment = ""
@@ -77,3 +77,5 @@ export default () => {
 
   return q.init()
 }
+
+export default deletelogic

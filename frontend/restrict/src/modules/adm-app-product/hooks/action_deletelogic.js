@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect, useCallback} from "react"
 import {useHistory, useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {async_get_by_id, async_deletelogic} from "modules/adm-app-product/async/async_repository"

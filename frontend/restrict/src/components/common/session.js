@@ -1,4 +1,3 @@
-import React from "react"
 import { useIdleTimer } from "react-idle-timer"
 import { useHistory } from "react-router"
 import {TIME_SESSION} from "config/constants"

@@ -37,7 +37,7 @@ function Boot() {
     }
     else {
       apifytoken = await async_gettoken()
-      db.save("apify-token",apifytoken)
+      db.save("apify-token", apifytoken)
     }
 
     if(!apifytoken){

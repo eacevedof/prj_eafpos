@@ -13,12 +13,12 @@ function InputSearch({cachekey, fnsettext, foundrows}){
     set_formdata({search: elem.value})
   }, [])
 
-  const reset = useCallback(evt => {
+  const reset = evt => {
     set_formdata({search:""})
     fnsettext("")
     refsearch.current.focus()
     db.save(cachekey, "")
-  },[])
+  }
 
   const on_submit = useCallback(async evt => {
     evt.preventDefault()
