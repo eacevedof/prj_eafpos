@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom"
+import {useHistory, useParams} from "react-router-dom"
 import {useCallback, useEffect, useRef, useState} from "react"
 import {async_clone, async_get_by_id} from "modules/adm-app-product/async/async_repository"
 
@@ -26,22 +26,20 @@ const formdefault = {
 }
 
 function ActionClone() {
-  const {id} = useParams()
-  const refcode = useRef(null)
 
   const [issubmitting, set_issubmitting] = useState(false)
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
   const [formdata, set_formdata] = useState(formdefault)
 
-  const before_submit = () => {}
+  const {id} = useParams()
+  const refcode = useRef(null)
+  const history = useHistory()
 
-  const async_onload = async () => {
-    console.log("async_onload")
+  const async_onload = useCallback(async () => {
     set_issubmitting(true)
     try {
       const r = await async_get_by_id(id)
-      //console.log("product.clone.onload.r",r)
       const temp = {...formdata, ...r}
       set_formdata(temp)
     }
@@ -51,33 +49,31 @@ function ActionClone() {
     finally {
       set_issubmitting(false)
     }
+  },[])// async_onload
 
-  }// async_onload
+  const async_refresh = async () => await async_onload()
 
-  const async_refresh = async () => {
-    await async_onload()
-  }
+  const before_submit = () => {}
 
-
-  const on_submit = async evt => {
+  const on_submit = useCallback(async evt => {
     evt.preventDefault()
 
     set_issubmitting(true)
     set_error("")
     set_success("")
 
-    before_submit()
     try {
+      before_submit()
+      //console.log("product.clone.formdata", formdata)
       const r = await async_clone(formdata)
       set_success(str => str + "Product cloned. Nº: ".concat(r))
+      history.push("/admin/products")
     }
     catch (error) {
       set_error(error)
-    }
-    finally {
       set_issubmitting(false)
     }
-  }// on_submit
+  },[formdata])//on_submit
 
   useEffect(()=>{
     async_onload()
@@ -85,18 +81,19 @@ function ActionClone() {
   }, [])
 
   return {
-    scrumbs: MODCONFIG.SCRUMBS.GENERIC,
-
     success,
     error,
+
+    issubmitting,
+    scrumbs: MODCONFIG.SCRUMBS.GENERIC,
     formdata,
     refcode,
     seldisplay,
 
-    issubmitting,
     async_refresh,
     on_submit,
-  }
+  }//return
+
 }
 
 export default ActionClone
