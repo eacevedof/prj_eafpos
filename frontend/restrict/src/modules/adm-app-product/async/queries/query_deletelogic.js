@@ -1,6 +1,5 @@
 import deletelogic from "helpers/query/query_deletelogic"
 import {isset} from "helpers/functions"
-import db from "helpers/localdb"
 
 const _TABLE = "app_product"
 

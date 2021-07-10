@@ -98,7 +98,7 @@ export const async_clone = async (formdata)=>{
   return r
 }
 
-export const async_deletelogic = async (formdata)=>{
+export const async_deletelogic = async (formdata) => {
   const keys = ["id"]
 
   const objdellog = {
@@ -108,7 +108,7 @@ export const async_deletelogic = async (formdata)=>{
   const dbfields = [{field_name:"id"}]
   const objparam = {fields:objdellog, keys}
   const objquery = get_obj_deletelogic(objparam, dbfields)
-  const r = await apify.async_update(objquery)
+  const r = await apify.async_deletelogic(objquery)
   
   if(is_defined(r.error)) throw r.error
   

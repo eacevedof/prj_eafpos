@@ -3,7 +3,7 @@ import axios from "axios"
 import db from "helpers/localdb"
 import auth from "helpers/providers/apifyauth"
 import {is_undefined, get_error} from "helpers/functions"
-import get_encrypted, {get_delete_form, get_select_form, get_update_form, get_insert_form} from "helpers/encrypt"
+import get_encrypted, {get_delete_form, get_select_form, get_update_form, get_insert_form, get_deletelogic_form} from "helpers/encrypt"
 
 const get_code_cache = () => db.select("session_user")?.code_cache ?? ""
 
@@ -128,6 +128,39 @@ const Apify = {
     } 
     catch (e) {
       console.error("ERROR: apify.async_update.url:",url,"e:",e)
+      return get_error(e)
+    }
+  },
+
+  async_deletelogic: async (objdeletelogic) => {
+    const apifytoken = db.select("apify-token")
+    const url = `${APIFY_BASEURL}/apify/write?context=${APIFY_CONTEXT}&schemainfo=${APIFY_SCHEMA}`
+
+    try {
+      const encrypt = await auth.async_get_encrypt()
+      let objform = null
+      if(encrypt) {
+        const fnencrypt = get_encrypted(encrypt.alphabet)(encrypt.steps)
+        const query = objdeletelogic.get_self()
+        window.lg("query-deletelogic",query)
+        objform = get_deletelogic_form(query, fnencrypt)
+        objform.append("apify-enckey", encrypt.key)
+      }
+      else
+        objform = objdeletelogic.get_form()
+
+      objform.append("apify-usertoken", apifytoken)
+      objform.append("useruuid", get_code_cache())
+      objdeletelogic.reset()
+      const response = await axios.post(url, objform)
+
+      if(is_undefined(response.data.data.result))
+        throw new Error("Wrong data received from server. deletelogic result")
+
+      return response.data.data.result
+    }
+    catch (e) {
+      console.error("ERROR: apify.async_deletelogic.url:",url,"e:",e)
       return get_error(e)
     }
   },
