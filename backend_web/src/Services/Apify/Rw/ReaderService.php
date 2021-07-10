@@ -27,7 +27,7 @@ final class ReaderService extends AppService
     private $oContext;
     private $oBehav;
     private string $sql;
-    private int $iFoundrows;
+    private int $foundrows;
     private float $cachettl = 0;
     private string $maintable = "";
 
@@ -87,24 +87,24 @@ final class ReaderService extends AppService
         $this->sql = $sql;
 
         if($ttl = $this->cachettl) {
-            if($r = $this->get_cached($sql)) {
-                $this->iFoundrows = $this->get_cachedcount($sql);
+            if($r = $this->get_cached($sql, $this->maintable)) {
+                $this->foundrows = $this->get_cachedcount($sql, $this->maintable);
                 return $r;
             }
         }
 
         $r = $this->oBehav->read_raw($sql);
-        $this->iFoundrows = $this->oBehav->get_foundrows();
+        $this->foundrows = $this->oBehav->get_foundrows();
         if($this->oBehav->is_error()) {
-            if($ttl) $this->delete_all($sql);
+            if($ttl) $this->delete_all($sql, $this->maintable);
             $this->logerr($errors = $this->oBehav->get_errors(),"readservice.read_raw");
             $this->add_error($errors);
             return $r;
         }
 
         if($ttl) {
-            $this->addto_cache($sql, $r, $ttl);
-            $this->addto_cachecount($sql, $this->iFoundrows, $ttl);
+            $this->addto_cache($sql, $r, $ttl, $this->maintable);
+            $this->addto_cachecount($sql, $this->foundrows, $ttl, $this->maintable);
         }
         return $r;
     }
@@ -112,7 +112,7 @@ final class ReaderService extends AppService
     public function get_read($arParams)
     {
         if(!$arParams) {
-            $this->logerr($error = "get_read No params","readservice.get_read");
+            $this->logerr($error = "get_read no params","readservice.get_read");
             return $this->add_error($error);
         }
 
@@ -123,6 +123,6 @@ final class ReaderService extends AppService
         return $r;
     }
 
-    public function get_foundrows(){return $this->iFoundrows;}
+    public function get_foundrows(){return $this->foundrows;}
 
 }//ReaderService
