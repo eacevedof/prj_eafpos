@@ -1,6 +1,6 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from "react"
 import db from "helpers/localdb"
-import SubmitAsync from 'components/bootstrap/button/submitasync';
+import SubmitAsync from "components/bootstrap/button/submitasync"
 
 function InputSearch({cachekey, fnsettext, foundrows}){
   
@@ -8,21 +8,19 @@ function InputSearch({cachekey, fnsettext, foundrows}){
   const [formdata, set_formdata] = useState({search:""})
   const refsearch = useRef(null)
 
-  const updateform = evt =>{
+  const updateform = useCallback(evt =>{
     const elem = evt.target
-    set_formdata({search:elem.value})
-    console.log("inputsearch.updateform.formdata",formdata)
-  }
+    set_formdata({search: elem.value})
+  }, [])
 
-  const reset = evt => {
+  const reset = useCallback(evt => {
     set_formdata({search:""})
     fnsettext("")
     refsearch.current.focus()
     db.save(cachekey, "")
-  }
+  },[])
 
-  const on_submit = async evt => {
-    console.log("inputsearch.on_submit.formdata:",formdata)
+  const on_submit = useCallback(async evt => {
     evt.preventDefault()
 
     set_issubmitting(true)
@@ -31,16 +29,13 @@ function InputSearch({cachekey, fnsettext, foundrows}){
     db.save(cachekey, formdata.search)
     set_issubmitting(false)
     
-  }// on_submit
+  }, [formdata])// on_submit
 
   useEffect(() => {
-    console.log("inputsearch.on_load")
     const search = db.select(cachekey) ?? ""
     set_formdata({search})
-      
     return ()=> console.log("inputsearch unmounting")
-  },[])  
-
+  },[cachekey])
 
   return (
     <form className="row" onSubmit={on_submit}>
