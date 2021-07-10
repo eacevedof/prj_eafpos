@@ -1,4 +1,4 @@
-export default () =>{
+const qinsert = () =>{
   const q = {
     reset(){
       this.comment = ""
@@ -67,3 +67,4 @@ export default () =>{
   return q.init()
 }
 
+export default qinsert

@@ -1,6 +1,6 @@
 import {add} from "helpers/functions"
 
-export default () =>{
+const qselect = () =>{
   const q = {
     reset(){
       this.comment = ""
@@ -164,3 +164,4 @@ export default () =>{
   return q.init()
 }
 
+export default qselect

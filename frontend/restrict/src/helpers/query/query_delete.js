@@ -1,6 +1,6 @@
 import {add} from "helpers/functions"
 
-export default () =>{
+const qdelete = () =>{
   const q = {
 
     reset(){
@@ -67,3 +67,5 @@ export default () =>{
 
   return q.init()
 }
+
+export default qdelete

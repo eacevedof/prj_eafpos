@@ -1,10 +1,9 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {MODCONFIG} from "modules/adm-app-product/config/config"
-
+import {useState, useEffect, useCallback} from "react"
 import {useParams} from "react-router-dom"
+
+import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {async_get_by_id} from "modules/adm-app-product/async/async_repository"
 import {seldisplay} from "modules/common/options"
-
 
 const formdefault = {
   insert_date: "",
