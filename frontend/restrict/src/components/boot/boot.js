@@ -10,6 +10,7 @@ import {routes as dashroutes} from "modules/adm-dashboard/routes"
 import {routes as loginroutes} from "modules/pos-login/routes"
 import {routes as tableroutes} from "modules/adm-app-table/routes"
 import {routes as tableposroutes} from "modules/pos-table/routes"
+import {routes as testroutes} from "modules/a-test/routes"
 
 import E404 from "modules/errors/404/e404"
 
@@ -23,7 +24,7 @@ function Boot() {
 
   const routes = [].concat(
     dashroutes, prodroutes,loginroutes, posroutes, tableroutes,
-    tableposroutes
+    tableposroutes, testroutes
   )
 
   const {set_apifytoken, set_errorg} = useContext(GlobalContext)
@@ -53,7 +54,7 @@ function Boot() {
 
   useEffect(() => {
     async_onload()
-   return () => console.log("boot unmounting")
+    return () => console.log("boot unmounting")
   }, [async_onload]);
 
   return (
