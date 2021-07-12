@@ -5,8 +5,8 @@ import Child from "./child"
 function TestIndex() {
 
   useEffect(()=>{
-    console.log("test mounting")
-    return ()=> console.log("test unmounting")
+    console.log("parent mounting")
+    return ()=> console.log("parent unmounting")
   },[])
 
   return (
