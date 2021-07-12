@@ -4,7 +4,7 @@ import Child from "./child"
 
 function TestIndex() {
 
-  const [msgd, set_msgd] = useState("")
+  const [msgd, set_msgd] = useState("-")
 
   useEffect(()=>{
     console.log("parent mounting")
@@ -17,7 +17,6 @@ function TestIndex() {
       <button onClick={() => set_msgd("ab-c")}>change</button>
       <h1>Test Index</h1>
       <Child msg1={msgd} msg2={"mundo"} />
-      <Child msg1={"hola 222"} msg2={"mundo 222"} />
     </>
   )
 }
