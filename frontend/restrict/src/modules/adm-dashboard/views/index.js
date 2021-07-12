@@ -109,6 +109,18 @@ function DashboardIndex() {
             </div>
           </div>
 
+          <div className="col-sm-4">
+            <div className="card">
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-6">
+                    <NavLink className="btn btn-primary" activeClassName="navlink-active" exact to={"/admin/tests"}>Tests</NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </main>
       
