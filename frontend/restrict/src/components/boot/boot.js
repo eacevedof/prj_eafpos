@@ -49,13 +49,12 @@ function Boot() {
     
     set_apifytoken(apifytoken)
 
-  }, [])// async_onload
+  }, [set_apifytoken, set_errorg])// async_onload
 
   useEffect(() => {
     async_onload()
-    console.log("boot.useeffect")
-
-  }, []);
+   return () => console.log("boot unmounting")
+  }, [async_onload]);
 
   return (
     <Router>
