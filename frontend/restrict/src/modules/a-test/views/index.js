@@ -1,8 +1,13 @@
-import React from "react"
+import React, {useEffect} from "react"
+import {NavLink} from "react-router-dom"
 import Child from "./child"
-import {NavLink} from "react-router-dom";
 
 function TestIndex() {
+
+  useEffect(()=>{
+    console.log("test mounting")
+    return ()=> console.log("test unmounting")
+  },[])
 
   return (
     <>
