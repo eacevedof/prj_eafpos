@@ -8,7 +8,7 @@ function TestIndex() {
     <>
       <NavLink className="btn btn-primary" activeClassName="navlink-active" exact to={"/admin"}>Admin</NavLink>
       <h1>Test Index</h1>
-      <Child />
+      <Child msg1={"hola"} msg2={"mundo"} />
     </>
   )
 }
