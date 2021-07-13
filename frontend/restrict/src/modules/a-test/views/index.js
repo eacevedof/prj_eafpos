@@ -14,12 +14,13 @@ function TestIndex() {
 */
 
   return (
-    <>
+    <div className="container">
+      <br/>
       <NavLink className="btn btn-primary" activeClassName="navlink-active" exact to={"/admin"}>Admin</NavLink>
-      <button onClick={() => set_msgd("ab-c")}>Set msgd en parent</button>
+      <button className="btn btn-warning" onClick={() => set_msgd("ab-c")}>Set msgd en parent</button>
       <h1>Test Index</h1>
       <Child msg1={msgd} msg2={"mundo"} />
-    </>
+    </div>
   )
 }
 
