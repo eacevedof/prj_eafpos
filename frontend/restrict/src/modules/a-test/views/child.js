@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react"
 
 //el componente se renderiza nuevamente si le llegan las variables de las propiedades
 function Child({msg1, msg2}){
-
+  console.log("function Child")
   const [ch, set_ch] = useState(":)")
 
+  /*
   useEffect(()=>{
     //esta funcion solo se dispara si hay un cambio en la variable msg1 pq la esta escuchando.
     //si hay un cambio en msg1 primero se ejecut el unmount y despues el mount
@@ -13,6 +14,7 @@ function Child({msg1, msg2}){
     return ()=> console.log("child unmounting por:", msg1, msg2)
   },[msg1])
 
+   */
   return (
     <>
       <div className="container">
