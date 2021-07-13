@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react"
 //el componente se renderiza nuevamente si le llegan las variables de las propiedades
 function Child({msg1, msg2}){
   console.log("function Child")
-  const [ch, set_ch] = useState(":)")
+  const [child, set_child] = useState("- child -")
 
   /*
   useEffect(()=>{
@@ -18,11 +18,9 @@ function Child({msg1, msg2}){
   return (
     <>
       <div className="container">
-        <h3>im a child</h3>
-        <h4>{msg1}</h4>
-        <h5>{msg2}</h5>
-        <h6>ch: {ch}</h6>
-        <button className="btn btn-secondary" onClick={() => set_ch("some child")}> just state</button>
+        <p>params in <br/>child. msg1:{msg1} <br/>msg2:{msg2}</p>
+        <h6>child state: {child}</h6>
+        <button className="btn btn-secondary" onClick={() => set_child("clicked child state")}> just state</button>
       </div>
     </>
   )
