@@ -23,4 +23,5 @@ function TestIndex() {
   )
 }
 
-export default memo(TestIndex);
+//export default memo(TestIndex);
+export default TestIndex
