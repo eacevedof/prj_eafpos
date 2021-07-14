@@ -18,15 +18,12 @@ function Parent() {
       <br/>
       {console.log("parent return")}
       <NavLink className="btn btn-primary" activeClassName="navlink-active" exact to={"/admin"}>Admin</NavLink>
+        <button className="btn btn-warning" onClick={() => set_msgp("ab-c")}>Set msgp en parent</button>
+        <h1>Test Index</h1>
+        <Child msg1={msgp} msg2={"mundo"} />
     </div>
   )
 }
-
-/*
-      <button className="btn btn-warning" onClick={() => set_msgp("ab-c")}>Set msgp en parent</button>
-      <h1>Test Index</h1>
-      <Child msg1={msgp} msg2={"mundo"} />
-* */
 
 //export default memo(Parent);
 export default Parent
