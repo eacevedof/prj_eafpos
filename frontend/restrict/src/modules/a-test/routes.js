@@ -1,9 +1,9 @@
 import React from "react"
-import TestIndex from "modules/a-test/views"
+import Parent from "modules/a-test/views/parent"
 
 export const routes = [
   {
     path:"/admin/tests",
-    component: (<TestIndex />)
+    component: (<Parent />)
   },
 ]

@@ -1,4 +1,3 @@
-//App.js
 import React from "react"
 import GlobalProvider from "components/context/global_context"
 import Boot from "components/boot/boot"
@@ -7,7 +6,9 @@ import ToastMiniSuccess from "components/bootstrap/toast/toastminisuccess"
 import ToastMiniWarning from "components/bootstrap/toast/toastminiwarning"
 import ToastMiniError from "components/bootstrap/toast/toastminierror"
 
+console.log("app pre")
 function App(){
+  console.log("app in")
   return (
     <GlobalProvider>
       <Devstripe />
@@ -17,6 +18,6 @@ function App(){
       <ToastMiniError />
     </GlobalProvider>
   );
-}//App
+}
 
 export default App;

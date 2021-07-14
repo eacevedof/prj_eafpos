@@ -2,8 +2,9 @@ import React, {createContext, useState} from "react"
 
 export const GlobalContext = createContext();
 
+console.log("global.provider - out")
 const GlobalProvider = (props) => {
-  //console.log("globalprovider.start.objorder.reset()",objorder.reset())
+  console.log("global.provider")
 
   const [errorg, set_errorg] = useState({})
   const [successg, set_successg] = useState({})
@@ -11,6 +12,7 @@ const GlobalProvider = (props) => {
 
   const [user, set_user] = useState({})
   const [apifytoken, set_apifytoken] = useState("")
+
   const [products, set_products] = useState([])
   const [search, set_search] = useState("")
   const [order, set_order] = useState({})
@@ -29,6 +31,7 @@ const GlobalProvider = (props) => {
         order_total, set_order_total
       }}
     >
+      {console.log("global.provider return")}
       {props.children}
     </GlobalContext.Provider>
   )

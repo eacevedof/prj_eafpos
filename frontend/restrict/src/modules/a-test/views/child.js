@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react"
 
 //el componente se renderiza nuevamente si le llegan las variables de las propiedades
+console.log("child pre")
 function Child({msg1, msg2}){
-  console.log("function Child")
   const [child, set_child] = useState("- child -")
+  console.log("child in:", child)
 
   /*
   useEffect(()=>{
@@ -17,6 +18,7 @@ function Child({msg1, msg2}){
    */
   return (
     <>
+      {console.log("child return")}
       <div className="container">
         <p>params in <br/>child. msg1:{msg1} <br/>msg2:{msg2}</p>
         <h6>child state: {child}</h6>

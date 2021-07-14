@@ -20,49 +20,55 @@ import {
   Route,
 } from "react-router-dom";
 
-function Boot() {
-
-  const routes = [].concat(
+const get_routes = () => [].concat(
     dashroutes, prodroutes,loginroutes, posroutes, tableroutes,
     tableposroutes, testroutes
-  )
+  ).map((obj,i) => (
+      <Route key={i} path={obj.path} exact><Session component={obj.component} /></Route>
+  ))
+
+console.log("boot pre")
+function Boot() {
+  console.log("boot in")
 
   const {set_apifytoken, set_errorg} = useContext(GlobalContext)
 
-  const async_onload = useCallback(async () => {
-    let apifytoken = ""
-    const islogged = await async_is_tokenized()
-
-    if(islogged){
-      apifytoken = db.select("apify-token")
-    }
-    else {
-      apifytoken = await async_gettoken()
-      db.save("apify-token", apifytoken)
-    }
-
-    if(!apifytoken){
-      set_errorg({title:"Error", message:"Empty token"})
-      db.delete("apify-token")
-    }
-    else
-      set_errorg({})
-    
-    set_apifytoken(apifytoken)
-
-  }, [set_apifytoken, set_errorg])// async_onload
+  //const async_onload = useCallback(, [set_apifytoken, set_errorg])// async_onload
 
   useEffect(() => {
-    async_onload()
+
+    //async_onload()
+    (async () => {
+      console.log("boot effect")
+      let apifytoken = ""
+      const islogged = await async_is_tokenized()
+
+      if(islogged){
+        apifytoken = db.select("apify-token")
+      }
+      else {
+        apifytoken = await async_gettoken()
+        db.save("apify-token", apifytoken)
+      }
+
+      if(!apifytoken){
+        set_errorg({title:"Error", message:"Empty token"})
+        db.delete("apify-token")
+      }
+      else
+        set_errorg({})
+
+      set_apifytoken(apifytoken)
+
+    })()
     return () => console.log("boot unmounting")
-  }, [async_onload]);
+  }, []);
 
   return (
     <Router>
       <Switch>
-        {routes.map((obj,i) => (
-            <Route key={i} path={obj.path} exact><Session component={obj.component} /></Route>
-        ))}
+        {console.log("boot return")}
+        {get_routes()}
 
         <Route path="/admin/order">
           <>orders</>
