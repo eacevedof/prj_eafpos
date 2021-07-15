@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from "react"
+import React, {useState, useEffect, useCallback, memo} from "react"
 import async_get_useralias from "modules/adm-sysfields/sysfields_repository"
 
 function Sysfields({formdata}){
@@ -25,7 +25,7 @@ function Sysfields({formdata}){
     const delete_name = await async_get_useralias(formmini.delete_user)
     
     if(formdata.delete_date) set_isdeleted(true)
-    set_sysfields({...formdata, insert_alias, update_alias, delete_name})
+    set_sysfields({...formmini, insert_alias, update_alias, delete_name})
   }, [
     formmini.insert_date,
     formmini.update_date,
@@ -36,11 +36,7 @@ function Sysfields({formdata}){
     async_onload()
     return () => console.log("sysfields.unmount")
 
-  },[
-    formmini.insert_date,
-    formmini.update_date,
-    formmini.delete_date
-  ])
+  },[async_onload])
 
   return (
     <>
@@ -57,17 +53,17 @@ function Sysfields({formdata}){
         <div className="col-3">{sysfields.update_alias}</div>
       </div>    
       {
-        isdeleted ? (
+        isdeleted && (
           <div className="row alert-danger">
             <div className="col-3">Deleted at:</div>
             <div className="col-3">{sysfields.delete_date}</div>
             <div className="col-3">Deleted by:</div>
             <div className="col-3">{sysfields.delete_name}</div>
           </div>
-        ): null
+        )
       }
     </>
   )
 }
 
-export default Sysfields;
+export default memo(Sysfields)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import {APP_VERSION} from "config/constants"
 
 function footer() {

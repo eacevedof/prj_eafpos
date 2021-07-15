@@ -1,31 +1,8 @@
 //Navbar.js
-import React from "react"
-//import React, {useEffect, useState} from "react"
+import React, {memo} from "react"
 import { NavLink } from "react-router-dom"
-//import {async_is_pinned} from "modules/pos-login/async/login_checker"
-
 function Navbar() {
 
-  /*
-  const {is_pinned, set_is_pinned} = useState(false)
-
-  const async_onload = async () => {
-    try {
-      const ispinned = await async_is_pinned()
-      set_is_pinned(ispinned)
-    }
-    catch(error) {
-      console.log("navbar.onload.error",error)
-    }
-  }// async_onload
-
-  useEffect(() => {
-    async_onload()
-    return () => console.log("navbar unmounting")
-  },[is_pinned])
-
-
-   */
   return (
     <header className="mb-2">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -63,4 +40,4 @@ function Navbar() {
   )
 }//Navbar()
 
-export default Navbar;
+export default memo(Navbar)

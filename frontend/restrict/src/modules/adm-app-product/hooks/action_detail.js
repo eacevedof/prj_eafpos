@@ -25,8 +25,6 @@ const formdefault = {
 
 const get_seltext = id => {
   const arfound = seldisplay.filter(obj => obj.value===id) || []
-  //pr(arfound)
-  //return ""
   if(arfound.length>0)
     return arfound[0]["text"]
   return ""
@@ -36,46 +34,38 @@ function ActionDetail(){
 
   const {id} = useParams()
   const [issubmitting, set_issubmitting] = useState(false)
-  const [error, set_error] = useState("")
-  const [success, set_success] = useState("")
   const [formdata, set_formdata] = useState(formdefault)
-
-  const async_refresh = async () => await async_onload()
 
   const async_onload = useCallback(async () => {
     set_issubmitting(true)
-    set_error("")
-    set_success("")
-    console.log("product.detail.onload.formdata:",formdata)
     try{
       const r = await async_get_by_id(id)
-      console.log("product.detail.onload.r",r)
 
       if(!r){
-        set_error("Product not found!")
+        console.log("error product not found", r)
         return
       }
       else{
         const tmpform = {...formdata, ...r}
         set_formdata(tmpform)
-        set_success(`Product Nº:${id} refreshed!`)
       }
     }
     catch(error){
-      set_error(error)
+      console.log(error)
     }
     finally{
       set_issubmitting(false)
     }
   },[])
 
+  const async_refresh = useCallback(async () => await async_onload(),[])
+
   useEffect(()=>{
     async_onload()
     return ()=> console.log("product.detail unmounting")
-  },[])
+  },[async_onload])
 
   return {
-    error, success,
     scrumbs: MODCONFIG.SCRUMBS.GENERIC,
     formdata,
     issubmitting,

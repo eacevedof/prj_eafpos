@@ -1,8 +1,6 @@
 import React from "react"
 
 import Navbar from "components/common/navbar"
-import AlertSimple from 'components/bootstrap/alert/alertsimple'
-import ToastSimple from 'components/bootstrap/toast/toastsimple'
 import Breadscrumb from 'components/bootstrap/breadscrumb/breadscrumb'
 import RefreshAsync from 'components/bootstrap/button/refreshasync'
 import Sysfields from "components/common/sysfields"
@@ -10,8 +8,8 @@ import Footer from "components/common/footer"
 import ActionDetail from "modules/adm-app-product/hooks/action_detail"
 
 function ProductDetail(){
+
   const {
-    error, success,
     scrumbs,
     formdata,
     issubmitting,
@@ -27,10 +25,7 @@ function ProductDetail(){
         <h1 className="mt-2 mb-2">Product Info</h1>
         <Breadscrumb urls={scrumbs}/>
         <div>
-          {error && <AlertSimple message={error} type="danger" />}
-          {success && <ToastSimple message={success} title="Success" isvisible={true} />}
-          {error && <ToastSimple message={error} title="Error" isvisible={true} />}
-          
+
           <div className="row">
             <div className="col-6">Nº</div>
             <div className="col-6">{formdata.id}&nbsp;&nbsp;&nbsp;
