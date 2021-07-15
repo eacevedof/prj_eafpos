@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react"
 import { TableContext } from "components/bootstrap/tableaction/tablecontext"
 import { get_uuid } from 'helpers/functions';
 

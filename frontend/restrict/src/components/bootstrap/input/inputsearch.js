@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useCallback} from "react"
+import React, {useEffect, useState, useRef, useCallback, memo} from "react"
 import db from "helpers/localdb"
 import SubmitAsync from "components/bootstrap/button/submitasync"
 
@@ -13,12 +13,12 @@ function InputSearch({cachekey, fnsettext, foundrows}){
     set_formdata({search: elem.value})
   }, [])
 
-  const reset = evt => {
+  const reset = useCallback(evt => {
     set_formdata({search:""})
     fnsettext("")
     refsearch.current.focus()
     db.save(cachekey, "")
-  }
+  },[])
 
   const on_submit = useCallback(async evt => {
     evt.preventDefault()
@@ -29,7 +29,7 @@ function InputSearch({cachekey, fnsettext, foundrows}){
     db.save(cachekey, formdata.search)
     set_issubmitting(false)
     
-  }, [cachekey, fnsettext])// on_submit
+  }, [formdata.search, fnsettext])
 
   useEffect(() => {
     const search = db.select(cachekey) ?? ""
@@ -54,10 +54,12 @@ function InputSearch({cachekey, fnsettext, foundrows}){
         <SubmitAsync innertext="Search" type="primary" issubmitting={issubmitting} />
       </div>      
       <div className="col-1">
-        <button type="button" className="btn btn-secondary" onClick={reset}><i className="fa fa-eraser" aria-hidden="true"></i></button>
+        <button type="button" className="btn btn-secondary" onClick={reset}>
+          <i className="fa fa-eraser" aria-hidden="true"></i>
+        </button>
       </div>
     </form>
   )
 }
 
-export default InputSearch;
+export default memo(InputSearch)

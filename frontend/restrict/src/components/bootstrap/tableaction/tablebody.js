@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext} from "react"
 
 import { TableContext } from "components/bootstrap/tableaction/tablecontext"
 import Tdaction from "components/bootstrap/tableaction/tdaction"

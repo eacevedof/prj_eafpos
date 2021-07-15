@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect} from "react"
 import TableHead from "./tablehead"
 import TableBody from "./tablebody"
 

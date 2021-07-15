@@ -1,31 +1,57 @@
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, memo} from "react"
+import { TableContext } from "components/bootstrap/tableaction/tablecontext"
+import { is_defined } from 'helpers/functions'
 
-//el componente se renderiza nuevamente si le llegan las variables de las propiedades
-console.log("child pre")
-function Child({msg1, msg2}){
-  const [child, set_child] = useState("- child -")
-  console.log("child in:", child)
+const is_conf_singleactions = objconf => {
+  if(!is_defined(objconf.ACTIONS)) return false
+  const actions = Object.keys(objconf.ACTIONS)
+  if(actions.length === 0) return false
+  return true
+}
 
-  /*
-  useEffect(()=>{
-    //esta funcion solo se dispara si hay un cambio en la variable msg1 pq la esta escuchando.
-    //si hay un cambio en msg1 primero se ejecut el unmount y despues el mount
-    console.log("child mounting", msg1, msg2)
+const is_conf_multiaction = multiconf => {
+  if(!is_defined(multiconf.ACTIONS)) return false
+  const actions = Object.keys(multiconf.ACTIONS)
+  if(actions.length === 0) return false
+  return true
+}
 
-    return ()=> console.log("child unmounting por:", msg1, msg2)
-  },[msg1])
+const get_th_action = () => <th>Action</th>
 
-   */
-  return (
-    <>
-      {console.log("child return")}
-      <div className="container">
-        <p>params in <br/>child. msg1:{msg1} <br/>msg2:{msg2}</p>
-        <h6>child state: {child}</h6>
-        <button className="btn btn-secondary" onClick={() => set_child("clicked child state")}> just state</button>
+const get_tds = ar => ar.map( (objth,i) => <th key={i} scope="col">{objth.text}</th>) // get_tds
+
+const get_th_checkall = (fnonmulticheck, ischecked)=> (
+    <th>
+      <div className="form-check">
+        <input className="form-check-input" type="checkbox" id="chk-all" onChange={fnonmulticheck} checked={ischecked} />
+        <label className="form-check-label" htmlFor="chk-all"></label>
       </div>
-    </>
+    </th>
+)
+
+function TableHead({arhead, objconf, multiconf}) {
+
+  const {ismultiaction, set_ismultiaction, multivalues} = useContext(TableContext)
+
+  const on_multicheck = evt => {
+    const ischecked = evt.target.checked
+    set_ismultiaction(ischecked)
+  }
+
+  useEffect(()=>{
+    console.log("tablehead.mounting")
+    return ()=> console.log("tablehead.unmounting")
+  },[multivalues])
+
+  return (
+    <thead>      
+      <tr>
+        { is_conf_multiaction(multiconf) ? get_th_checkall() :null }
+        { is_conf_singleactions(objconf) ? get_th_action(on_multicheck, ismultiaction) : null }
+        { get_tds(arhead) }
+      </tr>
+    </thead>
   )
 }
 
-export default Child;
+export default TableHead

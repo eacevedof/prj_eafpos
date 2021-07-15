@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react"
 
 //type: primary, secondary, success, danger, warning, info, light, dark
 function ToastSimple({message, title, isvisible}) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import {is_dev} from "helpers/env"
 
 function Devstripe() {

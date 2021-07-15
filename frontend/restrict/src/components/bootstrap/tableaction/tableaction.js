@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, memo} from "react"
 
 import {TableContext} from "components/bootstrap/tableaction/tablecontext"
 import DropdownTable from "components/bootstrap/dropdown/dropdowntable"
@@ -9,15 +9,10 @@ function TableAction({arhead, ardata, objconf, multiconf}) {
 
   const {multivalues} = useContext(TableContext)
 
-  useEffect(()=>{
-    console.log("tableaction.mounting")
-    return ()=> console.log("tableaction.unmounting")
-  },[multivalues])
-
   return (
     <>
       {
-        multivalues.length > 0 ? <DropdownTable multiconf={multiconf} fnconfirm={multiconf.fnmultiaction(multivalues)} /> : null
+        multivalues.length > 0 && <DropdownTable multiconf={multiconf} fnconfirm={multiconf.fnmultiaction(multivalues)} />
       }
       <table className="table">
         <TableHead arhead={arhead} objconf={objconf} multiconf={multiconf} />
@@ -27,4 +22,4 @@ function TableAction({arhead, ardata, objconf, multiconf}) {
   )
 }
 
-export default TableAction;
+export default memo(TableAction)

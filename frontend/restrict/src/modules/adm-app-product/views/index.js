@@ -36,13 +36,13 @@ function ProductIndex() {
       <main className="container">
         <h1 className="mt-2 mb-2">Products</h1>
         <Breadscrumb urls={scrumbs}/>
-        
+
         {success && <ToastSimple message={success} title="Success" isvisible={true}  />}
-        {error && <ToastSimple message={error} title="Error" isvisible={true}  />}       
-        
+        {error && <ToastSimple message={error} title="Error" isvisible={true}  />}
+
         <InputSearch cachekey={cachekey} fnsettext={set_txtsearch} foundrows={foundrows} />
 
-        <PaginationSimple objconf={{page, foundrows, ippage:perpage, url:urlpagination}} />
+        {foundrows && <PaginationSimple objconf={{page, foundrows, ippage:perpage, url:urlpagination}} />}
         
         {
           issubmitting ?
@@ -61,7 +61,7 @@ function ProductIndex() {
           </>
         }
 
-        <PaginationSimple objconf={{page, foundrows, ippage:perpage, url:urlpagination}} />
+        {foundrows && <PaginationSimple objconf={{page, foundrows, ippage:perpage, url:urlpagination}} />}
       </main>
       <Footer />
     </>

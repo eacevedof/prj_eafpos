@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef} from "react"
 import {useParams} from "react-router-dom"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {is_defined, is_empty, is_string, isset} from "helpers/functions"

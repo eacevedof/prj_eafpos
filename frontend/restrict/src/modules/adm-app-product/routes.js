@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import {Redirect} from "react-router-dom"
 
 import ProductProvider from "modules/adm-app-product/app-product_context"

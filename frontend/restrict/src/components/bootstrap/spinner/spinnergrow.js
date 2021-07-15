@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from "react"
 
 function Spinnergrow({type}) {
   if(!type) type="success"
@@ -18,4 +18,4 @@ function Spinnergrow({type}) {
   )
 }
 
-export default Spinnergrow;
+export default memo(Spinnergrow)
