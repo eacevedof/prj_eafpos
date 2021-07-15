@@ -18,7 +18,7 @@ function InputSearch({cachekey, fnsettext, foundrows}){
     fnsettext("")
     refsearch.current.focus()
     db.save(cachekey, "")
-  },[])
+  },[fnsettext])
 
   const on_submit = useCallback(async evt => {
     evt.preventDefault()
@@ -35,7 +35,7 @@ function InputSearch({cachekey, fnsettext, foundrows}){
     const search = db.select(cachekey) ?? ""
     set_formdata({search})
     return () => console.log("inputsearch unmounting")
-  },[cachekey])
+  },[cachekey, fnsettext])
 
   return (
     <form className="row" onSubmit={on_submit}>

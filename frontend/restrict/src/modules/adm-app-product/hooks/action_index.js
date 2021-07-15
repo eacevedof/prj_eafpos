@@ -9,6 +9,7 @@ import db from "helpers/localdb"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 
 function ActionIndex(){
+
   const {page} = useParams()
   const history = useHistory()
 
@@ -45,10 +46,8 @@ function ActionIndex(){
     set_foundrows(r.foundrows)
   },[txtsearch, page])
 
-  const async_onload = async () => {
-    console.log("product.index.async_onload")
+  const async_onload = useCallback(async () => {
     const ispinned = await async_is_pinned()
-
     if(!ispinned){
       history.push("/admin")
       return
@@ -62,13 +61,12 @@ function ActionIndex(){
     }
 
     await async_load_products()
-  }
+  }, [txtsearch, page])
 
   useEffect(()=>{
     async_onload()
-
     return ()=> console.log("product.index unmounting")
-  },[page, txtsearch])
+  },[async_onload])
 
   return {
     scrumbs: MODCONFIG.SCRUMBS.GENERIC,
@@ -91,4 +89,4 @@ function ActionIndex(){
   }
 }
 
-export default  ActionIndex
+export default ActionIndex

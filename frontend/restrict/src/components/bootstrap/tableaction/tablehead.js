@@ -16,11 +16,9 @@ const is_conf_multiaction = multiconf => {
   return true
 }
 
-
 const get_th_action = () => <th>Action</th>
 
 const get_tds = ar => ar.map( (objth,i) => <th key={i} scope="col">{objth.text}</th>) // get_tds
-
 
 const get_th_checkall = (fnonmulticheck, ischecked)=> (
     <th>

@@ -14,7 +14,8 @@ import Footer from "components/common/footer"
 
 function ProductIndex() {
 
-  const { scrumbs, cachekey,
+  const {
+    scrumbs, cachekey,
     error, success,
     async_load_products, on_multiconfirm,
 
