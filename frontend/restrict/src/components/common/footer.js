@@ -1,5 +1,7 @@
-import React from "react"
+import React, {memo} from "react"
 import {APP_VERSION} from "config/constants"
+
+const year = new Date().getFullYear()
 
 function footer() {
   return (
@@ -7,7 +9,7 @@ function footer() {
       <div className="container-fluid">
         <nav>
           <p className="text-center">
-            © {new Date().getFullYear()} 
+            © {year}
             &nbsp;&nbsp;Admin pannel
             <small>&nbsp;&nbsp;v:{APP_VERSION}</small>
           </p>
@@ -17,6 +19,6 @@ function footer() {
   )
 }
 
-export default footer;
+export default memo(footer)
 
 

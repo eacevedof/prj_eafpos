@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect} from "react"
+import React, {memo, useContext, useEffect} from "react"
 import {GlobalContext} from "components/context/global_context"
 import Session from "components/common/session"
 import db from "helpers/localdb"
@@ -31,12 +31,9 @@ console.log("boot pre")
 function Boot() {
   console.log("boot in")
 
-  const {set_apifytoken, set_errorg} = useContext(GlobalContext)
-
-  //const async_onload = useCallback(, [set_apifytoken, set_errorg])// async_onload
+  const {set_errorg} = useContext(GlobalContext)
 
   useEffect(() => {
-
     //async_onload()
     (async () => {
       console.log("boot effect")
@@ -52,14 +49,11 @@ function Boot() {
       }
 
       if(!apifytoken){
-        set_errorg({title:"Error", message:"Empty token"})
+        //set_errorg({title:"Error", message:"Empty token"})
         db.delete("apify-token")
       }
-      else
-        set_errorg({})
-
-      set_apifytoken(apifytoken)
-
+      else;
+        //set_errorg({})
     })()
     return () => console.log("boot unmounting")
   }, []);
@@ -89,4 +83,4 @@ function Boot() {
 }//Boot
 
 
-export default Boot;
+export default memo(Boot)

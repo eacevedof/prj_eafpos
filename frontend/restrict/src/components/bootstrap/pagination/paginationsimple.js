@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState, memo} from "react"
 import { NavLink } from "react-router-dom"
 import shortid from "shortid"
 
@@ -114,7 +114,7 @@ function PaginationSimple({objconf}){
   useEffect(()=>{
     on_load()
     return ()=> console.log("paginationsimple unmounting")
-  },[objconf.page, objconf.foundrows])
+  },[on_load])
 
   return (
     <nav className="d-flex justify-content-center">
@@ -136,4 +136,4 @@ function PaginationSimple({objconf}){
   )
 }
 
-export default PaginationSimple
+export default memo(PaginationSimple)
