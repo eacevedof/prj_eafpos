@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef, useCallback, memo} from "react"
 import db from "helpers/localdb"
 import SubmitAsync from "components/bootstrap/button/submitasync"
 
+//con useReduce
 function InputSearch({cachekey, fnsettext, foundrows}){
   
   const [issubmitting, set_issubmitting] = useState(false)
