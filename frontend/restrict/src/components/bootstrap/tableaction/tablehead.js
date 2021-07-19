@@ -20,7 +20,7 @@ const get_th_action = () => <th>Action</th>
 
 const get_tds = ar => ar.map( (objth,i) => <th key={i} scope="col">{objth.text}</th>) // get_tds
 
-const get_th_checkall = (fnonmulticheck, ischecked)=> (
+const get_th_checkall = (fnonmulticheck, ischecked) => (
     <th>
       <div className="form-check">
         <input className="form-check-input" type="checkbox" id="chk-all" onChange={fnonmulticheck} checked={ischecked} />
