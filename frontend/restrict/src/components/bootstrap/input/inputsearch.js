@@ -1,21 +1,51 @@
-import React, {useEffect, useState, useRef, useCallback, memo} from "react"
+import React, {useEffect, useState, useRef, useCallback, memo, useReducer} from "react"
 import db from "helpers/localdb"
 import SubmitAsync from "components/bootstrap/button/submitasync"
 
-//con useReduce
+const ACTIONS = {
+  RESET: "RESET",
+  UPDATE: "UPDATE",
+  SUBMIT: "SUBMIT"
+}
+
+const statesearch = {
+  is_submitting: false,
+  search: ""
+}
+
+const fnreducer = (state, action) => {
+  switch(action.type) {
+    case ACTIONS.RESET: {
+      const search = ""
+      return {
+        ...state,
+        search
+      }
+    }
+    case ACTIONS.UPDATE: {
+      const search = action.payload
+      return {
+        ...state,
+        search
+      }
+    }
+    case ACTIONS.SUBMIT:
+      return {
+        ...state,
+        is_submitting: action.payload
+      }
+    default:
+      return state
+  }
+}
+
 function InputSearch({cachekey, fnsettext, foundrows}){
-  
-  const [issubmitting, set_issubmitting] = useState(false)
-  const [formdata, set_formdata] = useState({search:""})
+
+  const [state, dispatch] = useReducer(fnreducer, statesearch)
   const refsearch = useRef(null)
 
-  const updateform = useCallback(evt => {
-    const elem = evt.target
-    set_formdata({search: elem.value})
-  }, [])
-
-  const reset = useCallback(evt => {
-    set_formdata({search:""})
+  const reset = useCallback(() => {
+    dispatch({type: ACTIONS.RESET})
     fnsettext("")
     refsearch.current.focus()
     db.save(cachekey, "")
@@ -23,36 +53,33 @@ function InputSearch({cachekey, fnsettext, foundrows}){
 
   const on_submit = useCallback(async evt => {
     evt.preventDefault()
-
-    set_issubmitting(true)
-    fnsettext(formdata.search)
+    dispatch({type:ACTIONS.SUBMIT, payload: true})
+    fnsettext(state.search)
     refsearch.current.focus()
-    db.save(cachekey, formdata.search)
-    set_issubmitting(false)
-    
-  }, [formdata.search, fnsettext])
+    db.save(cachekey, state.search)
+    dispatch({type:ACTIONS.SUBMIT, payload: false})
+  }, [state.search, fnsettext])
 
   useEffect(() => {
     const search = db.select(cachekey) ?? ""
-    set_formdata({search})
+    dispatch({type: ACTIONS.UPDATE, payload: search})
     return () => console.log("inputsearch unmounting")
   },[cachekey, fnsettext])
 
   return (
     <form className="row" onSubmit={on_submit}>
       <div className="col-8">
-        <input type="text" className="form-control" aria-describedby="search" placeholder="filter" 
-          
+        <input type="text" className="form-control" aria-describedby="search" placeholder="filter"
           ref={refsearch}
-          value={formdata.search}
-          onChange={updateform}        
+          value={state.search}
+          onChange={ event => dispatch({ type: ACTIONS.UPDATE, payload: event.target.value }) }
         />
         <div className="form-text">
           regs: {foundrows}
         </div>
       </div>
       <div className="col-2 col-md-2 col-lg-1">
-        <SubmitAsync innertext="Search" type="primary" issubmitting={issubmitting} />
+        <SubmitAsync innertext="Search" type="primary" issubmitting={state.is_submitting} />
       </div>      
       <div className="col-1">
         <button type="button" className="btn btn-secondary" onClick={reset}>
