@@ -15,20 +15,18 @@ const statesearch = {
 
 const fnreducer = (state, action) => {
   switch(action.type) {
-    case ACTIONS.RESET: {
-      const search = ""
+    case ACTIONS.RESET:
       return {
         ...state,
-        search
+        search: ""
       }
-    }
-    case ACTIONS.UPDATE: {
-      const search = action.payload
+
+    case ACTIONS.UPDATE:
       return {
         ...state,
-        search
+        search: action.payload
       }
-    }
+
     case ACTIONS.SUBMIT:
       return {
         ...state,

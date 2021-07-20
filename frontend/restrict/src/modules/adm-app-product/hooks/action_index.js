@@ -46,27 +46,26 @@ function ActionIndex(){
     set_foundrows(r.foundrows)
   },[txtsearch, page])
 
-  const async_onload = useCallback(async () => {
-    const ispinned = await async_is_pinned()
-    if(!ispinned){
-      history.push("/admin")
-      return
-    }
-
-    HrefDom.document_title("Admin | Products")
-    const search = db.select(VIEWCONFIG.CACHE_KEY)
-    if(!txtsearch && search){
-      set_txtsearch(search)
-      return
-    }
-
-    await async_load_products()
-  }, [txtsearch, page])
 
   useEffect(()=>{
-    async_onload()
+    (async () => {
+        const ispinned = await async_is_pinned()
+        if (!ispinned) {
+          history.push("/admin")
+          return
+        }
+
+        HrefDom.document_title("Admin | Products")
+        const search = db.select(VIEWCONFIG.CACHE_KEY)
+        if (!txtsearch && search) {
+          set_txtsearch(search)
+          return
+        }
+
+        await async_load_products()
+      })()
     return ()=> console.log("product.index unmounting")
-  },[async_onload])
+  },[txtsearch, page])
 
   return {
     scrumbs: MODCONFIG.SCRUMBS.GENERIC,
