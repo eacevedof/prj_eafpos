@@ -1,5 +1,5 @@
 import {useHistory, useParams} from "react-router-dom"
-import {useCallback, useEffect, useReducer, useState} from "react"
+import {useCallback, useEffect, useReducer} from "react"
 import {async_get_list, async_multidelete, async_multideletelogic} from "../async/async_repository"
 import {get_pages} from "helpers/functions"
 import {grid, VIEWCONFIG} from "../async/queries/query_list"
@@ -65,12 +65,10 @@ function ActionIndex(){
       case "delete":
         await async_multidelete(keys)
         dispatch({type: ACTIONS.DELETE, payload: "products deleted: ".concat(keys.toString())})
-        //set_success("products deleted: ".concat(keys.toString()))
         break
       case "deletelogic":
         await async_multideletelogic(keys)
         dispatch({type: ACTIONS.DELETE_LOGIC, payload: "products deleted: ".concat(keys.toString())})
-        //set_success("products deleted: ".concat(keys.toString()))
         break
     }
     await async_load_products()
