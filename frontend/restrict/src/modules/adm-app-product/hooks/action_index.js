@@ -1,5 +1,5 @@
 import {useHistory, useParams} from "react-router-dom"
-import {useCallback, useEffect, useState} from "react"
+import {useCallback, useEffect, useReducer, useState} from "react"
 import {async_get_list, async_multidelete, async_multideletelogic} from "../async/async_repository"
 import {get_pages} from "helpers/functions"
 import {grid, VIEWCONFIG} from "../async/queries/query_list"
@@ -8,11 +8,50 @@ import HrefDom from "helpers/href_dom"
 import db from "helpers/localdb"
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 
+const ACTIONS = {
+  DELETE: "DELETE",
+  DELETE_LOGIC: "DELETE_LOGIC"
+}
+
+const statesearch = {
+  error: "",
+  success: "",
+  search: "",
+  is_submitting: false,
+  results: [],
+  foundrows: 0,
+}
+
+const fnreducer = (state, action) => {
+  switch(action.type) {
+    case ACTIONS.DELETE:
+      return {
+        ...state,
+        search: ""
+      }
+
+    case ACTIONS.UPDATE:
+      return {
+        ...state,
+        search: action.payload
+      }
+
+    case ACTIONS.SUBMIT:
+      return {
+        ...state,
+        is_submitting: action.payload
+      }
+    default:
+      return state
+  }
+}
+
 function ActionIndex(){
 
   const {page} = useParams()
   const history = useHistory()
 
+  const [state, dispatch] = useReducer(fnreducer, statesearch)
   const [issubmitting, set_issubmitting] = useState(false)
   const [error,] = useState("")
   const [success, set_success] = useState("")
