@@ -52,7 +52,6 @@ function InputSearch({cachekey, fnsettext, foundrows}){
   const on_submit = useCallback(async evt => {
     evt.preventDefault()
     dispatch({type:ACTIONS.SUBMIT, payload: true})
-    console.log("state.search",state.search)
     fnsettext(state.search)
     refsearch.current.focus()
     db.save(cachekey, state.search)
