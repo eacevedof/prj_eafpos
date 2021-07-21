@@ -16,6 +16,7 @@ const statedefault = {
   error: "",
   success: "",
   is_submitting: false,
+
   formdata: {
     insert_user:"",
     insert_date:"",
@@ -81,8 +82,8 @@ function ActionClone() {
   const async_onload = useCallback(async () => {
     dispatch({type:ACTIONS.SUBMIT})
     try {
-      const r = await async_get_by_id(id)
-      const temp = {...state.formdata, ...r}
+      const fields = await async_get_by_id(id)
+      const temp = {...state.formdata, ...fields}
       dispatch({type:ACTIONS.LOAD, payload:temp})
     }
     catch (error){
@@ -92,15 +93,12 @@ function ActionClone() {
 
   const async_refresh = useCallback(async () => await async_onload(),[async_onload])
 
-  const before_submit = () => {}
-
   const on_submit = useCallback(async evt => {
     evt.preventDefault()
 
     dispatch({type: ACTIONS.SUBMIT})
 
     try {
-      before_submit()
       const r = await async_clone(state.formdata)
       dispatch({type:ACTIONS.SUCCESS, payload:"Product cloned. Nº: ".concat(r)})
       history.push("/admin/products")
