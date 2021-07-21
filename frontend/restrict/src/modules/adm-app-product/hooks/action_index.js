@@ -16,7 +16,7 @@ const ACTIONS = {
   SEARCH: "SEARCH",
 }
 
-const stateindex = {
+const statedefault = {
   error: "",
   success: "",
   txtsearch: "",
@@ -58,7 +58,7 @@ function ActionIndex(){
   const {page} = useParams()
   const history = useHistory()
 
-  const [state, dispatch] = useReducer(fnreducer, stateindex)
+  const [state, dispatch] = useReducer(fnreducer, statedefault)
 
   const on_multiconfirm = keys => async straction => {
     switch(straction){

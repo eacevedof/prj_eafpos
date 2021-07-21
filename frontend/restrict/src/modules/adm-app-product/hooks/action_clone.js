@@ -1,32 +1,79 @@
 import {useHistory, useParams} from "react-router-dom"
-import {useCallback, useEffect, useRef, useState} from "react"
+import {useCallback, useEffect, useReducer, useRef, useState} from "react"
 import {async_clone, async_get_by_id} from "modules/adm-app-product/async/async_repository"
 
 import {MODCONFIG} from "modules/adm-app-product/config/config"
 import {seldisplay} from "modules/common/options"
 
-const formdefault = {
-  insert_user:"",
-  insert_date:"",
-  update_date:"",
-  update_user:"",
+const ACTIONS = {
+  LOAD: "LOAD",
+  SUBMIT: "SUBMIT",
+  SUCCESS: "SUCCESS",
+  ERROR: "ERROR",
+}
 
-  id: -1,
-  code_erp:"",
-  description:"",
-  slug:"",
+const statedefault = {
+  error: "",
+  success: "",
+  is_submitting: false,
+  formdata: {
+    insert_user:"",
+    insert_date:"",
+    update_date:"",
+    update_user:"",
 
-  description_full:"",
-  price_sale:"0",
-  price_sale1:"0",
-  order_by:"100",
-  display:"0",
-  url_image: "",
-  id_user:1,
+    id: -1,
+    code_erp:"",
+    description:"",
+    slug:"",
+
+    description_full:"",
+    price_sale:"0",
+    price_sale1:"0",
+    order_by:"100",
+    display:"0",
+    url_image: "",
+    id_user:1,    
+  }
+}
+
+const fnreducer = (state, action) => {
+  switch(action.type) {
+    case ACTIONS.LOAD:
+      return {
+        ...state,
+        is_submitting: false,
+        formdata: {
+          ...state.formdata,
+          ...action.payload
+        }
+      }
+    case ACTIONS.SUBMIT:
+      return {
+        ...state,
+        is_submitting: true,
+        error: "",
+        success: "",
+      }
+    case ACTIONS.SUCCESS:
+      return {
+        ...state,
+        is_submitting: false,
+      }
+    case ACTIONS.ERROR:
+      return {
+        ...state,
+        is_submitting: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
 }
 
 function ActionClone() {
 
+  const [state, dispatch] = useReducer(fnreducer, statedefault)
   const [issubmitting, set_issubmitting] = useState(false)
   const [error, set_error] = useState("")
   const [success, set_success] = useState("")
@@ -37,17 +84,14 @@ function ActionClone() {
   const history = useHistory()
 
   const async_onload = useCallback(async () => {
-    set_issubmitting(true)
+    dispatch({type:ACTIONS.SUBMIT})
     try {
       const r = await async_get_by_id(id)
       const temp = {...formdata, ...r}
-      set_formdata(temp)
+      dispatch({type:ACTIONS.LOAD, payload:temp})
     }
     catch (error){
-      set_error(error)
-    }
-    finally {
-      set_issubmitting(false)
+      dispatch({type:ACTIONS.ERROR, payload:error})
     }
   },[])// async_onload
 
@@ -58,27 +102,23 @@ function ActionClone() {
   const on_submit = useCallback(async evt => {
     evt.preventDefault()
 
-    set_issubmitting(true)
-    set_error("")
-    set_success("")
+    dispatch({type: ACTIONS.SUBMIT})
 
     try {
       before_submit()
-      //console.log("product.clone.formdata", formdata)
       const r = await async_clone(formdata)
-      set_success(str => str + "Product cloned. Nº: ".concat(r))
+      dispatch({type:ACTIONS.SUCCESS, payload:"Product cloned. Nº: ".concat(r)})
       history.push("/admin/products")
     }
     catch (error) {
-      set_error(error)
-      set_issubmitting(false)
+      dispatch({type:ACTIONS.ERROR, payload:error})
     }
   },[formdata])//on_submit
 
   useEffect(()=>{
     async_onload()
     return ()=> console.log("product.clone unmounting")
-  }, [])
+  }, [state.formdata])
 
   return {
     success,
