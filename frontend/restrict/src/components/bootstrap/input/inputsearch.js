@@ -20,13 +20,11 @@ const fnreducer = (state, action) => {
         ...state,
         search: ""
       }
-
     case ACTIONS.UPDATE:
       return {
         ...state,
         search: action.payload
       }
-
     case ACTIONS.SUBMIT:
       return {
         ...state,
