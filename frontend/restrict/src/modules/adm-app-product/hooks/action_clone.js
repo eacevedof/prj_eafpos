@@ -74,11 +74,6 @@ const fnreducer = (state, action) => {
 function ActionClone() {
 
   const [state, dispatch] = useReducer(fnreducer, statedefault)
-  const [issubmitting, set_issubmitting] = useState(false)
-  const [error, set_error] = useState("")
-  const [success, set_success] = useState("")
-  const [formdata, set_formdata] = useState(formdefault)
-
   const {id} = useParams()
   const refcode = useRef(null)
   const history = useHistory()
@@ -87,7 +82,7 @@ function ActionClone() {
     dispatch({type:ACTIONS.SUBMIT})
     try {
       const r = await async_get_by_id(id)
-      const temp = {...formdata, ...r}
+      const temp = {...state.formdata, ...r}
       dispatch({type:ACTIONS.LOAD, payload:temp})
     }
     catch (error){
@@ -95,7 +90,7 @@ function ActionClone() {
     }
   },[])// async_onload
 
-  const async_refresh = async () => await async_onload()
+  const async_refresh = useCallback(async () => await async_onload(),[async_onload])
 
   const before_submit = () => {}
 
@@ -106,14 +101,14 @@ function ActionClone() {
 
     try {
       before_submit()
-      const r = await async_clone(formdata)
+      const r = await async_clone(state.formdata)
       dispatch({type:ACTIONS.SUCCESS, payload:"Product cloned. Nº: ".concat(r)})
       history.push("/admin/products")
     }
     catch (error) {
       dispatch({type:ACTIONS.ERROR, payload:error})
     }
-  },[formdata])//on_submit
+  },[state.formdata])//on_submit
 
   useEffect(()=>{
     async_onload()
@@ -121,15 +116,14 @@ function ActionClone() {
   }, [state.formdata])
 
   return {
-    success,
-    error,
+    success: state.success,
+    error: state.error,
 
-    issubmitting,
+    issubmitting: state.is_submitting,
     scrumbs: MODCONFIG.SCRUMBS.GENERIC,
-    formdata,
+    formdata: state.formdata,
     refcode,
     seldisplay,
-
     async_refresh,
     on_submit,
   }//return
