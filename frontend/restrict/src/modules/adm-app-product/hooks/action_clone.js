@@ -89,7 +89,7 @@ function ActionClone() {
     catch (error){
       dispatch({type:ACTIONS.ERROR, payload:error})
     }
-  },[])// async_onload
+  },[id])// async_onload
 
   const async_refresh = useCallback(async () => await async_onload(),[async_onload])
 
