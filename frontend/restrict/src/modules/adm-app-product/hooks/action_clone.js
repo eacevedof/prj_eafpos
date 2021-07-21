@@ -91,7 +91,7 @@ function ActionClone() {
     }
   },[id])// async_onload
 
-  const async_refresh = useCallback(async () => await async_onload(),[async_onload])
+  const async_refresh = useCallback(async () => await async_onload(),[])
 
   const on_submit = useCallback(async evt => {
     evt.preventDefault()
@@ -111,7 +111,7 @@ function ActionClone() {
   useEffect(()=>{
     async_onload()
     return ()=> console.log("product.clone unmounting")
-  }, [state.formdata])
+  }, [async_onload])
 
   return {
     success: state.success,
