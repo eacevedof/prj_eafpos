@@ -72,26 +72,32 @@ const fnreducer = (state, action) => {
   }
 }
 
+function LoadEntity(id, state, dispatch) {
+  useEffect(() => {
+    async function fetch_reg() {
+      dispatch({type: ACTIONS.SUBMIT})
+      try {
+        const fields = await async_get_by_id(id)
+        const temp = {...state.formdata, ...fields}
+        dispatch({type: ACTIONS.LOAD, payload: temp})
+      } catch (error) {
+        dispatch({type: ACTIONS.ERROR, payload: error})
+      }
+    }
+
+    if (id) {
+      fetch_reg()
+    }
+  }, [id])
+}
+
 function ActionClone() {
 
   const [state, dispatch] = useReducer(fnreducer, statedefault)
   const {id} = useParams()
   const refcode = useRef(null)
   const history = useHistory()
-
-  const async_onload = useCallback(async () => {
-    dispatch({type:ACTIONS.SUBMIT})
-    try {
-      const fields = await async_get_by_id(id)
-      const temp = {...state.formdata, ...fields}
-      dispatch({type:ACTIONS.LOAD, payload:temp})
-    }
-    catch (error){
-      dispatch({type:ACTIONS.ERROR, payload:error})
-    }
-  },[id])// async_onload
-
-  const async_refresh = useCallback(async () => await async_onload(),[])
+  LoadEntity(id, state, dispatch)
 
   const on_submit = useCallback(async evt => {
     evt.preventDefault()
@@ -108,10 +114,6 @@ function ActionClone() {
     }
   },[state.formdata])//on_submit
 
-  useEffect(()=>{
-    async_onload()
-    return ()=> console.log("product.clone unmounting")
-  }, [async_onload])
 
   return {
     success: state.success,
@@ -122,7 +124,7 @@ function ActionClone() {
     formdata: state.formdata,
     refcode,
     seldisplay,
-    async_refresh,
+    async_refresh: () => LoadEntity(id, state, dispatch),
     on_submit,
   }//return
 
