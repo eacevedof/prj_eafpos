@@ -21,6 +21,8 @@
   - entrar en el contenedor de php
   - dentro de la carpeta **console** ejecutar:
     - `php run.php --class=App.Services.Kafka.LogConsumerService`
+  - o desde cualquier sitio en bashrc está la función run y se puede ejecutar así:
+    - `run --class=App.Services.Kafka.LogConsumerService`
   
 ### helpers
 ```sql
