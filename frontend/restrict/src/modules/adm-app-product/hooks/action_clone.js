@@ -74,20 +74,15 @@ const fnreducer = (state, action) => {
 
 function LoadEntity(id, state, dispatch) {
   useEffect(() => {
-    async function fetch_reg() {
+    (async () => {
       dispatch({type: ACTIONS.SUBMIT})
       try {
-        const fields = await async_get_by_id(id)
-        const temp = {...state.formdata, ...fields}
-        dispatch({type: ACTIONS.LOAD, payload: temp})
+        const fields = id ? await async_get_by_id(id) : {}
+        dispatch({type: ACTIONS.LOAD, payload: fields})
       } catch (error) {
         dispatch({type: ACTIONS.ERROR, payload: error})
       }
-    }
-
-    if (id) {
-      fetch_reg()
-    }
+    })()
   }, [id])
 }
 
@@ -124,7 +119,7 @@ function ActionClone() {
     formdata: state.formdata,
     refcode,
     seldisplay,
-    async_refresh: () => LoadEntity(id, state, dispatch),
+    async_refresh: () => history.push("/admin/product/clone/"+id),
     on_submit,
   }//return
 
