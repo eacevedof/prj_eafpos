@@ -86,6 +86,25 @@ function LoadEntity(id, state, dispatch) {
   }, [id])
 }
 
+function Clone(evt, state, dispatch, history) {
+  useEffect(() => {
+    (async () => {
+      evt.preventDefault()
+
+      dispatch({type: ACTIONS.SUBMIT})
+
+      try {
+        const r = await async_clone(state.formdata)
+        dispatch({type:ACTIONS.SUCCESS, payload:"Product cloned. Nº: ".concat(r)})
+        history.push("/admin/products")
+      }
+      catch (error) {
+        dispatch({type:ACTIONS.ERROR, payload:error})
+      }
+    })()
+  }, [evt])
+}
+
 function ActionClone() {
 
   const [state, dispatch] = useReducer(fnreducer, statedefault)
@@ -93,22 +112,6 @@ function ActionClone() {
   const refcode = useRef(null)
   const history = useHistory()
   LoadEntity(id, state, dispatch)
-
-  const on_submit = useCallback(async evt => {
-    evt.preventDefault()
-
-    dispatch({type: ACTIONS.SUBMIT})
-
-    try {
-      const r = await async_clone(state.formdata)
-      dispatch({type:ACTIONS.SUCCESS, payload:"Product cloned. Nº: ".concat(r)})
-      history.push("/admin/products")
-    }
-    catch (error) {
-      dispatch({type:ACTIONS.ERROR, payload:error})
-    }
-  },[state.formdata])//on_submit
-
 
   return {
     success: state.success,
@@ -120,7 +123,7 @@ function ActionClone() {
     refcode,
     seldisplay,
     async_refresh: () => history.push("/admin/product/clone/"+id),
-    on_submit,
+    on_submit: evt => Clone(evt, state, dispatch(), history),
   }//return
 
 }
