@@ -8,6 +8,7 @@ function Parent() {
   //duda sobre esta linea: Pq cuando la comento solo se ejecuta el return 1 vez?
   const [msgp, set_msgp] = useState("-")
 /*
+
   useEffect(()=>{
     console.log("parent mounting")
     return ()=> console.log("parent unmounting")
