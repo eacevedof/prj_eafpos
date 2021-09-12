@@ -1,6 +1,8 @@
 import React from "react"
 
+//fuente:
 //https://www.youtube.com/watch?v=nE8UiSM44SY
+//https://medium.com/@josephat94/a-simple-but-awesome-animation-with-css3-for-your-modals-eb24ebe4ab99
 const Modalraw = ({title, is_open, fn_close, children}) => {
 
 	const on_dialogclick = (evt) => {
