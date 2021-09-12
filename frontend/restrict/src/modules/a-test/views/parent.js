@@ -1,7 +1,7 @@
 import React from "react"
-import ModalRaw from "components/bootstrap/modal/modalraw"
-import useModalRaw from "components/bootstrap/modal/usemodalraw"
-import "components/bootstrap/modal/modalraw.css"
+import ModalRaw from "components/raw/modal/modalraw"
+import useModalRaw from "components/raw/modal/usemodalraw"
+import "components/raw/modal/modalraw.css"
 
 function Parent() {
 
