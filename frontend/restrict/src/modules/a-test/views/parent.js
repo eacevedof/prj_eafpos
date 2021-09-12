@@ -1,12 +1,12 @@
 import React from "react"
-import useModal from "modules/a-test/views/useModal"
 import ModalRaw from "components/bootstrap/modal/modalraw"
+import useModalRaw from "components/bootstrap/modal/usemodalraw"
 import "components/bootstrap/modal/modalraw.css"
 
 function Parent() {
 
-	const [is_opened_lm, open_modal_lm, close_modal_lm] = useModal()
-	const [is_opened_cm, open_modal_cm, close_modal_cm] = useModal()
+	const [is_opened_lm, open_modal_lm, close_modal_lm] = useModalRaw()
+	const [is_opened_cm, open_modal_cm, close_modal_cm] = useModalRaw()
 
   return (
     <div className="container">
