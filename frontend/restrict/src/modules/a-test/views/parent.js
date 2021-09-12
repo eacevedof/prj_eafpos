@@ -12,7 +12,17 @@ function Parent() {
       <br/>
       <h1>Test Index</h1>
 			<button onClick={open_modal}>open modal</button>
-			<ModalRaw is_open={is_opened} fn_close={close_modal}/>
+			<ModalRaw
+				title={"hola mundo"}
+				is_open={is_opened}
+				fn_close={close_modal}
+			>
+				<h1>Login</h1>
+				<form>
+					<input type="email" placeholder="correo"/>
+					<input type="password" placeholder="contraseña"/>
+				</form>
+			</ModalRaw>
     </div>
   )
 }
