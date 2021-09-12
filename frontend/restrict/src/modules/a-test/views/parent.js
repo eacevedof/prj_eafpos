@@ -22,12 +22,10 @@ function Parent() {
 			<button onClick={open_toast}>open toast</button>
 
 			<Toastraw
-				title={"xxxx"}
+				text={"xxxx"}
 				is_open={is_opened_toast}
 				fn_close={close_toast}
-			>
-
-			</Toastraw>
+			/>
 
 			<ModalRaw
 				title={"login"}
