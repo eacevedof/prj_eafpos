@@ -1,12 +1,17 @@
 import React from "react"
 import ModalRaw from "components/raw/modal/modalraw"
-import useModalRaw from "components/raw/modal/usemodalraw"
+import useModalraw from "components/raw/modal/usemodalraw"
 import "components/raw/modal/modalraw.css"
+import Toastraw from "components/raw/toast/toastraw"
+import useToastraw from "components/raw/toast/usetoastraw"
+import "components/raw/toast/toastraw.css"
+
 
 function Parent() {
 
-	const [is_opened_lm, open_modal_lm, close_modal_lm] = useModalRaw()
-	const [is_opened_cm, open_modal_cm, close_modal_cm] = useModalRaw()
+	const [is_opened_lm, open_modal_lm, close_modal_lm] = useModalraw()
+	const [is_opened_cm, open_modal_cm, close_modal_cm] = useModalraw()
+	const [is_opened_toast, open_toast, close_toast] = useToastraw()
 
   return (
     <div className="container">
@@ -14,6 +19,15 @@ function Parent() {
       <h1>Test Index</h1>
 			<button onClick={open_modal_lm}>open login modal</button>
 			<button onClick={open_modal_cm}>open chat modal</button>
+			<button onClick={open_toast}>open toast</button>
+
+			<Toastraw
+				title={"xxxx"}
+				is_open={is_opened_toast}
+				fn_close={close_toast}
+			>
+
+			</Toastraw>
 
 			<ModalRaw
 				title={"login"}

@@ -45,7 +45,7 @@
     animation: hide .25s;
 }
 
-@keyframes  hide{
+@keyframes hide{
     from {
         z-index: 2;
         transform: scale(1);

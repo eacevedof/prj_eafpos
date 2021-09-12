@@ -1,6 +1,6 @@
 import {useState} from "react"
 
-const useModalRaw = (iniValue=false) => {
+const useModalraw = (iniValue=false) => {
 	const [is_opened, set_isopened] = useState(iniValue)
 
 	const open_modal = () => {
@@ -16,4 +16,4 @@ const useModalRaw = (iniValue=false) => {
 	]
 }
 
-export default useModalRaw
+export default useModalraw
