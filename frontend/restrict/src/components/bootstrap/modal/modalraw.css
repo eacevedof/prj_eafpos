@@ -12,7 +12,7 @@
 }
 
 .modal-raw-open {
-    display: flex;
+    display: grid; /*se cambia a grid para que automatice el responsive*/
 }
 
 .modal-raw-dialog {
