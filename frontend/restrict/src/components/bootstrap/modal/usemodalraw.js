@@ -16,4 +16,4 @@ const useModalRaw = (iniValue=false) => {
 	]
 }
 
-export default useModalRaw()
+export default useModalRaw
