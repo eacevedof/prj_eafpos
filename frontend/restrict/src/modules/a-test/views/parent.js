@@ -36,6 +36,7 @@ function Parent() {
 			</ModalRaw>
     </div>
   )
+
 }
 
 //export default memo(Parent);
