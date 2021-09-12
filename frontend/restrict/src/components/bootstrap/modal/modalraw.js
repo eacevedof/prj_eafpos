@@ -10,7 +10,7 @@ const Modalraw = ({title, is_open, fn_close, children}) => {
 	}
 
 	return (
-		<div className={`modal-raw ${is_open && "modal-raw-open"}`} onClick={fn_close}>
+		<div className={`modal-raw ${is_open ? "show-animation" : "hide-animation"}`} onClick={fn_close}>
 			<div className="modal-raw-dialog" onClick={on_dialogclick}>
 				{title && <h1>{title}</h1>}
 				<button onClick={fn_close}>x</button>
