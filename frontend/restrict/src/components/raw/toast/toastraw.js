@@ -20,9 +20,7 @@ const Toastraw = props => {
 							key={i}
 							className={`notification toast ${position}`}
 						>
-							<button>
-								X
-							</button>
+							<button>X</button>
 							<div className="notification-image">
 								<img src={toast.icon} alt="" />
 							</div>
