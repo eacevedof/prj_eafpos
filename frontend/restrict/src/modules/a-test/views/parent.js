@@ -44,7 +44,7 @@ function Parent() {
 
 			<Toastraw
 				toastList={testList}
-				position="bottom-right"
+				position="top-right"
 			/>
 
 			<ModalRaw
