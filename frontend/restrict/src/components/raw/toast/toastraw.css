@@ -93,10 +93,9 @@
 }
 
 .toast-raw {
-
     width: 365px;
     color: #fff;
-    padding: 20px 15px 10px 10px;
+    padding: 15px 15px 15px 10px;
 }
 
 .notification-container button {
