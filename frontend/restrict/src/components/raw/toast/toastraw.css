@@ -1,12 +1,12 @@
 .debug {
-    border: 1px solid red;
+    /*border: 1px solid red;*/
 }
 
 .notification-container {
     font-size: 14px;
     box-sizing: border-box;
     position: fixed;
-    z-index: 999999
+    z-index: 10;
 }
 
 .top-right {
@@ -92,7 +92,7 @@
     height: 30px;
 }
 
-.toast {
+.toast-raw {
     height: 50px;
     width: 365px;
     color: #fff;

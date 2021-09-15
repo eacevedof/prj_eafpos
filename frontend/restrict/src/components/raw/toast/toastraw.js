@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 //fuente:
 //https://www.w3schools.com/howto/howto_js_snackbar.asp
 //https://blog.logrocket.com/how-to-create-a-custom-toast-component-with-react/
+//https://github.com/uzochukwueddie/react-toast
 const Toastraw = props => {
 	const { toastList, position, autoDelete, dismissTime } = props;
 	const [list, setList] = useState(toastList);
@@ -23,8 +24,6 @@ const Toastraw = props => {
 		return () => {
 			clearInterval(interval);
 		}
-
-		// eslint-disable-next-line
 	}, [toastList, autoDelete, dismissTime, list]);
 
 	const deleteToast = id => {
@@ -37,12 +36,12 @@ const Toastraw = props => {
 
 	return (
 		<>
-			<div className={`notification-container ${position} debug`}>
+			<div className={`notification-container ${position}`}>
 				{
 					list.map((toast, i) =>
 						<div
 							key={i}
-							className={`notification toast ${position}`}
+							className={`notification toast-raw ${position}`}
 							style={{ backgroundColor: toast.backgroundColor }}
 						>
 							<button onClick={() => deleteToast(toast.id)}>
